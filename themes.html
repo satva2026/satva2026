@@ -1,0 +1,219 @@
+<!-- FILE: themes.html (Corrected and Complete) -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Themes - SATVA 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Roboto:wght@300;400;700&amp;display=swap');
+        :root {
+           --primary-color: #013328; --secondary-color: #117d56; --dark-color: #013328;
+            --text-color: #000000; --light-text-color: #ffffff; --header-bg: rgba(255, 255, 255, 0.9);
+            --section-alt-bg: #f8f9fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: #fff; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+        /* --- Header Styles (for loaded header) --- */
+        #header-placeholder { height: 80px; }
+        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-1 { height: 75px; } .logo-2 { height: 87px; } .logo-3 { height: 75px; }
+        .main-nav ul { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: var(--text-color); font-weight: 700; padding: 30px 0; position: relative; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); }
+        .main-nav a:hover::after { width: 100%; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: -20px; background: white; list-style: none; padding: 10px 0; margin-top: -15px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; }
+        .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li a { padding: 10px 20px; }
+        .dropdown-menu li a::after { content: none; }
+        .mobile-nav-toggle, .mobile-nav-container { display: none; }
+        .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s; }
+        .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+        .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+        
+        /* --- Page Specific Styles --- */
+        .content-section { padding: 60px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--dark-color); }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
+        
+        /* --- Original Themes Section Styles --- */
+        #themes { background-color: var(--section-alt-bg); }
+        .themes-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        .theme-card { 
+            width: calc(33.333% - 20px); 
+            background: #fff; 
+            padding: 25px; 
+            border-radius: 10px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            /* Original Animation Properties */
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        .theme-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .theme-card h3 { color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem; }
+        .theme-card ul { list-style: none; padding-left: 0; }
+        .theme-card li { margin-bottom: 10px; position: relative; padding-left: 20px; font-size: 0.95rem; }
+        .theme-card li::before { content: '•'; position: absolute; left: 0; color: var(--secondary-color); font-weight: bold; }
+
+        @media(max-width: 1200px) {
+            .theme-card { width: calc(50% - 15px); }
+        }
+        @media(max-width: 992px) {
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; }
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
+            .mobile-nav-container .dropdown-menu.show { display: block; }
+            .mobile-nav-container .dropdown-menu a { font-size: 1.1rem; font-weight: normal; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+        }
+        @media(max-width: 768px) {
+            .theme-card { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section id="themes" class="content-section">
+            <div class="container">
+                <h2 class="section-title"> Themes </h2>
+                <div class="themes-grid">
+                    <div class="theme-card">
+                        <h3>Theme 1: Resilient & Green Geotechnics</h3>
+                        <ul>
+                            <li>Innovative subgrade stabilization techniques</li>
+                            <li>Use of marginal and recycled materials</li>
+                            <li>Climate-resilient subgrade performance</li>
+                            <li>Traffic-induced behavior and durability improvements</li>
+                        </ul>
+                    </div>
+                    <div class="theme-card">
+                        <h3>Theme 2: Eco-Efficient Asphalt Technologies</h3>
+                        <ul>
+                            <li>Low-temperature asphalt production</li>
+                            <li>Incorporation of recycled asphalt materials</li>
+                            <li>Bio-based and alternative binders</li>
+                            <li>Performance-driven mix design approaches</li>
+                            
+                        </ul>
+                    </div>
+                    <div class="theme-card">
+                        <h3>Theme 3: Sustainable Rigid Pavement Systems</h3>
+                        <ul>
+                            <li>Use of supplementary cementitious materials</li>
+                            <li>Alternative low-carbon binders</li>
+                            <li>Innovative concrete mix design strategies</li>
+                            <li>Techniques to enhance durability and service life</li>
+
+                        </ul>
+                    </div>
+                    <div class="theme-card">
+                        <h3>Theme 4: Resilient Roads: Evaluation & Maintenance</h3>
+                        <ul>
+                            <li>Climate- and load-resilient pavement design</li>
+                            <li>Smart monitoring and digital technologies</li>
+                            <li>Data-driven maintenance strategies</li>
+                            <li>Life-cycle assessment and decision-making</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- SCRIPT TO LOAD THE HEADER ---
+            fetch("header.html")
+                .then(response => { if (!response.ok) throw new Error("Header not found"); return response.text(); })
+                .then(data => {
+                    document.getElementById("header-placeholder").innerHTML = data;
+                    
+                    // --- FULL MOBILE NAVIGATION SCRIPT ---
+                    const desktopNav = document.getElementById('desktop-nav');
+                    const mobileNavContainer = document.getElementById('mobile-nav');
+                    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+                    
+                    if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                        let mobileNavHTML = desktopNav.innerHTML;
+                        const parser = new DOMParser();
+                        const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                        navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                            const toggle = document.createElement('span');
+                            toggle.className = 'dropdown-toggle';
+                            link.appendChild(toggle);
+                        });
+                        mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                        mobileNavToggle.addEventListener('click', () => {
+                            mobileNavContainer.classList.toggle('active');
+                            mobileNavToggle.classList.toggle('active');
+                        });
+
+                        mobileNavContainer.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('dropdown-toggle')) {
+                                e.preventDefault();
+                                e.target.classList.toggle('open');
+                                const menu = e.target.closest('li.dropdown').querySelector('.dropdown-menu');
+                                if (menu) {
+                                   menu.classList.toggle('show');
+                                }
+                            } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                                mobileNavContainer.classList.remove('active');
+                                mobileNavToggle.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => { 
+                    console.error("Error loading header:", error); 
+                    document.getElementById("header-placeholder").innerHTML = "<p style='text-align:center;color:red;'>Error: Could not load page header.</p>";
+                });
+
+            // --- ORIGINAL THEME CARD ANIMATION SCRIPT ---
+            const animatedItems = document.querySelectorAll('.theme-card');
+            if (animatedItems.length > 0) {
+                const itemObserver = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            itemObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                animatedItems.forEach(item => {
+                    itemObserver.observe(item);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

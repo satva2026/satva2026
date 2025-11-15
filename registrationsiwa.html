@@ -1,0 +1,256 @@
+<!-- FILE: registrationsiwa.html (Final Polished Version) -->
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - SATVA 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Roboto:wght@300;400;700&amp;display=swap');
+        :root {
+           --primary-color: #013328; --secondary-color: #6f8e74; --dark-color: #162601;
+            --text-color: #000000; --light-text-color: #ffffff; --header-bg: rgba(255, 255, 255, 0.9);
+            --section-alt-bg: #f8f9fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        a { color: var(--primary-color); text-decoration: none; }
+
+        /* --- COMPLETE HEADER & NAVIGATION STYLES --- */
+        #header-placeholder { height: 80px; }
+        .main-header { position: sticky; top: 0; left: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-container a { display: inline-flex; align-items: center; }
+        .logo-1 { height: 75px; } .logo-2 { height: 87px; } .logo-3 { height: 75px; }
+        .main-nav ul { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: var(--text-color); font-weight: 700; padding: 30px 0; position: relative; transition: color 0.3s; display: flex; align-items: center; gap: 5px; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); }
+        .main-nav a:hover::after { width: 100%; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: -20px; background: white; list-style: none; padding: 10px 0; margin-top: -15px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; }
+        .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li a { padding: 10px 20px; }
+        .dropdown-menu li a::after { content: none; }
+        .mobile-nav-toggle, .mobile-nav-container { display: none; }
+        .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+        .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+        .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+        .mobile-nav-toggle.active .hamburger { background: transparent; }
+        .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+        .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+        
+        /* --- Page-Specific Styles --- */
+        .info-section { padding: 80px 0; }
+        .info-section h2 { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 50px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: flex-start; }
+        .info-column { display: flex; flex-direction: column; }
+        .info-column h3 { font-size: 1.5rem; color: var(--dark-color); margin-bottom: 15px; font-weight: 700; }
+        .info-column p { margin-bottom: 20px; font-size: 1.05rem; text-align: justify; }
+        .info-cta-button { display: inline-block; background-color: var(--secondary-color); color: var(--light-text-color); padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: 700; font-size: 1rem; text-align: center; transition: all 0.3s; align-self: flex-start; margin-top: 15px; }
+        .info-cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .image-section { padding: 40px 0 60px 0; background-color: var(--section-alt-bg); }
+        .image-container { max-width: 900px; margin: auto; }
+        .image-container img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.07); display: block; }
+        
+        .registration-tables-section { padding: 60px 0; background-color: #fff; }
+        .registration-title-banner { display: block; text-align: center; background-color: #013328; color: #fff; padding: 15px 40px; font-size: 1.8rem; border-radius: 8px 8px 0 0; }
+        .table-wrapper { margin-bottom: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+        .table-wrapper:hover { transform: translateY(-5px); box-shadow: 0 15px 45px rgba(0,0,0,0.15); }
+        .rate-table { width: 100%; border-collapse: collapse; }
+        .rate-table th, .rate-table td { padding: 15px; border-bottom: 1px solid #e0e0e0; }
+        .rate-table thead th { color: #fff; font-size: 1rem; }
+        .rate-table tbody td { color: #000000; }
+        .align-left { text-align: left; }
+        .align-right { text-align: right; }
+        .rate-table tbody tr:last-child td { border-bottom: none; }
+        .rate-table tbody tr:nth-child(even) { background-color: var(--section-alt-bg); }
+        .rate-table td[rowspan] { font-weight: bold; color: #fff; vertical-align: middle; text-align: center; font-size: 1.1rem; }
+        .table-wrapper.early-bird thead th, .table-wrapper.early-bird td[rowspan], .mobile-table-title.early-bird { background-color: #6f8e74; }
+        .table-wrapper.late-reg thead th, .table-wrapper.late-reg td[rowspan], .mobile-table-title.late-reg { background-color: #2980b9; }
+        .table-wrapper.onsite-reg thead th, .table-wrapper.onsite-reg td[rowspan], .mobile-table-title.onsite-reg { background-color: #27ae60; }
+        .mobile-table-title { display: none; }
+        
+        .register-button-container { text-align: center; margin-top: 20px; }
+        .register-button { display: inline-block; background-color: #162601; color: #fffefe; padding: 18px 50px; font-size: 1.3rem; font-weight: 700; border-radius: 50px; text-decoration: none; cursor: not-allowed; }
+
+        .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .js-scroll.fade-in-up { transform: translateY(40px); }
+        .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media(max-width: 992px) {
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; }
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
+            .mobile-nav-container .dropdown-menu.show { display: block; }
+            .mobile-nav-container .dropdown-menu a { font-size: 1.1rem; font-weight: normal; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+            .info-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .registration-title-banner { font-size: 1.5rem; padding: 20px 25px; }
+            .info-section h2 { font-size: 2rem; margin-bottom: 30px; }
+            .rate-table thead { display: none; }
+            .rate-table, .rate-table tbody, .rate-table tr, .rate-table td { display: block; width: 100%; }
+            .rate-table tr { margin-bottom: 15px; border: 1px solid #eee; border-radius: 5px; overflow: hidden; }
+            .rate-table td { display: flex; justify-content: space-between; align-items: center; text-align: right; position: relative; padding: 12px 15px; border-bottom: 1px solid #eee; }
+            .rate-table tr:last-child { margin-bottom: 0; }
+            .rate-table tr td:last-child { border-bottom: 0; }
+            .rate-table td[rowspan] { display: none; }
+            .rate-table td::before { content: attr(data-label); font-weight: bold; color: var(--dark-color); text-align: left; margin-right: 10px; }
+            .mobile-table-title { display: block; color: #fff; padding: 12px 15px; font-weight: bold; font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+    
+    <main>
+        <section class="registration-tables-section">
+            <div class="container">
+                <h2 class="registration-title-banner js-scroll fade-in-up">Symposium registration and charges</h2>
+
+                <div class="table-wrapper early-bird js-scroll fade-in-up">
+                    <div class="mobile-table-title early-bird">Registration</div>
+                    <table class="rate-table">
+                        <thead>
+                            <tr>
+                                <th style="border-radius: 8px 0 0 0;">Registration</th>
+                                <th class="align-left">Category</th>
+                                <th class="align-left">Fee (₹)</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="4">(From 20<sup>th</sup> April) </td>
+                                <td data-label="Category" class="align-left">will update soon...</td>
+                                <td data-label="High-income Fee (₹)" class="align-center">will update soon...</td>
+                               
+                            </tr>
+                            <tr>
+                                <td data-label="Category" class="align-left">will update soon...</td>
+                                <td data-label="High-income Fee (₹)" class="align-center">will update soon...</td>
+                                
+                            </tr>
+                            <tr>
+                                <td data-label="Category" class="align-left">will update soon...</td>
+                                <td data-label="High-income Fee (₹)" class="align-center">will update soon...</td>
+                                
+                            </tr>
+                            <tr>
+                                <td data-label="Category" class="align-left">will update soon...</td>
+                                <td data-label="High-income Fee (₹)" class="align-center">will update soon...</td>
+                               </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-wrapper late-reg js-scroll fade-in-up">
+                    <div class="mobile-table-title late-reg">Late registration</div>
+                    <table class="rate-table">
+                        
+                    </table>
+                </div>
+
+           
+                
+                <div class="register-button-container js-scroll fade-in-up">
+                    <a href="#" class="register-button">Register</a>
+                </div>
+            </div>
+        </section>
+
+       
+                     
+                    
+                </div>
+            </div>
+        </section>
+
+       
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // SCRIPT TO LOAD THE HEADER
+            fetch("header.html")
+                .then(response => { if (!response.ok) throw new Error("Header not found"); return response.text(); })
+                .then(data => {
+                    document.getElementById("header-placeholder").innerHTML = data;
+                    
+                    // FULL MOBILE NAVIGATION SCRIPT
+                    const desktopNav = document.getElementById('desktop-nav');
+                    const mobileNavContainer = document.getElementById('mobile-nav');
+                    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+                    
+                    if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                        let mobileNavHTML = desktopNav.innerHTML;
+                        const parser = new DOMParser();
+                        const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                        navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                            const toggle = document.createElement('span');
+                            toggle.className = 'dropdown-toggle';
+                            link.appendChild(toggle);
+                        });
+                        mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                        mobileNavToggle.addEventListener('click', () => {
+                            mobileNavContainer.classList.toggle('active');
+                            mobileNavToggle.classList.toggle('active');
+                        });
+
+                        mobileNavContainer.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('dropdown-toggle')) {
+                                e.preventDefault();
+                                e.target.classList.toggle('open');
+                                const menu = e.target.closest('li.dropdown').querySelector('.dropdown-menu');
+                                if (menu) { menu.classList.toggle('show'); }
+                            } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                                mobileNavContainer.classList.remove('active');
+                                mobileNavToggle.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => { console.error("Error loading header:", error); });
+            
+            // ANIMATION SCRIPT
+            const animatedItems = document.querySelectorAll('.js-scroll');
+            if (animatedItems.length > 0) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedItems.forEach(item => {
+                    observer.observe(item);
+                });
+            }
+        });
+    </script>
+</body>
+
+
+</html>

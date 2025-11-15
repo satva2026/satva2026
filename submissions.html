@@ -1,0 +1,215 @@
+<!-- FILE: submissions.html (Corrected Header & Staggered Animations) -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission - SATVA 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Roboto:wght@300;400;700&amp;display=swap');
+        :root {
+            --primary-color: #444003; --secondary-color: #6f8e74; --dark-color: #013328;
+            --text-color: #000000; --light-text-color: #ffffff; --header-bg: rgba(255, 255, 255, 0.9);
+            --section-alt-bg: #f8f9fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+        /* --- COMPLETE HEADER & NAVIGATION STYLES --- */
+        #header-placeholder { height: 80px; }
+        .main-header { position: sticky; top: 0; left: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 15px; }
+        .logo-1 { height: 75px; } .logo-2 { height: 87px; } .logo-3 { height: 75px; }
+        .main-nav ul { display: flex; list-style: none; gap: 30px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: var(--text-color); font-weight: 700; padding: 30px 0; position: relative; transition: color 0.3s; display: flex; align-items: center; gap: 5px; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); }
+        .main-nav a:hover::after { width: 100%; }
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: -20px; background: white; list-style: none; padding: 10px 0; margin-top: -15px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; }
+        .dropdown:hover .dropdown-menu { display: block; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li a { padding: 10px 20px; }
+        .dropdown-menu li a::after { content: none; }
+        .mobile-nav-toggle, .mobile-nav-container { display: none; }
+        .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+        .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+        .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+
+        /* --- Page-Specific Styles --- */
+        .registration-section { padding: 60px 0; text-align: center; background-color: var(--section-alt-bg); }
+        .registration-section h1 { font-size: 3rem; color: var(--dark-color); margin-bottom: 20px; }
+        .registration-section p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px auto; }
+        .cta-button { display: inline-block; background: var(--dark-color); color: var(--light-text-color); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s; }
+        .cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .brochure-buttons-container { display: flex; justify-content: center; gap: 20px; margin-top: 30px; flex-wrap: wrap; }
+        .brochure-button { display: inline-block; background: var(--secondary-color); color: var(--light-text-color); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1rem; transition: all 0.3s; position: relative; overflow: hidden; }
+        .brochure-button .button-text { display: inline-block; transition: transform 0.3s ease; }
+        .brochure-button::before { content: 'Download'; position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--dark-color); transform: translateY(100%); transition: transform 0.3s ease; }
+        .brochure-button:hover { background-color: var(--dark-color); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .brochure-button:hover .button-text { transform: translateY(-100%); }
+        .brochure-button:hover::before { transform: translateY(0); }
+
+        .info-section { padding: 80px 0; background-color: #fff; }
+        .info-section h2 { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 50px; }
+        .template-button-container { text-align: center; margin-bottom: 50px; }
+        .guidelines-content { max-width: 900px; margin: 0 auto; text-align: left; }
+        .guidelines-content h3 { font-size: 1.5rem; color: var(--dark-color); margin-top: 40px; margin-bottom: 15px; font-weight: 700; }
+        .guidelines-content h3:first-of-type { margin-top: 0; }
+        .guidelines-content ul { list-style-position: outside; padding-left: 25px; margin-bottom: 20px; }
+        .guidelines-content li { margin-bottom: 12px; }
+        .guidelines-content p { margin-top: 30px; font-weight: bold; }
+        .guidelines-content a { color: var(--primary-color); text-decoration: none; }
+        .guidelines-content a:hover { text-decoration: underline; }
+
+        .floating-info-tab { position: fixed; bottom: 20px; right: 20px; background-color: var(--dark-color); color: var(--light-text-color); padding: 10px 15px; border-radius: 50px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .floating-info-tab:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+        .floating-info-tab .icon { font-size: 1.2rem; line-height: 1; }
+        
+        .js-scroll { opacity: 0; transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+        .js-scroll.fade-in-up { transform: translateY(30px); }
+        .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+        
+        @media(max-width: 992px) {
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; }
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
+            .mobile-nav-container .dropdown-menu.show { display: block; }
+            .mobile-nav-container .dropdown-menu a { font-size: 1.1rem; font-weight: normal; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+    <main>
+        <section class="registration-section js-scroll fade-in-up">
+            <div class="container">
+                <h1>Call for Abstracts</h1>
+                <p>The call is open now for enthusiastic participants to submit their abstracts for SATVA 2026. </p>
+                <a href="WIll be updated soon..." class="cta-button" target="_blank" rel="noopener noreferrer">Abstract Submission</a>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <div class="container">
+                <div class="template-button-container js-scroll fade-in-up">
+                    <a href="DOCS/AbstractTemplateSATVA2026.docx" class="cta-button" download>DOWNLOAD ABSTRACT TEMPLATE</a>
+                    
+                </div>
+
+                <h2 class="js-scroll fade-in-up">Guidelines for Authors</h2>
+                <div class="guidelines-content">
+                    <h3 class="js-scroll fade-in-up">Guidelines to authors</h3>
+                    <ul>
+                        <li class="js-scroll fade-in-up">Will be updated soon...</li>
+                        
+                    </ul>
+
+                    <h3 class="js-scroll fade-in-up">Format</h3>
+                    <ul>
+                        <li class="js-scroll fade-in-up">Will be updated soon...</li>
+                        </ul>
+
+                    <h3 class="js-scroll fade-in-up">Evaluation criteria</h3>
+                    <ul>
+                        <li class="js-scroll fade-in-up">Will be updated soon...</li>
+                        <li class="js-scroll fade-in-up">Will be updated soon...
+                            <ul style="margin-top: 10px;">
+                                <li class="js-scroll fade-in-up">Will be updated soon...</li>
+                               </ul>
+                        </li>
+                        </ul>
+
+                    <p class="js-scroll fade-in-up">For any further clarifications, contact: <a href="mailto:essence@iitpkd.ac.in">essence@iitpkd.ac.in</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="mailto:essence@iitpkd.ac.in" class="floating-info-tab js-scroll fade-in-up">
+        <span class="icon">&#9993;</span> info
+    </a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // SCRIPT TO LOAD THE HEADER
+            fetch("header.html")
+                .then(response => { if (!response.ok) throw new Error("Header not found"); return response.text(); })
+                .then(data => {
+                    document.getElementById("header-placeholder").innerHTML = data;
+                    
+                    // FULL MOBILE NAVIGATION SCRIPT
+                    const desktopNav = document.getElementById('desktop-nav');
+                    const mobileNavContainer = document.getElementById('mobile-nav');
+                    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+                    
+                    if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                        let mobileNavHTML = desktopNav.innerHTML;
+                        const parser = new DOMParser();
+                        const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                        navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                            const toggle = document.createElement('span');
+                            toggle.className = 'dropdown-toggle';
+                            link.appendChild(toggle);
+                        });
+                        mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                        mobileNavToggle.addEventListener('click', () => {
+                            mobileNavContainer.classList.toggle('active');
+                            mobileNavToggle.classList.toggle('active');
+                        });
+
+                        mobileNavContainer.addEventListener('click', function(e) {
+                            if (e.target.classList.contains('dropdown-toggle')) {
+                                e.preventDefault();
+                                e.target.classList.toggle('open');
+                                const menu = e.target.closest('li.dropdown').querySelector('.dropdown-menu');
+                                if (menu) { menu.classList.toggle('show'); }
+                            } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                                mobileNavContainer.classList.remove('active');
+                                mobileNavToggle.classList.remove('active');
+                            }
+                        });
+                    }
+                })
+                .catch(error => { console.error("Error loading header:", error); });
+            
+            // UPGRADED STAGGERED ANIMATION SCRIPT
+            const animatedItems = document.querySelectorAll('.js-scroll');
+            if (animatedItems.length > 0) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            // Apply a staggered delay to each item
+                            entry.target.style.transitionDelay = `${index * 50}ms`;
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedItems.forEach(item => {
+                    observer.observe(item);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
