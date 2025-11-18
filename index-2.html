@@ -1,4 +1,4 @@
-<!-- FILE: index.html (FINAL - SATVA 2026) -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,7 +45,7 @@
         
         /* --- HERO SECTION --- */
         .hero {
-            background-image: URL('images/bg2.png');
+            background-image: URL('images/bg4.png');
             height: 100vh; color: var(--light-text-color); display: flex; align-items: center; justify-content: center; text-align: center; position: relative; background-size: cover; background-position: center center; transition: background-image 1.5s ease-in-out; }
         .hero::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4)); }
         .hero-content { position: relative; z-index: 1; max-width: none; padding: 20px; animation: fadeInDown 1.5s ease-out; }
@@ -194,12 +194,12 @@
                         <p class="js-scroll fade-in-up">The symposium aims to provide a platform for researchers, engineers, and industry professionals to exchange ideas and share advances in sustainable pavement technologies. Emphasis will be placed on developing resilient, low-carbon, and resource-efficient pavement systems through innovations in materials, design, construction, and maintenance practices. </p>
                     </div>
                     <div class="image-gallery-container js-scroll fade-in-up">
-                        <img src="images/abtimg.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image">
+                        <img src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image">
                         <div class="thumbnail-container">
-                            <img src="images/abtimg.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/abtimg.png">
-                            <img src="images/abtimg2.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/abtimg2.png">
+                            <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png">
+                            <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png">
                             <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png">
-                            <img src="images/abtimg4.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/abtimg4.png">
+                            <img src="images/evntimg3.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/evntimg3.png">
                         </div>
                     </div>
                 </div>
@@ -338,12 +338,12 @@
             if (heroSection&&false) {
                 const bgImages = ['images/bg1.png', 'images/bg2.png', 'images/bg3.png'];
                 bgImages.forEach(img => new Image().src = img);
-                heroSection.style.backgroundImage = `url('images/bg2.png')`;
+                heroSection.style.backgroundImage = `url('images/bg4.png')`;
                 
                 let currentImageIndex = 0;
                 setInterval(() => {
                     currentImageIndex = (currentImageIndex + 1) % bgImages.length;
-                    heroSection.style.backgroundImage = `url('images/bg2.png')`;
+                    heroSection.style.backgroundImage = `url('images/bg4.png')`;
                 }, 1000);
             }
 
@@ -370,3 +370,7 @@
 
 
 </html>
+
+
+
+
