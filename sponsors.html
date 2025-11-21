@@ -58,7 +58,7 @@
             color: var(--dark-color); 
             margin-bottom: 40px; 
             position: relative; 
-            display: block; /* Changed from inline-block/transform logic to standard block */
+            display: block;
         }
         .section-heading::after { 
             content: ''; 
@@ -66,7 +66,7 @@
             width: 80px; 
             height: 4px; 
             background: var(--primary-color); 
-            margin: 10px auto 0; /* Auto margins center block elements */
+            margin: 10px auto 0;
             border-radius: 2px; 
         }
         
@@ -122,7 +122,7 @@
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
             gap: 30px; 
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
         
         .sponsor-card { background: #fff; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; height: 100%; }
@@ -140,9 +140,25 @@
         /* --- PROFESSIONAL GRADIENT BACKGROUNDS --- */
         .platinum-bg { background: var(--platinum-gradient); } 
         .diamond-bg { background: var(--diamond-gradient); } 
-        .gold-bg { background: var(--gold-gradient); color: #444; /* Dark text for gold bg */ } 
+        .gold-bg { background: var(--gold-gradient); color: #444; } 
         .gold-bg h3 { color: #333; text-shadow: none; }
         .gold-bg .price-tag { color: #333; background: rgba(255,255,255,0.4); }
+
+        /* --- SPECIAL NOTE STYLE --- */
+        .special-note {
+            text-align: center;
+            background-color: #eef2f3;
+            border-left: 5px solid var(--primary-color);
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 1.05rem;
+            color: var(--dark-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         .floating-contact-btn { position: fixed; bottom: 20px; right: 20px; background-color: var(--primary-color); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; transition: all 0.3s; }
         .floating-contact-btn:hover { background-color: var(--dark-color); transform: scale(1.1); }
@@ -280,6 +296,12 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="special-note js-scroll fade-in-up">
+                    <i class="fas fa-info-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                    There are opportunities to finance specific activities of the symposium. Kindly contact the organizers if you are interested.
+                </div>
+
             </div>
         </section>
 
