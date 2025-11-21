@@ -1,4 +1,3 @@
-<!-- FILE: themes.html (Corrected and Complete) -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,12 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Themes - SATVA 2026</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Roboto:wght@300;400;700&amp;display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
         :root {
            --primary-color: #013328; --secondary-color: #117d56; --dark-color: #013328;
-            --text-color: #000000; --light-text-color: #ffffff; --header-bg: rgba(255, 255, 255, 0.9);
+            --text-color: #333333; --light-text-color: #ffffff; --header-bg: rgba(255, 255, 255, 0.9);
             --section-alt-bg: #f8f9fa;
+            --accent-color: #d4af37; /* Gold accent for subtle highlights */
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -19,7 +21,7 @@
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-        /* --- Header Styles (for loaded header) --- */
+        /* --- Header Styles --- */
         #header-placeholder { height: 80px; }
         .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
@@ -27,7 +29,7 @@
         .logo-1 { height: 75px; } .logo-2 { height: 87px; } .logo-3 { height: 75px; }
         .main-nav ul { display: flex; list-style: none; gap: 30px; align-items: center; }
         .main-nav li { position: relative; }
-        .main-nav a { text-decoration: none; color: var(--text-color); font-weight: 700; padding: 30px 0; position: relative; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
+        .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 30px 0; position: relative; display: flex; align-items: center; gap: 5px; transition: color 0.3s; }
         .main-nav a::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
         .main-nav a:hover { color: var(--primary-color); }
         .main-nav a:hover::after { width: 100%; }
@@ -41,37 +43,124 @@
         .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
         
         /* --- Page Specific Styles --- */
-        .content-section { padding: 60px 0; }
+        .content-section { padding: 80px 0; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--dark-color); }
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
         
-        /* --- Original Themes Section Styles --- */
+        /* --- ENHANCED THEMES SECTION --- */
         #themes { background-color: var(--section-alt-bg); }
-        .themes-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        
+        .themes-grid { 
+            display: grid;
+            /* Creates a symmetrical 2-column grid on desktop */
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 40px; 
+            justify-content: center;
+        }
+
         .theme-card { 
-            width: calc(33.333% - 20px); 
             background: #fff; 
-            padding: 25px; 
-            border-radius: 10px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-            /* Original Animation Properties */
-            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            padding: 40px 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            position: relative;
+            overflow: hidden;
+            /* Animation Properties */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             opacity: 0;
             transform: translateY(40px);
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text */
         }
+
         .theme-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        .theme-card h3 { color: var(--primary-color); margin-bottom: 15px; font-size: 1.3rem; }
-        .theme-card ul { list-style: none; padding-left: 0; }
-        .theme-card li { margin-bottom: 10px; position: relative; padding-left: 20px; font-size: 0.95rem; }
-        .theme-card li::before { content: '•'; position: absolute; left: 0; color: var(--secondary-color); font-weight: bold; }
 
-        @media(max-width: 1200px) {
-            .theme-card { width: calc(50% - 15px); }
+        /* --- HOVER EFFECTS --- */
+        .theme-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            border-bottom: 4px solid var(--secondary-color);
         }
+
+        /* --- ICONS STYLE --- */
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(1, 51, 40, 0.1); /* Light primary color */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .theme-card:hover .icon-box {
+            background-color: var(--primary-color);
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .theme-card h3 { 
+            color: var(--dark-color); 
+            margin-bottom: 20px; 
+            font-size: 1.4rem; 
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        /* Small underline under title */
+        .theme-card h3::after {
+            content: '';
+            width: 40px;
+            height: 2px;
+            background: var(--secondary-color);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .theme-card ul { 
+            list-style: none; 
+            padding-left: 0; 
+            width: 100%; /* Ensure list takes width for text align */
+            text-align: left; /* Revert list text to left for readability */
+        }
+
+        .theme-card li { 
+            margin-bottom: 12px; 
+            position: relative; 
+            padding-left: 25px; 
+            font-size: 1rem; 
+            color: #555;
+        }
+
+        /* Custom Arrow Bullet Point */
+        .theme-card li::before { 
+            content: '\f058'; /* FontAwesome Check Circle */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute; 
+            left: 0; 
+            color: var(--secondary-color); 
+            font-size: 0.9rem;
+            top: 3px;
+        }
+
+        /* --- RESPONSIVE --- */
         @media(max-width: 992px) {
+            .themes-grid { grid-template-columns: 1fr; max-width: 600px; margin: 0 auto; }
+            
+            /* Navbar Mobile Logic */
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; }
             .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
@@ -89,9 +178,6 @@
             .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
             .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
         }
-        @media(max-width: 768px) {
-            .theme-card { width: 100%; }
-        }
     </style>
 </head>
 <body>
@@ -101,10 +187,13 @@
     <main>
         <section id="themes" class="content-section">
             <div class="container">
-                <h2 class="section-title"> Themes </h2>
+                <h2 class="section-title">Conference Themes</h2>
                 <div class="themes-grid">
+                    
                     <div class="theme-card">
-                        <h3>Theme 1: Resilient & Green Geotechnics</h3>
+                        <div class="icon-box">
+                            <i class="fas fa-layer-group"></i> </div>
+                        <h3>Resilient & Green Geotechnics</h3>
                         <ul>
                             <li>Innovative subgrade stabilization techniques</li>
                             <li>Use of marginal and recycled materials</li>
@@ -112,36 +201,43 @@
                             <li>Traffic-induced behavior and durability improvements</li>
                         </ul>
                     </div>
+
                     <div class="theme-card">
-                        <h3>Theme 2: Eco-Efficient Asphalt Technologies</h3>
+                        <div class="icon-box">
+                            <i class="fas fa-road"></i> </div>
+                        <h3>Eco-Efficient Asphalt Technologies</h3>
                         <ul>
                             <li>Low-temperature asphalt production</li>
                             <li>Incorporation of recycled asphalt materials</li>
                             <li>Bio-based and alternative binders</li>
                             <li>Performance-driven mix design approaches</li>
-                            
                         </ul>
                     </div>
+
                     <div class="theme-card">
-                        <h3>Theme 3: Sustainable Rigid Pavement Systems</h3>
+                        <div class="icon-box">
+                            <i class="fas fa-cubes-stacked"></i> </div>
+                        <h3>Sustainable Rigid Pavement Systems</h3>
                         <ul>
                             <li>Use of supplementary cementitious materials</li>
                             <li>Alternative low-carbon binders</li>
                             <li>Innovative concrete mix design strategies</li>
                             <li>Techniques to enhance durability and service life</li>
-
                         </ul>
                     </div>
+
                     <div class="theme-card">
-                        <h3>Theme 4: Resilient Roads: Evaluation & Maintenance</h3>
+                        <div class="icon-box">
+                            <i class="fas fa-magnifying-glass-chart"></i> </div>
+                        <h3>Resilient Roads: Evaluation & Maintenance</h3>
                         <ul>
                             <li>Climate- and load-resilient pavement design</li>
                             <li>Smart monitoring and digital technologies</li>
                             <li>Data-driven maintenance strategies</li>
                             <li>Life-cycle assessment and decision-making</li>
-
                         </ul>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -196,19 +292,21 @@
                     document.getElementById("header-placeholder").innerHTML = "<p style='text-align:center;color:red;'>Error: Could not load page header.</p>";
                 });
 
-            // --- ORIGINAL THEME CARD ANIMATION SCRIPT ---
+            // --- THEME CARD ANIMATION SCRIPT ---
             const animatedItems = document.querySelectorAll('.theme-card');
             if (animatedItems.length > 0) {
                 const itemObserver = new IntersectionObserver(entries => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
+                            // Add a slight stagger delay based on index
                             entry.target.classList.add('visible');
                             itemObserver.unobserve(entry.target);
                         }
                     });
                 }, { threshold: 0.15 });
 
-                animatedItems.forEach(item => {
+                animatedItems.forEach((item, index) => {
+                    item.style.transitionDelay = (index * 0.1) + "s"; // Staggered animation
                     itemObserver.observe(item);
                 });
             }
