@@ -11,11 +11,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
         
         :root {
-            /* Using the consistent Brand Colors from previous pages */
-            --primary-color: #444003; 
-            --secondary-color: #6f8e74; 
-            --dark-color: #162601;
-            --text-color: #333;
+            /* UPDATED COLORS */
+            --primary-color: #606C38; 
+            --secondary-color: #117d56; 
+            --dark-color: #013328;
+            --text-color: #000000;
+            
             --light-text-color: #ffffff;
             --header-bg: rgba(255, 255, 255, 0.95);
             --section-alt-bg: #f8f9fa;
@@ -25,9 +26,9 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: var(--section-alt-bg); }
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
-        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        .container { max-width: 1300px; margin: auto; padding: 0 20px; }
 
-        /* --- HEADER STYLES (Architectural/Fixed) --- */
+        /* --- HEADER STYLES --- */
         #header-placeholder { height: 80px; }
         .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
@@ -50,6 +51,7 @@
 
         /* --- COMMITTEE PAGE STYLES --- */
         .page-section { padding: 60px 0; }
+        
         .section-heading { 
             font-size: 2.5rem; 
             color: var(--dark-color); 
@@ -61,80 +63,70 @@
             content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px;
         }
 
-        /* --- 1. PATRON CARD (Unique Style) --- */
-        .patron-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
-
-        .patron-card {
-            background: #fff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        /* Slightly smaller heading for Student Coordinators */
+        .sub-heading {
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin-top: 80px; /* Space from previous section */
+            margin-bottom: 40px;
             text-align: center;
-            max-width: 500px;
-            width: 100%;
-            border-top: 5px solid var(--primary-color);
-            transition: transform 0.3s ease;
+            position: relative;
         }
-        
+        .sub-heading::after {
+            content: ''; display: block; width: 60px; height: 3px; background: var(--secondary-color); margin: 12px auto 0; border-radius: 2px;
+        }
+
+        /* --- 1. PATRON CARD --- */
+        .patron-container { display: flex; justify-content: center; margin-bottom: 70px; }
+        .patron-card {
+            background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); text-align: center; max-width: 500px; width: 100%; border-top: 5px solid var(--primary-color); transition: transform 0.3s ease;
+        }
         .patron-card:hover { transform: translateY(-5px); }
-
-        .patron-img {
-            width: 220px;
-            height: 220px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 6px solid #f0f0f0;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
+        .patron-img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 6px solid #f0f0f0; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .patron-name { font-size: 1.5rem; color: var(--dark-color); margin-bottom: 5px; font-weight: 800; }
         .patron-role { font-size: 1.1rem; color: var(--primary-color); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
         .patron-aff { font-size: 1rem; color: #555; }
 
-        /* --- 2. MEMBERS GRID (Chair & Co-Chairs) --- */
-        .committee-grid {
-            display: flex;
-            flex-wrap: wrap;
+        /* --- 2. CHAIR GRID (4 Columns) --- */
+        .chair-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px;
             justify-content: center;
-            gap: 30px;
         }
 
+        /* --- 3. STUDENT GRID (3 Columns) --- */
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 per row for 6 students looks best */
+            gap: 30px;
+            justify-content: center;
+        }
+
+        /* --- SHARED MEMBER CARD STYLES --- */
         .member-card {
             background: #fff;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             text-align: center;
-            padding: 30px 20px;
-            width: 280px; /* Fixed width for uniformity */
+            padding: 25px 15px;
+            width: 100%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 100%; 
         }
 
-        .member-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
+        .member-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 
         .member-img {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--section-alt-bg);
-            margin-bottom: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--section-alt-bg); margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .member-name { font-size: 1.15rem; color: var(--dark-color); font-weight: 700; margin-bottom: 5px; }
-        .member-role { font-size: 0.9rem; color: var(--primary-color); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
-        .member-aff { font-size: 0.85rem; color: #666; line-height: 1.4; }
+        .member-name { font-size: 1.1rem; color: var(--dark-color); font-weight: 700; margin-bottom: 5px; line-height: 1.2; }
+        .member-role { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+        .member-aff { font-size: 0.8rem; color: #666; line-height: 1.4; }
 
         /* Animation Classes */
         .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
@@ -142,6 +134,13 @@
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
         /* --- MEDIA QUERIES --- */
+        @media(max-width: 1100px) {
+            /* On Tablets: Chairs 2x2 */
+            .chair-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; }
+            /* On Tablets: Students 2x3 */
+            .student-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; }
+        }
+
         @media(max-width: 992px) {
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; }
@@ -160,9 +159,10 @@
             .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
         }
 
-        @media (max-width: 768px) {
-            .patron-img { width: 180px; height: 180px; }
-            .member-card { width: 100%; max-width: 350px; } /* Cards take full width on mobile */
+        @media (max-width: 600px) {
+            .patron-img { width: 160px; height: 160px; }
+            /* On Mobile: Everything 1 column */
+            .chair-grid, .student-grid { grid-template-columns: 1fr; max-width: 350px; margin: 0 auto; }
         }
     </style>
 </head>
@@ -184,37 +184,86 @@
                     </div>
                 </div>
 
-                <div class="committee-grid">
+                <div class="chair-grid">
                     
                     <div class="member-card js-scroll fade-in-up">
                         <img src="images/cmtimg4.png" alt="Dr C V Veena Venudharan" class="member-img">
                         <h4 class="member-name">Dr. C V Veena Venudharan</h4>
                         <div class="member-role">Chair, SATVA 2026</div>
-                        <p class="member-aff">Department of Civil Engineering & ESSENCE,<br>IIT Palakkad</p>
+                        <p class="member-aff">IIT Palakkad</p>
                     </div>
 
                     <div class="member-card js-scroll fade-in-up">
                         <img src="images/cmtimg1.png" alt="Dr Athira Gopinath" class="member-img">
                         <h4 class="member-name">Dr. Athira Gopinath</h4>
                         <div class="member-role">Co-Chair, SATVA 2026</div>
-                        <p class="member-aff">Department of Civil Engineering,<br>IIT Palakkad</p>
+                        <p class="member-aff">IIT Palakkad</p>
                     </div>
 
                     <div class="member-card js-scroll fade-in-up">
                         <img src="images/cmtimg2.png" alt="Dr Divya P V" class="member-img">
                         <h4 class="member-name">Dr. Divya P V</h4>
                         <div class="member-role">Co-Chair, SATVA 2026</div>
-                        <p class="member-aff">Department of Civil Engineering & ESSENCE,<br>IIT Palakkad</p>
+                        <p class="member-aff">IIT Palakkad</p>
                     </div>
 
                     <div class="member-card js-scroll fade-in-up">
                         <img src="images/cmtimg3.png" alt="Dr Richa Agnihotri" class="member-img">
                         <h4 class="member-name">Dr. Richa Agnihotri</h4>
                         <div class="member-role">Co-Chair, SATVA 2026</div>
-                        <p class="member-aff">Environmental Sciences and Sustainable Engineering Centre,<br>IIT Palakkad</p>
+                        <p class="member-aff">IIT Palakkad</p>
                     </div>
 
                 </div>
+
+                <h3 class="sub-heading js-scroll fade-in-up">Student Coordinators</h3>
+                
+                <div class="student-grid">
+                    
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc1.png" alt="Ms. Silpa Sekhar" class="member-img">
+                        <h4 class="member-name">Ms. Silpa Sekhar</h4>
+                        <div class="member-role">Registration & Correspondence</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc2.png" alt="Ms. Aiswaria G R" class="member-img">
+                        <h4 class="member-name">Ms. Aiswaria G R</h4>
+                        <div class="member-role">Venue & Event Management</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc3.png" alt="Mr. Issac J" class="member-img">
+                        <h4 class="member-name">Mr. Issac J</h4>
+                        <div class="member-role">Food Committee</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc4.png" alt="Ms. Anavadya A" class="member-img">
+                        <h4 class="member-name">Ms. Anavadya A</h4>
+                        <div class="member-role">Poster & Talk Committee</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc5.png" alt="Mr. Saneesh Sabu" class="member-img">
+                        <h4 class="member-name">Mr. Saneesh Sabu</h4>
+                        <div class="member-role">Cultural Activities</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc6.png" alt="Mr. Vilas Sankar" class="member-img">
+                        <h4 class="member-name">Mr. Vilas Sankar</h4>
+                        <div class="member-role">Hospitality & Transportation</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                </div>
+
             </div>
         </section>
     </main>
