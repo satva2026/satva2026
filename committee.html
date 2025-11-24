@@ -1,4 +1,4 @@
-
+<!-- FILE: timeline.html (Adjusted for shared header) -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,23 +6,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Committee - SATVA 2026</title>
+    <title>Timeline - SATVA 2026</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&amp;family=Roboto:wght@300;400;700&amp;display=swap');
         :root {
-           --primary-color: #c4d5c5; --secondary-color: #6f8e74; --dark-color: #013328;
-            --text-color: #000000; --light-text-color: #162601; --header-bg: rgba(255, 255, 255, 0.9);
+            --primary-color: #013328; --secondary-color: #6f8e74; --dark-color: #013328; --text-color: #333; --light-text-color: #ffffff; 
+            --header-bg: rgba(255, 255, 255, 0.9);
             --section-alt-bg: #f8f9fa;
+            --active-green: #2ecc71;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: var(--section-alt-bg); }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; background-color: #fff; }
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
         /* --- COMPLETE HEADER & NAVIGATION STYLES --- */
         #header-placeholder { height: 80px; }
-        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .main-header { position: sticky; top: 0; left: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
         .logo-container { display: flex; align-items: center; gap: 15px; }
         .logo-1 { height: 75px; } .logo-2 { height: 87px; } .logo-3 { height: 75px; }
@@ -40,26 +41,36 @@
         .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
         .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
         .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+        .mobile-nav-toggle.active .hamburger { background: transparent; }
+        .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+        .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
         
-        /* --- Page Specific Styles from Original --- */
-        .page-section { padding: 60px 0; }
-        .page-section:first-of-type { padding-top: 60px; }
-        .section-heading { font-size: 2.5rem; color: var(--dark-color); margin-bottom: 40px; text-align: center; }
-        .image-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 60px; }
-        .image-card { background: #fff; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.07); text-align: center; overflow: hidden; opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
-        .image-card.visible { opacity: 1; transform: translateY(0); }
-        .image-holder { width: 100%; aspect-ratio: 1 / 1; background-size: cover; background-position: center; }
-        .image-card-title { padding: 20px 15px; }
-        .image-card-title strong { font-size: 1.2rem; display: block; margin-bottom: 8px; }
-        .image-card-title p { font-size: 0.9rem; line-height: 1.4; color: #555; }
-        .committee-table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
-        .committee-table th, .committee-table td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
-        .committee-table th { background-color: var(--primary-color); color: var(--light-text-color); font-size: 1.2rem; }
-        .committee-table tr:nth-child(even) { background-color: #f8f9fa; }
-        .committee-table td:first-child { font-weight: 700; }
-        .committee-table tbody tr { opacity: 0; transform: translateY(30px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
-        .committee-table tbody tr.visible { opacity: 1; transform: translateY(0); }
-        
+        /* --- TIMELINE PAGE STYLES --- */
+        .page-content-wrapper { padding-top: 0; }
+        .timeline-section { padding: 60px 0; background-color: var(--section-alt-bg); }
+        .timeline-section h1 { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 60px; }
+        .timeline-container { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline-item { position: relative; padding-left: 60px; margin-bottom: 50px; opacity: 0; transform: translateY(50px); transition: all 0.6s ease-out; }
+        .timeline-item.visible { opacity: 1; transform: translateY(0); }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-item::before { content: ""; position: absolute; left: 12px; top: 25px; width: 2px; height: 100%; background-image: linear-gradient(to bottom, var(--secondary-color) 40%, transparent 40%); background-size: 1px 10px; }
+        .timeline-item:last-child::before { display: none; }
+        .timeline-item::after { content: ''; position: absolute; left: 0; top: 25px; transform: translateY(-50%); width: 20px; height: 20px; border-radius: 50%; background-color: var(--section-alt-bg); z-index: 2; border: 4px solid var(--secondary-color); }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); } 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); } }
+        .timeline-item.active::after { background-color: var(--active-green); border-color: var(--active-green); animation: pulse 2s infinite; }
+        .timeline-card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.07); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .timeline-item:not(.interactive) .timeline-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .timeline-card h3 { color: var(--primary-color); margin-bottom: 10px; font-size: 1.4rem; }
+        .timeline-card p { font-size: 1rem; color: #666; margin-bottom: 15px; }
+        .timeline-card .date { font-weight: 700; font-size: 1.1rem; color: var(--dark-color); }
+        .timeline-link { text-decoration: none; display: block; }
+        .timeline-item.interactive .timeline-card { cursor: pointer; }
+        .timeline-item.interactive .timeline-card:hover { background-color: var(--primary-color); transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 25px rgba(0, 119, 182, 0.2); }
+        .card-content { transition: opacity 0.3s ease; }
+        .timeline-item.interactive .timeline-card:hover .card-content { opacity: 0; }
+        .timeline-item.interactive .timeline-card::before { content: 'SUBMIT'; position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 2rem; color: var(--light-text-color); opacity: 0; transition: opacity 0.3s ease; z-index: 2; }
+        .timeline-item.interactive .timeline-card:hover::before { opacity: 1; }
+
         @media(max-width: 992px) {
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; }
@@ -74,18 +85,6 @@
             .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
             .mobile-nav-container .dropdown-menu.show { display: block; }
             .mobile-nav-container .dropdown-menu a { font-size: 1.1rem; font-weight: normal; }
-            .mobile-nav-toggle.active .hamburger { background: transparent; }
-            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
-            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
-        }
-        @media (max-width: 768px) {
-            .image-grid { grid-template-columns: 1fr; }
-            .committee-table thead { display: none; }
-            .committee-table, .committee-table tbody, .committee-table tr, .committee-table td { display: block; width: 100%; }
-            .committee-table tr { margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; }
-            .committee-table td { text-align: right; padding-left: 50%; position: relative; border-bottom: 1px solid #ddd; }
-            .committee-table tr td:last-child { border-bottom: 0; }
-            .committee-table td::before { content: attr(data-label); position: absolute; left: 15px; width: 45%; padding-right: 10px; text-align: left; font-weight: bold; }
         }
     </style>
 </head>
@@ -93,79 +92,83 @@
 
     <div id="header-placeholder"></div>
 
-    <main>
-        <section class="page-section">
+    <main class="page-content-wrapper">
+        <section class="timeline-section">
             <div class="container">
-                <div class="image-grid">
-                    <div class="image-card">
-                        <div class="image-holder" style="background-image: url('images/cmtimg4.png');"></div>
-                        <div class="image-card-title">
-                            <strong>Dr. C V Veena Venudharan</strong>
-                            <p>Chair, SATVA 2026<br>Department of Civil Engineering & ESSENCE,<br>Indian Institute of Technology Palakkad</p>
+                <h1>Symposium Timeline</h1>
+                <div class="timeline-container">
+                    <div class="timeline-item active interactive">
+                        <a href="submissions.html" class="timeline-link">
+                            <div class="timeline-card">
+                                <div class="card-content">
+                                    <h3>Call for Abstracts Opens</h3>
+                                    <p>Authors are invited to submit abstracts for oral and poster presentations.</p>
+                                    <span class="date">1<sup>st</sup> December 2025</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-card">
+                            <div class="card-content">
+                                <h3>Abstract Submission Deadline</h3>
+                                <p>Final day for abstract submissions.</p>
+                                <span class="date">31<sup>th</sup> December 2025</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="image-card">
-                        <div class="image-holder" style="background-image: url('images/cmtimg1.png');"></div>
-                        <div class="image-card-title">
-                            <strong>Dr. Athira Gopinath</strong>
-                            <p>Co-Chair, SATVA 2026<br>Department of Civil Engineering,<br>Indian Institute of Technology Palakkad</p>
+                    <div class="timeline-item">
+                        <div class="timeline-card">
+                            <div class="card-content">
+                                <h3>Abstract Decision</h3>
+                                <p>Authors will be notified about the acceptance of their abstracts.</p>
+                                <span class="date">15<sup>th</sup> January 2026</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="image-card">
-                        <div class="image-holder" style="background-image: url('images/cmtimg2.png');"></div>
-                        <div class="image-card-title">
-                            <strong>Dr. Divya P V</strong>
-                            <p>Co-Chair,<br>Department of Civil Engineering & ESSENCE,<br>Indian Institute of Technology Palakkad</p>
+                    <div class="timeline-item">
+                        <div class="timeline-card">
+                            <div class="card-content">
+                                <h3>Full Paper Submission</h3>
+                                <p>Full paper submissions through the online portal.</p>
+                                <span class="date">16<sup>th</sup> January 2026 to 15<sup>th</sup> March 2026</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="image-card">
-                        <div class="image-holder" style="background-image: url('images/cmtimg3.png');"></div>
-                        <div class="image-card-title">
-                            <strong>Dr. Richa Agnihotri M</strong>
-                            <p>Co-Chair, SATVA 2026<br>Environmental Sciences and Sustainable Engineering Centre,<br>Indian Institute of Technology Palakkad</p>
+                    <div class="timeline-item">
+                        <div class="timeline-card">
+                            <div class="card-content">
+                                <h3>Full Paper Decision</h3>
+                                <p>Authors will be notified about the acceptance of their abstracts.</p>
+                                <span class="date">16<sup>th</sup> April 2026 </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-card">
+                            <div class="card-content">
+                                <h3>Registration</h3>
+                                <p>Registration starts for the symposium. </p>
+                                <span class="date">20<sup>th</sup> April 2026 </span>
+                            </div>
+                        </div>
+                    </div>
+                                        <div class="timeline-item">
+                        <div class="timeline-card">
+                            <div class="card-content">
+                                <h3>SATVA 2026</h3>
+                                <p> Indian Institute of Technology Palakkad</p>
+                                <span class="date">4<sup>th</sup> April 2026 to 6<sup>th</sup> April 2026 </span>
+                            </div>
                         </div>
                     </div>
                 </div>
- 
-                <h2 class="section-heading">Programme and Scientific Committee</h2>
-                <table class="committee-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Affiliation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td data-label="Name">Will be updated soon...</td><td data-label="Affiliation">Will be updated soon...</td></tr>
-                       
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="page-section" style="padding-top: 0;">
-            <div class="container">
-                <h2 class="section-heading">Organizing Committee</h2>
-                <table class="committee-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Affiliation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td data-label="Name">Dr. C V Veena Venudharan</td><td data-label="Affiliation">IIT Palakkad, India</td></tr>
-                        <tr><td data-label="Name">Dr. Athira Gopinath</td><td data-label="Affiliation">IIT Palakkad, India</td></tr>
-                        <tr><td data-label="Name">Dr. Divya P V</td><td data-label="Affiliation">IIT Palakkad, India</td></tr>
-                        <tr><td data-label="Name">Dr. Richa Agnihotri</td><td data-label="Affiliation">IIT Palakkad, India</td></tr>
-                    </tbody>
-                </table>
             </div>
         </section>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // SCRIPT TO LOAD THE HEADER
             fetch("header.html")
                 .then(response => { if (!response.ok) throw new Error("Header not found"); return response.text(); })
@@ -207,22 +210,21 @@
                     }
                 })
                 .catch(error => { console.error("Error loading header:", error); });
-
-            // ORIGINAL ANIMATION SCRIPT
-            const animatedItems = document.querySelectorAll('.committee-table tbody tr, .image-card');
-            const itemObserver = new IntersectionObserver(entries => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        // Apply a staggered delay
-                        entry.target.style.transitionDelay = `${index * 50}ms`;
-                        entry.target.classList.add('visible');
-                        itemObserver.unobserve(entry.target);
-                    }
+            
+            // ORIGINAL TIMELINE ANIMATION SCRIPT
+            const animatedItems = document.querySelectorAll('.timeline-item');
+            if (animatedItems.length > 0) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.2 });
+                animatedItems.forEach(item => {
+                    observer.observe(item);
                 });
-            }, { threshold: 0.1 });
-            animatedItems.forEach(item => {
-                itemObserver.observe(item);
-            });
+            }
         });
     </script>
 </body>
