@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SATVA 2026 | Symposium on Advanced Technologies and Visionary Approaches for Sustainability</title>
+    
+    <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
+        
+        :root {
+            --primary-color: #606C38; 
+            --secondary-color: #117d56; 
+            --dark-color: #013328;
+            --text-color: #000000; 
+            --light-text-color: #ffffff; 
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --section-alt-bg: #f8f9fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        
+        /* --- HEADER STYLES (Integrated) --- */
+        .main-header { 
+            position: sticky; 
+            top: 0; 
+            width: 100%; 
+            z-index: 1000; 
+            background: var(--header-bg); 
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        
+        /* Fix for congestion: Use 95% width for header container */
+        .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
+        
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        
+        .logo-container { display: flex; align-items: center; gap: 20px; }
+        .logo-1 { height: 65px; width: auto; } 
+        .logo-2 { height: 75px; width: auto; } 
+        .logo-3 { height: 65px; width: auto; }
+        .logo-container img { transition: transform 0.3s ease; }
+        .logo-container img:hover { transform: scale(1.05); }
+
+        .main-nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 25px 0; position: relative; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; transition: color 0.3s; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 15px; left: 0; width: 0; height: 3px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
+        .main-nav a:hover::after { width: 100%; }
+
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: -15px; background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; flex-direction: column; gap: 0 !important; }
+        .dropdown:hover .dropdown-menu { display: flex; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; }
+        .dropdown-menu li a::after { content: none; }
+        .dropdown-menu li a:hover { background-color: #f4f4f4; }
+
+        /* Hide Mobile Menu Elements on Desktop */
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav-container { display: none; }
+
+        /* --- HERO SECTION WITH SLIDER --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            color: var(--light-text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden; /* Essential for the zoom effect */
+        }
+
+        /* Slider Container */
+        .hero-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Individual Slides */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transform: scale(1);
+            /* UPDATED: Slower Zoom (10s) and smoother fade (2s) */
+            transition: opacity 2s ease-in-out, transform 10s linear; 
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1.1); /* The Zoom Effect */
+        }
+
+        /* Overlay to darken images for text readability */
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+            z-index: 1;
+        }
+
+        /* Hero Content */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1000px;
+            padding: 20px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero h3 { font-size: 1.3rem; font-weight: 300; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero .tagline { font-size: 1.5rem; font-weight: 600; margin-bottom: 30px; font-style: italic; }
+        .event-details { font-size: 1.2rem; font-weight: 700; margin-bottom: 30px; background: rgba(255, 255, 255, 0.15); padding: 10px 20px; border-radius: 50px; display: inline-block; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); }
+        
+        .cta-button { display: block; margin: auto; background: var(--secondary-color); color: var(--light-text-color); max-width: 300px; padding: 15px 35px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 1.1rem; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+        
+        .countdown-container { display: inline-flex; justify-content: center; gap: 15px; margin-top: 30px; padding: 15px 25px; background: rgba(0,0,0,0.4); border-radius: 15px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
+        .countdown-item { min-width: 70px; }
+        .countdown-item span { font-size: 2rem; font-weight: 800; display: block; line-height: 1; }
+        .countdown-item p { font-size: 0.7rem; text-transform: uppercase; margin: 5px 0 0 0; letter-spacing: 1px; }
+
+        /* --- NEWS TICKER --- */
+        .ticker-wrap {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            overflow: hidden;
+            height: 40px;
+            background-color: rgba(1, 51, 40, 0.9); /* Dark Green transparency */
+            padding-left: 100%; 
+            box-sizing: content-box;
+            z-index: 10; /* Above overlay */
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .ticker {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            white-space: nowrap;
+            padding-right: 100%;
+            box-sizing: content-box;
+            /* UPDATED: Animation duration increased to 45s for slower speed */
+            animation: ticker 45s linear infinite;
+        }
+
+        .ticker__item {
+            display: inline-block;
+            padding: 0 2rem;
+            font-size: 1.1rem;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+        
+        /* --- GENERAL CONTENT SECTIONS --- */
+        .content-section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--dark-color); position: relative; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
+        .about-grid { display: grid; grid-template-columns: none; gap: 50px; align-items: stretch; }
+        .about-text p { text-align: justify; font-size: 1.1rem; margin-bottom: 15px; }
+        .image-gallery-container { display: flex; flex-direction: column; gap: 15px; justify-content: center; }
+        .main-gallery-image { width: 100%; height: 380px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: opacity 0.4s ease-in-out; }
+        .thumbnail-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .thumbnail-image { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 3px solid transparent; transition: transform 0.3s ease, border-color 0.3s ease; }
+        .thumbnail-image.active { border-color: var(--primary-color); }
+        .partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: center; }
+        .partner-card h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 10px; }
+        .partner-card p { font-size: 1.1rem; font-weight: 700; }
+        .button-container { text-align: center; padding-top: 20px; }
+
+        /* --- WELCOME MESSAGE / CONTACT STYLES --- */
+        .welcome-message-section { padding-top: 80px; padding-bottom: 60px; background: var(--section-alt-bg); }
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; margin-top: 30px; }
+        .contact-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 40px 20px; text-align: center; position: relative; overflow: hidden; transition: transform 0.3s; }
+        .contact-card:hover { transform: translateY(-5px); }
+        .contact-card img.portrait { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 6px solid #fff; box-shadow: 0 5px 20px rgba(0,0,0,0.15); margin: 0 auto 15px; display: block; }
+        .contact-card .name { font-size: 1.15rem; font-weight: 800; color: var(--dark-color); margin-bottom: 6px; }
+        .contact-card .title { font-size: 0.95rem; font-weight: 700; color: var(--primary-color); }
+
+        /* --- ANIMATION --- */
+        .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .js-scroll.fade-in-up { transform: translateY(40px); }
+        .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- RESPONSIVE --- */
+        @media(max-width: 992px) {
+            /* Nav Logic */
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
+            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+            .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+
+            /* Mobile Menu Visible ONLY on small screens */
+            .mobile-nav-container { 
+                display: block; /* Reset display for mobile */
+                position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); 
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; 
+                transition: max-height 0.5s ease-in-out; 
+            }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
+            .mobile-nav-container .dropdown-menu.show { display: block; }
+
+            /* Header Logo Sizing */
+            .logo-container { gap: 8px; flex-grow: 1; }
+            .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
+            .logo-2 { height: 45px !important; } 
+
+            .about-grid { grid-template-columns: 1fr; }
+        }
+        
+        @media(max-width: 576px) {
+            .hero h1 { font-size: 1.8rem; }
+            .hero h3 { font-size: 1rem; }
+            .countdown-item { min-width: 50px; }
+            .countdown-item span { font-size: 1.5rem; }
+            .section-title { font-size: 2rem; }
+            .logo-container { gap: 5px; }
+            .logo-container img { height: 32px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <a href="index.html"><img src="images/logo4.png" alt="SATVA Logo" class="logo-3"></a>
+                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logo1.png" alt="IIT Palakkad Logo" class="logo-1"></a>
+                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logo2.png" alt="IEI Logo" class="logo-2"></a>
+                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logo3.png" alt="IGS Logo" class="logo-3"></a>
+                </div>
+    
+                <nav class="main-nav" id="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="organisers.html">ORGANISERS</a></li>
+                        <li><a href="themes.html">THEMES</a></li>
+                        <li class="dropdown">
+                            <a href="programme.html">PROGRAMME</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="timeline.html">Timeline</a></li>
+                                <li><a href="committee.html">Committee</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sponsors.html">SPONSORS</a></li>
+                        <li><a href="submissions.html">SUBMISSION</a></li>
+                        <li><a href="registrations.html">REGISTRATION</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
+            </nav>
+        </div>
+        <nav class="mobile-nav-container" id="mobile-nav"></nav>
+    </header>
+
+    <main id="main-content">
+        <section class="hero" id="hero">
+            
+            <div class="hero-slider">
+                <div class="slide active" style="background-image: url('images/bg1.png');"></div>
+                <div class="slide" style="background-image: url('images/bg2.png');"></div>
+                <div class="slide" style="background-image: url('images/bg3.png');"></div>
+                <div class="slide" style="background-image: url('images/bg4.png');"></div>
+            </div>
+            
+            <div class="hero-overlay"></div>
+
+            <div class="hero-content">
+                <h1>SATVA 2026</h1>
+                <h3>Symposium on Advanced Technologies and Visionary Approaches for Sustainability</h3>
+                <p class="tagline">Pavement Sustainability Frontiers: From Materials to Maintenance</p>
+                <div class="event-details">Indian Institute of Technology Palakkad, Kerala, India | June 04-06, 2026</div>
+                <a href="submissions.html" class="cta-button">SUBMISSION</a>
+                <div class="countdown-container">
+                    <div class="countdown-item"><span id="days">0</span><p>Days</p></div>
+                    <div class="countdown-item"><span id="hours">0</span><p>Hours</p></div>
+                    <div class="countdown-item"><span id="minutes">0</span><p>Minutes</p></div>
+                    <div class="countdown-item"><span id="seconds">0</span><p>Seconds</p></div>
+                </div>
+            </div>
+
+            <div class="ticker-wrap">
+                <div class="ticker">
+                    <div class="ticker__item">📢 Call for Abstracts open now! (01-31, December 2025)</div>
+                </div>
+            </div>
+            
+        </section>
+
+        <section id="about" class="content-section" style="padding-bottom: 0;">
+            <div class="container">
+                <h2 class="section-title js-scroll fade-in-up">About Symposium</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p class="js-scroll fade-in-up">The fourth edition of the Symposium on Advanced Technologies and Visionary Approaches for Sustainability (SATVA 2026), organized by the Environmental Sciences and Sustainable Engineering Centre (ESSENCE) at IIT Palakkad in collaboration with the Institution of Engineers (India) (IEI Palakkad Chapter) and Indian Geotechnical Society (IGS Palakkad Chapter), is scheduled to be held from 04 to 06 June 2026 at IIT Palakkad. The symposium aims to facilitate technical exchange and dialogue across diverse domains of engineering with a focus on sustainability. The event will feature expert lectures, research paper presentations, and panel discussions addressing contemporary challenges and innovations in sustainable technologies. The 2026 edition will particularly emphasize sustainability approaches in road infrastructure, highlighting recent advancements and future directions in this critical sector. </p>
+                    </div>
+                </div>
+                
+                <div class="button-container js-scroll fade-in-up">
+                    <a href="DOCS/Flyer.pdf" class="cta-button" download>DOWNLOAD FLYER</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="theme" class="content-section" style="padding-bottom: 0;">
+            <div class="container">
+                <h2 class="section-title js-scroll fade-in-up">Pavement Sustainability Frontiers: From Materials to Maintenance</h2>
+                <div class="about-grid">
+                    <div class="about-text">
+                        <p class="js-scroll fade-in-up">The symposium aims to provide a platform for researchers, engineers, and industry professionals to exchange ideas and share advances in sustainable pavement technologies. Emphasis will be placed on developing resilient, low-carbon, and resource-efficient pavement systems through innovations in materials, design, construction, and maintenance practices. </p>
+                    </div>
+                    <div class="image-gallery-container js-scroll fade-in-up">
+                        <img src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image">
+                        <div class="thumbnail-container">
+                            <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png">
+                            <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png">
+                            <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png">
+                            <img src="images/evntimg3.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/evntimg3.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="welcome-message-section">
+            <div class="container">
+                <h2 class="section-title js-scroll fade-in-up">Contact Us</h2>
+
+                <div class="contact-grid js-scroll fade-in-up">
+                    <div class="contact-card">
+                        <img src="images/cmtimg4.png" alt="Dr C V Veena Venudharan" class="portrait">
+                        <div class="name">Dr C V Veena Venudharan</div>
+                        <div class="title">Chair, SATVA 2026</div>
+                    </div>
+
+                    <div class="contact-card">
+                        <img src="images/cmtimg1.png" alt="Dr Athira Gopinath" class="portrait">
+                        <div class="name">Dr Athira Gopinath</div>
+                        <div class="title">Co-Chair, SATVA 2026</div>
+                    </div>
+
+                    <div class="contact-card">
+                        <img src="images/cmtimg2.png" alt="Dr Divya P V" class="portrait">
+                        <div class="name">Dr Divya P V</div>
+                        <div class="title">Co-Chair, SATVA 2026</div>
+                    </div>
+
+                    <div class="contact-card">
+                        <img src="images/cmtimg3.png" alt="Dr Richa Agnihotri" class="portrait">
+                        <div class="name">Dr Richa Agnihotri</div>
+                        <div class="title">Co-Chair, SATVA 2026</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="organisers" class="content-section">
+            <div class="container">
+                <h2 class="section-title">Organisers & Partners</h2>
+                <div class="partners-grid">
+                    <div class="partner-card js-scroll fade-in-up"><h4>Host Organizations</h4><p>Indian Institute of Technology Palakkad</p></div>
+                    <div class="partner-card js-scroll fade-in-up"><h4>Supporting Agencies</h4><p>Center for Continuing Education (CCE)<br> of IIT Palakkad <br>and<br>The Institution of Engineers (India)<br> (IEI Palakkad Chapter)</p></div>
+                    <div class="partner-card js-scroll fade-in-up"><h4>In Association with</h4><p>Indian Geotechnical Society <br>(IGS Palakkad Chapter)</p></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // --- MOBILE NAV LOGIC ---
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavContainer = document.getElementById('mobile-nav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                let mobileNavHTML = desktopNav.innerHTML;
+                const parser = new DOMParser();
+                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                    const toggle = document.createElement('span');
+                    toggle.className = 'dropdown-toggle';
+                    link.appendChild(toggle);
+                });
+                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavContainer.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) {
+                        e.preventDefault();
+                        e.target.classList.toggle('open');
+                        const menu = e.target.closest('li.dropdown').querySelector('.dropdown-menu');
+                        if (menu) { menu.classList.toggle('show'); }
+                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                        mobileNavContainer.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+
+            // --- BACKGROUND SLIDER LOGIC ---
+            const slides = document.querySelectorAll('.hero-slider .slide');
+            let currentSlide = 0;
+            // INCREASED INTERVAL TO 8 SECONDS
+            const slideInterval = 8000; 
+
+            function nextSlide() {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+
+            if(slides.length > 0) {
+                setInterval(nextSlide, slideInterval);
+            }
+
+            // --- COUNTDOWN LOGIC ---
+            const targetDate = new Date('June 4, 2026 09:00:00').getTime();
+            const countdownFunc = setInterval(() => {
+                const now = new Date().getTime();
+                const gap = targetDate - now;
+                if (gap < 0) {
+                    clearInterval(countdownFunc);
+                    if (document.querySelector('.countdown-container')) {
+                        document.querySelector('.countdown-container').innerHTML = "<p style='font-size:1.2rem; font-weight:700;'>Symposium has started!</p>";
+                    }
+                    return;
+                }
+                const d = Math.floor(gap / (1000 * 60 * 60 * 24));
+                const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((gap % (1000 * 60)) / 1000);
+                if(document.getElementById('days')) {
+                    document.getElementById('days').innerText = String(d).padStart(2, '0');
+                    document.getElementById('hours').innerText = String(h).padStart(2, '0');
+                    document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+                    document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+                }
+            }, 1000);
+
+            // --- SCROLL ANIMATIONS ---
+            const scrollElements = document.querySelectorAll('.js-scroll');
+            if (scrollElements.length > 0) {
+                const elementObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                scrollElements.forEach(el => { elementObserver.observe(el); });
+            }
+
+            // --- GALLERY THUMBNAIL LOGIC ---
+            const mainImage = document.getElementById('main-about-image');
+            const thumbnails = document.querySelectorAll('.thumbnail-image');
+            if(mainImage && thumbnails.length > 0) {
+                thumbnails.forEach(thumb => {
+                    thumb.addEventListener('click', function() {
+                        if (this.classList.contains('active')) return;
+                        thumbnails.forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        const newImageSrc = this.getAttribute('data-src');
+                        mainImage.style.opacity = 0;
+                        setTimeout(() => {
+                            mainImage.src = newImageSrc;
+                            mainImage.style.opacity = 1;
+                        }, 400);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
