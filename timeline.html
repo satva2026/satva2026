@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline - SATVA 2026</title>
+    
+    <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #606C38; 
+            --secondary-color: #117d56; 
+            --dark-color: #013328;
+            --text-color: #333;
+            --light-text-color: #ffffff; 
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --section-alt-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --completed-gray: #bdc3c7;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: var(--section-alt-bg); }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 900px; margin: auto; padding: 0 20px; }
+
+        /* --- HEADER STYLES (Integrated) --- */
+        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 20px; }
+        .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
+        .logo-container img { transition: transform 0.3s ease; }
+        .logo-container img:hover { transform: scale(1.05); }
+
+        .main-nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 25px 0; position: relative; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; transition: color 0.3s; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 15px; left: 0; width: 0; height: 3px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
+        .main-nav a:hover::after { width: 100%; }
+
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: -15px; background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; flex-direction: column; gap: 0 !important; }
+        .dropdown:hover .dropdown-menu { display: flex; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; }
+        .dropdown-menu li a::after { content: none; }
+        .dropdown-menu li a:hover { background-color: #f4f4f4; }
+
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav-container { display: none; }
+
+        /* --- TIMELINE STYLES --- */
+        .timeline-section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 60px; position: relative; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; }
+
+        .timeline-wrapper {
+            position: relative;
+            padding-left: 50px; 
+        }
+
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 15px; 
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+        }
+
+        .timeline-entry {
+            position: relative;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-out;
+        }
+        
+        .timeline-entry.visible { opacity: 1; transform: translateY(0); }
+
+        .timeline-dot {
+            position: absolute;
+            left: -43px; 
+            top: 25px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            border: 4px solid var(--primary-color);
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        /* CARD STYLING */
+        .timeline-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 30px;
+            position: relative;
+            overflow: hidden; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .timeline-card::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            width: 0; 
+            height: 0; 
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent; 
+            left: -10px;
+            border-right: 10px solid #fff;
+        }
+
+        .event-date {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .timeline-card h3 {
+            font-size: 1.4rem;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-card p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* --- INTERACTIVE REVEAL EFFECT --- */
+        .action-reveal {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to top, rgba(255,255,255,1) 20%, rgba(255,255,255,0));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .card-link { text-decoration: none; display: block; color: inherit; }
+
+        .timeline-entry.interactive:not(.completed) .card-link:hover .timeline-card h3,
+        .timeline-entry.interactive:not(.completed) .timeline-card:hover h3 {
+            transform: translateY(-10px);
+        }
+        .timeline-entry.interactive:not(.completed) .card-link:hover .timeline-card p,
+        .timeline-entry.interactive:not(.completed) .timeline-card:hover p {
+            transform: translateY(-10px);
+            opacity: 0.6;
+        }
+        .timeline-entry.interactive:not(.completed) .card-link:hover .action-reveal,
+        .timeline-entry.interactive:not(.completed) .timeline-card:hover .action-reveal {
+            opacity: 1;
+            transform: translateY(-10px);
+        }
+
+        .reveal-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(96, 108, 56, 0.3);
+        }
+
+        /* DISABLED BUTTON STYLE */
+        .reveal-btn.disabled {
+            background: var(--completed-gray);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* --- DYNAMIC STATES --- */
+        .timeline-entry.completed .timeline-dot {
+            border-color: var(--completed-gray);
+            background: var(--completed-gray);
+        }
+        .timeline-entry.completed .timeline-card {
+            border-left-color: var(--completed-gray);
+            opacity: 0.6;
+            pointer-events: none; 
+        }
+        .timeline-entry.completed .event-date {
+            color: var(--completed-gray);
+            text-decoration: line-through;
+        }
+
+        .timeline-entry:not(.completed) .timeline-dot {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(96, 108, 56, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media(max-width: 992px) {
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
+            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+            .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
+            .mobile-nav-container .dropdown-menu.show { display: block; }
+
+            .logo-container { gap: 8px; flex-grow: 1; }
+            .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
+            .logo-2 { height: 45px !important; } 
+        }
+
+        @media (max-width: 768px) {
+            .timeline-wrapper::before { left: 20px; }
+            .timeline-card::after { display: none; } /* Remove arrow on mobile for cleaner look */
+            .timeline-dot { left: -38px; }
+        }
+        
+        @media (max-width: 380px) {
+            .logo-container { gap: 5px; }
+            .logo-container img { height: 32px !important; }
+        }
+    </style>
+</head>
+<body>
+    
+    <header class="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <a href="index.html"><img src="images/logo4.png" alt="SATVA Logo" class="logo-3"></a>
+                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logo1.png" alt="IIT Palakkad Logo" class="logo-1"></a>
+                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logo2.png" alt="IEI Logo" class="logo-2"></a>
+                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logo3.png" alt="IGS Logo" class="logo-3"></a>
+                </div>
+                <nav class="main-nav" id="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="organisers.html">ORGANISERS</a></li>
+                        <li><a href="themes.html">THEMES</a></li>
+                        <li class="dropdown">
+                            <a href="programme.html">PROGRAMME</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="timeline.html">Timeline</a></li>
+                                <li><a href="committee.html">Committee</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sponsors.html">SPONSORS</a></li>
+                        <li><a href="submissions.html">SUBMISSION</a></li>
+                        <li><a href="registrations.html">REGISTRATION</a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
+            </nav>
+        </div>
+        <nav class="mobile-nav-container" id="mobile-nav"></nav>
+    </header>
+
+    <main>
+        <section class="timeline-section">
+            <div class="container">
+                <h1 class="section-title">Symposium Timeline</h1>
+                
+                <div class="timeline-wrapper">
+                    
+                    <div class="timeline-entry interactive" data-date="2025-12-01">
+                        <div class="timeline-dot"></div>
+                        <a href="submissions.html" class="card-link">
+                            <div class="timeline-card">
+                                <span class="event-date">1st December 2025</span>
+                                <h3>Call for Abstracts Opens</h3>
+                                <p>Authors are invited to submit abstracts for oral and poster presentations.</p>
+                                <div class="action-reveal">
+                                    <span class="reveal-btn">Submit Abstract</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="timeline-entry" data-date="2025-12-31">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <span class="event-date">31st December 2025</span>
+                            <h3>Abstract Submission Deadline</h3>
+                            <p>Final day for abstract submissions.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry" data-date="2026-01-15">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <span class="event-date">15th January 2026</span>
+                            <h3>Abstract Decision</h3>
+                            <p>Authors will be notified about the acceptance of their abstracts.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry interactive" data-date="2026-03-15">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <span class="event-date">16th Jan - 15th Mar 2026</span>
+                            <h3>Full Paper Submission</h3>
+                            <p>Full paper submissions through the online portal.</p>
+                            <div class="action-reveal">
+                                <span class="reveal-btn disabled">Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry" data-date="2026-04-16">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <span class="event-date">16th April 2026</span>
+                            <h3>Full Paper Decision</h3>
+                            <p>Notification of full paper acceptance.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry interactive" data-date="2026-04-20">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <span class="event-date">20th April 2026</span>
+                            <h3>Registration Starts</h3>
+                            <p>Registration opens for all delegates.</p>
+                            <div class="action-reveal">
+                                <span class="reveal-btn disabled">Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-entry" data-date="2026-06-04">
+                        <div class="timeline-dot" style="background: var(--secondary-color); border-color: var(--secondary-color);"></div>
+                        <div class="timeline-card" style="border-left-color: var(--secondary-color); background: rgba(111, 142, 116, 0.05);">
+                            <span class="event-date" style="color: var(--secondary-color);">4th - 6th June 2026</span>
+                            <h3 style="color: var(--secondary-color);">SATVA 2026</h3>
+                            <p>Symposium at IIT Palakkad.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // --- 1. DYNAMIC DATE CHECKER ---
+            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+            const items = document.querySelectorAll('.timeline-entry');
+
+            items.forEach(item => {
+                const eventDate = item.getAttribute('data-date');
+                
+                if (eventDate < today) {
+                    // Date has passed
+                    item.classList.add('completed');
+                    
+                    // Change Dot to Checkmark
+                    const dot = item.querySelector('.timeline-dot');
+                    dot.innerHTML = '<i class="fas fa-check" style="color:white; font-size: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
+                }
+            });
+
+            // --- 2. MOBILE NAV LOGIC ---
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavContainer = document.getElementById('mobile-nav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                let mobileNavHTML = desktopNav.innerHTML;
+                const parser = new DOMParser();
+                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                    const toggle = document.createElement('span');
+                    toggle.className = 'dropdown-toggle';
+                    link.appendChild(toggle);
+                });
+                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavContainer.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) {
+                        e.preventDefault();
+                        e.target.classList.toggle('open');
+                        const menu = e.target.closest('li.dropdown').querySelector('.dropdown-menu');
+                        if (menu) { menu.classList.toggle('show'); }
+                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                        mobileNavContainer.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+
+            // --- 3. ANIMATION SCRIPT ---
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            items.forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>

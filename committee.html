@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Committee - SATVA 2026</title>
+    <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
+        
+        :root {
+            --primary-color: #606C38; 
+            --secondary-color: #117d56; 
+            --dark-color: #013328;
+            --text-color: #000000;
+            --light-text-color: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --section-alt-bg: #f8f9fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: var(--section-alt-bg); }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1300px; margin: auto; padding: 0 20px; }
+
+        /* --- HEADER STYLES (Integrated) --- */
+        .main-header { 
+            position: sticky; 
+            top: 0; 
+            width: 100%; 
+            z-index: 1000; 
+            background: var(--header-bg); 
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 20px; }
+        .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
+        .logo-container img { transition: transform 0.3s ease; }
+        .logo-container img:hover { transform: scale(1.05); }
+
+        .main-nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 25px 0; position: relative; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; transition: color 0.3s; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 15px; left: 0; width: 0; height: 3px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
+        .main-nav a:hover::after { width: 100%; }
+
+        .dropdown-menu { display: none; position: absolute; top: 100%; left: -15px; background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; flex-direction: column; gap: 0 !important; }
+        .dropdown:hover .dropdown-menu { display: flex; opacity: 1; transform: translateY(0); }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; }
+        .dropdown-menu li a::after { content: none; }
+        .dropdown-menu li a:hover { background-color: #f4f4f4; }
+
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav-container { display: none; }
+
+        /* --- COMMITTEE PAGE STYLES --- */
+        .page-section { padding: 60px 0; }
+        
+        .section-heading { 
+            font-size: 2.5rem; 
+            color: var(--dark-color); 
+            margin-bottom: 50px; 
+            text-align: center; 
+            position: relative;
+        }
+        .section-heading::after {
+            content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px;
+        }
+
+        /* Slightly smaller heading for Student Coordinators */
+        .sub-heading {
+            font-size: 2rem;
+            color: var(--dark-color);
+            margin-top: 80px; /* Space from previous section */
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+        .sub-heading::after {
+            content: ''; display: block; width: 60px; height: 3px; background: var(--secondary-color); margin: 12px auto 0; border-radius: 2px;
+        }
+
+        /* --- 1. PATRON CARD --- */
+        .patron-container { display: flex; justify-content: center; margin-bottom: 70px; }
+        .patron-card {
+            background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.08); text-align: center; max-width: 500px; width: 100%; border-top: 5px solid var(--primary-color); transition: transform 0.3s ease;
+        }
+        .patron-card:hover { transform: translateY(-5px); }
+        .patron-img { width: 180px; height: 180px; border-radius: 50%; object-fit: cover; border: 6px solid #f0f0f0; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .patron-name { font-size: 1.5rem; color: var(--dark-color); margin-bottom: 5px; font-weight: 800; }
+        .patron-role { font-size: 1.1rem; color: var(--primary-color); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .patron-aff { font-size: 1rem; color: #555; }
+
+        /* --- 2. CHAIR GRID (4 Columns) --- */
+        .chair-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* --- 3. STUDENT GRID (3 Columns) --- */
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 per row for 6 students looks best */
+            gap: 30px;
+            justify-content: center;
+        }
+
+        /* --- SHARED MEMBER CARD STYLES --- */
+        .member-card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            text-align: center;
+            padding: 25px 15px;
+            width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%; 
+        }
+
+        .member-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+
+        .member-img {
+            width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--section-alt-bg); margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .member-name { font-size: 1.1rem; color: var(--dark-color); font-weight: 700; margin-bottom: 5px; line-height: 1.2; }
+        .member-role { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+        .member-aff { font-size: 0.8rem; color: #666; line-height: 1.4; }
+
+        /* Animation Classes */
+        .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .js-scroll.fade-in-up { transform: translateY(30px); }
+        .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- MEDIA QUERIES --- */
+        @media(max-width: 1100px) {
+            .chair-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; }
+            .student-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; }
+        }
+
+        @media(max-width: 992px) {
+            /* Nav Logic */
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
+            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+            .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
+            .mobile-nav-container .dropdown-menu.show { display: block; }
+
+            .logo-container { gap: 8px; flex-grow: 1; }
+            .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
+            .logo-2 { height: 45px !important; } 
+        }
+
+        @media (max-width: 600px) {
+            .patron-img { width: 160px; height: 160px; }
+            /* On Mobile: Everything 1 column */
+            .chair-grid, .student-grid { grid-template-columns: 1fr; max-width: 350px; margin: 0 auto; }
+            .logo-container { gap: 5px; }
+            .logo-container img { height: 32px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <a href="index.html"><img src="images/logo4.png" alt="SATVA Logo" class="logo-3"></a>
+                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logo1.png" alt="IIT Palakkad Logo" class="logo-1"></a>
+                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logo2.png" alt="IEI Logo" class="logo-2"></a>
+                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logo3.png" alt="IGS Logo" class="logo-3"></a>
+                </div>
+    
+                <nav class="main-nav" id="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="organisers.html">ORGANISERS</a></li>
+                        <li><a href="themes.html">THEMES</a></li>
+                        <li class="dropdown">
+                            <a href="programme.html">PROGRAMME</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="timeline.html">Timeline</a></li>
+                                <li><a href="committee.html">Committee</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sponsors.html">SPONSORS</a></li>
+                        <li><a href="submissions.html">SUBMISSION</a></li>
+                        <li><a href="registrations.html">REGISTRATION</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
+            </nav>
+        </div>
+        <nav class="mobile-nav-container" id="mobile-nav"></nav>
+    </header>
+
+    <main>
+        <section class="page-section">
+            <div class="container">
+                <h2 class="section-heading js-scroll fade-in-up">Organizing Committee</h2>
+
+                <div class="patron-container js-scroll fade-in-up">
+                    <div class="patron-card">
+                        <img src="images/patron.png" alt="Prof. A. Seshadri Sekhar" class="patron-img">
+                        <h3 class="patron-name">Prof. A. Seshadri Sekhar</h3>
+                        <div class="patron-role">Patron</div>
+                        <p class="patron-aff">Director, IIT Palakkad</p>
+                    </div>
+                </div>
+
+                <div class="chair-grid">
+                    
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/cmtimg4.png" alt="Dr C V Veena Venudharan" class="member-img">
+                        <h4 class="member-name">Dr. C V Veena Venudharan</h4>
+                        <div class="member-role">Chair, SATVA 2026</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/cmtimg1.png" alt="Dr Athira Gopinath" class="member-img">
+                        <h4 class="member-name">Dr. Athira Gopinath</h4>
+                        <div class="member-role">Co-Chair, SATVA 2026</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/cmtimg2.png" alt="Dr Divya P V" class="member-img">
+                        <h4 class="member-name">Dr. Divya P V</h4>
+                        <div class="member-role">Co-Chair, SATVA 2026</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/cmtimg3.png" alt="Dr Richa Agnihotri" class="member-img">
+                        <h4 class="member-name">Dr. Richa Agnihotri</h4>
+                        <div class="member-role">Co-Chair, SATVA 2026</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                </div>
+
+                <h3 class="sub-heading js-scroll fade-in-up">Student Coordinators</h3>
+                
+                <div class="student-grid">
+                    
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc1.png" alt="Ms. Silpa Sekhar" class="member-img">
+                        <h4 class="member-name">Ms. Silpa Sekhar</h4>
+                        <div class="member-role">Registration & Correspondence</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc2.png" alt="Ms. Aiswaria G R" class="member-img">
+                        <h4 class="member-name">Ms. Aiswaria G R</h4>
+                        <div class="member-role">Venue & Event Management</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc3.png" alt="Mr. Issac J" class="member-img">
+                        <h4 class="member-name">Mr. Issac J</h4>
+                        <div class="member-role">Food Committee</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc4.png" alt="Ms. Anavadya A" class="member-img">
+                        <h4 class="member-name">Ms. Anavadya A</h4>
+                        <div class="member-role">Poster & Talk Committee</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc5.png" alt="Mr. Saneesh Sabu" class="member-img">
+                        <h4 class="member-name">Mr. Saneesh Sabu</h4>
+                        <div class="member-role">Cultural Activities</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                    <div class="member-card js-scroll fade-in-up">
+                        <img src="images/studentcore/stc6.png" alt="Mr. Vilas Sankar" class="member-img">
+                        <h4 class="member-name">Mr. Vilas Sankar</h4>
+                        <div class="member-role">Hospitality & Transportation</div>
+                        <p class="member-aff">IIT Palakkad</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- MOBILE NAV LOGIC ---
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavContainer = document.getElementById('mobile-nav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                let mobileNavHTML = desktopNav.innerHTML;
+                const parser = new DOMParser();
+                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                    const toggle = document.createElement('span');
+                    toggle.className = 'dropdown-toggle';
+                    link.appendChild(toggle);
+                });
+                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavContainer.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) {
+                        e.preventDefault();
+                        e.target.classList.toggle('open');
+                        const menu = e.target.closest('li.dropdown').querySelector('.dropdown-menu');
+                        if (menu) { menu.classList.toggle('show'); }
+                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                        mobileNavContainer.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+
+            // ANIMATION SCRIPT
+            const animatedItems = document.querySelectorAll('.js-scroll');
+            if (animatedItems.length > 0) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            // Slight stagger based on index for nicer effect
+                            entry.target.style.transitionDelay = `${index * 50}ms`;
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedItems.forEach(item => {
+                    observer.observe(item);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
