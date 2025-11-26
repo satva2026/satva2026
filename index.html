@@ -7,9 +7,11 @@
     <title>SATVA 2026 | Symposium on Advanced Technologies and Visionary Approaches for Sustainability</title>
     
     <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
+        /* Imported Outfit for the new modern sections, kept original fonts for the rest */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&family=Outfit:wght@300;400;500;700&display=swap');
         
         :root {
             --primary-color: #606C38; 
@@ -19,6 +21,12 @@
             --light-text-color: #ffffff; 
             --header-bg: rgba(255, 255, 255, 0.95);
             --section-alt-bg: #f8f9fa;
+            
+            /* New Design Variables */
+            --accent-gold: #DDA15E;
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.15);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,7 +35,7 @@
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         
-        /* --- HEADER STYLES (Integrated) --- */
+        /* --- HEADER STYLES (UNCHANGED) --- */
         .main-header { 
             position: sticky; 
             top: 0; 
@@ -38,7 +46,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
         }
         
-        /* Fix for congestion: Use 95% width for header container */
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
@@ -67,126 +74,155 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- HERO SECTION WITH SLIDER --- */
+        /* --- NEW MODERN HERO SECTION --- */
         .hero {
             position: relative;
             height: 100vh;
-            color: var(--light-text-color);
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            overflow: hidden; /* Essential for the zoom effect */
+            overflow: hidden;
+            font-family: 'Outfit', sans-serif;
         }
 
-        /* Slider Container */
         .hero-slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+        }
+
+        .slide {
+            position: absolute; inset: 0;
+            background-size: cover; background-position: center;
+            opacity: 0; transform: scale(1.1);
+            transition: opacity 1.5s ease-in-out, transform 8s ease;
+        }
+        .slide.active { opacity: 1; transform: scale(1); }
+
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(1,51,40,0.3) 0%, rgba(1,51,40,0.8) 100%);
             z-index: 0;
         }
 
-        /* Individual Slides */
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transform: scale(1);
-            /* UPDATED: Slower Zoom (10s) and smoother fade (2s) */
-            transition: opacity 2s ease-in-out, transform 10s linear; 
-        }
-
-        .slide.active {
-            opacity: 1;
-            transform: scale(1.1); /* The Zoom Effect */
-        }
-
-        /* Overlay to darken images for text readability */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
-            z-index: 1;
-        }
-
-        /* Hero Content */
-        .hero-content {
-            position: relative;
+        /* Glassmorphism Card */
+        .hero-content-wrapper {
             z-index: 2;
-            max-width: 1000px;
-            padding: 20px;
-            animation: fadeInDown 1.5s ease-out;
-        }
-
-        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 10px; line-height: 1.2; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero h3 { font-size: 1.3rem; font-weight: 300; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .hero .tagline { font-size: 1.5rem; font-weight: 600; margin-bottom: 30px; font-style: italic; }
-        .event-details { font-size: 1.2rem; font-weight: 700; margin-bottom: 30px; background: rgba(255, 255, 255, 0.15); padding: 10px 20px; border-radius: 50px; display: inline-block; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); }
-        
-        .cta-button { display: block; margin: auto; background: var(--secondary-color); color: var(--light-text-color); max-width: 300px; padding: 15px 35px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 1.1rem; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
-        
-        .countdown-container { display: inline-flex; justify-content: center; gap: 15px; margin-top: 30px; padding: 15px 25px; background: rgba(0,0,0,0.4); border-radius: 15px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
-        .countdown-item { min-width: 70px; }
-        .countdown-item span { font-size: 2rem; font-weight: 800; display: block; line-height: 1; }
-        .countdown-item p { font-size: 0.7rem; text-transform: uppercase; margin: 5px 0 0 0; letter-spacing: 1px; }
-
-        /* --- NEWS TICKER --- */
-        .ticker-wrap {
-            position: absolute;
-            bottom: 0;
+            padding: 0 20px;
             width: 100%;
-            overflow: hidden;
-            height: 40px;
-            background-color: rgba(1, 51, 40, 0.9); /* Dark Green transparency */
-            padding-left: 100%; 
-            box-sizing: content-box;
-            z-index: 10; /* Above overlay */
-            border-top: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: center;
         }
 
-        .ticker {
-            display: inline-block;
-            height: 40px;
-            line-height: 40px;
-            white-space: nowrap;
-            padding-right: 100%;
-            box-sizing: content-box;
-            /* UPDATED: Animation duration increased to 45s for slower speed */
-            animation: ticker 45s linear infinite;
-        }
-
-        .ticker__item {
-            display: inline-block;
-            padding: 0 2rem;
-            font-size: 1.1rem;
+        .hero-glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 40px 60px;
+            border-radius: 24px;
+            text-align: center;
             color: white;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            max-width: 950px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+            animation: fadeInUp 1s ease-out;
         }
 
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+        .hero-glass-card h1 { 
+            font-size: 4.5rem; color: white; margin-bottom: 5px; 
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3); line-height: 1.1; 
         }
         
-        /* --- GENERAL CONTENT SECTIONS --- */
+        /* Added Style for Expansion */
+        .hero-glass-card h2 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .hero-glass-card .tagline {
+            font-size: 1.6rem; font-family: 'Montserrat', serif; font-style: italic;
+            color: var(--accent-gold); margin-bottom: 20px;
+        }
+        
+        .hero-glass-card h3 {
+            font-size: 1.2rem; font-weight: 600; color: rgba(255,255,255,1);
+            margin-bottom: 25px; /* Space before timer */
+        }
+
+        /* Modern Button */
+        .modern-btn {
+            position: relative; display: inline-block; padding: 16px 40px;
+            font-size: 1.1rem; font-weight: 700; color: white;
+            background: var(--secondary-color); border-radius: 50px;
+            overflow: hidden; transition: 0.4s ease; text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-top: 30px; /* Added margin to separate from timer */
+        }
+        .modern-btn:hover { transform: translateY(-5px); background-color: var(--primary-color); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
+
+        /* Modern Countdown */
+        .countdown-box {
+            display: inline-flex; gap: 20px;
+            padding: 15px 30px; background: rgba(0,0,0,0.25);
+            border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+        }
+        .cd-item { display: flex; flex-direction: column; align-items: center; }
+        .cd-item span { font-size: 2.2rem; font-weight: 800; line-height: 1; color: white; }
+        .cd-item small { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 5px; color: #ddd; }
+
+        /* Floating Ticker */
+        .floating-ticker {
+            position: fixed; bottom: 30px; right: 30px;
+            background: white; padding: 15px 25px; border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex; align-items: center; gap: 15px; z-index: 900;
+            border-left: 5px solid var(--secondary-color);
+            animation: slideInRight 1s ease-out 2s backwards;
+            max-width: 350px; font-family: 'Outfit', sans-serif;
+        }
+        .ticker-icon { font-size: 1.5rem; color: var(--secondary-color); animation: pulse 2s infinite; }
+        .ticker-text { font-size: 0.9rem; font-weight: 600; color: var(--dark-color); line-height: 1.3; }
+
+        /* --- NEW ABOUT SECTION DESIGN --- */
         .content-section { padding: 80px 0; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--dark-color); position: relative; }
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
-        .about-grid { display: grid; grid-template-columns: none; gap: 50px; align-items: stretch; }
-        .about-text p { text-align: justify; font-size: 1.1rem; margin-bottom: 15px; }
+
+        .about-modern-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-text { font-size: 1.1rem; color: #4a4a4a; text-align: justify; }
+        .about-text p { margin-bottom: 20px; }
+        
+        .btn-outline {
+            display: inline-block; padding: 12px 30px;
+            border: 2px solid var(--primary-color); color: var(--primary-color);
+            font-weight: 700; border-radius: 50px; margin-top: 10px;
+            text-decoration: none; transition: 0.3s;
+        }
+        .btn-outline:hover { background: var(--primary-color); color: white; }
+
+        /* Image Stack for About */
+        .image-stack { position: relative; height: 400px; }
+        .img-primary {
+            width: 80%; height: 320px; object-fit: cover; border-radius: 20px;
+            position: absolute; top: 0; left: 0; box-shadow: var(--shadow-lg); z-index: 1;
+        }
+        .img-secondary {
+            width: 60%; height: 240px; object-fit: cover; border-radius: 20px;
+            position: absolute; bottom: 0; right: 0;
+            box-shadow: var(--shadow-lg); border: 8px solid white; z-index: 2;
+            transition: 0.3s;
+        }
+        .image-stack:hover .img-secondary { transform: scale(1.05) translateX(-10px); }
+
+        /* --- EXISTING STYLES FOR OTHER SECTIONS (UNCHANGED) --- */
         .image-gallery-container { display: flex; flex-direction: column; gap: 15px; justify-content: center; }
         .main-gallery-image { width: 100%; height: 380px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: opacity 0.4s ease-in-out; }
         .thumbnail-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
@@ -197,7 +233,6 @@
         .partner-card p { font-size: 1.1rem; font-weight: 700; }
         .button-container { text-align: center; padding-top: 20px; }
 
-        /* --- WELCOME MESSAGE / CONTACT STYLES --- */
         .welcome-message-section { padding-top: 80px; padding-bottom: 60px; background: var(--section-alt-bg); }
         .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; margin-top: 30px; }
         .contact-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 40px 20px; text-align: center; position: relative; overflow: hidden; transition: transform 0.3s; }
@@ -211,6 +246,9 @@
         .js-scroll.fade-in-up { transform: translateY(40px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
         /* --- RESPONSIVE --- */
         @media(max-width: 992px) {
@@ -246,12 +284,17 @@
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
 
-            .about-grid { grid-template-columns: 1fr; }
+            /* New Hero Responsive */
+            .hero-glass-card { padding: 30px; width: 90%; }
+            .hero-glass-card h1 { font-size: 2.5rem; }
+            .about-modern-wrapper { grid-template-columns: 1fr; }
+            .image-stack { height: 300px; margin-bottom: 30px; order: -1; }
+            .img-primary { position: relative; width: 100%; height: 300px; }
+            .img-secondary { display: none; }
+            .floating-ticker { bottom: 10px; right: 10px; max-width: 90%; }
         }
         
         @media(max-width: 576px) {
-            .hero h1 { font-size: 1.8rem; }
-            .hero h3 { font-size: 1rem; }
             .countdown-item { min-width: 50px; }
             .countdown-item span { font-size: 1.5rem; }
             .section-title { font-size: 2rem; }
@@ -296,117 +339,125 @@
         <nav class="mobile-nav-container" id="mobile-nav"></nav>
     </header>
 
-    <main id="main-content">
-        <section class="hero" id="hero">
-            
-            <div class="hero-slider">
-                <div class="slide active" style="background-image: url('images/bg1.png');"></div>
-                <div class="slide" style="background-image: url('images/bg2.png');"></div>
-                <div class="slide" style="background-image: url('images/bg3.png');"></div>
-                <div class="slide" style="background-image: url('images/bg4.png');"></div>
-            </div>
-            
-            <div class="hero-overlay"></div>
+    <section class="hero" id="hero">
+        <div class="hero-slider">
+            <div class="slide active" style="background-image: url('images/bg1.png');"></div>
+            <div class="slide" style="background-image: url('images/bg2.png');"></div>
+            <div class="slide" style="background-image: url('images/bg3.png');"></div>
+            <div class="slide" style="background-image: url('images/bg4.png');"></div>
+        </div>
+        <div class="hero-overlay"></div>
 
-            <div class="hero-content">
+        <div class="hero-content-wrapper">
+            <div class="hero-glass-card">
                 <h1>SATVA 2026</h1>
-                <h3>Symposium on Advanced Technologies and Visionary Approaches for Sustainability</h3>
-                <p class="tagline">Pavement Sustainability Frontiers: From Materials to Maintenance</p>
-                <div class="event-details">Indian Institute of Technology Palakkad, Kerala, India | June 04-06, 2026</div>
-                <a href="submissions.html" class="cta-button">SUBMISSION</a>
-                <div class="countdown-container">
-                    <div class="countdown-item"><span id="days">0</span><p>Days</p></div>
-                    <div class="countdown-item"><span id="hours">0</span><p>Hours</p></div>
-                    <div class="countdown-item"><span id="minutes">0</span><p>Minutes</p></div>
-                    <div class="countdown-item"><span id="seconds">0</span><p>Seconds</p></div>
+                <h2>Symposium on Advanced Technologies and Visionary Approaches for Sustainability</h2>
+                
+                <p class="tagline">Pavement Sustainability Frontiers: <br>From Materials to Maintenance</p>
+                
+                <h3>June 04-06, 2026 | IIT Palakkad, Kerala, India</h3>
+                
+                <div class="countdown-box">
+                    <div class="cd-item"><span id="days">00</span><small>Days</small></div>
+                    <div class="cd-item"><span>:</span></div>
+                    <div class="cd-item"><span id="hours">00</span><small>Hrs</small></div>
+                    <div class="cd-item"><span>:</span></div>
+                    <div class="cd-item"><span id="minutes">00</span><small>Mins</small></div>
+                </div>
+
+                <div>
+                    <a href="submissions.html" class="modern-btn">SUBMISSION</a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="ticker-wrap">
-                <div class="ticker">
-                    <div class="ticker__item">📢 Call for Abstracts open now! (01-31, December 2025)</div>
-                </div>
-            </div>
-            
-        </section>
+    <div class="floating-ticker">
+        <div class="ticker-icon"><i class="fas fa-bell"></i></div>
+        <div class="ticker-text">Call for Abstracts open now! <br><span style="font-weight:400; font-size:0.8rem;">Dec 01 - Dec 31, 2025</span></div>
+    </div>
 
-        <section id="about" class="content-section" style="padding-bottom: 0;">
-            <div class="container">
-                <h2 class="section-title js-scroll fade-in-up">About Symposium</h2>
-                <div class="about-grid">
+    <section id="about" class="content-section">
+        <div class="container">
+            <div class="about-modern-wrapper">
+                <div class="js-scroll fade-in-up">
+                    <h2 class="section-title" style="text-align: left; transform: none; left: 0; margin-bottom: 30px;">About Symposium</h2>
                     <div class="about-text">
-                        <p class="js-scroll fade-in-up">The fourth edition of the Symposium on Advanced Technologies and Visionary Approaches for Sustainability (SATVA 2026), organized by the Environmental Sciences and Sustainable Engineering Centre (ESSENCE) at IIT Palakkad in collaboration with the Institution of Engineers (India) (IEI Palakkad Chapter) and Indian Geotechnical Society (IGS Palakkad Chapter), is scheduled to be held from 04 to 06 June 2026 at IIT Palakkad. The symposium aims to facilitate technical exchange and dialogue across diverse domains of engineering with a focus on sustainability. The event will feature expert lectures, research paper presentations, and panel discussions addressing contemporary challenges and innovations in sustainable technologies. The 2026 edition will particularly emphasize sustainability approaches in road infrastructure, highlighting recent advancements and future directions in this critical sector. </p>
+                        <p>The fourth edition of the Symposium on Advanced Technologies and Visionary Approaches for Sustainability (SATVA 2026), organized by the Environmental Sciences and Sustainable Engineering Centre (ESSENCE) at IIT Palakkad in collaboration with the Institution of Engineers (India) (IEI Palakkad Chapter) and Indian Geotechnical Society (IGS Palakkad Chapter), is scheduled to be held from 04 to 06 June 2026 at IIT Palakkad. The symposium aims to facilitate technical exchange and dialogue across diverse domains of engineering with a focus on sustainability. The event will feature expert lectures, research paper presentations, and panel discussions addressing contemporary challenges and innovations in sustainable technologies. The 2026 edition will particularly emphasize sustainability approaches in road infrastructure, highlighting recent advancements and future directions in this critical sector.</p>
                     </div>
+                    <a href="DOCS/Flyer.pdf" class="btn-outline" download>Download Flyer <i class="fas fa-download"></i></a>
                 </div>
                 
-                <div class="button-container js-scroll fade-in-up">
-                    <a href="DOCS/Flyer.pdf" class="cta-button" download>DOWNLOAD FLYER</a>
+                <div class="image-stack js-scroll fade-in-up">
+                    <img src="images/Purpled3.png" class="img-primary" alt="Symposium Main">
+                    <img src="images/sw1.png" class="img-secondary" alt="Symposium Highlight">
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="theme" class="content-section" style="padding-bottom: 0;">
-            <div class="container">
-                <h2 class="section-title js-scroll fade-in-up">Pavement Sustainability Frontiers: From Materials to Maintenance</h2>
-                <div class="about-grid">
-                    <div class="about-text">
-                        <p class="js-scroll fade-in-up">The symposium aims to provide a platform for researchers, engineers, and industry professionals to exchange ideas and share advances in sustainable pavement technologies. Emphasis will be placed on developing resilient, low-carbon, and resource-efficient pavement systems through innovations in materials, design, construction, and maintenance practices. </p>
-                    </div>
-                    <div class="image-gallery-container js-scroll fade-in-up">
-                        <img src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image">
-                        <div class="thumbnail-container">
-                            <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png">
-                            <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png">
-                            <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png">
-                            <img src="images/evntimg3.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/evntimg3.png">
-                        </div>
-                    </div>
+    <section id="theme" class="content-section" style="padding-bottom: 0;">
+        <div class="container">
+            <h2 class="section-title js-scroll fade-in-up">Pavement Sustainability Frontiers: From Materials to Maintenance</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p class="js-scroll fade-in-up">The symposium aims to provide a platform for researchers, engineers, and industry professionals to exchange ideas and share advances in sustainable pavement technologies. Emphasis will be placed on developing resilient, low-carbon, and resource-efficient pavement systems through innovations in materials, design, construction, and maintenance practices. </p>
                 </div>
-            </div>
-        </section>
-
-        <section class="welcome-message-section">
-            <div class="container">
-                <h2 class="section-title js-scroll fade-in-up">Contact Us</h2>
-
-                <div class="contact-grid js-scroll fade-in-up">
-                    <div class="contact-card">
-                        <img src="images/cmtimg4.png" alt="Dr C V Veena Venudharan" class="portrait">
-                        <div class="name">Dr C V Veena Venudharan</div>
-                        <div class="title">Chair, SATVA 2026</div>
-                    </div>
-
-                    <div class="contact-card">
-                        <img src="images/cmtimg1.png" alt="Dr Athira Gopinath" class="portrait">
-                        <div class="name">Dr Athira Gopinath</div>
-                        <div class="title">Co-Chair, SATVA 2026</div>
-                    </div>
-
-                    <div class="contact-card">
-                        <img src="images/cmtimg2.png" alt="Dr Divya P V" class="portrait">
-                        <div class="name">Dr Divya P V</div>
-                        <div class="title">Co-Chair, SATVA 2026</div>
-                    </div>
-
-                    <div class="contact-card">
-                        <img src="images/cmtimg3.png" alt="Dr Richa Agnihotri" class="portrait">
-                        <div class="name">Dr Richa Agnihotri</div>
-                        <div class="title">Co-Chair, SATVA 2026</div>
+                <div class="image-gallery-container js-scroll fade-in-up">
+                    <img src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image">
+                    <div class="thumbnail-container">
+                        <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png">
+                        <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png">
+                        <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png">
+                        <img src="images/evntimg3.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/evntimg3.png">
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="organisers" class="content-section">
-            <div class="container">
-                <h2 class="section-title">Organisers & Partners</h2>
-                <div class="partners-grid">
-                    <div class="partner-card js-scroll fade-in-up"><h4>Host Organizations</h4><p>Indian Institute of Technology Palakkad</p></div>
-                    <div class="partner-card js-scroll fade-in-up"><h4>Supporting Agencies</h4><p>Center for Continuing Education (CCE)<br> of IIT Palakkad <br>and<br>The Institution of Engineers (India)<br> (IEI Palakkad Chapter)</p></div>
-                    <div class="partner-card js-scroll fade-in-up"><h4>In Association with</h4><p>Indian Geotechnical Society <br>(IGS Palakkad Chapter)</p></div>
+    <section class="welcome-message-section">
+        <div class="container">
+            <h2 class="section-title js-scroll fade-in-up">Contact Us</h2>
+
+            <div class="contact-grid js-scroll fade-in-up">
+                <div class="contact-card">
+                    <img src="images/cmtimg4.png" alt="Dr C V Veena Venudharan" class="portrait">
+                    <div class="name">Dr C V Veena Venudharan</div>
+                    <div class="title">Chair, SATVA 2026</div>
+                </div>
+
+                <div class="contact-card">
+                    <img src="images/cmtimg1.png" alt="Dr Athira Gopinath" class="portrait">
+                    <div class="name">Dr Athira Gopinath</div>
+                    <div class="title">Co-Chair, SATVA 2026</div>
+                </div>
+
+                <div class="contact-card">
+                    <img src="images/cmtimg2.png" alt="Dr Divya P V" class="portrait">
+                    <div class="name">Dr Divya P V</div>
+                    <div class="title">Co-Chair, SATVA 2026</div>
+                </div>
+
+                <div class="contact-card">
+                    <img src="images/cmtimg3.png" alt="Dr Richa Agnihotri" class="portrait">
+                    <div class="name">Dr Richa Agnihotri</div>
+                    <div class="title">Co-Chair, SATVA 2026</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+
+    <section id="organisers" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Organisers & Partners</h2>
+            <div class="partners-grid">
+                <div class="partner-card js-scroll fade-in-up"><h4>Host Organizations</h4><p>Indian Institute of Technology Palakkad</p></div>
+                <div class="partner-card js-scroll fade-in-up"><h4>Supporting Agencies</h4><p>Center for Continuing Education (CCE)<br> of IIT Palakkad <br>and<br>The Institution of Engineers (India)<br> (IEI Palakkad Chapter)</p></div>
+                <div class="partner-card js-scroll fade-in-up"><h4>In Association with</h4><p>Indian Geotechnical Society <br>(IGS Palakkad Chapter)</p></div>
+            </div>
+        </div>
+    </section>
     </main>
 
     <script>
@@ -448,7 +499,6 @@
             // --- BACKGROUND SLIDER LOGIC ---
             const slides = document.querySelectorAll('.hero-slider .slide');
             let currentSlide = 0;
-            // INCREASED INTERVAL TO 8 SECONDS
             const slideInterval = 8000; 
 
             function nextSlide() {
@@ -481,7 +531,7 @@
                     document.getElementById('days').innerText = String(d).padStart(2, '0');
                     document.getElementById('hours').innerText = String(h).padStart(2, '0');
                     document.getElementById('minutes').innerText = String(m).padStart(2, '0');
-                    document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+                    /* Note: Seconds are not displayed in new design */
                 }
             }, 1000);
 
