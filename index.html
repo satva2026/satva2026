@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Imported Outfit for the new modern sections, kept original fonts for the rest */
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&family=Outfit:wght@300;400;500;700&display=swap');
         
         :root {
@@ -47,13 +46,9 @@
         }
         
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
-        
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
-        
         .logo-container { display: flex; align-items: center; gap: 20px; }
-        .logo-1 { height: 65px; width: auto; } 
-        .logo-2 { height: 75px; width: auto; } 
-        .logo-3 { height: 65px; width: auto; }
+        .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
         .logo-container img { transition: transform 0.3s ease; }
         .logo-container img:hover { transform: scale(1.05); }
 
@@ -70,17 +65,15 @@
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
 
-        /* Hide Mobile Menu Elements on Desktop */
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- NEW MODERN HERO SECTION --- */
+        /* --- NEW HERO: EDITORIAL GRADIENT STYLE --- */
         .hero {
             position: relative;
             height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
             overflow: hidden;
             font-family: 'Outfit', sans-serif;
         }
@@ -97,81 +90,111 @@
         }
         .slide.active { opacity: 1; transform: scale(1); }
 
+        /* The Editorial Gradient Overlay */
         .hero-overlay {
             position: absolute; inset: 0;
-            background: linear-gradient(180deg, rgba(1,51,40,0.3) 0%, rgba(1,51,40,0.8) 100%);
+            /* Dark Green to Transparent gradient from Left to Right */
+            background: linear-gradient(90deg, rgba(1, 51, 40, 0.98) 0%, rgba(1, 51, 40, 0.85) 35%, rgba(1, 51, 40, 0.4) 60%, rgba(1, 51, 40, 0) 100%);
             z-index: 0;
         }
 
-        /* Glassmorphism Card */
         .hero-content-wrapper {
             z-index: 2;
-            padding: 0 20px;
             width: 100%;
-            display: flex;
-            justify-content: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr; /* Text takes left side */
         }
 
-        .hero-glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            padding: 40px 60px;
-            border-radius: 24px;
-            text-align: center;
+        .hero-text-box {
             color: white;
-            max-width: 950px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-            animation: fadeInUp 1s ease-out;
+            padding-right: 20px;
+            animation: fadeInLeft 1s ease-out;
         }
 
-        .hero-glass-card h1 { 
-            font-size: 4.5rem; color: white; margin-bottom: 5px; 
-            text-shadow: 0 10px 30px rgba(0,0,0,0.3); line-height: 1.1; 
-        }
-        
-        /* Added Style for Expansion */
-        .hero-glass-card h2 {
-            font-size: 1.1rem;
-            font-weight: 500;
+        /* Theme Badge */
+        .theme-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 20px;
-            line-height: 1.4;
+            color: var(--accent-gold);
+            margin-bottom: 25px;
         }
 
-        .hero-glass-card .tagline {
-            font-size: 1.6rem; font-family: 'Montserrat', serif; font-style: italic;
-            color: var(--accent-gold); margin-bottom: 20px;
-        }
-        
-        .hero-glass-card h3 {
-            font-size: 1.2rem; font-weight: 600; color: rgba(255,255,255,1);
-            margin-bottom: 25px; /* Space before timer */
+        .hero-text-box h1 { 
+            font-size: 5.5rem; 
+            line-height: 1; 
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Modern Button */
-        .modern-btn {
-            position: relative; display: inline-block; padding: 16px 40px;
-            font-size: 1.1rem; font-weight: 700; color: white;
-            background: var(--secondary-color); border-radius: 50px;
-            overflow: hidden; transition: 0.4s ease; text-decoration: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            margin-top: 30px; /* Added margin to separate from timer */
+        .hero-text-box h2 {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: #e0e0e0;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--accent-gold);
+            padding-left: 20px;
         }
-        .modern-btn:hover { transform: translateY(-5px); background-color: var(--primary-color); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
 
-        /* Modern Countdown */
-        .countdown-box {
-            display: inline-flex; gap: 20px;
-            padding: 15px 30px; background: rgba(0,0,0,0.25);
-            border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);
+        .date-loc-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: white;
         }
-        .cd-item { display: flex; flex-direction: column; align-items: center; }
-        .cd-item span { font-size: 2.2rem; font-weight: 800; line-height: 1; color: white; }
-        .cd-item small { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; margin-top: 5px; color: #ddd; }
+        .date-loc-row i { color: var(--accent-gold); margin-right: 8px; }
+
+        /* Minimalist Countdown */
+        .countdown-minimal {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            width: fit-content;
+        }
+        .cm-item { text-align: left; }
+        .cm-item span { font-size: 2.5rem; font-weight: 800; line-height: 1; display: block; font-family: 'Montserrat', sans-serif; }
+        .cm-item p { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin: 0; }
+
+        /* Glow Button */
+        .glow-btn {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 18px 45px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(17, 125, 86, 0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .glow-btn:hover {
+            background: white;
+            color: var(--dark-color);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+        }
 
         /* Floating Ticker */
         .floating-ticker {
@@ -222,7 +245,7 @@
         }
         .image-stack:hover .img-secondary { transform: scale(1.05) translateX(-10px); }
 
-        /* --- EXISTING STYLES FOR OTHER SECTIONS (UNCHANGED) --- */
+        /* --- EXISTING STYLES (UNCHANGED) --- */
         .image-gallery-container { display: flex; flex-direction: column; gap: 15px; justify-content: center; }
         .main-gallery-image { width: 100%; height: 380px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: opacity 0.4s ease-in-out; }
         .thumbnail-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
@@ -246,7 +269,7 @@
         .js-scroll.fade-in-up { transform: translateY(40px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
@@ -262,13 +285,8 @@
             .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
             .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
 
-            /* Mobile Menu Visible ONLY on small screens */
-            .mobile-nav-container { 
-                display: block; /* Reset display for mobile */
-                position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); 
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; 
-                transition: max-height 0.5s ease-in-out; 
-            }
+            /* Mobile Menu */
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
             .mobile-nav-container.active { max-height: calc(100vh - 80px); }
             .mobile-nav-container ul { list-style: none; padding: 10px 0; }
             .mobile-nav-container > ul > li { text-align: center; }
@@ -279,14 +297,15 @@
             .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
             .mobile-nav-container .dropdown-menu.show { display: block; }
 
-            /* Header Logo Sizing */
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
 
             /* New Hero Responsive */
-            .hero-glass-card { padding: 30px; width: 90%; }
-            .hero-glass-card h1 { font-size: 2.5rem; }
+            .hero-content-wrapper { grid-template-columns: 1fr; padding-top: 40px; }
+            .hero-overlay { background: linear-gradient(180deg, rgba(1,51,40,0.95) 0%, rgba(1,51,40,0.7) 60%, rgba(1,51,40,0.4) 100%); }
+            .hero-text-box h1 { font-size: 3rem; }
+            .hero-text-box h2 { font-size: 1rem; }
             .about-modern-wrapper { grid-template-columns: 1fr; }
             .image-stack { height: 300px; margin-bottom: 30px; order: -1; }
             .img-primary { position: relative; width: 100%; height: 300px; }
@@ -349,26 +368,31 @@
         <div class="hero-overlay"></div>
 
         <div class="hero-content-wrapper">
-            <div class="hero-glass-card">
+            <div class="hero-text-box">
+                <div class="theme-badge">Pavement Sustainability Frontiers</div>
+                
                 <h1>SATVA 2026</h1>
+                
                 <h2>Symposium on Advanced Technologies and Visionary Approaches for Sustainability</h2>
                 
-                <p class="tagline">Pavement Sustainability Frontiers: <br>From Materials to Maintenance</p>
-                
-                <h3>June 04-06, 2026 | IIT Palakkad, Kerala, India</h3>
-                
-                <div class="countdown-box">
-                    <div class="cd-item"><span id="days">00</span><small>Days</small></div>
-                    <div class="cd-item"><span>:</span></div>
-                    <div class="cd-item"><span id="hours">00</span><small>Hrs</small></div>
-                    <div class="cd-item"><span>:</span></div>
-                    <div class="cd-item"><span id="minutes">00</span><small>Mins</small></div>
+                <div class="date-loc-row">
+                    <span><i class="fas fa-calendar-alt"></i> June 04-06, 2026</span>
+                    <span style="margin: 0 10px;">|</span>
+                    <span><i class="fas fa-map-marker-alt"></i> IIT Palakkad, India</span>
                 </div>
 
-                <div>
-                    <a href="submissions.html" class="modern-btn">SUBMISSION</a>
+                <div class="countdown-minimal">
+                    <div class="cm-item"><span id="days">00</span><p>Days</p></div>
+                    <div class="cm-item"><span>:</span></div>
+                    <div class="cm-item"><span id="hours">00</span><p>Hrs</p></div>
+                    <div class="cm-item"><span>:</span></div>
+                    <div class="cm-item"><span id="minutes">00</span><p>Mins</p></div>
                 </div>
+
+                <a href="submissions.html" class="glow-btn">SUBMISSION <i class="fas fa-arrow-right" style="margin-left:8px;"></i></a>
             </div>
+            
+            <div></div>
         </div>
     </section>
 
@@ -383,7 +407,8 @@
                 <div class="js-scroll fade-in-up">
                     <h2 class="section-title" style="text-align: left; transform: none; left: 0; margin-bottom: 30px;">About Symposium</h2>
                     <div class="about-text">
-                        <p>The fourth edition of the Symposium on Advanced Technologies and Visionary Approaches for Sustainability (SATVA 2026), organized by the Environmental Sciences and Sustainable Engineering Centre (ESSENCE) at IIT Palakkad in collaboration with the Institution of Engineers (India) (IEI Palakkad Chapter) and Indian Geotechnical Society (IGS Palakkad Chapter), is scheduled to be held from 04 to 06 June 2026 at IIT Palakkad. The symposium aims to facilitate technical exchange and dialogue across diverse domains of engineering with a focus on sustainability. The event will feature expert lectures, research paper presentations, and panel discussions addressing contemporary challenges and innovations in sustainable technologies. The 2026 edition will particularly emphasize sustainability approaches in road infrastructure, highlighting recent advancements and future directions in this critical sector.</p>
+                        <p>The fourth edition of <strong>SATVA 2026</strong>, organized by the Environmental Sciences and Sustainable Engineering Centre (ESSENCE) at IIT Palakkad, is set to redefine sustainable engineering.</p>
+                        <p>In collaboration with IEI Palakkad and IGS Palakkad, this symposium creates a vibrant platform for technical exchange. We bring together experts to discuss innovations in road infrastructure, focusing on resilient, low-carbon solutions.</p>
                     </div>
                     <a href="DOCS/Flyer.pdf" class="btn-outline" download>Download Flyer <i class="fas fa-download"></i></a>
                 </div>
