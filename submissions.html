@@ -26,7 +26,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* 2. LOCK SCROLL: Prevent scrolling while loading */
+        /* 2. LOCK SCROLL */
         body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
         
@@ -41,7 +41,7 @@
             width: 100vw;
             height: 100vh;
             background: #ffffff;
-            z-index: 999999; /* Highest priority */
+            z-index: 999999;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -101,7 +101,7 @@
             .loader-content { width: 240px; }
         }
 
-        /* --- HEADER STYLES (Integrated) --- */
+        /* --- HEADER STYLES --- */
         .main-header { 
             position: sticky; 
             top: 0; 
@@ -141,6 +141,23 @@
         
         .cta-button { display: inline-block; background: var(--dark-color); color: var(--light-text-color); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s; margin: 10px; }
         .cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+
+        /* New Style for the Deadline Note */
+        .deadline-note {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            display: block;
+        }
+        .deadline-note i {
+            color: #c0392b; /* Alert Red color for icon */
+            margin-right: 8px;
+        }
+        .deadline-highlight {
+            color: #c0392b; /* Alert Red color for date */
+            font-weight: 700;
+        }
 
         .info-section { padding: 80px 0; background-color: #fff; }
         .info-section h2 { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 50px; }
@@ -246,7 +263,13 @@
             <div class="container">
                 <h1>Call for Abstracts</h1>
                 <p>The call for abstracts for SATVA 2026 is now open. Interested participants are invited to submit their abstracts for consideration. Accepted papers will be considered for oral/poster presentations, and selected contributions will be included in the proceedings.</p>
+                
                 <a href="https://forms.gle/ybQ4Q6N3CUWpojc59" class="cta-button" target="_blank" rel="noopener noreferrer">Abstract Submission</a>
+                
+                <div class="deadline-note">
+                    <i class="fas fa-exclamation-circle"></i> Last date: <span class="deadline-highlight">31st December 2025</span> for Abstract Submission
+                </div>
+
             </div>
         </section>
 
