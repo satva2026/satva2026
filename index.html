@@ -175,9 +175,56 @@
         .thumbnail-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .thumbnail-image { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 3px solid transparent; transition: transform 0.3s ease, border-color 0.3s ease; }
         .thumbnail-image.active { border-color: var(--primary-color); }
-        .partners-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; text-align: center; }
-        .partner-card h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 10px; }
-        .partner-card p { font-size: 1.1rem; font-weight: 700; }
+        
+        /* Updated Partners Grid Logic */
+        .partners-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1.5fr; /* Left side smaller, right side larger */
+            gap: 30px; 
+            text-align: center; 
+            align-items: stretch;
+        }
+        
+        .partner-card {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        .partner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .partner-card h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .partner-card p { font-size: 1.1rem; font-weight: 700; line-height: 1.4; color: #444; }
+        
+        /* Association Container */
+        .association-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 100%;
+        }
+        .association-item {
+            flex: 1;
+            text-align: center;
+            padding: 0 10px;
+        }
+        /* Vertical Divider between associations */
+        .association-divider {
+            width: 2px;
+            height: 60px;
+            background-color: #ddd;
+        }
+
         .button-container { text-align: center; padding-top: 20px; }
 
         .welcome-message-section { padding-top: 80px; padding-bottom: 60px; background: var(--section-alt-bg); }
@@ -223,6 +270,13 @@
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
             .about-grid { grid-template-columns: 1fr; }
+            
+            /* Responsive Partner Logic */
+            .partners-grid { grid-template-columns: 1fr; gap: 20px; }
+            
+            /* On mobile, stack the associations and hide the divider */
+            .association-container { flex-direction: column; gap: 20px; }
+            .association-divider { width: 80%; height: 1px; background-color: #ddd; margin: 10px auto; }
         }
         
         @media(max-width: 576px) {
@@ -374,9 +428,29 @@
             <div class="container">
                 <h2 class="section-title">Organisers & Partners</h2>
                 <div class="partners-grid">
-                    <div class="partner-card js-scroll fade-in-up"><h4>Host Organizations</h4><p>Indian Institute of Technology Palakkad</p></div>
-                    <div class="partner-card js-scroll fade-in-up"><h4>Supporting Agencies</h4><p>Center for Continuing Education (CCE)<br> of IIT Palakkad <br>and<br>The Institution of Engineers (India)<br> (IEI Palakkad Chapter)</p></div>
-                    <div class="partner-card js-scroll fade-in-up"><h4>In Association with</h4><p>Indian Geotechnical Society <br>(IGS Palakkad Chapter)</p></div>
+                    
+                    <div class="partner-card js-scroll fade-in-up">
+                        <h4>Host Organisation</h4>
+                        <div class="association-container">
+                            <div class="association-item">
+                                <p>Indian Institute of Technology<br>Palakkad</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="partner-card js-scroll fade-in-up">
+                        <h4>In Association with</h4>
+                        <div class="association-container">
+                            <div class="association-item">
+                                <p>The Institution of Engineers (India)<br>(IEI Palakkad Chapter)</p>
+                            </div>
+                            <div class="association-divider"></div>
+                            <div class="association-item">
+                                <p>Indian Geotechnical Society <br>(IGS Palakkad Chapter)</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -384,9 +458,6 @@
 
     <script>
         // --- PRELOADER LOGIC ---
-        // This script simulates a progress bar. It moves to 30%, then 70%, then waits.
-        // When the actual window.load fires (assets done), it sprints to 100%.
-        
         let progress = 0;
         let isLoaded = false;
         const progressBar = document.getElementById('progress-bar');
@@ -394,42 +465,33 @@
         const preloader = document.getElementById('preloader');
         const body = document.body;
 
-        // Start simulation
         const interval = setInterval(() => {
-            // If not fully loaded yet, crawl up to 90%
             if (!isLoaded && progress < 90) {
-                // Slow down as we get higher
                 const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
                 progress += increment;
             } 
-            // If loaded, sprint to 100
             else if (isLoaded && progress < 100) {
                 progress += 5; 
             }
             
-            // Clean up numbers
             if(progress > 100) progress = 100;
             
-            // Update UI
             if (progressBar && progressText) {
                 progressBar.style.width = progress + "%";
                 progressText.innerText = Math.floor(progress) + "%";
             }
 
-            // Finish
             if (progress >= 100) {
                 clearInterval(interval);
                 setTimeout(() => {
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
                     body.classList.remove('loading-active');
-                    // Remove from DOM to save memory
                     setTimeout(() => { if(preloader) preloader.remove(); }, 800);
-                }, 400); // Short delay at 100% before fading
+                }, 400); 
             }
-        }, 30); // Speed of update
+        }, 30); 
 
-        // The actual window load event
         window.addEventListener("load", function() {
             isLoaded = true;
         });
