@@ -8,6 +8,8 @@
     
     <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
     
+    <link rel="preload" as="image" href="images/logo4.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
@@ -24,6 +26,9 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        
+        /* 2. LOCK SCROLL: Prevent scrolling while preloader is active */
+        body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.7; background-color: #fff; }
         body.lightbox-open { overflow: hidden; }
         
@@ -32,6 +37,74 @@
         a:hover { color: var(--dark-color); text-decoration: underline; }
         
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+        /* --- PRELOADER CSS --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 999999; /* Highest priority */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+
+        .loader-content {
+            text-align: center;
+            width: 300px;
+            max-width: 80%;
+        }
+
+        .loader-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 30px;
+            animation: breathe 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border-radius: 10px;
+            transition: width 0.2s linear;
+            box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); }
+            100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+        }
+
+        @media(max-width: 576px) {
+            .loader-logo { width: 120px; }
+            .loader-content { width: 240px; }
+        }
 
         /* --- HEADER STYLES --- */
         .main-header { 
@@ -116,7 +189,6 @@
         .venue-box h3 { margin-bottom: 10px; font-size: 1.4rem; color: var(--primary-color); }
         .venue-box p { font-size: 1.2rem; font-weight: 500; margin: 0; }
         
-        /* Hover Effect for Venue Box */
         .venue-box:hover {
             background: var(--primary-color);
             color: #fff;
@@ -272,8 +344,18 @@
         }
     </style>
 </head>
-<body>
+<body class="loading-active">
     
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="images/logo4.png" alt="SATVA Loading..." class="loader-logo">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0%</div>
+        </div>
+    </div>
+
     <header class="main-header">
         <div class="container">
             <nav class="navbar">
@@ -437,9 +519,49 @@
     </div>
 
     <script>
+        // --- 4. PRELOADER LOGIC ---
+        let progress = 0;
+        let isLoaded = false;
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const preloader = document.getElementById('preloader');
+        const body = document.body;
+
+        const interval = setInterval(() => {
+            if (!isLoaded && progress < 90) {
+                const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
+                progress += increment;
+            } 
+            else if (isLoaded && progress < 100) {
+                progress += 5; 
+            }
+            
+            if(progress > 100) progress = 100;
+            
+            if (progressBar && progressText) {
+                progressBar.style.width = progress + "%";
+                progressText.innerText = Math.floor(progress) + "%";
+            }
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    body.classList.remove('loading-active');
+                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
+                }, 400); 
+            }
+        }, 30); 
+
+        window.addEventListener("load", function() {
+            isLoaded = true;
+        });
+
+        // --- EXISTING PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function() {
             
-            // --- 1. MOBILE NAV LOGIC ---
+            // MOBILE NAV LOGIC
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -473,7 +595,7 @@
                 });
             }
 
-            // --- 2. ANIMATION SCRIPT ---
+            // ANIMATION SCRIPT
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
@@ -489,7 +611,7 @@
                 });
             }
 
-            // --- 3. LIGHTBOX SCRIPT ---
+            // LIGHTBOX SCRIPT
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const lightboxTriggers = document.querySelectorAll('.lightbox-trigger');
