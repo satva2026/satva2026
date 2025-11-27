@@ -8,6 +8,8 @@
     
     <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
     
+    <link rel="preload" as="image" href="images/logo4.png">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -25,11 +27,83 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
+        
+        /* 2. LOCK SCROLL: Prevent scrolling while loading */
+        body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: #fff; }
+        
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-        /* --- HEADER STYLES (Integrated) --- */
+        /* --- PRELOADER CSS --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+
+        .loader-content {
+            text-align: center;
+            width: 300px;
+            max-width: 80%;
+        }
+
+        .loader-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 30px;
+            animation: breathe 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border-radius: 10px;
+            transition: width 0.2s linear;
+            box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); }
+            100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+        }
+
+        @media(max-width: 576px) {
+            .loader-logo { width: 120px; }
+            .loader-content { width: 240px; }
+        }
+
+        /* --- HEADER STYLES --- */
         .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
@@ -146,7 +220,6 @@
 
         /* --- MEDIA QUERIES --- */
         @media(max-width: 992px) {
-            /* Mobile Nav Logic */
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
             .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
@@ -178,7 +251,17 @@
         }
     </style>
 </head>
-<body>
+<body class="loading-active">
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="images/logo4.png" alt="SATVA Loading..." class="loader-logo">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0%</div>
+        </div>
+    </div>
 
     <header class="main-header">
         <div class="container">
@@ -360,6 +443,46 @@
     </main>
     
     <script>
+        // --- 4. PRELOADER LOGIC ---
+        let progress = 0;
+        let isLoaded = false;
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const preloader = document.getElementById('preloader');
+        const body = document.body;
+
+        const interval = setInterval(() => {
+            if (!isLoaded && progress < 90) {
+                const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
+                progress += increment;
+            } 
+            else if (isLoaded && progress < 100) {
+                progress += 5; 
+            }
+            
+            if(progress > 100) progress = 100;
+            
+            if (progressBar && progressText) {
+                progressBar.style.width = progress + "%";
+                progressText.innerText = Math.floor(progress) + "%";
+            }
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    body.classList.remove('loading-active');
+                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
+                }, 400); 
+            }
+        }, 30); 
+
+        window.addEventListener("load", function() {
+            isLoaded = true;
+        });
+
+        // --- EXISTING PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function() {
             
             // --- MOBILE NAV LOGIC ---
@@ -402,7 +525,6 @@
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach((entry, index) => {
                         if (entry.isIntersecting) {
-                            // Add a slight stagger delay based on index for nicer flow
                             entry.target.style.transitionDelay = `${index * 100}ms`;
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
