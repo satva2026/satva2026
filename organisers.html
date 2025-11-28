@@ -268,30 +268,101 @@
         }
         .map-frame iframe { width: 100%; height: 100%; border: 0; }
 
-        /* --- ATTRACTIONS --- */
+        /* --- ATTRACTIONS (UPDATED) --- */
         .attractions-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+            gap: 25px;
         }
         .attraction-item {
-            height: 200px; border-radius: 12px; overflow: hidden;
-            position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.1); cursor: pointer;
+            height: 280px; 
+            border-radius: 15px; 
+            overflow: hidden;
+            position: relative; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .attraction-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.25);
         }
         .attraction-img {
-            width: 100%; height: 100%; background-size: cover;
-            background-position: center; transition: transform 0.5s ease;
+            width: 100%; height: 100%; 
+            background-size: cover;
+            background-position: center; 
+            transition: transform 0.6s ease;
         }
-        .attraction-item:hover .attraction-img { transform: scale(1.1); }
+        .attraction-item:hover .attraction-img { transform: scale(1.15); }
+        
+        .attraction-overlay {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            opacity: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .attraction-details {
+            transform: translateY(10px);
+            transition: transform 0.3s ease;
+        }
+        
+        .attraction-item:hover .attraction-details {
+            transform: translateY(0);
+        }
+
+        .attraction-title {
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .attraction-more {
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .attraction-item:hover .attraction-more {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-credits {
+            text-align: right;
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 15px;
+            font-style: italic;
+        }
 
         /* --- LIGHTBOX --- */
         .lightbox-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.9); z-index: 2000; 
+            background: rgba(0,0,0,0.95); z-index: 2000; 
             display: none; align-items: center; justify-content: center; 
-            backdrop-filter: blur(5px); animation: fadeIn 0.3s ease; 
+            backdrop-filter: blur(8px); animation: fadeIn 0.3s ease; 
         }
         .lightbox-overlay.show { display: flex; }
         .lightbox-content { position: relative; max-width: 90%; max-height: 90%; animation: zoomIn 0.3s ease; }
-        .lightbox-content img { display: block; max-width: 100%; max-height: 85vh; border-radius: 8px; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+        .lightbox-content img { display: block; max-width: 100%; max-height: 85vh; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.8); }
         .lightbox-close { position: absolute; top: -40px; right: 0; color: white; font-size: 40px; cursor: pointer; transition: color 0.3s; }
         .lightbox-close:hover { color: var(--primary-color); }
         
@@ -509,13 +580,133 @@
                 <p style="text-align: center; margin-bottom: 40px;" class="js-scroll fade-in-up">Explore the beauty of Palakkad. <a href="https://dtpcpalakkad.com/" target="_blank">Visit DTPC Palakkad</a></p>
                 
                 <div class="attractions-grid js-scroll fade-in-up">
-                    <div class="attraction-item lightbox-trigger" href="images/01.png"><div class="attraction-img" style="background-image: url('images/01.png');"></div></div>
-                    <div class="attraction-item lightbox-trigger" href="images/02.png"><div class="attraction-img" style="background-image: url('images/02.png');"></div></div>
-                    <div class="attraction-item lightbox-trigger" href="images/03.png"><div class="attraction-img" style="background-image: url('images/03.png');"></div></div>
-                    <div class="attraction-item lightbox-trigger" href="images/04.png"><div class="attraction-img" style="background-image: url('images/04.png');"></div></div>
-                    <div class="attraction-item lightbox-trigger" href="images/05.png"><div class="attraction-img" style="background-image: url('images/05.png');"></div></div>
-                    <div class="attraction-item lightbox-trigger" href="images/06.png"><div class="attraction-img" style="background-image: url('images/06.png');"></div></div>
+                    
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/01.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/01.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Nelliyampathy</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/02.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/02.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Kava View Point</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/03.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/03.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Palakkad Fort</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/04.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/04.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Kalpathy Heritage Village</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/05.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/05.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Dhoni Waterfalls</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/06.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/06.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Meenvallam Waterfalls</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/07.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/07.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Silent Valley National Park</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/08.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/08.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Pothundi Dam</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/09.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/09.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Malampuzha Dam & Garden</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/10.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/10.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Kanjirapuzha Dam</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/11.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/11.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Kunchan Smarakam</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="attraction-item lightbox-trigger" href="images/palakkad/12.webp">
+                        <div class="attraction-img" style="background-image: url('images/palakkad/12.webp');"></div>
+                        <div class="attraction-overlay">
+                            <div class="attraction-details">
+                                <div class="attraction-title">Thunchan Gurumadam</div>
+                                <span class="attraction-more"><i class="fas fa-search-plus"></i> View</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+                
+                <div class="image-credits js-scroll fade-in-up">
+                    Image credits: DTPC Palakkad
+                </div>
+
             </div>
         </section>
     </main>
