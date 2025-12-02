@@ -125,9 +125,32 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        .dropdown-menu { display: none; position: absolute; top: 100%; left: -15px; background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; flex-direction: column; gap: 0 !important; }
-        .dropdown:hover .dropdown-menu { display: flex; opacity: 1; transform: translateY(0); }
-        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; }
+        /* UPDATED DROPDOWN CSS (CENTERED) */
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 50%; /* Start at center */
+            transform: translate(-50%, 10px); /* Move back by 50% to perfectly center, plus slight Y offset for animation */
+            background: white; 
+            list-style: none; 
+            padding: 10px 0; 
+            margin-top: -10px; 
+            border-radius: 5px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            min-width: 280px; /* Slightly wider to accommodate long text */
+            opacity: 0; 
+            transition: opacity 0.3s, transform 0.3s; 
+            z-index: 100; 
+            flex-direction: column; 
+            gap: 0 !important; 
+        }
+        .dropdown:hover .dropdown-menu { 
+            display: flex; 
+            opacity: 1; 
+            transform: translate(-50%, 0); /* Keep centered and move to final Y position */
+        }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
 
@@ -206,7 +229,7 @@
             .logo-2 { height: 45px !important; } 
         }
         
-        @media (max-width: 380px) {
+        @media (max-width: 600px) { /* Updated to match reference */
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
         }
@@ -243,7 +266,8 @@
                             <a href="programme.html">PROGRAMME</a>
                             <ul class="dropdown-menu">
                                 <li><a href="timeline.html">Timeline</a></li>
-                                <li><a href="committee.html">Committee</a></li>
+                                <li><a href="advisory.html">Advisory and Technical Committee</a></li>
+                                <li><a href="committee.html">Organising Committee</a></li>
                             </ul>
                         </li>
                         <li><a href="sponsors.html">SPONSORS</a></li>
@@ -262,7 +286,7 @@
         <section class="registration-section js-scroll fade-in-up">
             <div class="container">
                 <h1>Call for Abstracts</h1>
-                <p>The call for abstracts for SATVA 2026 is now open. Interested participants are invited to submit their abstracts for consideration. Accepted papers will be considered for oral/poster presentations, and selected contributions will be included in the proceedings.</p>
+                <p>The call for abstracts for SATVA 2026 is now open. Interested participants are invited to submit their abstracts for consideration. Accepted papers will be considered for oral/poster presentations, and selected contributions will be included in the proceedings.</p>
                 
                 <a href="https://forms.gle/ybQ4Q6N3CUWpojc59" class="cta-button" target="_blank" rel="noopener noreferrer">Abstract Submission</a>
                 
