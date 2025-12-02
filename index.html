@@ -131,9 +131,32 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        .dropdown-menu { display: none; position: absolute; top: 100%; left: -15px; background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 180px; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s; z-index: 100; flex-direction: column; gap: 0 !important; }
-        .dropdown:hover .dropdown-menu { display: flex; opacity: 1; transform: translateY(0); }
-        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; }
+        /* UPDATED DROPDOWN CSS FOR CENTERING */
+        .dropdown-menu { 
+            display: none; 
+            position: absolute; 
+            top: 100%; 
+            left: 50%; /* Start at center */
+            transform: translate(-50%, 10px); /* Move back by 50% to perfectly center */
+            background: white; 
+            list-style: none; 
+            padding: 10px 0; 
+            margin-top: -10px; 
+            border-radius: 5px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            min-width: 280px; /* Slightly wider */
+            opacity: 0; 
+            transition: opacity 0.3s, transform 0.3s; 
+            z-index: 100; 
+            flex-direction: column; 
+            gap: 0 !important; 
+        }
+        .dropdown:hover .dropdown-menu { 
+            display: flex; 
+            opacity: 1; 
+            transform: translate(-50%, 0); 
+        }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
 
@@ -321,7 +344,8 @@
                             <a href="programme.html">PROGRAMME</a>
                             <ul class="dropdown-menu">
                                 <li><a href="timeline.html">Timeline</a></li>
-                                <li><a href="committee.html">Committee</a></li>
+                                <li><a href="advisory.html">Advisory and Technical Committee</a></li>
+                                <li><a href="committee.html">Organising Committee</a></li>
                             </ul>
                         </li>
                         <li><a href="sponsors.html">SPONSORS</a></li>
@@ -602,4 +626,3 @@
     </script>
 </body>
 </html>
-
