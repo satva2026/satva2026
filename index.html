@@ -25,48 +25,10 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
         
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
-
-        /* --- PRELOADER CSS --- */
-        #preloader {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #ffffff; z-index: 999999;
-            display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
-        }
-        .loader-content { text-align: center; width: 300px; max-width: 80%; }
-        .loader-logo {
-            width: 150px; height: auto; margin-bottom: 30px;
-            animation: breathe 2.5s infinite ease-in-out;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
-        }
-        .progress-container {
-            width: 100%; height: 6px; background-color: #e0e0e0;
-            border-radius: 10px; overflow: hidden; position: relative;
-        }
-        .progress-bar {
-            width: 0%; height: 100%;
-            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            border-radius: 10px; transition: width 0.2s linear;
-            box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
-        }
-        .progress-text {
-            margin-top: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700;
-            color: var(--primary-color); font-size: 1rem; letter-spacing: 1px;
-        }
-        @keyframes breathe {
-            0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); }
-            100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
-        }
-        @media(max-width: 576px) {
-            .loader-logo { width: 120px; }
-            .loader-content { width: 240px; }
-        }
 
         /* --- HEADER & NAV --- */
         .main-header { 
@@ -244,17 +206,7 @@
         }
     </style>
 </head>
-<body class="loading-active">
-
-    <div id="preloader">
-        <div class="loader-content">
-            <img src="images/logo4.png" alt="SATVA Loading..." class="loader-logo">
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
-            <div class="progress-text" id="progress-text">0%</div>
-        </div>
-    </div>
+<body>
 
     <header class="main-header">
         <div class="container">
@@ -294,7 +246,7 @@
     <main id="main-content">
         <section class="hero" id="hero">
             <div class="hero-slider">
-                <video autoplay loop muted playsinline class="hero-video-bg">
+                <video autoplay loop muted playsinline webkit-playsinline class="hero-video-bg" poster="images/bg4.webp">
                     <source src="videos/home/iitdrone.webm" type="video/webm">
                     <source src="videos/home/iitdrone.mp4" type="video/mp4">
                     Your browser does not support the video tag.
@@ -416,47 +368,9 @@
     </main>
 
     <script>
-        // --- PRELOADER LOGIC ---
-        let progress = 0;
-        let isLoaded = false;
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const preloader = document.getElementById('preloader');
-        const body = document.body;
-
-        const interval = setInterval(() => {
-            if (!isLoaded && progress < 90) {
-                const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
-                progress += increment;
-            } 
-            else if (isLoaded && progress < 100) {
-                progress += 5; 
-            }
-            
-            if(progress > 100) progress = 100;
-            
-            if (progressBar && progressText) {
-                progressBar.style.width = progress + "%";
-                progressText.innerText = Math.floor(progress) + "%";
-            }
-
-            if (progress >= 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    preloader.style.visibility = 'hidden';
-                    body.classList.remove('loading-active');
-                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
-                }, 400); 
-            }
-        }, 30); 
-
-        window.addEventListener("load", function() {
-            isLoaded = true;
-        });
-
         // --- EXISTING SITE LOGIC ---
         document.addEventListener("DOMContentLoaded", function() {
+            // ... (Your existing navigation code)
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -490,6 +404,7 @@
                 });
             }
 
+            // ... (Timer Logic)
             const targetDate = new Date('June 4, 2026 09:00:00').getTime();
             const countdownFunc = setInterval(() => {
                 const now = new Date().getTime();
@@ -513,6 +428,7 @@
                 }
             }, 1000);
 
+            // ... (Scroll Animation)
             const scrollElements = document.querySelectorAll('.js-scroll');
             if (scrollElements.length > 0) {
                 const elementObserver = new IntersectionObserver((entries, observer) => {
@@ -526,6 +442,7 @@
                 scrollElements.forEach(el => { elementObserver.observe(el); });
             }
 
+            // ... (Gallery Logic)
             const mainImage = document.getElementById('main-about-image');
             const thumbnails = document.querySelectorAll('.thumbnail-image');
             if(mainImage && thumbnails.length > 0) {
@@ -541,6 +458,17 @@
                             mainImage.style.opacity = 1;
                         }, 400);
                     });
+                });
+            }
+
+            /* --- NEW: SAFARI AUTOPLAY FIX --- */
+            /* Forces video to play if browser blocks simple autoplay */
+            const heroVideo = document.querySelector('.hero-video-bg');
+            if (heroVideo) {
+                heroVideo.muted = true; // Ensure it is muted for policy compliance
+                heroVideo.play().catch(function(error) {
+                    console.log("Autoplay was prevented by the browser:", error);
+                    // If it fails, the 'poster' image will show, which is why it's critical to have it.
                 });
             }
         });
