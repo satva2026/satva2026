@@ -8,12 +8,10 @@
 
     <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
 
-    <!-- FONT OPTIMIZATIONS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
-    <!-- PRELOAD CRITICAL IMAGES -->
     <link rel="preload" as="image" href="images/bg4.webp">
     <link rel="preload" as="image" href="images/logo4.png">
 
@@ -103,7 +101,7 @@
             .loader-content { width: 240px; }
         }
 
-        /* --- EXISTING SITE CSS (kept design) --- */
+        /* --- EXISTING SITE CSS --- */
         .main-header {
             position: sticky; top: 0; width: 100%; z-index: 1000;
             background: var(--header-bg); backdrop-filter: blur(10px);
@@ -126,12 +124,14 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
+        /* --- DESKTOP DROPDOWN CSS --- */
         .dropdown-menu {
-            display: none;
+            display: flex; 
+            flex-direction: column;
             position: absolute;
             top: 100%;
-            left: 50%;
-            transform: translate(-50%, 10px);
+            left: 50%; 
+            transform: translate(-50%, 20px);
             background: white;
             list-style: none;
             padding: 10px 0;
@@ -139,17 +139,19 @@
             border-radius: 5px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             min-width: 280px;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 100;
-            flex-direction: column;
             gap: 0 !important;
+            z-index: 100;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
         }
+
         .dropdown:hover .dropdown-menu {
-            display: flex;
+            visibility: visible;
             opacity: 1;
             transform: translate(-50%, 0);
         }
+        
         .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
@@ -157,7 +159,7 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- HERO SECTION: use actual <img> for priority control --- */
+        /* --- HERO SECTION --- */
         .hero { position: relative; height: 100vh; color: var(--light-text-color); display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
         .hero-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
         .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; transform-origin: center; animation: dronePan 30s ease-in-out infinite alternate; will-change: transform, opacity; }
@@ -277,8 +279,44 @@
             .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
-            .mobile-nav-container .dropdown-menu { display: none; position: static; background-color: #e9ecef; box-shadow: none; border-radius: 0; opacity: 1; transform: none; min-width: auto; }
-            .mobile-nav-container .dropdown-menu.show { display: block; }
+            
+            /* --- FIXED: FORCE MOBILE STYLES WITH !IMPORTANT --- */
+            .mobile-nav-container .dropdown-menu { 
+                position: static !important; /* Forces menu into the flow */
+                float: none !important;
+                display: none; 
+                width: 100% !important; 
+                min-width: 0 !important; /* Removes desktop width restriction */
+                transform: none !important; /* Removes desktop centering */
+                left: auto !important;
+                top: auto !important;
+                box-shadow: none !important;
+                background-color: #f8f9fa !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+            
+            .mobile-nav-container .dropdown-menu.show { 
+                display: block !important; 
+            }
+
+            .mobile-nav-container .dropdown-menu li {
+                width: 100% !important;
+                display: block !important;
+            }
+
+            .mobile-nav-container .dropdown-menu li a {
+                text-align: center !important;
+                padding: 12px 20px !important;
+                width: 100% !important;
+                display: block !important;
+                font-size: 1rem !important;
+                color: #444 !important;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
 
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
@@ -320,7 +358,6 @@
         <div class="container">
             <nav class="navbar">
                 <div class="logo-container">
-                    <!-- Keep logos eager (important for FCP) -->
                     <a href="index.html"><img src="images/logo4.png" alt="SATVA Logo" class="logo-3" width="65" height="65" decoding="async"></a>
                     <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logo1.png" alt="IIT Palakkad Logo" class="logo-1" width="65" height="65" decoding="async"></a>
                     <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logo2.png" alt="IEI Logo" class="logo-2" width="75" height="75" decoding="async"></a>
@@ -355,7 +392,6 @@
     <main id="main-content">
         <section class="hero" id="hero">
             <div class="hero-slider">
-                <!-- Hero as an <img> so we can control priority -->
                 <img src="images/bg4.webp" srcset="images/bg4.webp 1x" alt="Symposium background" class="hero-bg-img" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
             </div>
             <div class="hero-overlay"></div>
@@ -401,10 +437,8 @@
                         <p class="js-scroll fade-in-up">The symposium aims to provide a platform for researchers, engineers, and industry professionals to exchange ideas and share advances in sustainable pavement technologies. Emphasis will be placed on developing resilient, low-carbon, and resource-efficient pavement systems through innovations in materials, design, construction, and maintenance practices. </p>
                     </div>
                     <div class="image-gallery-container js-scroll fade-in-up">
-                        <!-- main image loads lazily (not critical for hero) -->
                         <img src="images/Purpled3.png" data-src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image" width="1200" height="380" loading="lazy" decoding="async">
                         <div class="thumbnail-container">
-                            <!-- thumbnails initially small placeholders (or same file) and lazy-loaded via data-src -->
                             <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png" width="320" height="80" loading="lazy" decoding="async">
                             <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png" width="320" height="80" loading="lazy" decoding="async">
                             <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png" width="320" height="80" loading="lazy" decoding="async">
@@ -475,12 +509,7 @@
         </section>
     </main>
 
-    <!-- SCRIPTS -->
     <script>
-        /* -----------------------------
-           Improved Preloader (DOM + hero image priority)
-           Hides preloader when DOMContentLoaded + hero image ready OR a short fallback.
-           ----------------------------- */
         (function () {
             const preloader = document.getElementById('preloader');
             const progressBar = document.getElementById('progress-bar');
@@ -524,18 +553,14 @@
                     heroImg.addEventListener('load', hidePreloader);
                     heroImg.addEventListener('error', hidePreloader);
                 }
-
-                // fallback: hide after 3s to avoid blocking user
                 setTimeout(hidePreloader, 3000);
             });
 
-            // safety fallback
             setTimeout(hidePreloader, 8000);
         })();
     </script>
 
     <script>
-        // Existing site logic preserved, with small integration tweaks for lazy-loading
         document.addEventListener("DOMContentLoaded", function () {
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
@@ -572,7 +597,6 @@
                 });
             }
 
-            // hero slider logic (kept as-is; harmless if no slides exist)
             const slides = document.querySelectorAll('.hero-slider .slide');
             let currentSlide = 0;
             const slideInterval = 8000;
@@ -584,7 +608,6 @@
             }
             if (slides.length > 0) setInterval(nextSlide, slideInterval);
 
-            // Countdown
             const targetDate = new Date('June 4, 2026 09:00:00').getTime();
             const countdownFunc = setInterval(() => {
                 const now = new Date().getTime();
@@ -608,7 +631,6 @@
                 }
             }, 1000);
 
-            // IntersectionObserver for reveal-on-scroll
             const scrollElements = document.querySelectorAll('.js-scroll');
             if (scrollElements.length > 0) {
                 const elementObserver = new IntersectionObserver((entries, observer) => {
@@ -622,7 +644,6 @@
                 scrollElements.forEach(el => { elementObserver.observe(el); });
             }
 
-            // About gallery thumbnail switching
             const mainImage = document.getElementById('main-about-image');
             const thumbnails = document.querySelectorAll('.thumbnail-image');
             if (mainImage && thumbnails.length > 0) {
@@ -641,7 +662,6 @@
                 });
             }
 
-            /* Lazy-load images with data-src using IntersectionObserver */
             const lazyImgs = document.querySelectorAll('img[data-src]');
             if ('IntersectionObserver' in window && lazyImgs.length > 0) {
                 const io = new IntersectionObserver((entries, obs) => {
