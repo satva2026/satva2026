@@ -5,31 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SATVA 2026 | Symposium on Advanced Technologies and Visionary Approaches for Sustainability</title>
-    
+
     <link rel="shortcut icon" href="images/logo4.png" type="image/x-icon">
 
+    <!-- FONT OPTIMIZATIONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- PRELOAD CRITICAL IMAGES -->
+    <link rel="preload" as="image" href="images/bg4.webp">
     <link rel="preload" as="image" href="images/logo4.png">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
-        
         :root {
-            --primary-color: #606C38; 
-            --secondary-color: #117d56; 
+            --primary-color: #606C38;
+            --secondary-color: #117d56;
             --dark-color: #013328;
-            --text-color: #000000; 
-            --light-text-color: #ffffff; 
+            --text-color: #000000;
+            --light-text-color: #ffffff;
             --header-bg: rgba(255, 255, 255, 0.95);
             --section-alt-bg: #f8f9fa;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        
-        /* Stop scrolling while preloader is active */
         body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
-        
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
@@ -52,20 +54,17 @@
         .loader-content {
             text-align: center;
             width: 300px;
-            max-width: 80%; /* Mobile safety */
+            max-width: 80%;
         }
 
-        /* Logo Styling */
         .loader-logo {
             width: 150px;
             height: auto;
             margin-bottom: 30px;
-            /* Premium 'Breathing' Effect */
             animation: breathe 2.5s infinite ease-in-out;
             filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
         }
 
-        /* Progress Bar Container */
         .progress-container {
             width: 100%;
             height: 6px;
@@ -75,17 +74,15 @@
             position: relative;
         }
 
-        /* The Moving Fill */
         .progress-bar {
             width: 0%;
             height: 100%;
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             border-radius: 10px;
-            transition: width 0.2s linear; /* Smooth increments */
+            transition: width 0.2s linear;
             box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
         }
 
-        /* Percentage Text */
         .progress-text {
             margin-top: 10px;
             font-family: 'Montserrat', sans-serif;
@@ -95,31 +92,29 @@
             letter-spacing: 1px;
         }
 
-        /* Keyframes for Logo Pulse */
         @keyframes breathe {
             0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
             50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); }
             100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         }
 
-        /* Mobile Adjustment */
         @media(max-width: 576px) {
             .loader-logo { width: 120px; }
             .loader-content { width: 240px; }
         }
 
-        /* --- EXISTING SITE CSS --- */
-        .main-header { 
-            position: sticky; top: 0; width: 100%; z-index: 1000; 
-            background: var(--header-bg); backdrop-filter: blur(10px); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        /* --- EXISTING SITE CSS (kept design) --- */
+        .main-header {
+            position: sticky; top: 0; width: 100%; z-index: 1000;
+            background: var(--header-bg); backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
-        
+
         .logo-container { display: flex; align-items: center; gap: 20px; }
-        .logo-1 { height: 65px; width: auto; } 
-        .logo-2 { height: 75px; width: auto; } 
+        .logo-1 { height: 65px; width: auto; }
+        .logo-2 { height: 75px; width: auto; }
         .logo-3 { height: 65px; width: auto; }
         .logo-container img { transition: transform 0.3s ease; }
         .logo-container img:hover { transform: scale(1.05); }
@@ -131,30 +126,29 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* UPDATED DROPDOWN CSS FOR CENTERING */
-        .dropdown-menu { 
-            display: none; 
-            position: absolute; 
-            top: 100%; 
-            left: 50%; /* Start at center */
-            transform: translate(-50%, 10px); /* Move back by 50% to perfectly center */
-            background: white; 
-            list-style: none; 
-            padding: 10px 0; 
-            margin-top: -10px; 
-            border-radius: 5px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            min-width: 280px; /* Slightly wider */
-            opacity: 0; 
-            transition: opacity 0.3s, transform 0.3s; 
-            z-index: 100; 
-            flex-direction: column; 
-            gap: 0 !important; 
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translate(-50%, 10px);
+            background: white;
+            list-style: none;
+            padding: 10px 0;
+            margin-top: -10px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            min-width: 280px;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100;
+            flex-direction: column;
+            gap: 0 !important;
         }
-        .dropdown:hover .dropdown-menu { 
-            display: flex; 
-            opacity: 1; 
-            transform: translate(-50%, 0); 
+        .dropdown:hover .dropdown-menu {
+            display: flex;
+            opacity: 1;
+            transform: translate(-50%, 0);
         }
         .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
@@ -163,10 +157,10 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION: use actual <img> for priority control --- */
         .hero { position: relative; height: 100vh; color: var(--light-text-color); display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
         .hero-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
-        .hero-drone-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('images/bg4.webp'); background-size: cover; background-position: center; animation: dronePan 30s ease-in-out infinite alternate; }
+        .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; transform-origin: center; animation: dronePan 30s ease-in-out infinite alternate; will-change: transform, opacity; }
         @keyframes dronePan { 0% { transform: scale(1.1); } 100% { transform: scale(1.3) translate(-20px, -10px); } }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3)); z-index: 1; }
         .hero-content { position: relative; z-index: 2; max-width: 1000px; padding: 20px; animation: fadeInDown 1.5s ease-out; }
@@ -174,10 +168,10 @@
         .hero h3 { font-size: 1.3rem; font-weight: 300; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
         .hero .tagline { font-size: 1.5rem; font-weight: 600; margin-bottom: 30px; font-style: italic; }
         .event-details { font-size: 1.2rem; font-weight: 700; margin-bottom: 30px; background: rgba(255, 255, 255, 0.15); padding: 10px 20px; border-radius: 50px; display: inline-block; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); }
-        
+
         .cta-button { display: block; margin: auto; background: var(--secondary-color); color: var(--light-text-color); max-width: 300px; padding: 15px 35px; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 1.1rem; transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
-        
+
         .countdown-container { display: inline-flex; justify-content: center; gap: 15px; margin-top: 30px; padding: 15px 25px; background: rgba(0,0,0,0.4); border-radius: 15px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
         .countdown-item { min-width: 70px; }
         .countdown-item span { font-size: 2rem; font-weight: 800; display: block; line-height: 1; }
@@ -187,7 +181,7 @@
         .ticker { display: inline-block; height: 40px; line-height: 40px; white-space: nowrap; padding-right: 100%; box-sizing: content-box; animation: ticker 45s linear infinite; }
         .ticker__item { display: inline-block; padding: 0 2rem; font-size: 1.1rem; color: white; font-weight: 600; letter-spacing: 0.5px; }
         @keyframes ticker { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
-        
+
         .content-section { padding: 80px 0; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--dark-color); position: relative; }
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
@@ -198,16 +192,15 @@
         .thumbnail-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
         .thumbnail-image { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 3px solid transparent; transition: transform 0.3s ease, border-color 0.3s ease; }
         .thumbnail-image.active { border-color: var(--primary-color); }
-        
-        /* Updated Partners Grid Logic */
-        .partners-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1.5fr; /* Left side smaller, right side larger */
-            gap: 30px; 
-            text-align: center; 
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 30px;
+            text-align: center;
             align-items: stretch;
         }
-        
+
         .partner-card {
             background: #fff;
             padding: 30px 20px;
@@ -219,7 +212,7 @@
             flex-direction: column;
             justify-content: flex-start;
         }
-        
+
         .partner-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -227,8 +220,7 @@
 
         .partner-card h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         .partner-card p { font-size: 1.1rem; font-weight: 700; line-height: 1.4; color: #444; }
-        
-        /* Association Container */
+
         .association-container {
             display: flex;
             justify-content: center;
@@ -241,7 +233,6 @@
             text-align: center;
             padding: 0 10px;
         }
-        /* Vertical Divider between associations */
         .association-divider {
             width: 2px;
             height: 60px;
@@ -273,11 +264,11 @@
             .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
             .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
 
-            .mobile-nav-container { 
-                display: block; 
-                position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); 
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; 
-                transition: max-height 0.5s ease-in-out; 
+            .mobile-nav-container {
+                display: block;
+                position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg);
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0;
+                transition: max-height 0.5s ease-in-out;
             }
             .mobile-nav-container.active { max-height: calc(100vh - 80px); }
             .mobile-nav-container ul { list-style: none; padding: 10px 0; }
@@ -291,17 +282,13 @@
 
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
-            .logo-2 { height: 45px !important; } 
+            .logo-2 { height: 45px !important; }
             .about-grid { grid-template-columns: 1fr; }
-            
-            /* Responsive Partner Logic */
             .partners-grid { grid-template-columns: 1fr; gap: 20px; }
-            
-            /* On mobile, stack the associations and hide the divider */
             .association-container { flex-direction: column; gap: 20px; }
             .association-divider { width: 80%; height: 1px; background-color: #ddd; margin: 10px auto; }
         }
-        
+
         @media(max-width: 576px) {
             .hero h1 { font-size: 1.8rem; }
             .hero h3 { font-size: 1rem; }
@@ -311,13 +298,17 @@
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
         }
+
+        /* Performance helpers */
+        .content-section { content-visibility: auto; contain-intrinsic-size: 800px; }
     </style>
 </head>
+
 <body class="loading-active">
 
     <div id="preloader">
         <div class="loader-content">
-            <img src="images/logo4.png" alt="SATVA Loading..." class="loader-logo">
+            <img src="images/logo4.png" alt="SATVA Loading..." class="loader-logo" width="150" height="150" decoding="async">
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
@@ -329,12 +320,13 @@
         <div class="container">
             <nav class="navbar">
                 <div class="logo-container">
-                    <a href="index.html"><img src="images/logo4.png" alt="SATVA Logo" class="logo-3"></a>
-                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logo1.png" alt="IIT Palakkad Logo" class="logo-1"></a>
-                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logo2.png" alt="IEI Logo" class="logo-2"></a>
-                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logo3.png" alt="IGS Logo" class="logo-3"></a>
+                    <!-- Keep logos eager (important for FCP) -->
+                    <a href="index.html"><img src="images/logo4.png" alt="SATVA Logo" class="logo-3" width="65" height="65" decoding="async"></a>
+                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logo1.png" alt="IIT Palakkad Logo" class="logo-1" width="65" height="65" decoding="async"></a>
+                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logo2.png" alt="IEI Logo" class="logo-2" width="75" height="75" decoding="async"></a>
+                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logo3.png" alt="IGS Logo" class="logo-3" width="65" height="65" decoding="async"></a>
                 </div>
-    
+
                 <nav class="main-nav" id="desktop-nav">
                     <ul>
                         <li><a href="index.html">HOME</a></li>
@@ -353,7 +345,7 @@
                         <li><a href="registrations.html">REGISTRATION</a></li>
                     </ul>
                 </nav>
-                
+
                 <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
             </nav>
         </div>
@@ -363,7 +355,8 @@
     <main id="main-content">
         <section class="hero" id="hero">
             <div class="hero-slider">
-                <div class="hero-drone-bg"></div>
+                <!-- Hero as an <img> so we can control priority -->
+                <img src="images/bg4.webp" srcset="images/bg4.webp 1x" alt="Symposium background" class="hero-bg-img" width="1920" height="1080" loading="eager" fetchpriority="high" decoding="async">
             </div>
             <div class="hero-overlay"></div>
             <div class="hero-content">
@@ -408,12 +401,14 @@
                         <p class="js-scroll fade-in-up">The symposium aims to provide a platform for researchers, engineers, and industry professionals to exchange ideas and share advances in sustainable pavement technologies. Emphasis will be placed on developing resilient, low-carbon, and resource-efficient pavement systems through innovations in materials, design, construction, and maintenance practices. </p>
                     </div>
                     <div class="image-gallery-container js-scroll fade-in-up">
-                        <img src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image">
+                        <!-- main image loads lazily (not critical for hero) -->
+                        <img src="images/Purpled3.png" data-src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image" width="1200" height="380" loading="lazy" decoding="async">
                         <div class="thumbnail-container">
-                            <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png">
-                            <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png">
-                            <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png">
-                            <img src="images/evntimg3.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/evntimg3.png">
+                            <!-- thumbnails initially small placeholders (or same file) and lazy-loaded via data-src -->
+                            <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png" width="320" height="80" loading="lazy" decoding="async">
+                            <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png" width="320" height="80" loading="lazy" decoding="async">
+                            <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png" width="320" height="80" loading="lazy" decoding="async">
+                            <img src="images/evntimg3.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/evntimg3.png" width="320" height="80" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
@@ -425,22 +420,22 @@
                 <h2 class="section-title js-scroll fade-in-up">Contact Us</h2>
                 <div class="contact-grid js-scroll fade-in-up">
                     <div class="contact-card">
-                        <img src="images/cmtimg4.png" alt="Dr C V Veena Venudharan" class="portrait">
+                        <img src="images/cmtimg4.png" alt="Dr C V Veena Venudharan" class="portrait" width="150" height="150" loading="lazy" decoding="async">
                         <div class="name">Dr C V Veena Venudharan</div>
                         <div class="title">Chair, SATVA 2026</div>
                     </div>
                     <div class="contact-card">
-                        <img src="images/cmtimg1.png" alt="Dr Athira Gopinath" class="portrait">
+                        <img src="images/cmtimg1.png" alt="Dr Athira Gopinath" class="portrait" width="150" height="150" loading="lazy" decoding="async">
                         <div class="name">Dr Athira Gopinath</div>
                         <div class="title">Co-Chair, SATVA 2026</div>
                     </div>
                     <div class="contact-card">
-                        <img src="images/cmtimg2.png" alt="Dr Divya P V" class="portrait">
+                        <img src="images/cmtimg2.png" alt="Dr Divya P V" class="portrait" width="150" height="150" loading="lazy" decoding="async">
                         <div class="name">Dr Divya P V</div>
                         <div class="title">Co-Chair, SATVA 2026</div>
                     </div>
                     <div class="contact-card">
-                        <img src="images/cmtimg3.png" alt="Dr Richa Agnihotri" class="portrait">
+                        <img src="images/cmtimg3.png" alt="Dr Richa Agnihotri" class="portrait" width="150" height="150" loading="lazy" decoding="async">
                         <div class="name">Dr Richa Agnihotri</div>
                         <div class="title">Co-Chair, SATVA 2026</div>
                     </div>
@@ -452,7 +447,7 @@
             <div class="container">
                 <h2 class="section-title">Organisers & Partners</h2>
                 <div class="partners-grid">
-                    
+
                     <div class="partner-card js-scroll fade-in-up">
                         <h4>Host Organisation</h4>
                         <div class="association-container">
@@ -461,7 +456,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="partner-card js-scroll fade-in-up">
                         <h4>In Association with</h4>
                         <div class="association-container">
@@ -480,52 +475,72 @@
         </section>
     </main>
 
+    <!-- SCRIPTS -->
     <script>
-        // --- PRELOADER LOGIC ---
-        let progress = 0;
-        let isLoaded = false;
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-        const preloader = document.getElementById('preloader');
-        const body = document.body;
+        /* -----------------------------
+           Improved Preloader (DOM + hero image priority)
+           Hides preloader when DOMContentLoaded + hero image ready OR a short fallback.
+           ----------------------------- */
+        (function () {
+            const preloader = document.getElementById('preloader');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const body = document.body;
+            let progress = 0;
+            let finished = false;
 
-        const interval = setInterval(() => {
-            if (!isLoaded && progress < 90) {
-                const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
-                progress += increment;
-            } 
-            else if (isLoaded && progress < 100) {
-                progress += 5; 
-            }
-            
-            if(progress > 100) progress = 100;
-            
-            if (progressBar && progressText) {
-                progressBar.style.width = progress + "%";
-                progressText.innerText = Math.floor(progress) + "%";
-            }
+            const interval = setInterval(() => {
+                if (progress < 85) progress += Math.random() * 3 + 1;
+                else progress += 0.5;
+                if (progress > 99) progress = 99;
+                if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
+                if (progressText) progressText.innerText = Math.floor(progress) + '%';
+            }, 80);
 
-            if (progress >= 100) {
+            function hidePreloader() {
+                if (finished) return;
+                finished = true;
                 clearInterval(interval);
+                if (progressBar) progressBar.style.width = '100%';
+                if (progressText) progressText.innerText = '100%';
                 setTimeout(() => {
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
                     body.classList.remove('loading-active');
-                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
-                }, 400); 
+                    setTimeout(() => preloader.remove(), 700);
+                }, 300);
             }
-        }, 30); 
 
-        window.addEventListener("load", function() {
-            isLoaded = true;
-        });
+            function heroReady() {
+                const heroImg = document.querySelector('.hero-bg-img');
+                return heroImg && (heroImg.complete || heroImg.naturalWidth > 0);
+            }
 
-        // --- EXISTING SITE LOGIC ---
-        document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener('DOMContentLoaded', () => {
+                if (heroReady()) return hidePreloader();
+
+                const heroImg = document.querySelector('.hero-bg-img');
+                if (heroImg) {
+                    heroImg.addEventListener('load', hidePreloader);
+                    heroImg.addEventListener('error', hidePreloader);
+                }
+
+                // fallback: hide after 3s to avoid blocking user
+                setTimeout(hidePreloader, 3000);
+            });
+
+            // safety fallback
+            setTimeout(hidePreloader, 8000);
+        })();
+    </script>
+
+    <script>
+        // Existing site logic preserved, with small integration tweaks for lazy-loading
+        document.addEventListener("DOMContentLoaded", function () {
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-            
+
             if (desktopNav && mobileNavContainer && mobileNavToggle) {
                 let mobileNavHTML = desktopNav.innerHTML;
                 const parser = new DOMParser();
@@ -542,11 +557,13 @@
                     mobileNavToggle.classList.toggle('active');
                 });
 
-                mobileNavContainer.addEventListener('click', function(e) {
+                mobileNavContainer.addEventListener('click', function (e) {
                     if (e.target.classList.contains('dropdown-toggle')) {
                         e.preventDefault();
                         e.target.classList.toggle('open');
-                        const menu = e.target.closest('li.dropdown').querySelector('.dropdown-menu');
+                        const li = e.target.closest('li.dropdown');
+                        if (!li) return;
+                        const menu = li.querySelector('.dropdown-menu');
                         if (menu) { menu.classList.toggle('show'); }
                     } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
                         mobileNavContainer.classList.remove('active');
@@ -555,20 +572,19 @@
                 });
             }
 
+            // hero slider logic (kept as-is; harmless if no slides exist)
             const slides = document.querySelectorAll('.hero-slider .slide');
             let currentSlide = 0;
-            const slideInterval = 8000; 
-
+            const slideInterval = 8000;
             function nextSlide() {
+                if (!slides || slides.length === 0) return;
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
             }
+            if (slides.length > 0) setInterval(nextSlide, slideInterval);
 
-            if(slides.length > 0) {
-                setInterval(nextSlide, slideInterval);
-            }
-
+            // Countdown
             const targetDate = new Date('June 4, 2026 09:00:00').getTime();
             const countdownFunc = setInterval(() => {
                 const now = new Date().getTime();
@@ -584,7 +600,7 @@
                 const h = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((gap % (1000 * 60)) / 1000);
-                if(document.getElementById('days')) {
+                if (document.getElementById('days')) {
                     document.getElementById('days').innerText = String(d).padStart(2, '0');
                     document.getElementById('hours').innerText = String(h).padStart(2, '0');
                     document.getElementById('minutes').innerText = String(m).padStart(2, '0');
@@ -592,6 +608,7 @@
                 }
             }, 1000);
 
+            // IntersectionObserver for reveal-on-scroll
             const scrollElements = document.querySelectorAll('.js-scroll');
             if (scrollElements.length > 0) {
                 const elementObserver = new IntersectionObserver((entries, observer) => {
@@ -605,15 +622,16 @@
                 scrollElements.forEach(el => { elementObserver.observe(el); });
             }
 
+            // About gallery thumbnail switching
             const mainImage = document.getElementById('main-about-image');
             const thumbnails = document.querySelectorAll('.thumbnail-image');
-            if(mainImage && thumbnails.length > 0) {
+            if (mainImage && thumbnails.length > 0) {
                 thumbnails.forEach(thumb => {
-                    thumb.addEventListener('click', function() {
+                    thumb.addEventListener('click', function () {
                         if (this.classList.contains('active')) return;
                         thumbnails.forEach(t => t.classList.remove('active'));
                         this.classList.add('active');
-                        const newImageSrc = this.getAttribute('data-src');
+                        const newImageSrc = this.getAttribute('data-src') || this.getAttribute('src');
                         mainImage.style.opacity = 0;
                         setTimeout(() => {
                             mainImage.src = newImageSrc;
@@ -622,7 +640,26 @@
                     });
                 });
             }
+
+            /* Lazy-load images with data-src using IntersectionObserver */
+            const lazyImgs = document.querySelectorAll('img[data-src]');
+            if ('IntersectionObserver' in window && lazyImgs.length > 0) {
+                const io = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            obs.unobserve(img);
+                        }
+                    });
+                }, { rootMargin: '200px 0px' });
+                lazyImgs.forEach(img => io.observe(img));
+            } else {
+                lazyImgs.forEach(img => { img.src = img.dataset.src; img.removeAttribute('data-src'); });
+            }
         });
     </script>
 </body>
+
 </html>
