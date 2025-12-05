@@ -189,11 +189,74 @@
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
         .about-grid { display: grid; grid-template-columns: none; gap: 50px; align-items: stretch; }
         .about-text p { text-align: justify; font-size: 1.1rem; margin-bottom: 15px; }
-        .image-gallery-container { display: flex; flex-direction: column; gap: 15px; justify-content: center; }
-        .main-gallery-image { width: 100%; height: 380px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: opacity 0.4s ease-in-out; }
-        .thumbnail-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-        .thumbnail-image { width: 100%; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 3px solid transparent; transition: transform 0.3s ease, border-color 0.3s ease; }
-        .thumbnail-image.active { border-color: var(--primary-color); }
+        
+        /* --- NEW CARD STACK CSS --- */
+        .stack-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .card-stack-wrapper {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .card-stack {
+            position: relative;
+            width: 300px; /* Reduced visual footprint */
+            height: 220px;
+        }
+
+        .stack-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 6px solid #fff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transform-origin: center bottom;
+            will-change: transform, opacity, z-index;
+        }
+
+        /* The shuffling classes handled by JS */
+        .stack-card.top {
+            z-index: 10;
+            transform: translateY(0) scale(1) rotate(0deg);
+            opacity: 1;
+        }
+        .stack-card.middle {
+            z-index: 5;
+            transform: translateY(-15px) scale(0.95) rotate(3deg);
+            opacity: 1;
+        }
+        .stack-card.bottom {
+            z-index: 1;
+            transform: translateY(-30px) scale(0.9) rotate(6deg);
+            opacity: 0.8;
+        }
+        .stack-card.hidden {
+            z-index: 0;
+            transform: translateY(-40px) scale(0.85);
+            opacity: 0;
+        }
+        
+        /* The animation for the card leaving */
+        .stack-card.shuffling-out {
+            transform: translate(120%, -20%) rotate(20deg);
+            opacity: 0;
+            z-index: 20;
+        }
 
         .partners-grid {
             display: grid;
@@ -280,14 +343,13 @@
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
             
-            /* --- FIXED: FORCE MOBILE STYLES WITH !IMPORTANT --- */
             .mobile-nav-container .dropdown-menu { 
-                position: static !important; /* Forces menu into the flow */
+                position: static !important;
                 float: none !important;
                 display: none; 
                 width: 100% !important; 
-                min-width: 0 !important; /* Removes desktop width restriction */
-                transform: none !important; /* Removes desktop centering */
+                min-width: 0 !important;
+                transform: none !important;
                 left: auto !important;
                 top: auto !important;
                 box-shadow: none !important;
@@ -322,6 +384,7 @@
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; }
             .about-grid { grid-template-columns: 1fr; }
+            .stack-grid { grid-template-columns: 1fr; gap: 40px; } /* Stack becomes vertical on mobile */
             .partners-grid { grid-template-columns: 1fr; gap: 20px; }
             .association-container { flex-direction: column; gap: 20px; }
             .association-divider { width: 80%; height: 1px; background-color: #ddd; margin: 10px auto; }
@@ -335,6 +398,8 @@
             .section-title { font-size: 2rem; }
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
+            /* Adjust stack size for small mobile */
+            .card-stack { width: 260px; height: 190px; }
         }
 
         /* Performance helpers */
@@ -432,17 +497,17 @@
         <section id="theme" class="content-section" style="padding-bottom: 0;">
             <div class="container">
                 <h2 class="section-title js-scroll fade-in-up">Pavement Sustainability Frontiers: From Materials to Maintenance</h2>
-                <div class="about-grid">
+                <div class="stack-grid">
                     <div class="about-text">
                         <p class="js-scroll fade-in-up">The symposium aims to provide a platform for researchers, engineers, and industry professionals to exchange ideas and share advances in sustainable pavement technologies. Emphasis will be placed on developing resilient, low-carbon, and resource-efficient pavement systems through innovations in materials, design, construction, and maintenance practices. </p>
                     </div>
-                    <div class="image-gallery-container js-scroll fade-in-up">
-                        <img src="images/Purpled3.png" data-src="images/Purpled3.png" alt="Symposium venue main view" id="main-about-image" class="main-gallery-image" width="1200" height="380" loading="lazy" decoding="async">
-                        <div class="thumbnail-container">
-                            <img src="images/Purpled3.png" alt="Thumbnail view 1" class="thumbnail-image active" data-src="images/Purpled3.png" width="320" height="80" loading="lazy" decoding="async">
-                            <img src="images/sw1.png" alt="Thumbnail view 2" class="thumbnail-image" data-src="images/sw1.png" width="320" height="80" loading="lazy" decoding="async">
-                            <img src="images/abtimg3.png" alt="Thumbnail view 3" class="thumbnail-image" data-src="images/abtimg3.png" width="320" height="80" loading="lazy" decoding="async">
-                            <img src="images/evntimg3.png" alt="Thumbnail view 4" class="thumbnail-image" data-src="images/evntimg3.png" width="320" height="80" loading="lazy" decoding="async">
+                    
+                    <div class="card-stack-wrapper js-scroll fade-in-up">
+                        <div class="card-stack" id="cardStack">
+                            <img src="images/home/img1.webp" class="stack-card top" alt="Symposium Highlight 1" loading="lazy">
+                            <img src="images/home/img2.webp" class="stack-card middle" alt="Symposium Highlight 2" loading="lazy">
+                            <img src="images/home/img3.webp" class="stack-card bottom" alt="Symposium Highlight 3" loading="lazy">
+                            <img src="images/home/img4.webp" class="stack-card hidden" alt="Symposium Highlight 4" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -562,6 +627,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // --- MOBILE NAV LOGIC ---
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -597,6 +663,7 @@
                 });
             }
 
+            // --- HERO SLIDER ---
             const slides = document.querySelectorAll('.hero-slider .slide');
             let currentSlide = 0;
             const slideInterval = 8000;
@@ -608,6 +675,7 @@
             }
             if (slides.length > 0) setInterval(nextSlide, slideInterval);
 
+            // --- COUNTDOWN ---
             const targetDate = new Date('June 4, 2026 09:00:00').getTime();
             const countdownFunc = setInterval(() => {
                 const now = new Date().getTime();
@@ -631,6 +699,7 @@
                 }
             }, 1000);
 
+            // --- SCROLL ANIMATION ---
             const scrollElements = document.querySelectorAll('.js-scroll');
             if (scrollElements.length > 0) {
                 const elementObserver = new IntersectionObserver((entries, observer) => {
@@ -644,24 +713,46 @@
                 scrollElements.forEach(el => { elementObserver.observe(el); });
             }
 
-            const mainImage = document.getElementById('main-about-image');
-            const thumbnails = document.querySelectorAll('.thumbnail-image');
-            if (mainImage && thumbnails.length > 0) {
-                thumbnails.forEach(thumb => {
-                    thumb.addEventListener('click', function () {
-                        if (this.classList.contains('active')) return;
-                        thumbnails.forEach(t => t.classList.remove('active'));
-                        this.classList.add('active');
-                        const newImageSrc = this.getAttribute('data-src') || this.getAttribute('src');
-                        mainImage.style.opacity = 0;
-                        setTimeout(() => {
-                            mainImage.src = newImageSrc;
-                            mainImage.style.opacity = 1;
-                        }, 400);
-                    });
-                });
+            // --- NEW: CARD STACK SHUFFLE LOGIC ---
+            const cardStack = document.getElementById('cardStack');
+            if (cardStack) {
+                // Initial stack logic runs every 15 seconds
+                setInterval(() => {
+                    const cards = Array.from(cardStack.querySelectorAll('.stack-card'));
+                    if (cards.length < 2) return;
+
+                    // 1. Identify the current top card
+                    const topCard = cards[0];
+
+                    // 2. Animate the top card out (dealing effect)
+                    topCard.classList.remove('top');
+                    topCard.classList.add('shuffling-out');
+
+                    // 3. Shift the visual classes of the remaining cards
+                    // We timeout briefly to let the "fly out" start before reordering the stack
+                    setTimeout(() => {
+                        // Move the old top element to the very end of the DOM container
+                        cardStack.appendChild(topCard);
+                        
+                        // Re-query the list in new order
+                        const newOrder = Array.from(cardStack.querySelectorAll('.stack-card'));
+                        
+                        // Reset classes based on new position
+                        newOrder.forEach((card, index) => {
+                            // Strip all positioning classes
+                            card.className = 'stack-card'; 
+                            
+                            // Assign new class based on index
+                            if (index === 0) card.classList.add('top');
+                            else if (index === 1) card.classList.add('middle');
+                            else if (index === 2) card.classList.add('bottom');
+                            else card.classList.add('hidden');
+                        });
+                    }, 600); // Wait 0.6s for the card to fly out before snapping back to bottom
+                }, 15000); // 15 seconds
             }
 
+            // --- LAZY LOAD FALLBACK ---
             const lazyImgs = document.querySelectorAll('img[data-src]');
             if ('IntersectionObserver' in window && lazyImgs.length > 0) {
                 const io = new IntersectionObserver((entries, obs) => {
@@ -681,5 +772,4 @@
         });
     </script>
 </body>
-
 </html>
