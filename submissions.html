@@ -7,7 +7,6 @@
     <title>Submission - SATVA 2026</title>
     
     <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
-    
     <link rel="preload" as="image" href="images/logos/logo4.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -100,32 +99,16 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* DESKTOP DROPDOWN CSS (CENTERED) */
+        /* DESKTOP DROPDOWN CSS */
         .dropdown-menu { 
-            display: flex; 
-            flex-direction: column;
-            position: absolute; 
-            top: 100%; 
-            left: 50%; 
-            transform: translate(-50%, 20px); 
-            background: white; 
-            list-style: none; 
-            padding: 10px 0; 
-            margin-top: -10px; 
-            border-radius: 5px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            min-width: 280px; 
-            gap: 0 !important; 
-            z-index: 100; 
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            display: flex; flex-direction: column; position: absolute; 
+            top: 100%; left: 50%; transform: translate(-50%, 20px); 
+            background: white; list-style: none; padding: 10px 0; 
+            margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            min-width: 280px; gap: 0 !important; z-index: 100; 
+            visibility: hidden; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
         }
-        .dropdown:hover .dropdown-menu { 
-            visibility: visible;
-            opacity: 1;
-            transform: translate(-50%, 0); 
-        }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
         .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
@@ -138,75 +121,25 @@
         .registration-section h1 { font-size: 3rem; color: var(--dark-color); margin-bottom: 20px; }
         .registration-section p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px auto; }
         
-        .cta-button { display: inline-block; background: var(--dark-color); color: var(--light-text-color); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s; margin: 10px; }
+        .cta-button { cursor: pointer; display: inline-block; background: var(--dark-color); color: var(--light-text-color); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s; margin: 10px; border: none; }
         .cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
 
         /* --- COUNTDOWN TIMER CSS --- */
-        .timer-wrapper {
-            margin: 30px auto 10px auto;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .timer-box {
-            background: #fff;
-            padding: 10px 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border: 1px solid var(--primary-color);
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .timer-box .number {
-            display: block;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 1.5rem;
-            color: var(--dark-color);
-            line-height: 1.2;
-        }
-
-        .timer-box .label {
-            display: block;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--secondary-color);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        
-        .expired-msg {
-            color: #c0392b;
-            font-weight: 800;
-            font-size: 1.5rem;
-            padding: 20px;
-        }
+        .timer-wrapper { margin: 30px auto 10px auto; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .timer-box { background: #fff; padding: 10px 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--primary-color); min-width: 80px; text-align: center; }
+        .timer-box .number { display: block; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--dark-color); line-height: 1.2; }
+        .timer-box .label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--secondary-color); font-weight: 600; letter-spacing: 0.5px; }
+        .expired-msg { color: #c0392b; font-weight: 800; font-size: 1.5rem; padding: 20px; }
 
         /* Deadline Note */
-        .deadline-note {
-            margin-top: 25px;
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--dark-color);
-            display: block;
-        }
-        .deadline-note i {
-            color: #c0392b; /* Alert Red color for icon */
-            margin-right: 8px;
-        }
-        .deadline-highlight {
-            color: #c0392b; /* Alert Red color for date */
-            font-weight: 700;
-        }
+        .deadline-note { margin-top: 25px; font-size: 1.1rem; font-weight: 500; color: var(--dark-color); display: block; }
+        .deadline-note i { color: #c0392b; margin-right: 8px; }
+        .deadline-highlight { color: #c0392b; font-weight: 700; }
 
         .info-section { padding: 80px 0; background-color: #fff; }
         .info-section h2 { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 50px; }
         
         .template-button-container { text-align: center; margin-bottom: 20px; }
-        
         .guidelines-content { max-width: 900px; margin: 0 auto; text-align: center; }
         .guidelines-content p { margin-top: 20px; font-weight: bold; }
         .guidelines-content a { color: var(--primary-color); text-decoration: none; }
@@ -219,6 +152,38 @@
         .js-scroll.fade-in-up { transform: translateY(30px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
         
+        /* --- MODAL & AUTH STYLES --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-container { background: white; width: 90%; max-width: 600px; max-height: 90vh; border-radius: 10px; padding: 0; position: relative; display: flex; flex-direction: column; transform: scale(0.9); transition: transform 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .modal-overlay.active .modal-container { transform: scale(1); }
+        .modal-header { padding: 20px; background: var(--dark-color); color: white; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h2 { font-size: 1.5rem; margin: 0; }
+        .close-modal-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .modal-body { padding: 30px; overflow-y: auto; }
+
+        /* Auth Styles */
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+        .auth-tab { flex: 1; padding: 10px; background: none; border: none; font-weight: 700; cursor: pointer; color: #aaa; }
+        .auth-tab.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
+        .auth-form-container input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 1rem; }
+        .auth-action-btn { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 5px; font-weight: 700; cursor: pointer; transition: background 0.3s; }
+        .auth-action-btn:hover { background: var(--secondary-color); }
+        .google-btn { width: 100%; padding: 12px; background: #fff; border: 1px solid #ddd; color: #333; border-radius: 5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; transition: background 0.3s; }
+        .google-btn:hover { background: #f1f1f1; }
+        .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 10px; text-align: center; }
+
+        /* Form Styles */
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark-color); font-size: 0.95rem; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 1rem; }
+        textarea.form-control { resize: vertical; min-height: 120px; }
+        .word-counter { text-align: right; font-size: 0.8rem; color: #666; margin-top: 5px; }
+        .word-counter.limit-exceeded { color: #c0392b; font-weight: bold; }
+        .file-upload-wrapper { border: 2px dashed #ccc; padding: 20px; text-align: center; border-radius: 5px; cursor: pointer; transition: all 0.3s; }
+        .file-upload-wrapper:hover { border-color: var(--primary-color); background: #f9f9f9; }
+        .submit-form-btn { background: var(--secondary-color); color: white; border: none; padding: 15px 40px; font-size: 1.1rem; font-weight: 700; border-radius: 50px; cursor: pointer; transition: background 0.3s; width: 100%; }
+
         /* --- MEDIA QUERIES --- */
         @media(max-width: 992px) {
             .main-nav { display: none; }
@@ -229,7 +194,6 @@
             .mobile-nav-toggle.active .hamburger { background: transparent; }
             .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
             .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
-
             .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
             .mobile-nav-container.active { max-height: calc(100vh - 80px); }
             .mobile-nav-container ul { list-style: none; padding: 10px 0; }
@@ -238,45 +202,17 @@
             .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
-            
-            /* --- FIXED: FORCE MOBILE DROPDOWN STYLES WITH !IMPORTANT --- */
+            /* FIXED: FORCE MOBILE DROPDOWN STYLES */
             .mobile-nav-container .dropdown-menu { 
-                position: static !important; 
-                float: none !important;
-                display: none; 
-                width: 100% !important; 
-                min-width: 0 !important; 
-                transform: none !important; 
-                left: auto !important;
-                top: auto !important;
-                box-shadow: none !important;
-                background-color: #f8f9fa !important;
-                border-radius: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                opacity: 1 !important;
-                visibility: visible !important;
+                position: static !important; float: none !important; display: none; 
+                width: 100% !important; min-width: 0 !important; transform: none !important; 
+                left: auto !important; top: auto !important; box-shadow: none !important;
+                background-color: #f8f9fa !important; border-radius: 0 !important;
+                margin: 0 !important; padding: 0 !important; opacity: 1 !important; visibility: visible !important;
             }
-            
-            .mobile-nav-container .dropdown-menu.show { 
-                display: block !important; 
-            }
-
-            .mobile-nav-container .dropdown-menu li {
-                width: 100% !important;
-                display: block !important;
-            }
-
-            .mobile-nav-container .dropdown-menu li a {
-                text-align: center !important;
-                padding: 12px 20px !important;
-                width: 100% !important;
-                display: block !important;
-                font-size: 1rem !important;
-                color: #444 !important;
-                border-bottom: 1px solid rgba(0,0,0,0.05);
-            }
-
+            .mobile-nav-container .dropdown-menu.show { display: block !important; }
+            .mobile-nav-container .dropdown-menu li { width: 100% !important; display: block !important; }
+            .mobile-nav-container .dropdown-menu li a { text-align: center !important; padding: 12px 20px !important; width: 100% !important; display: block !important; font-size: 1rem !important; color: #444 !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
@@ -341,31 +277,20 @@
                 <h1>Call for Abstracts</h1>
                 <p>The call for abstracts for SATVA 2026 is now open. Interested participants are invited to submit their abstracts for consideration. Accepted papers will be considered for oral/poster presentations, and selected contributions will be included in the proceedings.</p>
                 
-                <a href="https://forms.gle/ybQ4Q6N3CUWpojc59" class="cta-button" target="_blank" rel="noopener noreferrer">Abstract Submission</a>
+                <button id="openSubmissionModal" class="cta-button">
+                    <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Abstract Submission
+                </button>
                 
                 <div id="submission-timer" class="timer-wrapper">
-                    <div class="timer-box">
-                        <span class="number" id="t-days">00</span>
-                        <span class="label">Days</span>
-                    </div>
-                    <div class="timer-box">
-                        <span class="number" id="t-hours">00</span>
-                        <span class="label">Hours</span>
-                    </div>
-                    <div class="timer-box">
-                        <span class="number" id="t-minutes">00</span>
-                        <span class="label">Mins</span>
-                    </div>
-                    <div class="timer-box">
-                        <span class="number" id="t-seconds">00</span>
-                        <span class="label">Secs</span>
-                    </div>
+                    <div class="timer-box"><span class="number" id="t-days">00</span><span class="label">Days</span></div>
+                    <div class="timer-box"><span class="number" id="t-hours">00</span><span class="label">Hours</span></div>
+                    <div class="timer-box"><span class="number" id="t-minutes">00</span><span class="label">Mins</span></div>
+                    <div class="timer-box"><span class="number" id="t-seconds">00</span><span class="label">Secs</span></div>
                 </div>
 
                 <div class="deadline-note">
                     <i class="fas fa-exclamation-circle"></i> Last date: <span class="deadline-highlight">31st December 2025</span> for Abstract Submission
                 </div>
-
             </div>
         </section>
 
@@ -374,7 +299,6 @@
                 <div class="template-button-container js-scroll fade-in-up">
                     <a href="DOCS/AbstractTemplateSATVA2026.docx" class="cta-button" download>DOWNLOAD ABSTRACT TEMPLATE</a>
                 </div>
-
                 <div class="guidelines-content">
                     <p class="js-scroll fade-in-up">For any further clarifications, contact: <a href="mailto:satva@iitpkd.ac.in">satva@iitpkd.ac.in</a></p>
                 </div>
@@ -382,143 +306,319 @@
         </section>
     </main>
 
-    <a href="mailto:satva@iitpkd.ac.in" class="floating-info-tab js-scroll fade-in-up">
-        &#9993; info
-    </a>
+    <a href="mailto:satva@iitpkd.ac.in" class="floating-info-tab js-scroll fade-in-up">&#9993; info</a>
+
+    <div id="submissionModalOverlay" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2 id="modal-title">Sign In Required</h2>
+                <button class="close-modal-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                
+                <div id="auth-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" onclick="window.switchTab('login')">Login</button>
+                        <button class="auth-tab" onclick="window.switchTab('signup')">Sign Up</button>
+                    </div>
+
+                    <div id="login-form" class="auth-form-container">
+                        <input type="email" id="login-email" placeholder="Email Address" required>
+                        <input type="password" id="login-password" placeholder="Password" required>
+                        <button id="btn-login-email" class="auth-action-btn">Login</button>
+                        <div style="text-align:center; margin:15px 0; color:#999;">or</div>
+                        <button id="btn-google-login" class="google-btn"><i class="fab fa-google"></i> Continue with Google</button>
+                        <p id="login-error" class="error-msg"></p>
+                    </div>
+
+                    <div id="signup-form" class="auth-form-container" style="display: none;">
+                        <input type="email" id="signup-email" placeholder="Email Address" required>
+                        <input type="password" id="signup-password" placeholder="Password (Min 6 chars)" required>
+                        <button id="btn-signup-email" class="auth-action-btn">Sign Up</button>
+                        <div style="text-align:center; margin:15px 0; color:#999;">or</div>
+                        <button id="btn-google-signup" class="google-btn"><i class="fab fa-google"></i> Sign up with Google</button>
+                        <p id="signup-error" class="error-msg"></p>
+                    </div>
+                </div>
+
+                <div id="submission-container" style="display: none;">
+                    
+                    <div style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #606C38;">
+                        <small>Submitting as:</small><br>
+                        <strong id="display-user-email">user@email.com</strong>
+                        <button id="btn-logout" style="float: right; border: none; background: none; color: #c0392b; cursor: pointer; text-decoration: underline;">Logout</button>
+                    </div>
+
+                    <form id="abstractForm">
+                        <input type="hidden" id="authName" name="authName">
+                        <input type="hidden" id="email" name="email">
+
+                        <div class="form-group">
+                            <label>1. Corresponding Author Name *</label>
+                            <input type="text" id="visibleName" class="form-control" placeholder="Full Name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>2. Designation *</label>
+                            <select id="designation" class="form-control" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="UG / PG Student">UG / PG Student</option>
+                                <option value="Research Scholar">Research Scholar</option>
+                                <option value="Faculty">Faculty</option>
+                                <option value="Industry Professional / Research Scientists">Industry Professional / Research Scientists</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>3. Institution / Organization *</label>
+                            <input type="text" id="institution" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>4. Phone Number (Corresponding Author) *</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>5. Title of the abstract *</label>
+                            <input type="text" id="paperTitle" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>6. Relevant Theme *</label>
+                            <select id="theme" class="form-control" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="Resilient & Green Geotechnics">Resilient & Green Geotechnics</option>
+                                <option value="Eco-Efficient Asphalt Technologies">Eco-Efficient Asphalt Technologies</option>
+                                <option value="Sustainable Rigid Pavement Systems">Sustainable Rigid Pavement Systems</option>
+                                <option value="Resilient Roads: Evaluation & Maintenance">Resilient Roads: Evaluation & Maintenance</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>7. Presentation Preference *</label>
+                            <select id="preference" class="form-control" required>
+                                <option value="" disabled selected>Select</option>
+                                <option value="Oral">Oral</option>
+                                <option value="Poster">Poster</option>
+                                <option value="Both">Both</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>8. Abstract (Maximum 500 words) *</label>
+                            <textarea id="abstractText" class="form-control" required></textarea>
+                            <div id="wordCountDisplay" class="word-counter">0 / 500</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>9. Abstract (PDF, Max 10MB) *</label>
+                            <div class="file-upload-wrapper" onclick="document.getElementById('abstractFile').click()">
+                                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #606C38;"></i>
+                                <p id="fileNameDisplay" style="margin-top: 5px;">Click to upload PDF</p>
+                                <input type="file" id="abstractFile" accept=".pdf" style="display: none;" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-form-btn">Submit Abstract</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <script>
-        // --- 4. PRELOADER LOGIC ---
-        (function () {
-            let progress = 0;
-            let finished = false;
-            const progressBar = document.getElementById('progress-bar');
-            const progressText = document.getElementById('progress-text');
-            const preloader = document.getElementById('preloader');
-            const body = document.body;
-
-            const interval = setInterval(() => {
-                if (progress < 90) {
-                    const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
-                    progress += increment;
-                }
-                
-                if (progress > 99) progress = 99;
-                
-                if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
-                if (progressText) progressText.innerText = Math.floor(progress) + '%';
-            }, 30); 
-
-            function hidePreloader() {
-                if (finished) return;
-                finished = true;
-                clearInterval(interval);
-                
-                // Jump to 100%
-                if (progressBar) progressBar.style.width = '100%';
-                if (progressText) progressText.innerText = '100%';
-                
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    preloader.style.visibility = 'hidden';
-                    body.classList.remove('loading-active');
-                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
-                }, 300); 
-            }
-
-            // Detect Actual Page Load
-            window.addEventListener("load", hidePreloader);
-            // Fallback
-            setTimeout(hidePreloader, 4000);
-        })();
-
-        // --- EXISTING PAGE LOGIC ---
+        // PRELOADER
+        (function(){let e=0,t=!1,n=document.getElementById("progress-bar"),o=document.getElementById("progress-text"),r=document.getElementById("preloader"),a=document.body,i=setInterval(()=>{e<90&&(e+=(e>70?.5:e>40?1:2)),e>99&&(e=99),n&&(n.style.width=Math.floor(e)+"%"),o&&(o.innerText=Math.floor(e)+"%")},30);function s(){if(!t){t=!0,clearInterval(i),n&&(n.style.width="100%"),o&&(o.innerText="100%"),setTimeout(()=>{r.style.opacity="0",r.style.visibility="hidden",a.classList.remove("loading-active"),setTimeout(()=>{r&&r.remove()},800)},300)}}window.addEventListener("load",s),setTimeout(s,4e3)})();
+        
+        // PAGE LOGIC
         document.addEventListener('DOMContentLoaded', function() {
+            // Timer Logic
+            const e=new Date("Dec 31, 2025 23:59:00").getTime(),t=document.getElementById("submission-timer");if(t){const n=setInterval(function(){const o=(new Date).getTime(),r=e-o;document.getElementById("t-days").innerHTML=Math.floor(r/864e5)<10?"0"+Math.floor(r/864e5):Math.floor(r/864e5),document.getElementById("t-hours").innerHTML=Math.floor(r%864e5/36e5)<10?"0"+Math.floor(r%864e5/36e5):Math.floor(r%864e5/36e5),document.getElementById("t-minutes").innerHTML=Math.floor(r%36e5/6e4)<10?"0"+Math.floor(r%36e5/6e4):Math.floor(r%36e5/6e4),document.getElementById("t-seconds").innerHTML=Math.floor(r%6e4/1e3)<10?"0"+Math.floor(r%6e4/1e3):Math.floor(r%6e4/1e3),r<0&&(clearInterval(n),t.innerHTML="<div class='expired-msg'>Closed</div>")},1e3)}
             
-            // --- COUNTDOWN LOGIC ---
-            // Set the date we're counting down to: Dec 31, 2025 23:59:00
-            const submissionDeadline = new Date("Dec 31, 2025 23:59:00").getTime();
-            const timerElement = document.getElementById('submission-timer');
-
-            if(timerElement) {
-                const timerInterval = setInterval(function() {
-                    const now = new Date().getTime();
-                    const distance = submissionDeadline - now;
-
-                    // Time calculations
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                    // Output the result
-                    document.getElementById("t-days").innerHTML = days < 10 ? "0" + days : days;
-                    document.getElementById("t-hours").innerHTML = hours < 10 ? "0" + hours : hours;
-                    document.getElementById("t-minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-                    document.getElementById("t-seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
-
-                    // If the count down is over
-                    if (distance < 0) {
-                        clearInterval(timerInterval);
-                        timerElement.innerHTML = "<div class='expired-msg'>Abstract Submission Closed</div>";
-                    }
-                }, 1000);
-            }
-
-            // --- MOBILE NAV LOGIC ---
-            const desktopNav = document.getElementById('desktop-nav');
-            const mobileNavContainer = document.getElementById('mobile-nav');
-            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            // Mobile Nav
+            const n=document.getElementById("desktop-nav"),o=document.getElementById("mobile-nav"),r=document.querySelector(".mobile-nav-toggle");if(n&&o&&r){let a=n.innerHTML,i=(new DOMParser).parseFromString(a,"text/html");i.querySelectorAll(".dropdown > a").forEach(e=>{let t=document.createElement("span");t.className="dropdown-toggle",e.appendChild(t)}),o.innerHTML=i.body.innerHTML,r.addEventListener("click",()=>{o.classList.toggle("active"),r.classList.toggle("active")}),o.addEventListener("click",function(e){if(e.target.classList.contains("dropdown-toggle")){e.preventDefault(),e.target.classList.toggle("open");let t=e.target.closest("li.dropdown");if(!t)return;let n=t.querySelector(".dropdown-menu");n&&n.classList.toggle("show")}else"A"===e.target.tagName&&!e.target.closest(".dropdown-menu")&&(o.classList.remove("active"),r.classList.remove("active"))})}
             
-            if (desktopNav && mobileNavContainer && mobileNavToggle) {
-                let mobileNavHTML = desktopNav.innerHTML;
-                const parser = new DOMParser();
-                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
-                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
-                    const toggle = document.createElement('span');
-                    toggle.className = 'dropdown-toggle';
-                    link.appendChild(toggle);
-                });
-                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
-
-                mobileNavToggle.addEventListener('click', () => {
-                    mobileNavContainer.classList.toggle('active');
-                    mobileNavToggle.classList.toggle('active');
-                });
-
-                mobileNavContainer.addEventListener('click', function(e) {
-                    if (e.target.classList.contains('dropdown-toggle')) {
-                        e.preventDefault();
-                        e.target.classList.toggle('open');
-                        const li = e.target.closest('li.dropdown');
-                        if (!li) return;
-                        const menu = li.querySelector('.dropdown-menu');
-                        if (menu) { menu.classList.toggle('show'); }
-                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
-                        mobileNavContainer.classList.remove('active');
-                        mobileNavToggle.classList.remove('active');
-                    }
-                });
-            }
+            // Modal Open/Close Logic
+            const modal = document.getElementById('submissionModalOverlay');
+            const btn = document.getElementById('openSubmissionModal');
+            const close = document.getElementById('closeModalBtn');
+            if(btn) btn.addEventListener('click', ()=> { modal.classList.add('active'); document.body.style.overflow='hidden'; });
+            const closeModal = () => { modal.classList.remove('active'); document.body.style.overflow=''; };
+            if(close) close.addEventListener('click', closeModal);
+            // NOTE: Clicking background does NOT close modal
             
-            // --- ANIMATION SCRIPT ---
+            // Animation
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
+                    entries.forEach((entry, index) => {
                         if (entry.isIntersecting) {
-                            entry.target.style.transitionDelay = '0s'; // Reset delay
+                            entry.target.style.transitionDelay = `${index * 100}ms`;
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
                     });
                 }, { threshold: 0.1 });
-                
-                animatedItems.forEach(item => {
-                    observer.observe(item);
-                });
+                animatedItems.forEach(item => { observer.observe(item); });
             }
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // 1. FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVtOz8jA_5ShckO9ljeMV1EO3aTXXgKx4",
+            authDomain: "satva-2026.firebaseapp.com",
+            projectId: "satva-2026",
+            storageBucket: "satva-2026.firebasestorage.app",
+            messagingSenderId: "754639793020",
+            appId: "1:754639793020:web:1016a5a827f35c0f4f92f9",
+            measurementId: "G-YYF670FM93"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // 2. UI ELEMENTS
+        const authContainer = document.getElementById('auth-container');
+        const subContainer = document.getElementById('submission-container');
+        const modalTitle = document.getElementById('modal-title');
+        const displayEmail = document.getElementById('display-user-email');
+        const hiddenEmail = document.getElementById('email');
+        const hiddenName = document.getElementById('authName');
+        const visibleName = document.getElementById('visibleName');
+
+        // 3. AUTH STATE LISTENER
+        onAuthStateChanged(auth, (user) => {
+            if (user && (user.emailVerified || user.providerData[0].providerId === 'google.com')) {
+                // LOGGED IN
+                authContainer.style.display = 'none';
+                subContainer.style.display = 'block';
+                modalTitle.textContent = "Submit Abstract";
+                
+                displayEmail.textContent = user.email;
+                hiddenEmail.value = user.email;
+                hiddenName.value = user.displayName || "";
+                if(user.displayName) visibleName.value = user.displayName;
+            } else {
+                // LOGGED OUT
+                authContainer.style.display = 'block';
+                subContainer.style.display = 'none';
+                modalTitle.textContent = "Sign In Required";
+            }
+        });
+
+        // 4. AUTH ACTIONS
+        window.switchTab = (tab) => {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.auth-tab[onclick="window.switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
+        };
+
+        const handleGoogle = async () => {
+            try { await signInWithPopup(auth, provider); } 
+            catch (e) { alert("Error: " + e.message); }
+        };
+        document.getElementById('btn-google-login').onclick = handleGoogle;
+        document.getElementById('btn-google-signup').onclick = handleGoogle;
+
+        document.getElementById('btn-login-email').onclick = async () => {
+            const e = document.getElementById('login-email').value;
+            const p = document.getElementById('login-password').value;
+            try {
+                const cred = await signInWithEmailAndPassword(auth, e, p);
+                if(!cred.user.emailVerified) {
+                    await signOut(auth);
+                    document.getElementById('login-error').textContent = "Please verify your email first.";
+                }
+            } catch(err) { document.getElementById('login-error').textContent = "Invalid credentials."; }
+        };
+
+        document.getElementById('btn-signup-email').onclick = async () => {
+            const e = document.getElementById('signup-email').value;
+            const p = document.getElementById('signup-password').value;
+            if(p.length < 6) { document.getElementById('signup-error').textContent = "Password too short."; return; }
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, e, p);
+                await sendEmailVerification(cred.user);
+                alert("Verification email sent! Please check inbox.");
+            } catch(err) { document.getElementById('signup-error').textContent = err.message; }
+        };
+
+        document.getElementById('btn-logout').onclick = () => signOut(auth);
+
+        // 5. FORM SUBMISSION
+        const abstractForm = document.getElementById('abstractForm');
+        const fileInput = document.getElementById('abstractFile');
+        const wordCount = document.getElementById('wordCountDisplay');
+        const abstractText = document.getElementById('abstractText');
+        
+        abstractText.addEventListener('input', function() {
+            const w = this.value.trim() ? this.value.trim().split(/\s+/).length : 0;
+            wordCount.textContent = `${w} / 500`;
+            wordCount.className = w > 500 ? "word-counter limit-exceeded" : "word-counter";
+        });
+
+        fileInput.addEventListener('change', function() {
+            if(this.files[0]) {
+                if(this.files[0].size > 10*1024*1024) { alert("File too big (Max 10MB)"); this.value=""; return; }
+                document.getElementById('fileNameDisplay').textContent = "Selected: " + this.files[0].name;
+            }
+        });
+
+        abstractForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const w = abstractText.value.trim() ? abstractText.value.trim().split(/\s+/).length : 0;
+            if(w > 500) { alert("Abstract exceeds word limit"); return; }
+            
+            const btn = this.querySelector('.submit-form-btn');
+            const origText = btn.textContent;
+            btn.textContent = "Uploading...";
+            btn.disabled = true;
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function() {
+                const base64 = reader.result.split(',')[1];
+                
+                const payload = {
+                    authName: document.getElementById('visibleName').value,
+                    email: hiddenEmail.value,
+                    designation: document.getElementById('designation').value,
+                    institution: document.getElementById('institution').value,
+                    phone: document.getElementById('phone').value,
+                    paperTitle: document.getElementById('paperTitle').value,
+                    theme: document.getElementById('theme').value,
+                    preference: document.getElementById('preference').value,
+                    abstractText: document.getElementById('abstractText').value,
+                    fileName: file.name,
+                    fileMimeType: file.type,
+                    fileData: base64
+                };
+
+                // --- GOOGLE APPS SCRIPT URL ---
+                const scriptURL = "https://script.google.com/macros/s/AKfycbxnNXAiP5xEL11GKzSSWRHa9ljp3c3t-a___bFC2hT5rXvrU5cprQHB2ruoiwTar8Xddw/exec"; 
+
+                fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.result === "success") {
+                        alert("Submission Successful!");
+                        window.location.reload();
+                    } else { throw new Error(data.error); }
+                })
+                .catch(err => { console.error(err); alert("Submission Failed. Check console."); btn.textContent = origText; btn.disabled = false; });
+            };
         });
     </script>
 </body>
 </html>
-
