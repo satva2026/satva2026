@@ -289,7 +289,7 @@
                 </div>
 
                 <div class="deadline-note">
-                    <i class="fas fa-exclamation-circle"></i> Last date: <span class="deadline-highlight">31st December 2025</span> for Abstract Submission
+                    <i class="fas fa-exclamation-circle"></i> Last date: <span class="deadline-highlight"><strike>31st December 2025 </strike>10th January 2026</span> for Abstract Submission
                 </div>
             </div>
         </section>
@@ -444,7 +444,7 @@
         // PAGE LOGIC
         document.addEventListener('DOMContentLoaded', function() {
             // Timer Logic
-            const e=new Date("Dec 31, 2025 23:59:00").getTime(),t=document.getElementById("submission-timer");if(t){const n=setInterval(function(){const o=(new Date).getTime(),r=e-o;document.getElementById("t-days").innerHTML=Math.floor(r/864e5)<10?"0"+Math.floor(r/864e5):Math.floor(r/864e5),document.getElementById("t-hours").innerHTML=Math.floor(r%864e5/36e5)<10?"0"+Math.floor(r%864e5/36e5):Math.floor(r%864e5/36e5),document.getElementById("t-minutes").innerHTML=Math.floor(r%36e5/6e4)<10?"0"+Math.floor(r%36e5/6e4):Math.floor(r%36e5/6e4),document.getElementById("t-seconds").innerHTML=Math.floor(r%6e4/1e3)<10?"0"+Math.floor(r%6e4/1e3):Math.floor(r%6e4/1e3),r<0&&(clearInterval(n),t.innerHTML="<div class='expired-msg'>Closed</div>")},1e3)}
+            const e=new Date("Jan 10, 2026 23:59:00").getTime(),t=document.getElementById("submission-timer");if(t){const n=setInterval(function(){const o=(new Date).getTime(),r=e-o;document.getElementById("t-days").innerHTML=Math.floor(r/864e5)<10?"0"+Math.floor(r/864e5):Math.floor(r/864e5),document.getElementById("t-hours").innerHTML=Math.floor(r%864e5/36e5)<10?"0"+Math.floor(r%864e5/36e5):Math.floor(r%864e5/36e5),document.getElementById("t-minutes").innerHTML=Math.floor(r%36e5/6e4)<10?"0"+Math.floor(r%36e5/6e4):Math.floor(r%36e5/6e4),document.getElementById("t-seconds").innerHTML=Math.floor(r%6e4/1e3)<10?"0"+Math.floor(r%6e4/1e3):Math.floor(r%6e4/1e3),r<0&&(clearInterval(n),t.innerHTML="<div class='expired-msg'>Closed</div>")},1e3)}
             
             // Mobile Nav
             const n=document.getElementById("desktop-nav"),o=document.getElementById("mobile-nav"),r=document.querySelector(".mobile-nav-toggle");if(n&&o&&r){let a=n.innerHTML,i=(new DOMParser).parseFromString(a,"text/html");i.querySelectorAll(".dropdown > a").forEach(e=>{let t=document.createElement("span");t.className="dropdown-toggle",e.appendChild(t)}),o.innerHTML=i.body.innerHTML,r.addEventListener("click",()=>{o.classList.toggle("active"),r.classList.toggle("active")}),o.addEventListener("click",function(e){if(e.target.classList.contains("dropdown-toggle")){e.preventDefault(),e.target.classList.toggle("open");let t=e.target.closest("li.dropdown");if(!t)return;let n=t.querySelector(".dropdown-menu");n&&n.classList.toggle("show")}else"A"===e.target.tagName&&!e.target.closest(".dropdown-menu")&&(o.classList.remove("active"),r.classList.remove("active"))})}
