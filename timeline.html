@@ -7,9 +7,7 @@
     <title>Timeline - SATVA 2026</title>
     
     <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
-    
     <link rel="preload" as="image" href="images/logos/logo4.png">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -17,22 +15,19 @@
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500;700&display=swap');
         
         :root {
-            /* --- ORIGINAL COLOR PALETTE --- */
             --primary-color: #606C38; 
             --secondary-color: #117d56; 
             --dark-color: #013328;
             --text-color: #333;
-            --light-text-color: #ffffff; 
             --header-bg: rgba(255, 255, 255, 0.95);
             --section-alt-bg: #f8f9fa;
             --card-bg: #ffffff;
             --completed-gray: #bdc3c7;
+            --success-green: #2ecc71; /* New variable for the Green Tick */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        
-        /* LOCK SCROLL: Prevent scrolling while loading */
         body.loading-active { overflow: hidden; height: 100vh; }
         
         body { 
@@ -40,7 +35,6 @@
             color: var(--text-color); 
             line-height: 1.6; 
             background-color: var(--section-alt-bg); 
-            /* CSS Pattern instead of image for performance */
             background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
             background-size: 20px 20px;
         }
@@ -50,117 +44,58 @@
 
         /* --- PRELOADER CSS --- */
         #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #ffffff;
-            z-index: 999999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #ffffff; z-index: 999999;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
             transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
         }
-
-        .loader-content {
-            text-align: center;
-            width: 300px;
-            max-width: 80%;
-        }
-
+        .loader-content { text-align: center; width: 300px; max-width: 80%; }
         .loader-logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 30px;
+            width: 150px; height: auto; margin-bottom: 30px;
             animation: breathe 2.5s infinite ease-in-out;
             filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
         }
-
         .progress-container {
-            width: 100%;
-            height: 6px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
+            width: 100%; height: 6px; background-color: #e0e0e0;
+            border-radius: 10px; overflow: hidden; position: relative;
         }
-
         .progress-bar {
-            width: 0%;
-            height: 100%;
+            width: 0%; height: 100%;
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            border-radius: 10px;
-            transition: width 0.2s linear;
-            box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
+            border-radius: 10px; transition: width 0.2s linear;
         }
-
         .progress-text {
-            margin-top: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 1rem;
-            letter-spacing: 1px;
+            margin-top: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            color: var(--primary-color); font-size: 1rem; letter-spacing: 1px;
         }
-
         @keyframes breathe {
             0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
             50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); }
             100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         }
 
-        @media(max-width: 576px) {
-            .loader-logo { width: 120px; }
-            .loader-content { width: 240px; }
-        }
-
-        /* =========================================
-           HEADER STYLES
-           ========================================= */
+        /* --- HEADER STYLES --- */
         .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
         .logo-container { display: flex; align-items: center; gap: 20px; }
         .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
-        .logo-container img { transition: transform 0.3s ease; }
-        .logo-container img:hover { transform: scale(1.05); }
+        .logo-container img:hover { transform: scale(1.05); transition: transform 0.3s ease; }
 
         .main-nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
-        .main-nav li { position: relative; }
         .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 25px 0; position: relative; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; transition: color 0.3s; }
+        .main-nav a:hover { color: var(--primary-color); }
         .main-nav a::after { content: ''; position: absolute; bottom: 15px; left: 0; width: 0; height: 3px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
-        .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* --- DESKTOP DROPDOWN CSS --- */
+        /* Dropdown */
         .dropdown-menu { 
-            /* Hidden state for desktop (allows animation) */
-            display: flex; 
-            flex-direction: column;
-            position: absolute; 
-            top: 100%; 
-            left: 50%; 
-            transform: translate(-50%, 20px); 
-            background: white; 
-            list-style: none; 
-            padding: 10px 0; 
-            margin-top: -10px; 
-            border-radius: 5px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            min-width: 280px; 
-            gap: 0 !important; 
-            z-index: 100; 
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+            display: flex; flex-direction: column; position: absolute; top: 100%; left: 50%; 
+            transform: translate(-50%, 20px); background: white; list-style: none; padding: 10px 0; margin-top: -10px; 
+            border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 280px; gap: 0 !important; z-index: 100; 
+            visibility: hidden; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
         }
-        .dropdown:hover .dropdown-menu { 
-            visibility: visible;
-            opacity: 1;
-            transform: translate(-50%, 0); 
-        }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
         .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
@@ -168,247 +103,149 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* =========================================
-           TIMELINE STYLES
-           ========================================= */
+        /* --- TIMELINE STYLES --- */
         .timeline-section { padding: 80px 0; overflow-x: hidden; }
-        
-        .section-title { 
-            text-align: center; 
-            font-size: 2.8rem; 
-            color: var(--dark-color); 
-            margin-bottom: 80px; 
-            position: relative;
-            text-transform: uppercase; 
-        }
-        .section-title::after { 
-            content: ''; display: block; width: 80px; height: 4px; 
-            background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; 
-        }
+        .section-title { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 80px; position: relative; text-transform: uppercase; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; }
 
-        /* Spine */
         .timeline-wrapper { position: relative; padding: 20px 0; }
-        .timeline-wrapper::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background: #e0e0e0;
-            top: 0; bottom: 0; left: 50%;
-            margin-left: -2px;
-            border-radius: 2px;
-        }
+        .timeline-wrapper::after { content: ''; position: absolute; width: 4px; background: #e0e0e0; top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; }
 
-        /* Entries */
-        .timeline-entry {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            opacity: 0; 
-            transition: all 0.6s ease-out;
-        }
-
-        /* Zig-Zag Logic */
+        .timeline-entry { padding: 10px 40px; position: relative; width: 50%; opacity: 0; transition: all 0.6s ease-out; }
         .timeline-entry:nth-child(odd) { left: 0; transform: translateX(-50px); }
         .timeline-entry:nth-child(even) { left: 50%; transform: translateX(50px); }
         .timeline-entry.visible { opacity: 1; transform: translateX(0); }
 
-        /* Dots */
         .timeline-dot {
-            position: absolute;
-            width: 24px; height: 24px;
-            background: #fff;
-            border: 4px solid var(--primary-color);
-            top: 30px;
-            border-radius: 50%;
-            z-index: 10;
-            transition: 0.3s;
+            position: absolute; width: 24px; height: 24px; background: #fff;
+            border: 4px solid var(--primary-color); top: 30px; border-radius: 50%; z-index: 10; transition: 0.3s;
         }
         .timeline-entry:nth-child(odd) .timeline-dot { right: -12px; }
         .timeline-entry:nth-child(even) .timeline-dot { left: -12px; }
 
-        /* Cards */
         .timeline-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            position: relative;
-            border-top: 5px solid var(--primary-color); 
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--card-bg); border-radius: 12px; padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative;
+            border-top: 5px solid var(--primary-color); transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+        .timeline-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
         
-        .timeline-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        }
-
         /* Arrows */
-        .timeline-card::before {
-            content: " ";
-            height: 0; position: absolute; top: 32px; width: 0; z-index: 1;
-            border: medium solid white;
-        }
-        .timeline-entry:nth-child(odd) .timeline-card::before {
-            right: -10px; border-width: 10px 0 10px 10px; border-color: transparent transparent transparent var(--card-bg);
-        }
-        .timeline-entry:nth-child(even) .timeline-card::before {
-            left: -10px; border-width: 10px 10px 10px 0; border-color: transparent var(--card-bg) transparent transparent;
-        }
+        .timeline-card::before { content: " "; height: 0; position: absolute; top: 32px; width: 0; z-index: 1; border: medium solid white; }
+        .timeline-entry:nth-child(odd) .timeline-card::before { right: -10px; border-width: 10px 0 10px 10px; border-color: transparent transparent transparent var(--card-bg); }
+        .timeline-entry:nth-child(even) .timeline-card::before { left: -10px; border-width: 10px 10px 10px 0; border-color: transparent var(--card-bg) transparent transparent; }
 
-        /* Typography */
         .event-date {
-            display: inline-block;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            background: rgba(17, 125, 86, 0.1); 
-            padding: 5px 12px;
-            border-radius: 20px;
+            display: inline-block; font-family: 'Montserrat', sans-serif; font-weight: 700;
+            color: var(--secondary-color); font-size: 0.9rem; text-transform: uppercase;
+            margin-bottom: 10px; background: rgba(17, 125, 86, 0.1); padding: 5px 12px; border-radius: 20px;
         }
 
-        .timeline-card h3 {
-            font-size: 1.4rem;
-            color: var(--dark-color);
-            margin-bottom: 10px;
-        }
-
-        .timeline-card p {
-            font-size: 1rem;
-            color: #555;
-            margin-bottom: 15px;
-        }
-
+        .timeline-card h3 { font-size: 1.4rem; color: var(--dark-color); margin-bottom: 10px; }
+        .timeline-card p { font-size: 1rem; color: #555; margin-bottom: 15px; }
         .card-link { text-decoration: none; color: inherit; display: block; }
         
         .action-reveal {
-            font-weight: 700;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            display: flex; align-items: center; gap: 5px;
-            opacity: 0.8; transition: 0.3s;
+            font-weight: 700; color: var(--primary-color); text-transform: uppercase;
+            font-size: 0.85rem; display: flex; align-items: center; gap: 5px; opacity: 0.8; transition: 0.3s;
         }
         .timeline-card:hover .action-reveal { opacity: 1; gap: 10px; }
 
-        /* Completed State */
-        .timeline-entry.completed .timeline-dot {
-            background: var(--completed-gray);
-            border-color: var(--completed-gray);
+        /* --- MAIL ANIMATION --- */
+        .mail-notification {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        .mail-notification i {
+            animation: mailFly 2s infinite ease-in-out;
+            color: var(--primary-color);
+        }
+        @keyframes mailFly {
+            0% { transform: translate(0, 0); opacity: 0.8; }
+            50% { transform: translate(5px, -5px); opacity: 1; }
+            100% { transform: translate(0, 0); opacity: 0.8; }
+        }
+
+        /* --- COMPLETED STATE --- */
+        /* Card goes grey */
         .timeline-entry.completed .timeline-card {
             border-top-color: var(--completed-gray);
             opacity: 0.6;
         }
+        /* Card arrow goes grey/white match */
         .timeline-entry.completed .event-date {
             color: var(--completed-gray);
             background: #eee;
         }
 
-        /* Pulse Animation */
-        .timeline-entry:not(.completed) .timeline-dot {
-            animation: pulse 2s infinite;
+        /* Dot turns GREEN for success/completed */
+        .timeline-entry.completed .timeline-dot {
+            background: var(--success-green);
+            border-color: var(--success-green);
         }
+
+        /* Pulse Animation */
+        .timeline-entry:not(.completed) .timeline-dot { animation: pulse 2s infinite; }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(96, 108, 56, 0); }
             100% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0); }
         }
 
-        /* =========================================
-           RESPONSIVE STYLES
-           ========================================= */
+        /* --- RESPONSIVE --- */
         @media(max-width: 992px) {
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
-            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
-            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s; }
+            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s, top 0.3s; }
             .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
             .mobile-nav-toggle.active .hamburger { background: transparent; }
             .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
             .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
-
-            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            
+            .mobile-nav-container { 
+                display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); 
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; 
+            }
             .mobile-nav-container.active { max-height: calc(100vh - 80px); }
             .mobile-nav-container ul { list-style: none; padding: 10px 0; }
             .mobile-nav-container > ul > li { text-align: center; }
             .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
             .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
-            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
             
-            /* --- FIXED: FORCE MOBILE DROPDOWN STYLES WITH !IMPORTANT --- */
+            /* Mobile dropdown fix */
             .mobile-nav-container .dropdown-menu { 
-                position: static !important; 
-                float: none !important;
-                display: none; 
-                width: 100% !important; 
-                min-width: 0 !important; 
-                transform: none !important; 
-                left: auto !important;
-                top: auto !important;
-                box-shadow: none !important;
-                background-color: #f8f9fa !important;
-                border-radius: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                opacity: 1 !important;
-                visibility: visible !important;
+                position: static !important; float: none !important; display: none; width: 100% !important; 
+                transform: none !important; left: auto !important; top: auto !important; box-shadow: none !important; 
+                background-color: #f8f9fa !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; 
+                opacity: 1 !important; visibility: visible !important;
             }
-            
-            .mobile-nav-container .dropdown-menu.show { 
-                display: block !important; 
-            }
-
-            .mobile-nav-container .dropdown-menu li {
-                width: 100% !important;
-                display: block !important;
-            }
-
-            .mobile-nav-container .dropdown-menu li a {
-                text-align: center !important;
-                padding: 12px 20px !important;
-                width: 100% !important;
-                display: block !important;
-                font-size: 1rem !important;
-                color: #444 !important;
-                border-bottom: 1px solid rgba(0,0,0,0.05);
-            }
-
+            .mobile-nav-container .dropdown-menu.show { display: block !important; }
+            .mobile-nav-container .dropdown-menu li { width: 100% !important; display: block !important; }
+            .mobile-nav-container .dropdown-menu li a { text-align: center !important; padding: 12px 20px !important; color: #444 !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
         }
 
         @media (max-width: 768px) {
-            /* Reset Timeline to Left-Aligned for Mobile */
             .timeline-wrapper::after { left: 30px; }
             .timeline-entry { width: 100%; padding-left: 70px; padding-right: 20px; margin-bottom: 20px; }
-            
-            .timeline-entry:nth-child(even),
-            .timeline-entry:nth-child(odd) { 
-                left: 0; transform: translateY(30px); 
-            }
+            .timeline-entry:nth-child(even), .timeline-entry:nth-child(odd) { left: 0; transform: translateY(30px); }
             .timeline-entry.visible { transform: translateY(0); }
-
-            .timeline-entry:nth-child(odd) .timeline-dot,
-            .timeline-entry:nth-child(even) .timeline-dot {
-                left: 18px; right: auto;
-            }
-
-            .timeline-entry:nth-child(odd) .timeline-card::before,
-            .timeline-entry:nth-child(even) .timeline-card::before {
-                left: -10px; right: auto;
-                border-width: 10px 10px 10px 0; 
-                border-color: transparent var(--card-bg) transparent transparent;
+            .timeline-entry:nth-child(odd) .timeline-dot, .timeline-entry:nth-child(even) .timeline-dot { left: 18px; right: auto; }
+            .timeline-entry:nth-child(odd) .timeline-card::before, .timeline-entry:nth-child(even) .timeline-card::before {
+                left: -10px; right: auto; border-width: 10px 10px 10px 0; border-color: transparent var(--card-bg) transparent transparent;
             }
         }
-        
         @media (max-width: 380px) {
-            .logo-container { gap: 5px; }
-            .logo-container img { height: 32px !important; }
+            .logo-container { gap: 5px; } .logo-container img { height: 32px !important; }
         }
     </style>
 </head>
@@ -417,9 +254,7 @@
     <div id="preloader">
         <div class="loader-content">
             <img src="images/logos/logo4.png" alt="SATVA Loading..." class="loader-logo">
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar"></div>
-            </div>
+            <div class="progress-container"><div class="progress-bar" id="progress-bar"></div></div>
             <div class="progress-text" id="progress-text">0%</div>
         </div>
     </div>
@@ -433,7 +268,6 @@
                     <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo2.png" alt="IEI Logo" class="logo-2"></a>
                     <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo3.png" alt="IGS Logo" class="logo-3"></a>
                 </div>
-    
                 <nav class="main-nav" id="desktop-nav">
                     <ul>
                         <li><a href="index.html">HOME</a></li>
@@ -452,7 +286,6 @@
                         <li><a href="registrations.html">REGISTRATION</a></li>
                     </ul>
                 </nav>
-                
                 <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
             </nav>
         </div>
@@ -468,16 +301,16 @@
                     
                     <div class="timeline-entry interactive" data-date="2025-12-31">
                         <div class="timeline-dot"></div>
-                        <a href="submissions.html" class="card-link">
+                        <div style="cursor: default;">
                             <div class="timeline-card">
                                 <span class="event-date">1st December 2025</span>
                                 <h3>Call for Abstracts Opens</h3>
                                 <p>Authors are invited to submit abstracts for oral and poster presentations.</p>
                                 <div class="action-reveal">
-                                    Submit Abstract <i class="fas fa-arrow-right"></i>
+                                    Submissions Closed
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     </div>
 
                     <div class="timeline-entry" data-date="2026-01-10">
@@ -495,6 +328,9 @@
                             <span class="event-date">15th January 2026</span>
                             <h3>Abstract Decision</h3>
                             <p>Authors will be notified about the acceptance of their abstracts.</p>
+                            <p class="mail-notification">
+                                <i class="fas fa-paper-plane"></i> Check registered mail id for the Abstract Decision
+                            </p>
                         </div>
                     </div>
 
@@ -505,7 +341,7 @@
                             <h3>Full Paper Submission</h3>
                             <p>Full paper submissions through the online portal.</p>
                             <div class="action-reveal" style="color: var(--text-color);">
-                                <i class="fas fa-clock"></i> Coming Soon
+                                <i class="fas fa-clock"></i> Opening Soon!
                             </div>
                         </div>
                     </div>
@@ -548,10 +384,9 @@
     </main>
 
     <script>
-        // --- PRELOADER LOGIC (MATCHING INDEX.HTML) ---
+        // --- PRELOADER LOGIC ---
         (function () {
-            let progress = 0;
-            let finished = false;
+            let progress = 0; let finished = false;
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
             const preloader = document.getElementById('preloader');
@@ -563,39 +398,30 @@
                     progress += increment;
                 }
                 if (progress > 99) progress = 99;
-                
                 if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
                 if (progressText) progressText.innerText = Math.floor(progress) + '%';
             }, 30);
 
             function hidePreloader() {
-                if (finished) return;
-                finished = true;
-                clearInterval(interval);
-                
-                // Jump to 100%
+                if (finished) return; finished = true; clearInterval(interval);
                 if (progressBar) progressBar.style.width = '100%';
                 if (progressText) progressText.innerText = '100%';
-                
                 setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    preloader.style.visibility = 'hidden';
+                    preloader.style.opacity = '0'; preloader.style.visibility = 'hidden';
                     body.classList.remove('loading-active');
                     setTimeout(() => { if(preloader) preloader.remove(); }, 800);
                 }, 300);
             }
-
-            // Force hide on load
             window.addEventListener('load', hidePreloader);
-            // Fallback
             setTimeout(hidePreloader, 4000);
         })();
 
-        // --- EXISTING PAGE LOGIC ---
+        // --- PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function () {
-            
-            // --- 1. DYNAMIC DATE CHECKER (TIMELINE LOGIC) ---
-            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+            // --- DATE CHECKER ---
+            // Manual overrides can be done by changing data-date in HTML, 
+            // but the logic below automatically handles the "Past Event" grey status.
+            const today = new Date().toISOString().split('T')[0]; 
             const items = document.querySelectorAll('.timeline-entry');
 
             items.forEach(item => {
@@ -603,17 +429,14 @@
                 if (eventDate < today) {
                     item.classList.add('completed');
                     const dot = item.querySelector('.timeline-dot');
+                    // Add Checkmark inside the dot (The dot background is set to Green in CSS)
                     if(!dot.querySelector('.fa-star')) {
                         dot.innerHTML = '<i class="fas fa-check" style="color:white; font-size: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
-                    }
-                    const badge = item.querySelector('.action-reveal');
-                    if(badge && badge.innerText.includes('Coming Soon')) {
-                        badge.innerHTML = "Closed";
                     }
                 }
             });
 
-            // --- 2. MOBILE NAV LOGIC (MATCHING INDEX.HTML) ---
+            // --- MOBILE NAV LOGIC ---
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -649,7 +472,7 @@
                 });
             }
 
-            // --- 3. ANIMATION SCRIPT ---
+            // --- ANIMATION SCRIPT ---
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -659,11 +482,8 @@
                 });
             }, { threshold: 0.1 });
 
-            items.forEach(item => {
-                observer.observe(item);
-            });
+            items.forEach(item => { observer.observe(item); });
         });
     </script>
 </body>
 </html>
-
