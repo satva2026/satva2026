@@ -27,7 +27,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* 2. LOCK SCROLL */
         body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
         
@@ -119,29 +118,58 @@
         /* --- Page-Specific Styles --- */
         .registration-section { padding: 80px 0; text-align: center; background-color: var(--section-alt-bg); }
         .registration-section h1 { font-size: 3rem; color: var(--dark-color); margin-bottom: 20px; }
-        .registration-section p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px auto; }
         
-        .cta-button { cursor: pointer; display: inline-block; background: var(--dark-color); color: var(--light-text-color); padding: 15px 35px; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: all 0.3s; margin: 10px; border: none; }
-        .cta-button:hover { background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        /* Updated List Styles for Tick Points */
+        .content-list {
+            list-style: none;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+            text-align: left;
+        }
+        .content-list li {
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative;
+        }
+        .content-list li::before {
+            content: '\f00c'; /* Font Awesome Check Icon */
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            top: 4px;
+        }
 
-        /* --- COUNTDOWN TIMER CSS --- */
-        .timer-wrapper { margin: 30px auto 10px auto; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .timer-box { background: #fff; padding: 10px 15px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--primary-color); min-width: 80px; text-align: center; }
-        .timer-box .number { display: block; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--dark-color); line-height: 1.2; }
-        .timer-box .label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--secondary-color); font-weight: 600; letter-spacing: 0.5px; }
-        .expired-msg { color: #c0392b; font-weight: 800; font-size: 1.5rem; padding: 20px; }
+        /* Buttons */
+        .cta-button { 
+            cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: var(--dark-color); color: var(--light-text-color); 
+            padding: 15px 35px; text-decoration: none; border-radius: 50px; 
+            font-weight: 700; font-size: 1.1rem; transition: all 0.3s; 
+            margin: 10px; border: none; 
+        }
+        .cta-button:not(.disabled):hover { 
+            background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
+        }
 
-        /* Deadline Note */
-        .deadline-note { margin-top: 25px; font-size: 1.1rem; font-weight: 500; color: var(--dark-color); display: block; }
-        .deadline-note i { color: #c0392b; margin-right: 8px; }
-        .deadline-highlight { color: #c0392b; font-weight: 700; }
+        /* Disabled Button Style */
+        .cta-button.disabled {
+            background-color: #bdc3c7;
+            color: #7f8c8d;
+            cursor: not-allowed;
+            pointer-events: none; /* Prevents clicks */
+        }
 
-        .info-section { padding: 80px 0; background-color: #fff; }
-        .info-section h2 { text-align: center; font-size: 2.8rem; color: var(--dark-color); margin-bottom: 50px; }
+        .info-section { padding: 60px 0; background-color: #fff; text-align: center; }
+        .info-section h2 { font-size: 2.2rem; color: var(--dark-color); margin-bottom: 20px; }
+        .info-section p { font-size: 1.2rem; color: var(--secondary-color); margin-bottom: 40px; }
         
-        .template-button-container { text-align: center; margin-bottom: 20px; }
-        .guidelines-content { max-width: 900px; margin: 0 auto; text-align: center; }
-        .guidelines-content p { margin-top: 20px; font-weight: bold; }
+        .template-button-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 40px; }
+        
+        .guidelines-content { max-width: 900px; margin: 0 auto; text-align: center; margin-top: 40px;}
+        .guidelines-content p { margin-top: 20px; font-weight: bold; font-size: 1rem; color: var(--text-color); }
         .guidelines-content a { color: var(--primary-color); text-decoration: none; }
         .guidelines-content a:hover { text-decoration: underline; }
 
@@ -151,38 +179,6 @@
         .js-scroll { opacity: 0; transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
         .js-scroll.fade-in-up { transform: translateY(30px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
-        
-        /* --- MODAL & AUTH STYLES --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-container { background: white; width: 90%; max-width: 600px; max-height: 90vh; border-radius: 10px; padding: 0; position: relative; display: flex; flex-direction: column; transform: scale(0.9); transition: transform 0.3s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .modal-overlay.active .modal-container { transform: scale(1); }
-        .modal-header { padding: 20px; background: var(--dark-color); color: white; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; align-items: center; }
-        .modal-header h2 { font-size: 1.5rem; margin: 0; }
-        .close-modal-btn { background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-        .modal-body { padding: 30px; overflow-y: auto; }
-
-        /* Auth Styles */
-        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
-        .auth-tab { flex: 1; padding: 10px; background: none; border: none; font-weight: 700; cursor: pointer; color: #aaa; }
-        .auth-tab.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
-        .auth-form-container input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 1rem; }
-        .auth-action-btn { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 5px; font-weight: 700; cursor: pointer; transition: background 0.3s; }
-        .auth-action-btn:hover { background: var(--secondary-color); }
-        .google-btn { width: 100%; padding: 12px; background: #fff; border: 1px solid #ddd; color: #333; border-radius: 5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; transition: background 0.3s; }
-        .google-btn:hover { background: #f1f1f1; }
-        .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 10px; text-align: center; }
-
-        /* Form Styles */
-        .form-group { margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark-color); font-size: 0.95rem; }
-        .form-control { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 1rem; }
-        textarea.form-control { resize: vertical; min-height: 120px; }
-        .word-counter { text-align: right; font-size: 0.8rem; color: #666; margin-top: 5px; }
-        .word-counter.limit-exceeded { color: #c0392b; font-weight: bold; }
-        .file-upload-wrapper { border: 2px dashed #ccc; padding: 20px; text-align: center; border-radius: 5px; cursor: pointer; transition: all 0.3s; }
-        .file-upload-wrapper:hover { border-color: var(--primary-color); background: #f9f9f9; }
-        .submit-form-btn { background: var(--secondary-color); color: white; border: none; padding: 15px 40px; font-size: 1.1rem; font-weight: 700; border-radius: 50px; cursor: pointer; transition: background 0.3s; width: 100%; }
 
         /* --- MEDIA QUERIES --- */
         @media(max-width: 992px) {
@@ -274,31 +270,38 @@
     <main>
         <section class="registration-section js-scroll fade-in-up">
             <div class="container">
-                <h1>Call for Abstracts</h1>
-                <p>The call for abstracts for SATVA 2026 is now open. Interested participants are invited to submit their abstracts for consideration. Accepted papers will be considered for oral/poster presentations, and selected contributions will be included in the proceedings.</p>
+                <h1>Full Paper Submission</h1>
                 
-                <button id="openSubmissionModal" class="cta-button">
-                    <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Abstract Submission
-                </button>
-                
-                <div id="submission-timer" class="timer-wrapper">
-                    <div class="timer-box"><span class="number" id="t-days">00</span><span class="label">Days</span></div>
-                    <div class="timer-box"><span class="number" id="t-hours">00</span><span class="label">Hours</span></div>
-                    <div class="timer-box"><span class="number" id="t-minutes">00</span><span class="label">Mins</span></div>
-                    <div class="timer-box"><span class="number" id="t-seconds">00</span><span class="label">Secs</span></div>
-                </div>
+                <ul class="content-list">
+                    <li>The full paper submission portal for SATVA 2026 will open shortly. Authors are invited to submit their full-length manuscripts through the dedicated submission portal.</li>
+                    <li>Accepted papers will be considered for oral and poster presentations at SATVA 2026.</li>
+                    <li>Select papers from the Symposium will be published by Springer as a proceedings book volume.</li>
+                    <li>Springer will conduct quality checks on the accepted papers and only papers that pass these checks will be published.</li>
+                </ul>
 
-                <div class="deadline-note">
-                    <i class="fas fa-exclamation-circle"></i> Last date: <span class="deadline-highlight"><strike>31st December 2025 </strike>10th January 2026</span> for Abstract Submission
-                </div>
+                <button class="cta-button disabled" title="Link will be added later">
+                    <i class="fas fa-file-upload"></i> Submit Full Paper (Coming Soon)
+                </button>
             </div>
         </section>
 
         <section class="info-section">
             <div class="container">
-                <div class="template-button-container js-scroll fade-in-up">
-                    <a href="DOCS/AbstractTemplateSATVA2026.docx" class="cta-button" download>DOWNLOAD ABSTRACT TEMPLATE</a>
+                
+                <div class="js-scroll fade-in-up">
+                    <h2>Instruction for full paper submission</h2>
+                    <p style="font-weight: bold; color: var(--primary-color);">Will be updated soon!</p>
                 </div>
+
+                <div class="template-button-container js-scroll fade-in-up">
+                    <a href="DOCS/SATVA 2026 Word Template.docm" class="cta-button" download>
+                        <i class="fas fa-file-word"></i> Word Template
+                    </a>
+                    <a href="DOCS/SATVA 2026 LaTeX Template.zip" class="cta-button" download>
+                        <i class="fas fa-file-archive"></i> LaTeX Template
+                    </a>
+                </div>
+
                 <div class="guidelines-content">
                     <p class="js-scroll fade-in-up">For any further clarifications, contact: <a href="mailto:satva@iitpkd.ac.in">satva@iitpkd.ac.in</a></p>
                 </div>
@@ -308,157 +311,17 @@
 
     <a href="mailto:satva@iitpkd.ac.in" class="floating-info-tab js-scroll fade-in-up">&#9993; info</a>
 
-    <div id="submissionModalOverlay" class="modal-overlay">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h2 id="modal-title">Sign In Required</h2>
-                <button class="close-modal-btn" id="closeModalBtn">&times;</button>
-            </div>
-            <div class="modal-body">
-                
-                <div id="auth-container">
-                    <div class="auth-tabs">
-                        <button class="auth-tab active" onclick="window.switchTab('login')">Login</button>
-                        <button class="auth-tab" onclick="window.switchTab('signup')">Sign Up</button>
-                    </div>
-
-                    <div id="login-form" class="auth-form-container">
-                        <input type="email" id="login-email" placeholder="Email Address" required>
-                        <input type="password" id="login-password" placeholder="Password" required>
-                        <button id="btn-login-email" class="auth-action-btn">Login</button>
-                        <div style="text-align:center; margin:15px 0; color:#999;">or</div>
-                        <button id="btn-google-login" class="google-btn"><i class="fab fa-google"></i> Continue with Google</button>
-                        <p id="login-error" class="error-msg"></p>
-                    </div>
-
-                    <div id="signup-form" class="auth-form-container" style="display: none;">
-                        <h3>Create Account</h3>
-                        
-                        <div class="note-box" style="background: #fff3cd; padding: 10px; border-radius: 5px; font-size: 0.8rem; color: #856404; margin-bottom: 15px; border: 1px solid #ffeeba;">
-                            <strong>Important:</strong> The verification email will be sent from <br>
-                            <em>noreply@satva-2026.firebaseapp.com</em>.<br>
-                            Please check your <strong>Spam/Junk folder</strong> if you don't see it in your inbox.
-                        </div>
-
-                        <input type="email" id="signup-email" placeholder="Email Address" required>
-                        <input type="password" id="signup-password" placeholder="Password (Min 6 chars)" required>
-                        <button id="btn-signup-email" class="auth-action-btn">Sign Up</button>
-                        <div style="text-align:center; margin:15px 0; color:#999;">or</div>
-                        <button id="btn-google-signup" class="google-btn"><i class="fab fa-google"></i> Sign up with Google</button>
-                        <p id="signup-error" class="error-msg"></p>
-                    </div>
-                </div>
-
-                <div id="submission-container" style="display: none;">
-                    
-                    <div style="background: #e8f5e9; padding: 10px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #606C38;">
-                        <small>Submitting as:</small><br>
-                        <strong id="display-user-email">user@email.com</strong>
-                        <button id="btn-logout" style="float: right; border: none; background: none; color: #c0392b; cursor: pointer; text-decoration: underline;">Logout</button>
-                    </div>
-
-                    <form id="abstractForm">
-                        <input type="hidden" id="authName" name="authName">
-                        <input type="hidden" id="email" name="email">
-
-                        <div class="form-group">
-                            <label>1. Name of the Corresponding Author *</label>
-                            <input type="text" id="visibleName" class="form-control" placeholder="Full Name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>2. Designation *</label>
-                            <select id="designation" class="form-control" required>
-                                <option value="" disabled selected>Select</option>
-                                <option value="UG / PG Student">UG / PG Student</option>
-                                <option value="Research Scholar">Research Scholar</option>
-                                <option value="Faculty">Faculty</option>
-                                <option value="Industry Professional / Research Scientists">Industry Professional / Research Scientists</option>
-                                <option value="Others">Others</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>3. Institution / Organization *</label>
-                            <input type="text" id="institution" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>4. Phone Number (Corresponding Author) *</label>
-                            <input type="tel" id="phone" class="form-control" placeholder="+91 XXXXX XXXXX" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>5. Title of the abstract *</label>
-                            <input type="text" id="paperTitle" class="form-control" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label>6. Relevant Theme *</label>
-                            <select id="theme" class="form-control" required>
-                                <option value="" disabled selected>Select</option>
-                                <option value="Resilient & Green Geotechnics">Resilient & Green Geotechnics</option>
-                                <option value="Eco-Efficient Asphalt Technologies">Eco-Efficient Asphalt Technologies</option>
-                                <option value="Sustainable Rigid Pavement Systems">Sustainable Rigid Pavement Systems</option>
-                                <option value="Resilient Roads: Evaluation & Maintenance">Resilient Roads: Evaluation & Maintenance</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>7. Presentation Preference *</label>
-                            <select id="preference" class="form-control" required>
-                                <option value="" disabled selected>Select</option>
-                                <option value="Oral">Oral</option>
-                                <option value="Poster">Poster</option>
-                                <option value="Both">Both</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>8. Abstract (Maximum 500 words) *</label>
-                            <textarea id="abstractText" class="form-control" required></textarea>
-                            <div id="wordCountDisplay" class="word-counter">0 / 500</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>9. Abstract (PDF, Max 10MB) *</label>
-                            <div class="file-upload-wrapper" onclick="document.getElementById('abstractFile').click()">
-                                <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #606C38;"></i>
-                                <p id="fileNameDisplay" style="margin-top: 5px;">Click to upload PDF</p>
-                                <input type="file" id="abstractFile" accept=".pdf" style="display: none;" required>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-form-btn">Submit Abstract</button>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <script>
         // PRELOADER
         (function(){let e=0,t=!1,n=document.getElementById("progress-bar"),o=document.getElementById("progress-text"),r=document.getElementById("preloader"),a=document.body,i=setInterval(()=>{e<90&&(e+=(e>70?.5:e>40?1:2)),e>99&&(e=99),n&&(n.style.width=Math.floor(e)+"%"),o&&(o.innerText=Math.floor(e)+"%")},30);function s(){if(!t){t=!0,clearInterval(i),n&&(n.style.width="100%"),o&&(o.innerText="100%"),setTimeout(()=>{r.style.opacity="0",r.style.visibility="hidden",a.classList.remove("loading-active"),setTimeout(()=>{r&&r.remove()},800)},300)}}window.addEventListener("load",s),setTimeout(s,4e3)})();
         
         // PAGE LOGIC
         document.addEventListener('DOMContentLoaded', function() {
-            // Timer Logic
-            const e=new Date("Jan 10, 2026 23:59:00").getTime(),t=document.getElementById("submission-timer");if(t){const n=setInterval(function(){const o=(new Date).getTime(),r=e-o;document.getElementById("t-days").innerHTML=Math.floor(r/864e5)<10?"0"+Math.floor(r/864e5):Math.floor(r/864e5),document.getElementById("t-hours").innerHTML=Math.floor(r%864e5/36e5)<10?"0"+Math.floor(r%864e5/36e5):Math.floor(r%864e5/36e5),document.getElementById("t-minutes").innerHTML=Math.floor(r%36e5/6e4)<10?"0"+Math.floor(r%36e5/6e4):Math.floor(r%36e5/6e4),document.getElementById("t-seconds").innerHTML=Math.floor(r%6e4/1e3)<10?"0"+Math.floor(r%6e4/1e3):Math.floor(r%6e4/1e3),r<0&&(clearInterval(n),t.innerHTML="<div class='expired-msg'>Closed</div>")},1e3)}
             
             // Mobile Nav
             const n=document.getElementById("desktop-nav"),o=document.getElementById("mobile-nav"),r=document.querySelector(".mobile-nav-toggle");if(n&&o&&r){let a=n.innerHTML,i=(new DOMParser).parseFromString(a,"text/html");i.querySelectorAll(".dropdown > a").forEach(e=>{let t=document.createElement("span");t.className="dropdown-toggle",e.appendChild(t)}),o.innerHTML=i.body.innerHTML,r.addEventListener("click",()=>{o.classList.toggle("active"),r.classList.toggle("active")}),o.addEventListener("click",function(e){if(e.target.classList.contains("dropdown-toggle")){e.preventDefault(),e.target.classList.toggle("open");let t=e.target.closest("li.dropdown");if(!t)return;let n=t.querySelector(".dropdown-menu");n&&n.classList.toggle("show")}else"A"===e.target.tagName&&!e.target.closest(".dropdown-menu")&&(o.classList.remove("active"),r.classList.remove("active"))})}
             
-            // Modal Open/Close Logic
-            const modal = document.getElementById('submissionModalOverlay');
-            const btn = document.getElementById('openSubmissionModal');
-            const close = document.getElementById('closeModalBtn');
-            if(btn) btn.addEventListener('click', ()=> { modal.classList.add('active'); document.body.style.overflow='hidden'; });
-            const closeModal = () => { modal.classList.remove('active'); document.body.style.overflow=''; };
-            if(close) close.addEventListener('click', closeModal);
-            // NOTE: Clicking background does NOT close modal
-            
-            // Animation
+            // Scroll Animation
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
@@ -472,160 +335,6 @@
                 }, { threshold: 0.1 });
                 animatedItems.forEach(item => { observer.observe(item); });
             }
-        });
-    </script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        // 1. FIREBASE CONFIG
-        const firebaseConfig = {
-            apiKey: "AIzaSyDVtOz8jA_5ShckO9ljeMV1EO3aTXXgKx4",
-            authDomain: "satva-2026.firebaseapp.com",
-            projectId: "satva-2026",
-            storageBucket: "satva-2026.firebasestorage.app",
-            messagingSenderId: "754639793020",
-            appId: "1:754639793020:web:1016a5a827f35c0f4f92f9",
-            measurementId: "G-YYF670FM93"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        // 2. UI ELEMENTS
-        const authContainer = document.getElementById('auth-container');
-        const subContainer = document.getElementById('submission-container');
-        const modalTitle = document.getElementById('modal-title');
-        const displayEmail = document.getElementById('display-user-email');
-        const hiddenEmail = document.getElementById('email');
-        const hiddenName = document.getElementById('authName');
-        const visibleName = document.getElementById('visibleName');
-
-        // 3. AUTH STATE LISTENER
-        onAuthStateChanged(auth, (user) => {
-            if (user && (user.emailVerified || user.providerData[0].providerId === 'google.com')) {
-                // LOGGED IN
-                authContainer.style.display = 'none';
-                subContainer.style.display = 'block';
-                modalTitle.textContent = "Submit Abstract";
-                
-                displayEmail.textContent = user.email;
-                hiddenEmail.value = user.email;
-                hiddenName.value = user.displayName || "";
-                if(user.displayName) visibleName.value = user.displayName;
-            } else {
-                // LOGGED OUT
-                authContainer.style.display = 'block';
-                subContainer.style.display = 'none';
-                modalTitle.textContent = "Sign In Required";
-            }
-        });
-
-        // 4. AUTH ACTIONS
-        window.switchTab = (tab) => {
-            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.auth-tab[onclick="window.switchTab('${tab}')"]`).classList.add('active');
-            document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
-            document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
-        };
-
-        const handleGoogle = async () => {
-            try { await signInWithPopup(auth, provider); } 
-            catch (e) { alert("Error: " + e.message); }
-        };
-        document.getElementById('btn-google-login').onclick = handleGoogle;
-        document.getElementById('btn-google-signup').onclick = handleGoogle;
-
-        document.getElementById('btn-login-email').onclick = async () => {
-            const e = document.getElementById('login-email').value;
-            const p = document.getElementById('login-password').value;
-            try {
-                const cred = await signInWithEmailAndPassword(auth, e, p);
-                if(!cred.user.emailVerified) {
-                    await signOut(auth);
-                    document.getElementById('login-error').textContent = "Please verify your email first.";
-                }
-            } catch(err) { document.getElementById('login-error').textContent = "Invalid credentials."; }
-        };
-
-        document.getElementById('btn-signup-email').onclick = async () => {
-            const e = document.getElementById('signup-email').value;
-            const p = document.getElementById('signup-password').value;
-            if(p.length < 6) { document.getElementById('signup-error').textContent = "Password too short."; return; }
-            try {
-                const cred = await createUserWithEmailAndPassword(auth, e, p);
-                await sendEmailVerification(cred.user);
-                alert("Verification email sent! Please check inbox.");
-            } catch(err) { document.getElementById('signup-error').textContent = err.message; }
-        };
-
-        document.getElementById('btn-logout').onclick = () => signOut(auth);
-
-        // 5. FORM SUBMISSION
-        const abstractForm = document.getElementById('abstractForm');
-        const fileInput = document.getElementById('abstractFile');
-        const wordCount = document.getElementById('wordCountDisplay');
-        const abstractText = document.getElementById('abstractText');
-        
-        abstractText.addEventListener('input', function() {
-            const w = this.value.trim() ? this.value.trim().split(/\s+/).length : 0;
-            wordCount.textContent = `${w} / 500`;
-            wordCount.className = w > 500 ? "word-counter limit-exceeded" : "word-counter";
-        });
-
-        fileInput.addEventListener('change', function() {
-            if(this.files[0]) {
-                if(this.files[0].size > 10*1024*1024) { alert("File too big (Max 10MB)"); this.value=""; return; }
-                document.getElementById('fileNameDisplay').textContent = "Selected: " + this.files[0].name;
-            }
-        });
-
-        abstractForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const w = abstractText.value.trim() ? abstractText.value.trim().split(/\s+/).length : 0;
-            if(w > 500) { alert("Abstract exceeds word limit"); return; }
-            
-            const btn = this.querySelector('.submit-form-btn');
-            const origText = btn.textContent;
-            btn.textContent = "Uploading...";
-            btn.disabled = true;
-
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = function() {
-                const base64 = reader.result.split(',')[1];
-                
-                const payload = {
-                    authName: document.getElementById('visibleName').value,
-                    email: hiddenEmail.value,
-                    designation: document.getElementById('designation').value,
-                    institution: document.getElementById('institution').value,
-                    phone: document.getElementById('phone').value,
-                    paperTitle: document.getElementById('paperTitle').value,
-                    theme: document.getElementById('theme').value,
-                    preference: document.getElementById('preference').value,
-                    abstractText: document.getElementById('abstractText').value,
-                    fileName: file.name,
-                    fileMimeType: file.type,
-                    fileData: base64
-                };
-
-                // --- GOOGLE APPS SCRIPT URL ---
-                const scriptURL = "https://script.google.com/macros/s/AKfycbxnNXAiP5xEL11GKzSSWRHa9ljp3c3t-a___bFC2hT5rXvrU5cprQHB2ruoiwTar8Xddw/exec"; 
-
-                fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => res.json())
-                .then(data => {
-                    if(data.result === "success") {
-                        alert("Submission Successful!");
-                        window.location.reload();
-                    } else { throw new Error(data.error); }
-                })
-                .catch(err => { console.error(err); alert("Submission Failed. Check console."); btn.textContent = origText; btn.disabled = false; });
-            };
         });
     </script>
 </body>
