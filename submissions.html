@@ -146,32 +146,50 @@
         .cta-button { 
             cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             background: var(--dark-color); color: var(--light-text-color); 
-            padding: 15px 35px; text-decoration: none; border-radius: 50px; 
-            font-weight: 700; font-size: 1.1rem; transition: all 0.3s; 
+            padding: 12px 25px; text-decoration: none; border-radius: 50px; 
+            font-weight: 700; font-size: 1rem; transition: all 0.3s; 
             margin: 10px; border: none; 
         }
         .cta-button:not(.disabled):hover { 
             background-color: var(--primary-color); transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.15); 
         }
-
-        /* Disabled Button Style */
         .cta-button.disabled {
-            background-color: #bdc3c7;
-            color: #7f8c8d;
-            cursor: not-allowed;
-            pointer-events: none; /* Prevents clicks */
+            background-color: #bdc3c7; color: #7f8c8d; cursor: not-allowed; pointer-events: none;
         }
 
         .info-section { padding: 60px 0; background-color: #fff; text-align: center; }
         .info-section h2 { font-size: 2.2rem; color: var(--dark-color); margin-bottom: 20px; }
-        .info-section p { font-size: 1.2rem; color: var(--secondary-color); margin-bottom: 40px; }
         
-        .template-button-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 40px; }
+        /* NEW STYLES FOR GUIDELINES */
+        .guidelines-wrapper { text-align: left; max-width: 900px; margin: auto; padding: 0 20px; }
+        .guidelines-wrapper h3 { color: var(--primary-color); margin-top: 35px; margin-bottom: 15px; font-size: 1.5rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
+        .guidelines-wrapper h4 { color: var(--dark-color); font-size: 1.1rem; margin-top: 15px; margin-bottom: 8px; }
+        .guidelines-wrapper p { margin-bottom: 15px; color: #333; font-size: 1rem; line-height: 1.7; }
         
-        .guidelines-content { max-width: 900px; margin: 0 auto; text-align: center; margin-top: 40px;}
-        .guidelines-content p { margin-top: 20px; font-weight: bold; font-size: 1rem; color: var(--text-color); }
-        .guidelines-content a { color: var(--primary-color); text-decoration: none; }
-        .guidelines-content a:hover { text-decoration: underline; }
+        .guidelines-wrapper ul { margin-bottom: 20px; padding-left: 20px; }
+        .guidelines-wrapper li { margin-bottom: 8px; color: #333; }
+        
+        /* Formal Statement / Disclaimer Box */
+        .formal-statement {
+            background-color: #f8f9fa;
+            border-left: 5px solid #0056b3; /* Microsoft/Springer blueish tone */
+            padding: 20px;
+            margin: 25px 0;
+            font-size: 0.95rem;
+            color: #444;
+        }
+        .formal-statement p:last-child { margin-bottom: 0; }
+        
+        /* Template buttons now inside the list area */
+        .template-button-container { 
+            display: flex; justify-content: flex-start; flex-wrap: wrap; 
+            gap: 15px; margin-top: 20px; margin-bottom: 30px; 
+            padding-left: 10px;
+        }
+        
+        .contact-info { margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+        .contact-info a { color: var(--primary-color); text-decoration: none; font-weight: 700; }
+        .contact-info a:hover { text-decoration: underline; }
 
         .floating-info-tab { position: fixed; bottom: 20px; right: 20px; background-color: var(--dark-color); color: var(--light-text-color); padding: 10px 20px; border-radius: 50px; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .floating-info-tab:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
@@ -198,7 +216,6 @@
             .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
-            /* FIXED: FORCE MOBILE DROPDOWN STYLES */
             .mobile-nav-container .dropdown-menu { 
                 position: static !important; float: none !important; display: none; 
                 width: 100% !important; min-width: 0 !important; transform: none !important; 
@@ -217,6 +234,7 @@
         @media (max-width: 600px) {
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
+            .template-button-container { justify-content: center; padding-left: 0; }
         }
     </style>
 </head>
@@ -270,18 +288,17 @@
     <main>
         <section class="registration-section js-scroll fade-in-up">
             <div class="container">
-                <h1>Full Paper Submission</h1>
+                <h1>Full Paper Submission Guidelines – SATVA 2026</h1>
                 
                 <ul class="content-list">
-                    <li>The full paper submission portal for SATVA 2026 will open shortly. Authors are invited to submit their full-length manuscripts through the dedicated submission portal.</li>
-                    <li>Accepted papers will be considered for oral and poster presentations at SATVA 2026.</li>
-                    <li>Select papers from the Symposium will be published by Springer as a proceedings book volume.</li>
-                    <li>Springer will conduct quality checks on the accepted papers and only papers that pass these checks will be published.</li>
+                    <li>Full paper submissions are invited for SATVA 2026 in all areas covered under the symposium themes.</li>
+                    <li>Authors are encouraged to submit original and unpublished research work relevant to the scope of the symposium.</li>
+                    <li>The submission portal is <strong>OPEN</strong> starting 16 January 2026.</li>
                 </ul>
 
-                <button class="cta-button disabled" title="Link will be added later">
-                    <i class="fas fa-file-upload"></i> Submit Full Paper (Coming Soon)
-                </button>
+                <a href="#" class="cta-button" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Submit via Microsoft CMT
+                </a>
             </div>
         </section>
 
@@ -289,21 +306,56 @@
             <div class="container">
                 
                 <div class="js-scroll fade-in-up">
-                    <h2>Instruction for full paper submission</h2>
-                    <p style="font-weight: bold; color: var(--primary-color);">Will be updated soon!</p>
+                    <h2>Submission Instructions</h2>
                 </div>
 
-                <div class="template-button-container js-scroll fade-in-up">
-                    <a href="DOCS/SATVA 2026 Word Template.docm" class="cta-button" download>
-                        <i class="fas fa-file-word"></i> Word Template
-                    </a>
-                    <a href="DOCS/SATVA 2026 LaTeX Template.zip" class="cta-button" download>
-                        <i class="fas fa-file-archive"></i> LaTeX Template
-                    </a>
+                <div class="guidelines-wrapper js-scroll fade-in-up">
+                    
+                    <h3>Submission Process</h3>
+                    <ul>
+                        <li>Full-length papers must be submitted through the <strong>Microsoft CMT</strong> submission system.</li>
+                        <li>All submissions will undergo a <strong>peer-review process</strong> conducted through Microsoft CMT.</li>
+                        <li>Accepted papers will be considered for <strong>oral or poster presentation</strong> at SATVA 2026.</li>
+                        <li>Select papers from the symposium will be published by <strong>Springer</strong> as a proceedings book volume.</li>
+                    </ul>
+
+                    <h3>Manuscript Preparation Guidelines</h3>
+                    <ul>
+                        <li><strong>Length:</strong> The full paper length must not exceed <strong>15 pages</strong>, including figures and tables.</li>
+                        <li><strong>Figures:</strong> There is no restriction on the number of figures/tables, but all must be clearly readable with a minimum resolution of <strong>300 dpi</strong>.</li>
+                        <li><strong>Accessibility:</strong> Authors will be required to provide <strong>Alt Text descriptions</strong> for all figures to ensure compliance.</li>
+                        <li><strong>Formatting:</strong> Authors must strictly follow the prescribed template provided below. Requirements related to font size, line spacing, margins, indentation, and table design must be adhered to.</li>
+                    </ul>
+
+                    <div class="template-button-container">
+                        <a href="DOCS/SATVA 2026 Word Template.docm" class="cta-button" download>
+                            <i class="fas fa-file-word"></i> Word Template
+                        </a>
+                        <a href="DOCS/SATVA 2026 LaTeX Template.zip" class="cta-button" download>
+                            <i class="fas fa-file-archive"></i> LaTeX Template
+                        </a>
+                    </div>
+
+                    <h3>Springer Proceedings Publication Policy</h3>
+                    <div class="formal-statement">
+                        <p style="margin-bottom: 15px;">Select papers from the conference will be published by Springer as a proceedings book volume.</p>
+                        
+                        <p style="margin-bottom: 15px;">Springer will conduct quality checks on the accepted papers and only papers that pass these checks will be published.</p>
+                        
+                        <p style="margin-bottom: 15px;">We do not publish abstracts or extended abstracts. We only publish full papers. We only publish original articles with new outcomes in proceedings, no review articles and no literature survey articles are accepted.</p>
+                        
+                        <p>Springer Nature does not charge any money for publication of Non-Open Access content. Abstracts/extended abstracts and short papers (less than 6 pages) are not considered for publication.</p>
+                    </div>
+
+                    <h3>Peer-Review Platform</h3>
+                    <p style="color: #555; background: #f1f1f1; padding: 15px; border-radius: 4px;">
+                        "The Microsoft CMT service was used for managing the peer-reviewing process for this conference. This service was provided for free by Microsoft and they bore all expenses, including costs for Azure cloud services as well as for software development and support."
+                    </p>
+
                 </div>
 
-                <div class="guidelines-content">
-                    <p class="js-scroll fade-in-up">For any further clarifications, contact: <a href="mailto:satva@iitpkd.ac.in">satva@iitpkd.ac.in</a></p>
+                <div class="guidelines-wrapper contact-info js-scroll fade-in-up" style="text-align: center;">
+                    <p>For any further clarifications, contact: <a href="mailto:satva@iitpkd.ac.in">satva@iitpkd.ac.in</a></p>
                 </div>
             </div>
         </section>
