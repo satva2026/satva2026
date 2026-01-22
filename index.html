@@ -258,6 +258,7 @@
             z-index: 20;
         }
 
+        /* --- UPDATED PARTNERS GRID FOR LOGOS --- */
         .partners-grid {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
@@ -265,7 +266,7 @@
             text-align: center;
             align-items: stretch;
         }
-
+        
         .partner-card {
             background: #fff;
             padding: 30px 20px;
@@ -277,19 +278,24 @@
             flex-direction: column;
             justify-content: flex-start;
         }
+        
+        /* New class to span full width */
+        .partner-card.full-width {
+            grid-column: 1 / -1;
+        }
 
         .partner-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        .partner-card h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .partner-card p { font-size: 1.1rem; font-weight: 700; line-height: 1.4; color: #444; }
+        .partner-card h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .partner-card p { font-size: 1.05rem; font-weight: 600; line-height: 1.4; color: #444; margin-top: 10px; }
 
         .association-container {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Changed to flex-start for top alignment */
             gap: 20px;
             height: 100%;
         }
@@ -297,10 +303,26 @@
             flex: 1;
             text-align: center;
             padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        
+        .association-logo {
+            height: 80px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .association-item:hover .association-logo {
+            transform: scale(1.1);
+        }
+
         .association-divider {
             width: 2px;
-            height: 60px;
+            align-self: stretch; /* Stretch divider to match height */
             background-color: #ddd;
         }
 
@@ -386,7 +408,7 @@
             .about-grid { grid-template-columns: 1fr; }
             .stack-grid { grid-template-columns: 1fr; gap: 40px; } /* Stack becomes vertical on mobile */
             .partners-grid { grid-template-columns: 1fr; gap: 20px; }
-            .association-container { flex-direction: column; gap: 20px; }
+            .association-container { flex-direction: column; gap: 30px; }
             .association-divider { width: 80%; height: 1px; background-color: #ddd; margin: 10px auto; }
         }
 
@@ -499,7 +521,7 @@
                 <h2 class="section-title js-scroll fade-in-up">Pavement Sustainability Frontiers: From Materials to Maintenance</h2>
                 <div class="stack-grid">
                     <div class="about-text">
-                        <p class="js-scroll fade-in-up">Pavement Sustainability Frontiers: From Materials to Maintenance aims to provide a collaborative platform for researchers, engineers, and industry professionals to exchange knowledge and showcase advances shaping the future of sustainable pavement infrastructure. The symposium is built around four core themes—Resilient & Green Geotechnics, Eco-Efficient Asphalt Technologies, Sustainable Rigid Pavement Systems, and Resilient Roads: Evaluation & Maintenance—each reflecting the growing need for innovation across the pavement lifecycle. These themes highlight progress in eco-friendly materials, performance-driven design, energy-efficient construction practices, and smart, data-enabled maintenance strategies. Together, they emphasize the vision of developing resilient, low-carbon, and resource-efficient pavement systems that support long-term sustainability and improved infrastructure performance. </p>
+                        <p class="js-scroll fade-in-up">Pavement Sustainability Frontiers: From Materials to Maintenance aims to provide a collaborative platform for researchers, engineers, and industry professionals to exchange knowledge and showcase advances shaping the future of sustainable pavement infrastructure. The symposium is built around four core themes—Resilient & Green Geotechnics, Eco-Efficient Asphalt Technologies, Sustainable Rigid Pavement Systems, and Resilient Roads: Evaluation & Maintenance—each reflecting the growing need for innovation across the pavement lifecycle. These themes highlight progress in eco-friendly materials, performance-driven design, energy-efficient construction practices, and smart, data-enabled maintenance strategies. Together, they emphasize the vision of developing resilient, low-carbon, and resource-efficient pavement systems that support long-term sustainability and improved infrastructure performance. </p>
                     </div>
                     
                     <div class="card-stack-wrapper js-scroll fade-in-up">
@@ -551,6 +573,7 @@
                         <h4>Host Organisation</h4>
                         <div class="association-container">
                             <div class="association-item">
+                                <img src="images/logos/logo1.png" alt="IIT Palakkad" class="association-logo" loading="lazy">
                                 <p>Indian Institute of Technology<br>Palakkad</p>
                             </div>
                         </div>
@@ -560,11 +583,23 @@
                         <h4>In Association with</h4>
                         <div class="association-container">
                             <div class="association-item">
+                                <img src="images/logos/logo2.png" alt="IEI" class="association-logo" loading="lazy">
                                 <p>The Institution of Engineers (India)<br>(IEI Palakkad Chapter)</p>
                             </div>
                             <div class="association-divider"></div>
                             <div class="association-item">
+                                <img src="images/logos/logo3.png" alt="IGS" class="association-logo" loading="lazy">
                                 <p>Indian Geotechnical Society <br>(IGS Palakkad Chapter)</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="partner-card full-width js-scroll fade-in-up">
+                        <h4>Academic Partners</h4>
+                        <div class="association-container">
+                            <div class="association-item">
+                                <img src="images/acadp/JCET_logo.png" alt="JCET" class="association-logo" style="height: 90px;" loading="lazy">
+                                <p>Jawaharlal College of Engineering and Technology<br>Ottapalam, Palakkad</p>
                             </div>
                         </div>
                     </div>
@@ -716,40 +751,25 @@
             // --- NEW: CARD STACK SHUFFLE LOGIC ---
             const cardStack = document.getElementById('cardStack');
             if (cardStack) {
-                // Initial stack logic runs every 15 seconds
                 setInterval(() => {
                     const cards = Array.from(cardStack.querySelectorAll('.stack-card'));
                     if (cards.length < 2) return;
-
-                    // 1. Identify the current top card
                     const topCard = cards[0];
-
-                    // 2. Animate the top card out (dealing effect)
                     topCard.classList.remove('top');
                     topCard.classList.add('shuffling-out');
 
-                    // 3. Shift the visual classes of the remaining cards
-                    // We timeout briefly to let the "fly out" start before reordering the stack
                     setTimeout(() => {
-                        // Move the old top element to the very end of the DOM container
                         cardStack.appendChild(topCard);
-                        
-                        // Re-query the list in new order
                         const newOrder = Array.from(cardStack.querySelectorAll('.stack-card'));
-                        
-                        // Reset classes based on new position
                         newOrder.forEach((card, index) => {
-                            // Strip all positioning classes
                             card.className = 'stack-card'; 
-                            
-                            // Assign new class based on index
                             if (index === 0) card.classList.add('top');
                             else if (index === 1) card.classList.add('middle');
                             else if (index === 2) card.classList.add('bottom');
                             else card.classList.add('hidden');
                         });
-                    }, 600); // Wait 0.6s for the card to fly out before snapping back to bottom
-                }, 15000); // 15 seconds
+                    }, 600); 
+                }, 15000); 
             }
 
             // --- LAZY LOAD FALLBACK ---
@@ -773,8 +793,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
