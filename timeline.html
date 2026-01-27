@@ -23,7 +23,7 @@
             --section-alt-bg: #f8f9fa;
             --card-bg: #ffffff;
             --completed-gray: #bdc3c7;
-            --success-green: #2ecc71; /* New variable for the Green Tick */
+            --success-green: #2ecc71; 
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -109,9 +109,21 @@
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; }
 
         .timeline-wrapper { position: relative; padding: 20px 0; }
-        .timeline-wrapper::after { content: ''; position: absolute; width: 4px; background: #e0e0e0; top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; }
+        
+        /* FIX: Set z-index to 0 to ensure line stays behind the dots */
+        .timeline-wrapper::after { 
+            content: ''; position: absolute; width: 4px; background: #e0e0e0; 
+            top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; 
+            z-index: 0; 
+        }
 
-        .timeline-entry { padding: 10px 40px; position: relative; width: 50%; opacity: 0; transition: all 0.6s ease-out; }
+        /* FIX: Set z-index to 1 so the entry (and the dot inside it) sits on top of the line */
+        .timeline-entry { 
+            padding: 10px 40px; position: relative; width: 50%; 
+            opacity: 0; transition: all 0.6s ease-out; 
+            z-index: 1; 
+        }
+        
         .timeline-entry:nth-child(odd) { left: 0; transform: translateX(-50px); }
         .timeline-entry:nth-child(even) { left: 50%; transform: translateX(50px); }
         .timeline-entry.visible { opacity: 1; transform: translateX(0); }
@@ -150,6 +162,31 @@
             font-size: 0.85rem; display: flex; align-items: center; gap: 5px; opacity: 0.8; transition: 0.3s;
         }
         .timeline-card:hover .action-reveal { opacity: 1; gap: 10px; }
+
+        /* --- SUBMIT BUTTON STYLE --- */
+        .btn-submit {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 5px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border: 1px solid var(--primary-color);
+        }
+        .btn-submit:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .btn-submit i { transition: margin 0.3s; }
+        .btn-submit:hover i { margin-left: 8px; }
 
         /* --- MAIL ANIMATION --- */
         .mail-notification {
@@ -339,10 +376,13 @@
                         <div class="timeline-card">
                             <span class="event-date">16th Jan - 15th Mar 2026</span>
                             <h3>Full Paper Submission</h3>
-                            <p>Full paper submissions through the online portal.</p>
-                            <div class="action-reveal" style="color: var(--text-color);">
-                                <i class="fas fa-clock"></i> Opening Soon!
+                            <p>Full paper submissions are now open through the online portal.</p>
+                            <div class="action-reveal" style="color: var(--secondary-color); opacity: 1; margin-bottom: 15px;">
+                                <i class="fas fa-door-open"></i> Submissions Open!
                             </div>
+                            <a href="submissions.html" class="btn-submit">
+                                Submit Paper <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
+                            </a>
                         </div>
                     </div>
 
