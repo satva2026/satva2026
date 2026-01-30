@@ -258,6 +258,103 @@
             z-index: 20;
         }
 
+        /* --- KEYNOTE SPEAKERS CSS (NEW) --- */
+        .keynote-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .keynote-card {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 1;
+        }
+
+        .keynote-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            transition: height 0.3s ease;
+            z-index: -1;
+            opacity: 1;
+        }
+
+        .keynote-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .keynote-card:hover::before {
+            height: 100%;
+            opacity: 0.05;
+        }
+
+        .keynote-img-wrapper {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            position: relative;
+            background: var(--section-alt-bg);
+        }
+
+        .keynote-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .keynote-card:hover .keynote-img {
+            transform: scale(1.1);
+        }
+
+        .keynote-info {
+            text-align: center;
+            width: 100%;
+        }
+
+        .keynote-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+            transition: color 0.3s ease;
+            line-height: 1.3;
+        }
+
+        .keynote-card:hover .keynote-name {
+            color: var(--primary-color);
+        }
+
+        .keynote-inst {
+            font-size: 1rem;
+            color: #555;
+            font-weight: 500;
+            margin-bottom: 0; /* Removed margin since button is gone */
+            min-height: 1.5em; /* Prevent layout shift */
+        }
+
         /* --- UPDATED PARTNERS GRID FOR LOGOS --- */
         .partners-grid {
             display: grid;
@@ -532,6 +629,53 @@
                             <img src="images/home/img4.webp" class="stack-card hidden" alt="Symposium Highlight 4" loading="lazy">
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="keynote" class="content-section">
+            <div class="container">
+                <h2 class="section-title js-scroll fade-in-up">Keynote Speakers</h2>
+                <div class="keynote-grid">
+                    <a href="https://www.civil.iitb.ac.in/~viswam/" target="_blank" class="keynote-card js-scroll fade-in-up">
+                        <div class="keynote-img-wrapper">
+                            <img src="images/keynote/key1.webp" alt="Prof. B.V.S. Viswanadham" class="keynote-img" loading="lazy">
+                        </div>
+                        <div class="keynote-info">
+                            <div class="keynote-name">Prof. B.V.S. Viswanadham</div>
+                            <div class="keynote-inst">IIT Bombay</div>
+                        </div>
+                    </a>
+
+                    <a href="https://old.iittp.ac.in/dr-b-krishna-prapoorna" target="_blank" class="keynote-card js-scroll fade-in-up">
+                        <div class="keynote-img-wrapper">
+                            <img src="images/keynote/key2.jpg" alt="Prof. Krishna Prapoorna Biligiri" class="keynote-img" loading="lazy">
+                        </div>
+                        <div class="keynote-info">
+                            <div class="keynote-name">Prof. Krishna Prapoorna Biligiri</div>
+                            <div class="keynote-inst">IIT Tirupati</div>
+                        </div>
+                    </a>
+
+                    <a href="https://www.iitkgp.ac.in/department/CE/faculty/ce-ksreddy" target="_blank" class="keynote-card js-scroll fade-in-up">
+                        <div class="keynote-img-wrapper">
+                            <img src="images/keynote/key3.webp" alt="Prof. K. S. Reddy" class="keynote-img" loading="lazy">
+                        </div>
+                        <div class="keynote-info">
+                            <div class="keynote-name">Prof. K. S. Reddy</div>
+                            <div class="keynote-inst">IIT Kharagpur</div>
+                        </div>
+                    </a>
+
+                    <a href="https://civil.iitm.ac.in/faculty/manus/" target="_blank" class="keynote-card js-scroll fade-in-up">
+                        <div class="keynote-img-wrapper">
+                            <img src="images/keynote/key4.jpg" alt="Prof. Manu Santhanam" class="keynote-img" loading="lazy">
+                        </div>
+                        <div class="keynote-info">
+                            <div class="keynote-name">Prof. Manu Santhanam</div>
+                            <div class="keynote-inst">IIT Madras</div>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
