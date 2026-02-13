@@ -190,7 +190,7 @@
         .about-grid { display: grid; grid-template-columns: none; gap: 50px; align-items: stretch; }
         .about-text p { text-align: justify; font-size: 1.1rem; margin-bottom: 15px; }
         
-        /* --- NEW CARD STACK CSS --- */
+        /* --- CARD STACK CSS --- */
         .stack-grid {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -210,7 +210,7 @@
 
         .card-stack {
             position: relative;
-            width: 300px; /* Reduced visual footprint */
+            width: 300px; 
             height: 220px;
         }
 
@@ -229,7 +229,6 @@
             will-change: transform, opacity, z-index;
         }
 
-        /* The shuffling classes handled by JS */
         .stack-card.top {
             z-index: 10;
             transform: translateY(0) scale(1) rotate(0deg);
@@ -251,14 +250,13 @@
             opacity: 0;
         }
         
-        /* The animation for the card leaving */
         .stack-card.shuffling-out {
             transform: translate(120%, -20%) rotate(20deg);
             opacity: 0;
             z-index: 20;
         }
 
-        /* --- KEYNOTE SPEAKERS CSS (NEW) --- */
+        /* --- KEYNOTE SPEAKERS CSS --- */
         .keynote-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -351,11 +349,11 @@
             font-size: 1rem;
             color: #555;
             font-weight: 500;
-            margin-bottom: 0; /* Removed margin since button is gone */
-            min-height: 1.5em; /* Prevent layout shift */
+            margin-bottom: 0; 
+            min-height: 1.5em; 
         }
 
-        /* --- UPDATED PARTNERS GRID FOR LOGOS --- */
+        /* --- PARTNERS GRID --- */
         .partners-grid {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
@@ -376,7 +374,6 @@
             justify-content: flex-start;
         }
         
-        /* New class to span full width */
         .partner-card.full-width {
             grid-column: 1 / -1;
         }
@@ -392,7 +389,7 @@
         .association-container {
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Changed to flex-start for top alignment */
+            align-items: flex-start; 
             gap: 20px;
             height: 100%;
         }
@@ -419,7 +416,7 @@
 
         .association-divider {
             width: 2px;
-            align-self: stretch; /* Stretch divider to match height */
+            align-self: stretch; 
             background-color: #ddd;
         }
 
@@ -503,7 +500,7 @@
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; }
             .about-grid { grid-template-columns: 1fr; }
-            .stack-grid { grid-template-columns: 1fr; gap: 40px; } /* Stack becomes vertical on mobile */
+            .stack-grid { grid-template-columns: 1fr; gap: 40px; } 
             .partners-grid { grid-template-columns: 1fr; gap: 20px; }
             .association-container { flex-direction: column; gap: 30px; }
             .association-divider { width: 80%; height: 1px; background-color: #ddd; margin: 10px auto; }
@@ -517,7 +514,6 @@
             .section-title { font-size: 2rem; }
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
-            /* Adjust stack size for small mobile */
             .card-stack { width: 260px; height: 190px; }
         }
 
@@ -674,6 +670,16 @@
                         <div class="keynote-info">
                             <div class="keynote-name">Prof. Manu Santhanam</div>
                             <div class="keynote-inst">IIT Madras</div>
+                        </div>
+                    </a>
+
+                    <a href="https://search.asu.edu/profile/868725" target="_blank" class="keynote-card js-scroll fade-in-up">
+                        <div class="keynote-img-wrapper">
+                            <img src="images/keynote/key5.png" alt="Prof. Narayanan Neithalath" class="keynote-img" loading="lazy">
+                        </div>
+                        <div class="keynote-info">
+                            <div class="keynote-name">Prof. Narayanan Neithalath</div>
+                            <div class="keynote-inst">Arizona State University</div>
                         </div>
                     </a>
                 </div>
@@ -903,7 +909,7 @@
                 scrollElements.forEach(el => { elementObserver.observe(el); });
             }
 
-            // --- NEW: CARD STACK SHUFFLE LOGIC ---
+            // --- CARD STACK SHUFFLE LOGIC ---
             const cardStack = document.getElementById('cardStack');
             if (cardStack) {
                 setInterval(() => {
