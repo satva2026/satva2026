@@ -46,49 +46,14 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
-        .loader-content {
-            text-align: center;
-            width: 300px;
-            max-width: 80%;
-        }
-
-        .loader-logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 30px;
-            animation: breathe 2.5s infinite ease-in-out;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            border-radius: 10px;
-            transition: width 0.2s linear;
-            box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
-        }
-
-        .progress-text {
-            margin-top: 10px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            color: var(--primary-color);
-            font-size: 1rem;
-            letter-spacing: 1px;
-        }
+        .loader-content { text-align: center; width: 300px; max-width: 80%; }
+        .loader-logo { width: 150px; height: auto; margin-bottom: 30px; animation: breathe 2.5s infinite ease-in-out; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+        .progress-container { width: 100%; height: 6px; background-color: #e0e0e0; border-radius: 10px; overflow: hidden; position: relative; }
+        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border-radius: 10px; transition: width 0.1s linear; box-shadow: 0 0 10px rgba(96, 108, 56, 0.4); }
+        .progress-text { margin-top: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--primary-color); font-size: 1rem; letter-spacing: 1px; }
 
         @keyframes breathe {
             0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
@@ -96,17 +61,10 @@
             100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         }
 
-        @media(max-width: 576px) {
-            .loader-logo { width: 120px; }
-            .loader-content { width: 240px; }
-        }
+        @media(max-width: 576px) { .loader-logo { width: 120px; } .loader-content { width: 240px; } }
 
         /* --- EXISTING SITE CSS --- */
-        .main-header {
-            position: sticky; top: 0; width: 100%; z-index: 1000;
-            background: var(--header-bg); backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
 
@@ -124,34 +82,8 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* --- DESKTOP DROPDOWN CSS --- */
-        .dropdown-menu {
-            display: flex; 
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 50%; 
-            transform: translate(-50%, 20px);
-            background: white;
-            list-style: none;
-            padding: 10px 0;
-            margin-top: -10px;
-            border-radius: 5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            min-width: 280px;
-            gap: 0 !important;
-            z-index: 100;
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            visibility: visible;
-            opacity: 1;
-            transform: translate(-50%, 0);
-        }
-        
+        .dropdown-menu { display: flex; flex-direction: column; position: absolute; top: 100%; left: 50%; transform: translate(-50%, 20px); background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 280px; gap: 0 !important; z-index: 100; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
         .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
@@ -159,7 +91,6 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- HERO SECTION --- */
         .hero { position: relative; height: 100vh; color: var(--light-text-color); display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
         .hero-slider { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; }
         .hero-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; transform-origin: center; animation: dronePan 30s ease-in-out infinite alternate; will-change: transform, opacity; }
@@ -190,248 +121,46 @@
         .about-grid { display: grid; grid-template-columns: none; gap: 50px; align-items: stretch; }
         .about-text p { text-align: justify; font-size: 1.1rem; margin-bottom: 15px; }
         
-        /* --- CARD STACK CSS --- */
-        .stack-grid {
-            display: grid;
-            grid-template-columns: 1fr 400px;
-            gap: 60px;
-            align-items: center;
-        }
+        .stack-grid { display: grid; grid-template-columns: 1fr 400px; gap: 60px; align-items: center; }
+        .card-stack-wrapper { position: relative; width: 100%; height: 320px; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
+        .card-stack { position: relative; width: 300px; height: 220px; }
+        .stack-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; border: 6px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); transform-origin: center bottom; will-change: transform, opacity, z-index; }
+        .stack-card.top { z-index: 10; transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+        .stack-card.middle { z-index: 5; transform: translateY(-15px) scale(0.95) rotate(3deg); opacity: 1; }
+        .stack-card.bottom { z-index: 1; transform: translateY(-30px) scale(0.9) rotate(6deg); opacity: 0.8; }
+        .stack-card.hidden { z-index: 0; transform: translateY(-40px) scale(0.85); opacity: 0; }
+        .stack-card.shuffling-out { transform: translate(120%, -20%) rotate(20deg); opacity: 0; z-index: 20; }
 
-        .card-stack-wrapper {
-            position: relative;
-            width: 100%;
-            height: 320px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
+        .keynote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 40px; }
+        @media (min-width: 1100px) { .keynote-grid { grid-template-columns: repeat(5, 1fr); } }
 
-        .card-stack {
-            position: relative;
-            width: 300px; 
-            height: 220px;
-        }
+        .keynote-card { background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.08); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; text-decoration: none; display: flex; flex-direction: column; align-items: center; padding: 30px 10px; border: 1px solid rgba(0,0,0,0.03); position: relative; z-index: 1; height: 100%; }
+        .keynote-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); transition: height 0.3s ease; z-index: -1; opacity: 1; }
+        .keynote-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .keynote-card:hover::before { height: 100%; opacity: 0.05; }
 
-        .stack-card {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 12px;
-            border: 6px solid #fff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform-origin: center bottom;
-            will-change: transform, opacity, z-index;
-        }
+        .keynote-img-wrapper { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 4px solid #fff; box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 20px; position: relative; background: var(--section-alt-bg); flex-shrink: 0; }
+        .keynote-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .keynote-card:hover .keynote-img { transform: scale(1.1); }
+        .keynote-info { text-align: center; width: 100%; }
+        .keynote-name { font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--dark-color); margin-bottom: 8px; transition: color 0.3s ease; line-height: 1.3; }
+        .keynote-card:hover .keynote-name { color: var(--primary-color); }
+        .keynote-inst { font-size: 0.9rem; color: #555; font-weight: 500; margin-bottom: 0; min-height: 1.5em; }
 
-        .stack-card.top {
-            z-index: 10;
-            transform: translateY(0) scale(1) rotate(0deg);
-            opacity: 1;
-        }
-        .stack-card.middle {
-            z-index: 5;
-            transform: translateY(-15px) scale(0.95) rotate(3deg);
-            opacity: 1;
-        }
-        .stack-card.bottom {
-            z-index: 1;
-            transform: translateY(-30px) scale(0.9) rotate(6deg);
-            opacity: 0.8;
-        }
-        .stack-card.hidden {
-            z-index: 0;
-            transform: translateY(-40px) scale(0.85);
-            opacity: 0;
-        }
-        
-        .stack-card.shuffling-out {
-            transform: translate(120%, -20%) rotate(20deg);
-            opacity: 0;
-            z-index: 20;
-        }
-
-        /* --- KEYNOTE SPEAKERS CSS (UPDATED FOR ONE LINE) --- */
-        .keynote-grid {
-            display: grid;
-            /* Default: Responsive wrapping for mobile/tablet */
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        /* On Desktop (approx >1100px), force 5 items in one line */
-        @media (min-width: 1100px) {
-            .keynote-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
-        }
-
-        .keynote-card {
-            background: #ffffff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            text-decoration: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 10px; /* Reduced padding */
-            border: 1px solid rgba(0,0,0,0.03);
-            position: relative;
-            z-index: 1;
-            height: 100%;
-        }
-
-        .keynote-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            transition: height 0.3s ease;
-            z-index: -1;
-            opacity: 1;
-        }
-
-        .keynote-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-
-        .keynote-card:hover::before {
-            height: 100%;
-            opacity: 0.05;
-        }
-
-        .keynote-img-wrapper {
-            width: 150px; /* Reduced size to fit 5 */
-            height: 150px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid #fff;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            position: relative;
-            background: var(--section-alt-bg);
-            flex-shrink: 0;
-        }
-
-        .keynote-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-
-        .keynote-card:hover .keynote-img {
-            transform: scale(1.1);
-        }
-
-        .keynote-info {
-            text-align: center;
-            width: 100%;
-        }
-
-        .keynote-name {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.1rem; /* Slightly smaller to prevent break */
-            font-weight: 800;
-            color: var(--dark-color);
-            margin-bottom: 8px;
-            transition: color 0.3s ease;
-            line-height: 1.3;
-        }
-
-        .keynote-card:hover .keynote-name {
-            color: var(--primary-color);
-        }
-
-        .keynote-inst {
-            font-size: 0.9rem;
-            color: #555;
-            font-weight: 500;
-            margin-bottom: 0; 
-            min-height: 1.5em; 
-        }
-
-        /* --- PARTNERS GRID --- */
-        .partners-grid {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 30px;
-            text-align: center;
-            align-items: stretch;
-        }
-        
-        .partner-card {
-            background: #fff;
-            padding: 30px 20px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-        
-        .partner-card.full-width {
-            grid-column: 1 / -1;
-        }
-
-        .partner-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
+        .partners-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; text-align: center; align-items: stretch; }
+        .partner-card { background: #fff; padding: 30px 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s ease; height: 100%; display: flex; flex-direction: column; justify-content: flex-start; }
+        .partner-card.full-width { grid-column: 1 / -1; }
+        .partner-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .partner-card h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         .partner-card p { font-size: 1.05rem; font-weight: 600; line-height: 1.4; color: #444; margin-top: 10px; }
 
-        .association-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; 
-            gap: 20px;
-            height: 100%;
-        }
-        .association-item {
-            flex: 1;
-            text-align: center;
-            padding: 0 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .association-logo {
-            height: 80px;
-            width: auto;
-            object-fit: contain;
-            margin-bottom: 10px;
-            transition: transform 0.3s ease;
-        }
-        
-        .association-item:hover .association-logo {
-            transform: scale(1.1);
-        }
-
-        .association-divider {
-            width: 2px;
-            align-self: stretch; 
-            background-color: #ddd;
-        }
+        .association-container { display: flex; justify-content: center; align-items: flex-start; gap: 20px; height: 100%; }
+        .association-item { flex: 1; text-align: center; padding: 0 10px; display: flex; flex-direction: column; align-items: center; }
+        .association-logo { height: 80px; width: auto; object-fit: contain; margin-bottom: 10px; transition: transform 0.3s ease; }
+        .association-item:hover .association-logo { transform: scale(1.1); }
+        .association-divider { width: 2px; align-self: stretch; background-color: #ddd; }
 
         .button-container { text-align: center; padding-top: 20px; }
-
         .welcome-message-section { padding-top: 80px; padding-bottom: 60px; background: var(--section-alt-bg); }
         .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; margin-top: 30px; }
         .contact-card { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 40px 20px; text-align: center; position: relative; overflow: hidden; transition: transform 0.3s; }
@@ -455,12 +184,7 @@
             .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
             .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
 
-            .mobile-nav-container {
-                display: block;
-                position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg);
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0;
-                transition: max-height 0.5s ease-in-out;
-            }
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
             .mobile-nav-container.active { max-height: calc(100vh - 80px); }
             .mobile-nav-container ul { list-style: none; padding: 10px 0; }
             .mobile-nav-container > ul > li { text-align: center; }
@@ -469,42 +193,10 @@
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
             
-            .mobile-nav-container .dropdown-menu { 
-                position: static !important;
-                float: none !important;
-                display: none; 
-                width: 100% !important; 
-                min-width: 0 !important;
-                transform: none !important;
-                left: auto !important;
-                top: auto !important;
-                box-shadow: none !important;
-                background-color: #f8f9fa !important;
-                border-radius: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-            }
-            
-            .mobile-nav-container .dropdown-menu.show { 
-                display: block !important; 
-            }
-
-            .mobile-nav-container .dropdown-menu li {
-                width: 100% !important;
-                display: block !important;
-            }
-
-            .mobile-nav-container .dropdown-menu li a {
-                text-align: center !important;
-                padding: 12px 20px !important;
-                width: 100% !important;
-                display: block !important;
-                font-size: 1rem !important;
-                color: #444 !important;
-                border-bottom: 1px solid rgba(0,0,0,0.05);
-            }
+            .mobile-nav-container .dropdown-menu { position: static !important; float: none !important; display: none; width: 100% !important; min-width: 0 !important; transform: none !important; left: auto !important; top: auto !important; box-shadow: none !important; background-color: #f8f9fa !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; opacity: 1 !important; visibility: visible !important; }
+            .mobile-nav-container .dropdown-menu.show { display: block !important; }
+            .mobile-nav-container .dropdown-menu li { width: 100% !important; display: block !important; }
+            .mobile-nav-container .dropdown-menu li a { text-align: center !important; padding: 12px 20px !important; width: 100% !important; display: block !important; font-size: 1rem !important; color: #444 !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
@@ -527,7 +219,6 @@
             .card-stack { width: 260px; height: 190px; }
         }
 
-        /* Performance helpers */
         .content-section { content-visibility: auto; contain-intrinsic-size: 800px; }
     </style>
 </head>
@@ -781,6 +472,7 @@
     </main>
 
     <script>
+        // --- OPTIMIZED PRELOADER LOGIC ---
         (function () {
             const preloader = document.getElementById('preloader');
             const progressBar = document.getElementById('progress-bar');
@@ -789,65 +481,58 @@
             let progress = 0;
             let finished = false;
 
+            // Make the visual progress bar fill up much faster
             const interval = setInterval(() => {
-                if (progress < 85) progress += Math.random() * 3 + 1;
-                else progress += 0.5;
-                if (progress > 99) progress = 99;
+                if (progress < 90) progress += Math.random() * 15 + 5;
+                if (progress >= 95) progress = 95; // Hold near the end until fully loaded
                 if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
                 if (progressText) progressText.innerText = Math.floor(progress) + '%';
-            }, 80);
+            }, 50);
 
             function hidePreloader() {
                 if (finished) return;
                 finished = true;
                 clearInterval(interval);
+                
+                // Jump to 100% instantly
                 if (progressBar) progressBar.style.width = '100%';
                 if (progressText) progressText.innerText = '100%';
+                
                 setTimeout(() => {
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
                     body.classList.remove('loading-active');
-                    setTimeout(() => preloader.remove(), 700);
-                }, 300);
+                    setTimeout(() => preloader.remove(), 500);
+                }, 150);
             }
 
-            function heroReady() {
-                const heroImg = document.querySelector('.hero-bg-img');
-                return heroImg && (heroImg.complete || heroImg.naturalWidth > 0);
-            }
-
-            document.addEventListener('DOMContentLoaded', () => {
-                if (heroReady()) return hidePreloader();
-
-                const heroImg = document.querySelector('.hero-bg-img');
-                if (heroImg) {
-                    heroImg.addEventListener('load', hidePreloader);
-                    heroImg.addEventListener('error', hidePreloader);
-                }
-                setTimeout(hidePreloader, 3000);
-            });
-
-            setTimeout(hidePreloader, 8000);
+            // Remove artificial timeouts and tie strictly to browser load event
+            window.addEventListener('load', hidePreloader);
+            
+            // Safety fallback just in case the load event hangs on a bad network
+            setTimeout(hidePreloader, 5000); 
         })();
     </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // --- MOBILE NAV LOGIC ---
+            // --- OPTIMIZED MOBILE NAV LOGIC ---
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
 
             if (desktopNav && mobileNavContainer && mobileNavToggle) {
-                let mobileNavHTML = desktopNav.innerHTML;
-                const parser = new DOMParser();
-                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
-                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
-                    const toggle = document.createElement('span');
-                    toggle.className = 'dropdown-toggle';
-                    link.appendChild(toggle);
-                });
-                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+                // Swapped heavy DOMParser for faster native cloning
+                const ulElement = desktopNav.querySelector('ul');
+                if(ulElement) {
+                    const clonedNav = ulElement.cloneNode(true);
+                    clonedNav.querySelectorAll('.dropdown > a').forEach(link => {
+                        const toggle = document.createElement('span');
+                        toggle.className = 'dropdown-toggle';
+                        link.appendChild(toggle);
+                    });
+                    mobileNavContainer.appendChild(clonedNav);
+                }
 
                 mobileNavToggle.addEventListener('click', () => {
                     mobileNavContainer.classList.toggle('active');
@@ -964,5 +649,3 @@
     </script>
 </body>
 </html>
-
-
