@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - SATVA 2026</title>
+    
+    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    <link rel="preload" as="image" href="images/logos/logo4.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary-color: #606C38; 
+            --secondary-color: #117d56; 
+            --dark-color: #013328;
+            --text-color: #333;
+            --light-text-color: #ffffff; 
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --section-alt-bg: #f8f9fa;
+            --table-border: #eaeaea;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body.loading-active { overflow: hidden; height: 100vh; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: #fff; }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+        /* --- PRELOADER CSS --- */
+        #preloader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 999999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.8s ease-out, visibility 0.8s ease-out; }
+        .loader-content { text-align: center; width: 300px; max-width: 80%; }
+        .loader-logo { width: 150px; height: auto; margin-bottom: 30px; animation: breathe 2.5s infinite ease-in-out; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+        .progress-container { width: 100%; height: 6px; background-color: #e0e0e0; border-radius: 10px; overflow: hidden; position: relative; }
+        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border-radius: 10px; transition: width 0.2s linear; box-shadow: 0 0 10px rgba(96, 108, 56, 0.4); }
+        .progress-text { margin-top: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--primary-color); font-size: 1rem; letter-spacing: 1px; }
+        
+        @keyframes breathe {
+            0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); }
+            100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+        }
+
+        @media(max-width: 576px) { .loader-logo { width: 120px; } .loader-content { width: 240px; } }
+
+        /* --- HEADER STYLES --- */
+        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 20px; }
+        .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
+        .logo-container img { transition: transform 0.3s ease; }
+        .logo-container img:hover { transform: scale(1.05); }
+
+        .main-nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 25px 0; position: relative; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; transition: color 0.3s; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 15px; left: 0; width: 0; height: 3px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
+        .main-nav a:hover::after { width: 100%; }
+
+        /* DROPDOWN */
+        .dropdown-menu { display: flex; flex-direction: column; position: absolute; top: 100%; left: 50%; transform: translate(-50%, 20px); background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 280px; gap: 0 !important; z-index: 100; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
+        .dropdown-menu li a::after { content: none; }
+        .dropdown-menu li a:hover { background-color: #f4f4f4; }
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav-container { display: none; }
+
+        /* --- REGISTRATION PAGE SPECIFIC STYLES --- */
+        .content-section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--dark-color); position: relative; }
+        .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
+
+        /* Pricing Table */
+        .table-container { margin-bottom: 30px; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); background: #fff; border: 1px solid var(--table-border); max-width: 1000px; margin: 0 auto; }
+        .table-header { padding: 20px; color: white; text-align: center; font-family: 'Montserrat', sans-serif; background: linear-gradient(135deg, #606C38, #27ae60); }
+        .rate-table { width: 100%; border-collapse: collapse; }
+        .rate-table th { background-color: #f9f9f9; padding: 15px; text-align: center; border-bottom: 2px solid var(--table-border); color: var(--dark-color); }
+        .rate-table td { padding: 15px; border-bottom: 1px solid var(--table-border); text-align: center; color: #333; }
+        .rate-table td:first-child { text-align: left; font-weight: 600; color: var(--primary-color); }
+        .date-sub { display: block; font-size: 0.75rem; color: #666; font-weight: 500; margin-top: 5px; }
+
+        /* Info Notes */
+        .info-notes { max-width: 1000px; margin: 40px auto; background: #e8f5e9; border-left: 4px solid var(--secondary-color); padding: 20px; border-radius: 5px; }
+        .info-notes p { margin-bottom: 10px; font-size: 0.95rem; }
+        .info-notes p:last-child { margin-bottom: 0; }
+        .info-notes strong { color: var(--dark-color); }
+
+        /* CTA Box */
+        .register-cta-box { text-align: center; background: var(--section-alt-bg); padding: 40px; border-radius: 15px; border: 1px solid #ddd; max-width: 900px; margin: 0 auto; }
+        .register-btn { display: inline-block; background-color: var(--dark-color); color: #fff; padding: 15px 50px; font-size: 1.2rem; font-weight: 700; border-radius: 50px; cursor: pointer; border: none; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .register-btn:hover { background-color: var(--secondary-color); transform: translateY(-2px); }
+
+        /* --- MODAL (AUTH ONLY) --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-container { background: white; width: 95%; max-width: 450px; border-radius: 10px; overflow: hidden; transform: scale(0.9); transition: transform 0.3s ease; }
+        .modal-overlay.active .modal-container { transform: scale(1); }
+        .modal-header { padding: 20px; background: var(--dark-color); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .close-modal-btn { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
+        .modal-body { padding: 30px; }
+
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+        .auth-tab { flex: 1; padding: 10px; background: none; border: none; font-weight: 700; cursor: pointer; color: #aaa; font-size: 1rem; }
+        .auth-tab.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
+        .auth-form-container input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 5px; font-size: 1rem; }
+        .auth-action-btn { width: 100%; padding: 12px; background: var(--primary-color); color: white; border: none; border-radius: 5px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .auth-action-btn:hover { background: var(--secondary-color); }
+        .google-btn { width: 100%; padding: 12px; background: #fff; border: 1px solid #ddd; color: #333; border-radius: 5px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; transition: 0.3s; }
+        .google-btn:hover { background: #f1f1f1; }
+        .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 10px; text-align: center; }
+
+        /* Animation Classes */
+        .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .js-scroll.fade-in-up { transform: translateY(30px); }
+        .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media(max-width: 992px) {
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
+            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+            .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            
+            .mobile-nav-container .dropdown-menu { position: static !important; float: none !important; display: none; width: 100% !important; min-width: 0 !important; transform: none !important; left: auto !important; top: auto !important; box-shadow: none !important; background-color: #f8f9fa !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; opacity: 1 !important; visibility: visible !important; }
+            .mobile-nav-container .dropdown-menu.show { display: block !important; }
+            .mobile-nav-container .dropdown-menu li { width: 100% !important; display: block !important; }
+            .mobile-nav-container .dropdown-menu li a { text-align: center !important; padding: 12px 20px !important; width: 100% !important; display: block !important; font-size: 1rem !important; color: #444 !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+            .logo-container { gap: 8px; flex-grow: 1; }
+            .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
+            .logo-2 { height: 45px !important; } 
+            
+            /* Responsive Table */
+            .rate-table thead { display: none; }
+            .rate-table, .rate-table tbody, .rate-table tr, .rate-table td { display: block; width: 100%; }
+            .rate-table tr { margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; }
+            .rate-table td { display: flex; justify-content: space-between; align-items: center; text-align: right; padding: 15px; border-bottom: 1px solid #f5f5f5; }
+            .rate-table td:first-child { background-color: #f1f3eb; justify-content: center; text-align: center; }
+            .rate-table td:nth-child(2)::before { content: "Early Bird (Till 15 May)"; font-weight: 700; color: #777; font-size: 0.9rem; }
+            .rate-table td:nth-child(3)::before { content: "Regular (Till 01 June)"; font-weight: 700; color: #777; font-size: 0.9rem; }
+            .rate-table td:nth-child(4)::before { content: "On-Spot (From 04 June)"; font-weight: 700; color: #777; font-size: 0.9rem; }
+        }
+        @media(max-width: 380px) { .logo-container { gap: 5px; } .logo-container img { height: 32px !important; } }
+    </style>
+</head>
+
+<body class="loading-active">
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="images/logos/logo4.png" alt="SATVA Loading..." class="loader-logo">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0%</div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <a href="index.html"><img src="images/logos/logo4.png" alt="SATVA Logo" class="logo-3"></a>
+                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo1.png" alt="IIT Palakkad Logo" class="logo-1"></a>
+                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo2.png" alt="IEI Logo" class="logo-2"></a>
+                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo3.png" alt="IGS Logo" class="logo-3"></a>
+                </div>
+    
+                <nav class="main-nav" id="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="organisers.html">ORGANISERS</a></li>
+                        <li><a href="themes.html">THEMES</a></li>
+                        <li class="dropdown">
+                            <a href="programme.html">PROGRAMME</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="timeline.html">Timeline</a></li>
+                                <li><a href="advisory.html">Advisory and Technical Committee</a></li>
+                                <li><a href="committee.html">Organising Committee</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sponsors.html">SPONSORS</a></li>
+                        <li><a href="submissions.html">SUBMISSION</a></li>
+                        <li><a href="registrations.html" style="color: var(--primary-color);">REGISTRATION</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
+            </nav>
+        </div>
+        <nav class="mobile-nav-container" id="mobile-nav"></nav>
+    </header>
+
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <h2 class="section-title js-scroll fade-in-up">Registration Details</h2>
+                
+                <div class="table-container js-scroll fade-in-up">
+                    <div class="table-header">
+                        <h3>Fee Structure</h3>
+                    </div>
+                    <table class="rate-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">Category</th>
+                                <th style="width: 23%;">Early Bird<span class="date-sub">Till 15 May 2026</span></th>
+                                <th style="width: 23%;">Regular<span class="date-sub">Till 01 June 2026</span></th>
+                                <th style="width: 24%;">On-Spot<span class="date-sub">From 04 June 2026</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fas fa-user-graduate" style="margin-right: 10px;"></i> Students / Research Scholars</td>
+                                <td>&#8377; 4,000</td>
+                                <td>&#8377; 5,000</td>
+                                <td>&#8377; 6,000</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-briefcase" style="margin-right: 10px;"></i> Delegates <br><small style="font-weight: normal; font-size: 0.8em; color: #666;">(Academia / Industry)</small></td>
+                                <td>&#8377; 8,000</td>
+                                <td>&#8377; 9,500</td>
+                                <td>&#8377; 11,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-notes js-scroll fade-in-up">
+                    <p><strong>* Note:</strong> The above registration fees are inclusive of GST.</p>
+                    <p><strong>* Inclusions:</strong> Registration fee includes access to all technical sessions, registration kit, lunch, and refreshments during the symposium days.</p>
+                </div>
+
+                <div class="register-cta-box js-scroll fade-in-up">
+                    <h3 style="margin-bottom: 20px;">Ready to participate or check your status?</h3>
+                    <button id="openRegisterModal" class="register-btn">
+                        <i class="fas fa-sign-in-alt" style="margin-right:8px;"></i> Login / Register Portal
+                    </button>
+                </div>
+
+            </div>
+        </section>
+    </main>
+    
+    <div id="registerModalOverlay" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Portal Access</h2>
+                <button class="close-modal-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+                    <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+                </div>
+
+                <div id="login-form" class="auth-form-container">
+                    <input type="email" id="login-email" placeholder="Email Address" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button id="btn-login-email" class="auth-action-btn">Login</button>
+                    <div style="text-align:center; margin:15px 0; color:#999;">or</div>
+                    <button id="btn-google-login" class="google-btn"><i class="fab fa-google"></i> Continue with Google</button>
+                    <p id="login-error" class="error-msg"></p>
+                </div>
+
+                <div id="signup-form" class="auth-form-container" style="display: none;">
+                    <div style="background: #fff3cd; padding: 10px; border-radius: 5px; font-size: 0.8rem; color: #856404; margin-bottom: 15px; border: 1px solid #ffeeba;">
+                        <strong>Note:</strong> Verification email may go to Spam.
+                    </div>
+                    <input type="email" id="signup-email" placeholder="Email Address" required>
+                    <input type="password" id="signup-password" placeholder="Password (Min 6 chars)" required>
+                    <button id="btn-signup-email" class="auth-action-btn">Sign Up</button>
+                    <div style="text-align:center; margin:15px 0; color:#999;">or</div>
+                    <button id="btn-google-signup" class="google-btn"><i class="fab fa-google"></i> Sign up with Google</button>
+                    <p id="signup-error" class="error-msg"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- PRELOADER LOGIC ---
+        (function () {
+            let progress = 0;
+            let finished = false;
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            const interval = setInterval(() => {
+                if (progress < 90) {
+                    const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
+                    progress += increment;
+                }
+                
+                if (progress > 99) progress = 99;
+                
+                if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
+                if (progressText) progressText.innerText = Math.floor(progress) + '%';
+            }, 30); 
+
+            function hidePreloader() {
+                if (finished) return;
+                finished = true;
+                clearInterval(interval);
+                
+                if (progressBar) progressBar.style.width = '100%';
+                if (progressText) progressText.innerText = '100%';
+                
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    body.classList.remove('loading-active');
+                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
+                }, 300); 
+            }
+
+            window.addEventListener("load", hidePreloader);
+            setTimeout(hidePreloader, 4000);
+        })();
+
+        // --- PAGE LOGIC ---
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Mobile Nav
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavContainer = document.getElementById('mobile-nav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                let mobileNavHTML = desktopNav.innerHTML;
+                const parser = new DOMParser();
+                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                    const toggle = document.createElement('span');
+                    toggle.className = 'dropdown-toggle';
+                    link.appendChild(toggle);
+                });
+                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavContainer.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) {
+                        e.preventDefault();
+                        e.target.classList.toggle('open');
+                        const li = e.target.closest('li.dropdown');
+                        if (!li) return;
+                        const menu = li.querySelector('.dropdown-menu');
+                        if (menu) { menu.classList.toggle('show'); }
+                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                        mobileNavContainer.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+
+            // Scroll Animation
+            const animatedItems = document.querySelectorAll('.js-scroll');
+            if (animatedItems.length > 0) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.transitionDelay = `${index * 100}ms`;
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                animatedItems.forEach(item => observer.observe(item));
+            }
+
+            // Modal & Tabs
+            const modal = document.getElementById('registerModalOverlay');
+            document.getElementById('openRegisterModal').addEventListener('click', () => modal.classList.add('active'));
+            document.getElementById('closeModalBtn').addEventListener('click', () => modal.classList.remove('active'));
+        });
+
+        // Tab Switching Function attached to window
+        window.switchTab = function(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.auth-tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
+        };
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVtOz8jA_5ShckO9ljeMV1EO3aTXXgKx4",
+            authDomain: "satva-2026.firebaseapp.com",
+            projectId: "satva-2026",
+            storageBucket: "satva-2026.firebasestorage.app",
+            messagingSenderId: "754639793020",
+            appId: "1:754639793020:web:1016a5a827f35c0f4f92f9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Redirect if logged in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const btn = document.getElementById('openRegisterModal');
+                btn.innerHTML = `<i class="fas fa-columns" style="margin-right:8px;"></i> Go to Dashboard`;
+                btn.onclick = () => window.location.href = "dashboard.html"; 
+            }
+        });
+
+        const handleGoogle = async () => { 
+            try { 
+                await signInWithPopup(auth, provider); 
+                window.location.href = "dashboard.html"; 
+            } catch (e) { alert(e.message); } 
+        };
+        
+        document.getElementById('btn-google-login').onclick = handleGoogle;
+        document.getElementById('btn-google-signup').onclick = handleGoogle;
+
+        document.getElementById('btn-login-email').onclick = async () => {
+            try {
+                await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value);
+                window.location.href = "dashboard.html";
+            } catch(e) { document.getElementById('login-error').textContent = "Invalid credentials."; }
+        };
+
+        document.getElementById('btn-signup-email').onclick = async () => {
+            const p = document.getElementById('signup-password').value;
+            if(p.length < 6) { document.getElementById('signup-error').textContent = "Password too short."; return; }
+            try {
+                await createUserWithEmailAndPassword(auth, document.getElementById('signup-email').value, p);
+                window.location.href = "dashboard.html";
+            } catch(e) { document.getElementById('signup-error').textContent = e.message; }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Console - SATVA 2026</title>
+    
+    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root { 
+            --primary: #606C38; 
+            --secondary: #283618; 
+            --accent: #bc6c25; 
+            --light: #f4f7f6; 
+            --white: #ffffff; 
+            --dark-color: #013328;
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; background: var(--light); color: #333; }
+
+        /* HEADER */
+        .admin-header { background: var(--dark-color); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .admin-header h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; margin: 0;}
+        .user-controls { display: flex; align-items: center; gap: 20px; }
+        .btn-logout { background: var(--danger); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-logout:hover { background: #c0392b; }
+
+        /* LOADER & MESSAGES */
+        #loader, #access-denied { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh; text-align: center; }
+        .spinner { border: 5px solid #ccc; border-top: 5px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .container { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
+
+        /* DASHBOARD STATS */
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; border-bottom: 4px solid var(--primary); }
+        .stat-card h3 { color: #666; font-size: 1rem; margin-bottom: 10px; font-weight: normal; }
+        .stat-card .num { font-size: 2.5rem; font-weight: bold; color: var(--dark-color); font-family: 'Montserrat'; }
+
+        /* DATA TABLE */
+        .table-container { background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow-x: auto; padding: 20px; }
+        .table-header-actions { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; flex-wrap: wrap; gap: 15px;}
+        .search-box { padding: 10px 15px; width: 100%; max-width: 350px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
+        
+        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; font-size: 0.95rem; }
+        th { background: #f8f9fa; color: var(--dark-color); font-weight: bold; position: sticky; top: 0; }
+        tr:hover { background-color: #f1f5f1; }
+        
+        .badge { padding: 5px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: bold; display: inline-block; text-align: center; }
+        .bg-pending { background: #fff3cd; color: #856404; }
+        .bg-approved { background: #d4edda; color: #155724; }
+        .bg-rejected { background: #f8d7da; color: #721c24; }
+        .bg-neutral { background: #e2e3e5; color: #383d41; }
+
+        .btn-edit { background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; font-weight: bold;}
+        .btn-edit:hover { background: var(--dark-color); }
+        
+        .btn-doc { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: #eef2f3; color: var(--dark-color); padding: 10px 15px; border-radius: 5px; text-decoration: none; font-size: 0.9rem; font-weight: bold; border: 1px solid #ccc; transition: 0.3s; margin-right: 10px; margin-bottom: 10px;}
+        .btn-doc:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .disabled-doc { background: #f8d7da !important; color: #721c24 !important; border-color: #f5c6cb !important; pointer-events: none; cursor: not-allowed; }
+
+        /* EDIT MODAL */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: none; justify-content: center; align-items: center; }
+        .modal-overlay.active { display: flex !important; }
+        .modal-content { background: white; width: 95%; max-width: 800px; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column; }
+        .modal-header { padding: 20px; background: var(--dark-color); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { margin: 0; font-family: 'Montserrat'; }
+        .modal-body { padding: 30px; overflow-y: auto; background: #fafafa;}
+        .modal-footer { padding: 15px 20px; background: #fff; text-align: right; border-top: 1px solid #eee; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; background: white; padding: 20px; border-radius: 8px; border: 1px solid #eee;}
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;}
+        .form-group select, .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-family: inherit; font-size: 0.95rem;}
+        .form-group input:read-only, .form-group textarea:read-only { background: #e9ecef; color: #495057; outline: none; border-color: #ddd;}
+        
+        .full-width { grid-column: span 2; }
+        .section-title { font-size: 1.2rem; color: var(--primary); margin: 0 0 15px; font-weight: bold; font-family: 'Montserrat';}
+
+        .btn-save { background: var(--success); color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+        .btn-cancel { background: #95a5a6; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; margin-right: 10px; }
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="admin-header hidden" id="admin-ui-header">
+        <h2><img src="images/logos/logo4.png" alt="SATVA" style="height: 40px; background: white; border-radius: 50%; padding: 2px;"> SATVA 2026 Admin</h2>
+        <div class="user-controls">
+            <span id="admin-email-display" style="font-size: 0.9rem; font-weight: bold; display: none;"></span>
+            <button class="btn-logout" onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </header>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <h3 style="color: var(--dark-color); font-family: 'Montserrat';">Authenticating Admin Access...</h3>
+    </div>
+
+    <div id="access-denied" class="hidden">
+        <i class="fas fa-user-shield" style="font-size: 4rem; color: var(--danger); margin-bottom: 20px;"></i>
+        <h2 style="color: var(--dark-color); font-family: 'Montserrat';">Access Denied</h2>
+        <p style="margin: 10px 0 20px; color: #666;">You do not have administrator privileges to view this page.</p>
+        <button class="btn-logout" onclick="window.logout()">Back to Login</button>
+    </div>
+
+    <div id="admin-dashboard" class="container hidden">
+        
+        <div class="stat-grid">
+            <div class="stat-card">
+                <h3>Total Registrations</h3>
+                <div class="num" id="stat-total">0</div>
+            </div>
+            <div class="stat-card" style="border-bottom-color: var(--warning);">
+                <h3>Pending Verification</h3>
+                <div class="num" id="stat-pending">0</div>
+            </div>
+            <div class="stat-card" style="border-bottom-color: var(--success);">
+                <h3>Approved Registrations</h3>
+                <div class="num" id="stat-approved">0</div>
+            </div>
+            <div class="stat-card" style="border-bottom-color: #3498db;">
+                <h3>Requested Accommodations</h3>
+                <div class="num" id="stat-acc">0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header-actions">
+                <h3 style="color: var(--dark-color); font-family: 'Montserrat'; margin: 0;"><i class="fas fa-users"></i> Registered Participants</h3>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="searchInput" class="search-box" placeholder="Search by name, email, or Ref ID..." onkeyup="filterTable()">
+                    <button onclick="fetchData()" style="background: var(--dark-color); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;"><i class="fas fa-sync-alt"></i> Refresh</button>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table id="registrationsTable">
+                    <thead>
+                        <tr>
+                            <th>Participant Info</th>
+                            <th>Category</th>
+                            <th>Contact</th>
+                            <th>Payment Ref</th>
+                            <th>Reg. Status</th>
+                            <th>Acc. Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Manage Participant</h3>
+                <button onclick="closeModal()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="updateForm">
+                    <input type="hidden" id="editUserEmail"> 
+                    
+                    <div class="section-title"><i class="fas fa-info-circle"></i> Complete Participant Details</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>Full Name</label><input type="text" id="editName" readonly></div>
+                        <div class="form-group"><label>Email Address</label><input type="text" id="editEmail" readonly></div>
+                        <div class="form-group"><label>Registration Category</label><input type="text" id="editCategory" readonly></div>
+                        <div class="form-group"><label>Designation</label><input type="text" id="editDesignation" readonly></div>
+                        <div class="form-group full-width"><label>Affiliated Organization</label><input type="text" id="editOrganization" readonly></div>
+                        
+                        <div class="form-group"><label>Phone Number</label><input type="text" id="editPhone" readonly></div>
+                        <div class="form-group"><label>WhatsApp Number</label><input type="text" id="editWhatsapp" readonly></div>
+                        <div class="form-group full-width"><label>Postal Address</label><textarea id="editAddress" readonly rows="2"></textarea></div>
+
+                        <div class="form-group"><label>Paper Accepted?</label><input type="text" id="editPaperAcc" readonly></div>
+                        <div class="form-group"><label>Paper ID & Title</label><input type="text" id="editPaperDetails" readonly></div>
+                        
+                        <div class="form-group"><label>Payment Reference ID</label><input type="text" id="editRefId" readonly style="font-family: monospace; font-weight: bold; color: var(--dark-color);"></div>
+                        
+                        <div class="form-group full-width">
+                            <label>User Uploaded Proofs</label>
+                            <div style="margin-top: 5px; padding: 15px; background: #e9ecef; border-radius: 5px;">
+                                <a href="#" id="viewUserReceipt" target="_blank" class="btn-doc"><i class="fas fa-receipt"></i> View Receipt Proof</a>
+                                <a href="#" id="viewUserId" target="_blank" class="btn-doc"><i class="fas fa-id-card"></i> View Student ID</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-title"><i class="fas fa-user-check"></i> Administrator Actions</div>
+                    <div class="form-grid" style="background: #e8f5e9; border-color: #c8e6c9;">
+                        <div class="form-group">
+                            <label style="color: var(--secondary);">Registration Approval</label>
+                            <select id="editRegStatus" style="border-color: var(--secondary); font-weight: bold;">
+                                <option value="Pending">Pending Verification</option>
+                                <option value="Approved">Approved / Registered</option>
+                                <option value="Rejected">Rejected / Discrepancy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label style="color: var(--secondary);">Accommodation Allotment</label>
+                            <select id="editAccStatus" style="border-color: var(--secondary); font-weight: bold;">
+                                <option value="Pending">Pending Request</option>
+                                <option value="Allotted">Allotted</option>
+                                <option value="Not Requested">Not Requested</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="section-title"><i class="fas fa-link"></i> Distribute Official Documents</div>
+                    <p style="font-size: 0.85rem; color: #666; margin: -5px 0 15px;">Paste your generated Google Drive links below. They will immediately become downloadable on the user's personal dashboard.</p>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label>Official Payment Receipt URL</label>
+                            <input type="url" id="editReceiptUrl" placeholder="Paste link to official receipt PDF...">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Participation Certificate URL</label>
+                            <input type="url" id="editPartCert" placeholder="Paste link to participation certificate...">
+                        </div>
+                        <div class="form-group full-width" id="presCertContainer">
+                            <label>Presentation Certificate URL</label>
+                            <input type="url" id="editPresCert" placeholder="Paste link to presentation certificate...">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button type="button" class="btn-save" id="saveBtn" onclick="saveUserData()"><i class="fas fa-save"></i> Save & Update User</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVtOz8jA_5ShckO9ljeMV1EO3aTXXgKx4",
+            authDomain: "satva-2026.firebaseapp.com",
+            projectId: "satva-2026",
+            storageBucket: "satva-2026.firebasestorage.app",
+            messagingSenderId: "754639793020",
+            appId: "1:754639793020:web:1016a5a827f35c0f4f92f9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // 🚨 ADD YOUR ADMIN EMAILS HERE
+        const ADMIN_EMAILS = [
+            "satva2026@gmail.com",
+            "veena@iitpkd.ac.in", 
+            "satva@iitpkd.ac.in",
+            "adityaramsankar@gmail.com" // You added this previously
+        ];
+
+        // 🚨 YOUR NEW GOOGLE SCRIPT URL 🚨
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxMPo2MS8aoMwa93e-ie3Gtlbyz0qFXkLRgq2FJQNv6fLDNmHdPNhswdSYqqsODAX_K/exec";
+        
+        let globalData = []; 
+
+        // 🛠️ FUZZY MATCHER TOOL (Ignores spaces, underscores, and caps from Sheet headers)
+        const getVal = (userObj, possibleNames) => {
+            for (let key in userObj) {
+                let cleanKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
+                for (let name of possibleNames) {
+                    let cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (cleanKey === cleanName && userObj[key]) return userObj[key];
+                }
+            }
+            return "";
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                if(ADMIN_EMAILS.includes(user.email.toLowerCase())) {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('admin-ui-header').classList.remove('hidden');
+                    document.getElementById('admin-dashboard').classList.remove('hidden');
+                    document.getElementById('admin-email-display').textContent = user.email;
+                    document.getElementById('admin-email-display').style.display = 'inline-block';
+                    window.fetchData();
+                } else {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('access-denied').classList.remove('hidden');
+                }
+            } else {
+                window.location.href = "registrations.html";
+            }
+        });
+
+        window.logout = () => signOut(auth).then(() => window.location.href = "registrations.html");
+
+        window.fetchData = async () => {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 50px;"><i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--primary);"></i><br><br>Syncing with Google Sheets Database...</td></tr>';
+            
+            try {
+                const response = await fetch(`${scriptURL}?action=getAll`);
+                const result = await response.json();
+                
+                if(result.status === "success") {
+                    globalData = result.data;
+                    renderTable(globalData);
+                    updateStats(globalData);
+                } else { throw new Error("Failed to load data from Sheet."); }
+            } catch (error) {
+                console.error(error);
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:red; padding: 20px;">Database Error. Please ensure the Google Apps Script is updated and deployed correctly.</td></tr>';
+            }
+        };
+
+        function renderTable(dataArray) {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = "";
+
+            if(dataArray.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 20px;">No registrations found yet.</td></tr>';
+                return;
+            }
+
+            for (let i = dataArray.length - 1; i >= 0; i--) {
+                const user = dataArray[i];
+                
+                // Using Fuzzy Matcher for safe extraction
+                const name = getVal(user, ['name', 'fullname']) || "Unknown";
+                const org = getVal(user, ['organization', 'affiliatedorganization']) || "";
+                const email = getVal(user, ['email']) || "";
+                const cat = getVal(user, ['category']) || "";
+                const payRef = getVal(user, ['paymentref', 'transactionid', 'refno']) || "N/A";
+
+                const regStatus = getVal(user, ['adminregstatus', 'regstatus']) || "Pending";
+                const rawAccField = getVal(user, ['accommodation']);
+                let accStatus = getVal(user, ['adminaccstatus', 'accstatus']) || "Pending";
+                if (rawAccField.toLowerCase() === "no") accStatus = "Not Requested";
+                
+                let regBadgeClass = regStatus === "Approved" ? "bg-approved" : (regStatus === "Rejected" ? "bg-rejected" : "bg-pending");
+                let accBadgeClass = accStatus === "Allotted" ? "bg-approved" : (accStatus === "Not Requested" || accStatus === "No" ? "bg-neutral" : "bg-pending");
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${name}</strong><br><small style="color:#666;"><i class="fas fa-building"></i> ${org}</small></td>
+                    <td><a href="mailto:${email}" style="color:var(--primary); text-decoration:none;">${email}</a></td>
+                    <td>${cat}</td>
+                    <td><span style="font-family:monospace; font-weight:bold; background:#e9ecef; padding:3px 8px; border-radius: 4px;">${payRef}</span></td>
+                    <td><span class="badge ${regBadgeClass}">${regStatus}</span></td>
+                    <td><span class="badge ${accBadgeClass}">${accStatus}</span></td>
+                    <td><button class="btn-edit" onclick="window.openModal(${i})"><i class="fas fa-eye"></i> View & Edit</button></td>
+                `;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function updateStats(dataArray) {
+            document.getElementById('stat-total').textContent = dataArray.length;
+            document.getElementById('stat-pending').textContent = dataArray.filter(u => (getVal(u, ['adminregstatus', 'regstatus']) || "Pending") === "Pending").length;
+            document.getElementById('stat-approved').textContent = dataArray.filter(u => (getVal(u, ['adminregstatus', 'regstatus']) || "") === "Approved").length;
+            document.getElementById('stat-acc').textContent = dataArray.filter(u => (getVal(u, ['accommodation']) || "").toLowerCase() === "yes").length;
+        }
+
+        window.filterTable = () => {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = globalData.filter(user => 
+                (getVal(user, ['name'])).toLowerCase().includes(query) || 
+                (getVal(user, ['email'])).toLowerCase().includes(query) || 
+                (getVal(user, ['paymentref'])).toLowerCase().includes(query) ||
+                (getVal(user, ['organization'])).toLowerCase().includes(query)
+            );
+            renderTable(filtered);
+        };
+
+        window.openModal = (index) => {
+            const user = globalData[index];
+            
+            document.getElementById('editUserEmail').value = getVal(user, ['email']); 
+            
+            // Populate Read-Only Details with expanded Fuzzy Matcher
+            document.getElementById('editName').value = getVal(user, ['name', 'fullname']);
+            document.getElementById('editEmail').value = getVal(user, ['email']);
+            document.getElementById('editCategory').value = getVal(user, ['category']);
+            document.getElementById('editDesignation').value = getVal(user, ['designation']);
+            document.getElementById('editOrganization').value = getVal(user, ['organization', 'affiliatedorganization']);
+            document.getElementById('editPhone').value = getVal(user, ['phone', 'phonenumber']);
+            document.getElementById('editWhatsapp').value = getVal(user, ['whatsapp', 'whatsappnumber']);
+            document.getElementById('editAddress').value = getVal(user, ['address', 'postaladdress']);
+            
+            let pAcc = getVal(user, ['paperaccepted', 'ispaperaccepted']);
+            document.getElementById('editPaperAcc').value = pAcc || "No";
+            
+            let pId = getVal(user, ['paperid', 'idofpaper']);
+            let pTitle = getVal(user, ['papertitle', 'titleofpaper']);
+            let paperStr = "N/A";
+            if(pAcc.toLowerCase() === "yes") {
+                paperStr = `ID: ${pId} - ${pTitle}`;
+            }
+            document.getElementById('editPaperDetails').value = paperStr;
+            
+            document.getElementById('editRefId').value = getVal(user, ['paymentref', 'transactionid', 'refno']);
+
+            // Populate Admin Statuses
+            document.getElementById('editRegStatus').value = getVal(user, ['adminregstatus', 'regstatus']) || "Pending";
+            
+            let currentAcc = getVal(user, ['adminaccstatus', 'accstatus']) || "Pending";
+            if ((getVal(user, ['accommodation'])).toLowerCase() === "no") currentAcc = "Not Requested";
+            document.getElementById('editAccStatus').value = currentAcc;
+
+            // Populate Document URLs
+            document.getElementById('editReceiptUrl').value = getVal(user, ['officialreceipturl', 'adminreceipturl']);
+            document.getElementById('editPartCert').value = getVal(user, ['participationcerturl']);
+            document.getElementById('editPresCert').value = getVal(user, ['presentationcerturl']);
+
+            // ==========================================
+            // 🛑 THE FIX FOR USER UPLOADED FILES 🛑
+            // ==========================================
+            const receiptLink = document.getElementById('viewUserReceipt');
+            const idLink = document.getElementById('viewUserId');
+            
+            // 1. Find Receipt Link
+            let userRec = getVal(user, ['userreceipturl', 'receipturl', 'paymentreceipt']);
+            if(!userRec || userRec.trim() === "") {
+                for(let key in user) {
+                    if(user[key] && typeof user[key] === 'string' && user[key].includes('drive.google.com') && key.toLowerCase().includes('receipt')) {
+                        userRec = user[key]; break;
+                    }
+                }
+            }
+
+            // 2. Find Student ID Link
+            let stuId = getVal(user, ['studentidurl', 'idurl', 'studentid']);
+            if(!stuId || stuId.trim() === "") {
+                for(let key in user) {
+                    if(user[key] && typeof user[key] === 'string' && user[key].includes('drive.google.com') && key.toLowerCase().includes('id')) {
+                        stuId = user[key]; break;
+                    }
+                }
+            }
+
+            // 3. Update Receipt Button UI
+            if (userRec && userRec.includes('http')) { 
+                receiptLink.href = userRec; 
+                receiptLink.className = "btn-doc"; // Make it green/clickable
+                receiptLink.innerHTML = '<i class="fas fa-receipt"></i> View Receipt Proof';
+            } else { 
+                receiptLink.href = "#";
+                receiptLink.className = "btn-doc disabled-doc"; // Make it red
+                receiptLink.innerHTML = '<i class="fas fa-times-circle"></i> No Receipt Found';
+            }
+
+            // 4. Update ID Button UI
+            let catCheck = getVal(user, ['category', 'cat']);
+            if (stuId && stuId.includes('http')) { 
+                idLink.href = stuId; 
+                idLink.className = "btn-doc"; // Make it green/clickable
+                idLink.innerHTML = '<i class="fas fa-id-card"></i> View Student ID';
+                idLink.classList.remove('hidden');
+            } else if (catCheck && catCheck.toLowerCase() === 'student') {
+                idLink.href = "#";
+                idLink.className = "btn-doc disabled-doc"; // Make it red
+                idLink.innerHTML = '<i class="fas fa-times-circle"></i> No ID Found';
+                idLink.classList.remove('hidden');
+            } else {
+                // If they are a Delegate and uploaded no ID, hide the button completely
+                idLink.classList.add('hidden'); 
+            }
+
+            document.getElementById('editModal').classList.add('active');
+        };
+
+        window.closeModal = () => document.getElementById('editModal').classList.remove('active');
+
+        window.saveUserData = async () => {
+            const btn = document.getElementById('saveBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Saving to Database...";
+            btn.disabled = true;
+
+            const payload = {
+                action: "update",
+                email: document.getElementById('editUserEmail').value,
+                adminRegStatus: document.getElementById('editRegStatus').value,
+                adminAccStatus: document.getElementById('editAccStatus').value,
+                officialReceiptUrl: document.getElementById('editReceiptUrl').value,
+                partCertUrl: document.getElementById('editPartCert').value,
+                presCertUrl: document.getElementById('editPresCert').value
+            };
+
+            try {
+                const response = await fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) });
+                const result = await response.json();
+
+                if(result.result === "success") {
+                    window.closeModal();
+                    window.fetchData(); 
+                } else { throw new Error(result.error || "Update failed."); }
+            } catch (error) {
+                alert("Error updating user: " + error.message);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

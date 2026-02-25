@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Portal - SATVA 2026</title>
+    
+    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    <link rel="preload" as="image" href="images/logos/logo4.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
+        
+        :root {
+            --primary-color: #606C38; 
+            --secondary-color: #117d56; 
+            --dark-color: #013328;
+            --text-color: #333;
+            --light-text-color: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --section-alt-bg: #f8f9fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body.loading-active { overflow: hidden; height: 100vh; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: var(--section-alt-bg); }
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+        /* --- PRELOADER CSS --- */
+        #preloader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 999999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.8s ease-out, visibility 0.8s ease-out; }
+        .loader-content { text-align: center; width: 300px; max-width: 80%; }
+        .loader-logo { width: 150px; height: auto; margin-bottom: 30px; animation: breathe 2.5s infinite ease-in-out; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+        .progress-container { width: 100%; height: 6px; background-color: #e0e0e0; border-radius: 10px; overflow: hidden; position: relative; }
+        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border-radius: 10px; transition: width 0.2s linear; box-shadow: 0 0 10px rgba(96, 108, 56, 0.4); }
+        .progress-text { margin-top: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--primary-color); font-size: 1rem; letter-spacing: 1px; }
+        @keyframes breathe { 0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); } 50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); } 100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); } }
+        @media(max-width: 576px) { .loader-logo { width: 120px; } .loader-content { width: 240px; } }
+
+        /* --- HEADER STYLES --- */
+        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 20px; }
+        .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
+        .logo-container img { transition: transform 0.3s ease; }
+        .logo-container img:hover { transform: scale(1.05); }
+
+        .main-nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 25px 0; position: relative; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; transition: color 0.3s; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 15px; left: 0; width: 0; height: 3px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
+        .main-nav a:hover::after { width: 100%; }
+
+        .dropdown-menu { display: flex; flex-direction: column; position: absolute; top: 100%; left: 50%; transform: translate(-50%, 20px); background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 280px; gap: 0 !important; z-index: 100; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
+        .dropdown-menu li a::after { content: none; }
+        .dropdown-menu li a:hover { background-color: #f4f4f4; }
+
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav-container { display: none; }
+
+        /* --- DASHBOARD PORTAL STYLES --- */
+        .portal-section { padding: 60px 0; min-height: calc(100vh - 80px); }
+        .portal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; flex-wrap: wrap; gap: 20px; border-bottom: 2px solid #eaeaea; padding-bottom: 20px; }
+        .portal-header h2 { font-size: 2rem; color: var(--dark-color); }
+        .portal-user-info { display: flex; align-items: center; gap: 15px; }
+        
+        .btn { padding: 10px 25px; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; border: none; text-decoration: none; display: inline-block; text-align: center; }
+        .btn-logout { background-color: #e74c3c; color: white; }
+        .btn-logout:hover { background-color: #c0392b; }
+        .btn-primary { background-color: var(--primary-color); color: white; font-size: 1.1rem; padding: 15px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn-primary:hover { background-color: var(--dark-color); transform: translateY(-2px); }
+
+        /* --- DASHBOARD CARDS GRID --- */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .dash-card { background: #fff; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s; border: 1px solid #eaeaea; }
+        .dash-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        
+        .dash-card-header { padding: 20px; color: white; text-align: center; font-size: 1.2rem; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .dash-card-header i { font-size: 2rem; }
+        .dash-card-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; }
+        
+        .badge { display: inline-block; padding: 8px 20px; border-radius: 50px; font-weight: bold; font-size: 1rem; margin-bottom: 15px; width: 100%; text-align: center; }
+        .badge.pending { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .badge.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .badge.danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .badge.neutral { background: #e2e3e5; color: #383d41; border: 1px solid #d6d8db; }
+
+        .dash-card-body p { color: #666; font-size: 0.95rem; margin-bottom: 20px; }
+
+        /* Document Action Buttons */
+        .doc-btn { width: 100%; padding: 12px; border-radius: 5px; font-weight: bold; text-decoration: none; display: block; margin-bottom: 10px; transition: 0.3s; }
+        .doc-btn.active { background: #e8f5e9; color: var(--secondary-color); border: 1px solid var(--secondary-color); }
+        .doc-btn.active:hover { background: var(--secondary-color); color: white; }
+        .doc-btn.locked { background: #f4f4f4; color: #aaa; border: 1px solid #ddd; cursor: not-allowed; pointer-events: none; }
+
+        /* Card Header Colors */
+        .bg-reg { background: linear-gradient(135deg, #093028, #237a57); }
+        .bg-acc { background: linear-gradient(135deg, #3b414a, #686e79); }
+        .bg-rec { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); }
+        .bg-cert { background: linear-gradient(135deg, #bf953f, #b38728); }
+
+        /* --- REGISTRATION FORM --- */
+        .form-container { background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); max-width: 900px; margin: 0 auto; border: 1px solid #eaeaea; }
+        .form-section-title { font-size: 1.1rem; font-weight: 700; color: var(--secondary-color); margin: 25px 0 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--dark-color); }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-family: 'Roboto', sans-serif; font-size: 1rem; }
+        .radio-group { display: flex; gap: 20px; }
+        .file-upload-wrapper { border: 2px dashed #ccc; padding: 15px; text-align: center; border-radius: 5px; cursor: pointer; background: #fafafa; transition: 0.3s; }
+        .file-upload-wrapper:hover { background: #f0f5f0; border-color: var(--primary-color); }
+        
+        .hidden { display: none !important; }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media(max-width: 992px) {
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
+            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+            .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; z-index: 999; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            
+            .mobile-nav-container .dropdown-menu { position: static !important; float: none !important; display: none; width: 100% !important; min-width: 0 !important; transform: none !important; left: auto !important; top: auto !important; box-shadow: none !important; background-color: #f8f9fa !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; opacity: 1 !important; visibility: visible !important; }
+            .mobile-nav-container .dropdown-menu.show { display: block !important; }
+            .mobile-nav-container .dropdown-menu li { width: 100% !important; display: block !important; }
+            .mobile-nav-container .dropdown-menu li a { text-align: center !important; padding: 12px 20px !important; width: 100% !important; display: block !important; font-size: 1rem !important; color: #444 !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+            .logo-container { gap: 8px; flex-grow: 1; }
+            .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
+            .logo-2 { height: 45px !important; } 
+        }
+        @media (max-width: 380px) {
+            .logo-container { gap: 5px; }
+            .logo-container img { height: 32px !important; }
+        }
+    </style>
+</head>
+<body class="loading-active">
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="images/logos/logo4.png" alt="SATVA Loading..." class="loader-logo">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0%</div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <a href="index.html"><img src="images/logos/logo4.png" alt="SATVA Logo" class="logo-3"></a>
+                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo1.png" alt="IIT Palakkad Logo" class="logo-1"></a>
+                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo2.png" alt="IEI Logo" class="logo-2"></a>
+                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo3.png" alt="IGS Logo" class="logo-3"></a>
+                </div>
+    
+                <nav class="main-nav" id="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="organisers.html">ORGANISERS</a></li>
+                        <li><a href="themes.html">THEMES</a></li>
+                        <li class="dropdown">
+                            <a href="programme.html">PROGRAMME</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="timeline.html">Timeline</a></li>
+                                <li><a href="advisory.html">Advisory and Technical Committee</a></li>
+                                <li><a href="committee.html">Organising Committee</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sponsors.html">SPONSORS</a></li>
+                        <li><a href="submissions.html">SUBMISSION</a></li>
+                        <li><a href="registrations.html" style="color: var(--primary-color);">REGISTRATION</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
+            </nav>
+        </div>
+        <nav class="mobile-nav-container" id="mobile-nav"></nav>
+    </header>
+
+    <main class="portal-section">
+        <div class="container">
+            
+            <div class="portal-header hidden" id="portal-header">
+                <h2>User Portal</h2>
+                <div class="portal-user-info">
+                    <span><i class="fas fa-user-circle"></i> <strong id="header-user-email"></strong></span>
+                    <button class="btn btn-logout" onclick="window.logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+            </div>
+
+            <div id="view-loading" style="text-align: center; padding: 100px 0;">
+                <i class="fas fa-circle-notch fa-spin" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+                <h3>Verifying your profile securely...</h3>
+            </div>
+
+            <div id="view-unregistered" class="hidden" style="text-align: center; padding: 60px 0; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                <i class="fas fa-clipboard-list" style="font-size: 4rem; color: var(--secondary-color); margin-bottom: 20px;"></i>
+                <h2 style="font-size: 2.5rem; color: var(--dark-color); margin-bottom: 10px;">Welcome to SATVA 2026</h2>
+                <p style="font-size: 1.1rem; color: #555; max-width: 600px; margin: 0 auto 30px;">You have successfully created an account, but you have not submitted your registration details for the symposium yet.</p>
+                <button id="btn-show-form" class="btn btn-primary"><i class="fas fa-edit"></i> Register Now</button>
+            </div>
+
+            <div id="view-dashboard" class="hidden">
+                <div style="background: #fff; padding: 20px 30px; border-radius: 10px; border-left: 5px solid var(--primary-color); margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <h3 style="margin: 0;">Welcome back, <span id="dash-name" style="color: var(--primary-color);">Participant</span>!</h3>
+                    <p style="margin: 5px 0 0 0; color: #666;">Track your symposium application status and download official documents below.</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    
+                    <div class="dash-card">
+                        <div class="dash-card-header bg-reg">
+                            <i class="fas fa-id-badge"></i>
+                            Registration
+                        </div>
+                        <div class="dash-card-body">
+                            <div id="ui-reg-badge" class="badge pending">Pending Verification</div>
+                            <p id="ui-reg-text">We have received your details. Admin verification is currently pending.</p>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-header bg-acc">
+                            <i class="fas fa-bed"></i>
+                            Accommodation
+                        </div>
+                        <div class="dash-card-body">
+                            <div id="ui-acc-badge" class="badge neutral">Pending</div>
+                            <p id="ui-acc-text">Your accommodation request is under review.</p>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-header bg-rec">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            Official Receipt
+                        </div>
+                        <div class="dash-card-body" style="justify-content: flex-start;">
+                            <p style="margin-bottom: 15px;">Your officially verified payment receipt.</p>
+                            <a href="#" id="ui-receipt-btn" class="doc-btn locked" target="_blank"><i class="fas fa-lock"></i> Processing...</a>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-header bg-cert">
+                            <i class="fas fa-award"></i>
+                            Certificates
+                        </div>
+                        <div class="dash-card-body" style="justify-content: flex-start;">
+                            <p style="margin-bottom: 15px;">Issued electronically after the symposium.</p>
+                            <a href="#" id="ui-part-cert-btn" class="doc-btn locked" target="_blank"><i class="fas fa-lock"></i> Participation Cert.</a>
+                            <a href="#" id="ui-pres-cert-btn" class="doc-btn locked hidden" target="_blank"><i class="fas fa-lock"></i> Presentation Cert.</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="view-form" class="hidden">
+                <div class="form-container">
+                    <div style="text-align:center; margin-bottom:30px;">
+                        <h2 style="font-size: 2rem; color: var(--dark-color);">Symposium Registration Form</h2>
+                        <p style="color: #666;">Please fill out the details accurately. This information will be used for your certificates.</p>
+                    </div>
+
+                    <form id="satvaRegisterForm">
+                        <input type="hidden" id="userEmail" name="email">
+                        
+                        <div class="form-group">
+                            <label>1. Registration Category *</label>
+                            <select id="regCategory" class="form-control" required onchange="toggleStudentField()">
+                                <option value="" disabled selected>Select Category</option>
+                                <option value="Student">Students / Research Scholars</option>
+                                <option value="Delegate">Delegates (Academia / Industry)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-section-title">Personal Details</div>
+                        <div class="form-group"><label>2. Full Name *</label><input type="text" id="regName" class="form-control" required></div>
+                        <div class="form-group"><label>3. Designation *</label><input type="text" id="regDesignation" class="form-control" required></div>
+                        <div class="form-group"><label>4. Affiliated Organization *</label><input type="text" id="regOrganization" class="form-control" required></div>
+                        <div class="form-group"><label>5. Contact Number *</label><input type="tel" id="regPhone" class="form-control" required></div>
+                        <div class="form-group"><label>6. WhatsApp Number *</label><input type="tel" id="regWhatsapp" class="form-control" required></div>
+                        <div class="form-group"><label>7. Postal Address *</label><textarea id="regAddress" class="form-control" rows="3" required></textarea></div>
+
+                        <div class="form-section-title">Paper Details</div>
+                        <div class="form-group">
+                            <label>8. Do you have a paper accepted in SATVA 2026? *</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="paperAccepted" value="Yes" onchange="togglePaper(true)"> Yes</label>
+                                <label><input type="radio" name="paperAccepted" value="No" checked onchange="togglePaper(false)"> No</label>
+                            </div>
+                        </div>
+                        <div id="paperBox" class="hidden" style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                            <div class="form-group"><label>Paper ID *</label><input type="text" id="regPaperId" class="form-control"></div>
+                            <div class="form-group" style="margin-bottom:0;"><label>Paper Title *</label><input type="text" id="regPaperTitle" class="form-control"></div>
+                        </div>
+
+                        <div class="form-section-title">Payment & Documents</div>
+                        <div class="form-group" style="background:#e8f5e9; padding:15px; border-radius:5px; border-left: 4px solid var(--secondary-color);">
+                            <p style="margin:0 0 10px 0; font-size:0.95rem;">Click the link below to pay, then enter the Transaction ID and upload the screenshot.</p>
+                            <a id="paymentLink" href="#" target="_blank" style="font-weight:bold; color:var(--dark-color); text-decoration:underline;">Select Category above to view Payment Link <i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                        <div class="form-group"><label>9. Transaction ID / Ref No *</label><input type="text" id="regRefId" class="form-control" required placeholder="e.g., UPI123456789"></div>
+                        <div class="form-group">
+                            <label>10. Upload Payment Receipt (Image/PDF) *</label>
+                            <div class="file-upload-wrapper" onclick="document.getElementById('fileReceipt').click()">
+                                <p id="fileNameReceipt" style="margin:0; color:#555; font-weight: bold;"><i class="fas fa-upload"></i> Click to upload Receipt</p>
+                                <input type="file" id="fileReceipt" style="display:none;" required onchange="showName(this, 'fileNameReceipt')">
+                            </div>
+                        </div>
+                        <div id="studentIdBox" class="hidden form-group">
+                            <label>11. Upload Student ID Card (Required for Student Category) *</label>
+                            <div class="file-upload-wrapper" onclick="document.getElementById('fileStudentId').click()">
+                                <p id="fileNameStudentId" style="margin:0; color:#555; font-weight: bold;"><i class="fas fa-id-card"></i> Click to upload ID Card</p>
+                                <input type="file" id="fileStudentId" style="display:none;" onchange="showName(this, 'fileNameStudentId')">
+                            </div>
+                        </div>
+
+                        <div class="form-section-title">Accommodation</div>
+                        <div class="form-group">
+                            <label>12. Accommodation Required within campus? *</label>
+                            <div class="radio-group">
+                                <label><input type="radio" name="accommodation" value="Yes"> Yes</label>
+                                <label><input type="radio" name="accommodation" value="No" checked> No</label>
+                            </div>
+                            <small style="color:#777; display:block; margin-top: 5px;">(Subject to availability on campus. Payment details will be shared separately if allotted.)</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="submit-form-btn" style="width: 100%; margin-top: 20px;">Submit Registration Data</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // PRELOADER
+        window.addEventListener('load', () => {
+            let p = 0; const bar = document.getElementById('progress-bar'); const txt = document.getElementById('progress-text');
+            const int = setInterval(() => { p += 10; bar.style.width = p + '%'; txt.innerText = p + '%'; if(p >= 100) { clearInterval(int); document.getElementById('preloader').style.opacity = '0'; setTimeout(() => document.getElementById('preloader').style.display = 'none', 500); document.body.classList.remove('loading-active'); } }, 50);
+        });
+
+        // MOBILE NAV
+        document.addEventListener('DOMContentLoaded', function() {
+            const desktopNav = document.getElementById('desktop-nav'); const mobileNavContainer = document.getElementById('mobile-nav'); const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                let mobileNavHTML = desktopNav.innerHTML; const parser = new DOMParser(); const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                navDoc.querySelectorAll('.dropdown > a').forEach(link => { const toggle = document.createElement('span'); toggle.className = 'dropdown-toggle'; link.appendChild(toggle); });
+                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+                mobileNavToggle.addEventListener('click', () => { mobileNavContainer.classList.toggle('active'); mobileNavToggle.classList.toggle('active'); });
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) { e.preventDefault(); e.target.classList.toggle('open'); const li = e.target.closest('li.dropdown'); if (!li) return; const menu = li.querySelector('.dropdown-menu'); if (menu) { menu.classList.toggle('show'); } } 
+                    else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) { mobileNavContainer.classList.remove('active'); mobileNavToggle.classList.remove('active'); }
+                });
+            }
+        });
+
+        // FORM LOGIC
+        document.getElementById('btn-show-form').addEventListener('click', () => {
+            document.getElementById('view-unregistered').classList.add('hidden');
+            document.getElementById('view-form').classList.remove('hidden');
+        });
+
+        window.toggleStudentField = () => {
+            const cat = document.getElementById('regCategory').value; const payLink = document.getElementById('paymentLink'); const stuBox = document.getElementById('studentIdBox');
+            if (cat === 'Student') { payLink.href = "https://sbi.bank.in/"; payLink.innerHTML = "Pay via SBI Collect (Student) <i class='fas fa-external-link-alt'></i>"; stuBox.classList.remove('hidden'); document.getElementById('fileStudentId').required = true; } 
+            else { payLink.href = "https://canarabank.com/"; payLink.innerHTML = "Pay via Canara Bank (Delegate) <i class='fas fa-external-link-alt'></i>"; stuBox.classList.add('hidden'); document.getElementById('fileStudentId').required = false; }
+        };
+
+        window.togglePaper = (show) => {
+            document.getElementById('paperBox').classList.toggle('hidden', !show);
+            document.getElementById('regPaperId').required = show; document.getElementById('regPaperTitle').required = show;
+        };
+
+        window.showName = (input, id) => { 
+            const fileName = input.files[0] ? input.files[0].name : "Click to upload";
+            document.getElementById(id).innerHTML = `<i class="fas fa-check-circle" style="color:var(--secondary-color);"></i> Selected: ${fileName}`; 
+        };
+
+        const getBase64 = (file) => new Promise((resolve, reject) => { const reader = new FileReader(); reader.readAsDataURL(file); reader.onload = () => resolve(reader.result.split(',')[1]); reader.onerror = error => reject(error); });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDVtOz8jA_5ShckO9ljeMV1EO3aTXXgKx4",
+            authDomain: "satva-2026.firebaseapp.com",
+            projectId: "satva-2026",
+            storageBucket: "satva-2026.firebasestorage.app",
+            messagingSenderId: "754639793020",
+            appId: "1:754639793020:web:1016a5a827f35c0f4f92f9"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // --- NEW UPDATED SCRIPT URL ---
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxMPo2MS8aoMwa93e-ie3Gtlbyz0qFXkLRgq2FJQNv6fLDNmHdPNhswdSYqqsODAX_K/exec";
+
+        window.logout = () => signOut(auth).then(() => window.location.href = "registrations.html");
+
+        // 🛠️ FUZZY MATCHER TOOL (Ignores spaces, underscores, and caps from Sheet headers)
+        const getVal = (userObj, possibleNames) => {
+            for (let key in userObj) {
+                let cleanKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
+                for (let name of possibleNames) {
+                    let cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (cleanKey === cleanName && userObj[key]) return userObj[key];
+                }
+            }
+            return "";
+        };
+
+        function updateDashboardUI(userData) {
+            // Status Variables using Fuzzy Matcher
+            const regStatus = getVal(userData, ['adminregstatus', 'regstatus']) || "Pending"; 
+            
+            const rawAccField = getVal(userData, ['accommodation']);
+            let accStatus = getVal(userData, ['adminaccstatus', 'accstatus']) || "Pending"; 
+            if (rawAccField.toLowerCase() === "no") accStatus = "Not Requested";
+
+            const receiptLink = getVal(userData, ['officialreceipturl', 'adminreceipturl']);
+            const partCertLink = getVal(userData, ['participationcerturl']);
+            const presCertLink = getVal(userData, ['presentationcerturl']);
+
+            // Update Registration Status Card
+            const regBadge = document.getElementById('ui-reg-badge');
+            const regText = document.getElementById('ui-reg-text');
+            if(regStatus.toLowerCase() === "approved" || regStatus.toLowerCase() === "registered") {
+                regBadge.textContent = "Approved & Registered"; regBadge.className = "badge success"; regText.textContent = "Your details and payment have been successfully verified.";
+            } else if (regStatus.toLowerCase() === "rejected" || regStatus.toLowerCase() === "discrepancy") {
+                regBadge.textContent = "Discrepancy Noticed"; regBadge.className = "badge danger"; regText.innerHTML = "There is an issue with your registration details. Please contact admin.";
+            } else {
+                regBadge.textContent = "Pending Verification"; regBadge.className = "badge pending"; regText.textContent = "We have received your details. Admin verification is currently pending.";
+            }
+
+            // Update Accommodation Card
+            const accBadge = document.getElementById('ui-acc-badge');
+            const accText = document.getElementById('ui-acc-text');
+            if(accStatus.toLowerCase() === "allotted" || accStatus.toLowerCase() === "verified") {
+                accBadge.textContent = "Allotted"; accBadge.className = "badge success"; accText.textContent = "Your campus accommodation request has been approved.";
+            } else if (accStatus.toLowerCase() === "not requested" || accStatus.toLowerCase() === "no") {
+                accBadge.textContent = "Not Requested"; accBadge.className = "badge neutral"; accText.textContent = "You did not request campus accommodation.";
+            } else {
+                accBadge.textContent = "Pending"; accBadge.className = "badge neutral"; accText.textContent = "Your accommodation request is under review by the committee.";
+            }
+
+            // Update Receipt Button
+            if(receiptLink && receiptLink.length > 5) {
+                const rBtn = document.getElementById('ui-receipt-btn');
+                rBtn.href = receiptLink; rBtn.className = "doc-btn active"; rBtn.innerHTML = "<i class='fas fa-download'></i> Download Receipt";
+            }
+
+            // Update Certificates
+            if(partCertLink && partCertLink.length > 5) {
+                const pBtn = document.getElementById('ui-part-cert-btn');
+                pBtn.href = partCertLink; pBtn.className = "doc-btn active"; pBtn.innerHTML = "<i class='fas fa-download'></i> Participation Cert.";
+            }
+            
+            const pAcc = getVal(userData, ['paperaccepted', 'ispaperaccepted']);
+            if(pAcc.toLowerCase() === "yes") {
+                const presBtn = document.getElementById('ui-pres-cert-btn');
+                presBtn.classList.remove('hidden');
+                if(presCertLink && presCertLink.length > 5) {
+                    presBtn.href = presCertLink; presBtn.className = "doc-btn active"; presBtn.innerHTML = "<i class='fas fa-download'></i> Presentation Cert.";
+                }
+            }
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                try {
+                    document.getElementById('portal-header').classList.remove('hidden');
+                    document.getElementById('header-user-email').textContent = user.email;
+
+                    const response = await fetch(`${scriptURL}?email=${user.email}`);
+                    const data = await response.json();
+
+                    document.getElementById('view-loading').style.display = 'none';
+
+                    if (data.exists) {
+                        // User exists -> Show Dashboard Grid
+                        document.getElementById('view-dashboard').classList.remove('hidden');
+                        document.getElementById('dash-name').textContent = getVal(data.data, ['name', 'fullname']) || "Participant";
+                        updateDashboardUI(data.data);
+                    } else {
+                        // User does not exist -> Show Welcome/Unregistered Screen
+                        document.getElementById('view-unregistered').classList.remove('hidden');
+                        document.getElementById('userEmail').value = user.email;
+                        if(user.displayName) document.getElementById('regName').value = user.displayName;
+                    }
+                } catch (e) {
+                    alert("System Error: Could not connect to database.");
+                    console.error(e);
+                }
+            } else {
+                window.location.href = "registrations.html";
+            }
+        });
+
+        // FORM SUBMISSION
+        document.getElementById('satvaRegisterForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-form-btn');
+            const originalText = btn.textContent;
+            btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Uploading securely..."; 
+            btn.disabled = true;
+
+            try {
+                const receiptFile = document.getElementById('fileReceipt').files[0];
+                const studentFile = document.getElementById('fileStudentId').files[0];
+                
+                const payload = {
+                    email: document.getElementById('userEmail').value,
+                    category: document.getElementById('regCategory').value,
+                    name: document.getElementById('regName').value,
+                    designation: document.getElementById('regDesignation').value,
+                    organization: document.getElementById('regOrganization').value,
+                    phone: document.getElementById('regPhone').value,
+                    whatsapp: document.getElementById('regWhatsapp').value,
+                    address: document.getElementById('regAddress').value,
+                    paperAccepted: document.querySelector('input[name="paperAccepted"]:checked').value,
+                    paperId: document.getElementById('regPaperId').value,
+                    paperTitle: document.getElementById('regPaperTitle').value,
+                    paymentRef: document.getElementById('regRefId').value,
+                    accommodation: document.querySelector('input[name="accommodation"]:checked').value,
+                    
+                    receiptName: receiptFile.name,
+                    receiptMime: receiptFile.type,
+                    receiptData: await getBase64(receiptFile),
+                    
+                    studentIdName: studentFile ? studentFile.name : "",
+                    studentIdMime: studentFile ? studentFile.type : "",
+                    studentIdData: studentFile ? await getBase64(studentFile) : ""
+                };
+
+                await fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.result === "success") {
+                        alert("Success! Your registration data has been submitted for review.");
+                        window.location.reload(); 
+                    } else { throw new Error(data.error); }
+                });
+
+            } catch(err) {
+                console.error(err);
+                alert("Upload failed: " + err.message);
+                btn.textContent = originalText; 
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
