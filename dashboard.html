@@ -387,8 +387,8 @@
 
         window.toggleStudentField = () => {
             const cat = document.getElementById('regCategory').value; const payLink = document.getElementById('paymentLink'); const stuBox = document.getElementById('studentIdBox');
-            if (cat === 'Student') { payLink.href = "https://sbi.bank.in/"; payLink.innerHTML = "Pay via SBI Collect (Student) <i class='fas fa-external-link-alt'></i>"; stuBox.classList.remove('hidden'); document.getElementById('fileStudentId').required = true; } 
-            else { payLink.href = "https://canarabank.com/"; payLink.innerHTML = "Pay via Canara Bank (Delegate) <i class='fas fa-external-link-alt'></i>"; stuBox.classList.add('hidden'); document.getElementById('fileStudentId').required = false; }
+            if (cat === 'Student') { payLink.href = "https://payments.billdesk.com/bdcollect/bd/centreforcontinuingeducationiitpalakkad/19189"; payLink.innerHTML = "Pay via BillDesk (Student) <i class='fas fa-external-link-alt'></i>"; stuBox.classList.remove('hidden'); document.getElementById('fileStudentId').required = true; } 
+            else { payLink.href = "https://payments.billdesk.com/bdcollect/bd/centreforcontinuingeducationiitpalakkad/19589"; payLink.innerHTML = "Pay via BillDesk (Delegate) <i class='fas fa-external-link-alt'></i>"; stuBox.classList.add('hidden'); document.getElementById('fileStudentId').required = false; }
         };
 
         window.togglePaper = (show) => {
@@ -580,3 +580,4 @@
 </body>
 
 </html>
+
