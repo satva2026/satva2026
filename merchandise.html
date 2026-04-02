@@ -95,7 +95,8 @@
         .merch-card:hover .merch-img { transform: scale(1.1); }
         .merch-info { padding: 25px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .merch-title { font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--dark-color); margin-bottom: 5px; line-height: 1.3; }
-        .merch-price { font-size: 1.3rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px; }
+        .merch-price { font-size: 1.3rem; font-weight: 700; color: var(--primary-color); margin-bottom: 5px; }
+        .merch-desc { font-size: 0.85rem; color: #555; margin-bottom: 15px; line-height: 1.4; min-height: 40px; }
         
         /* SIZE SELECTOR & FIT GUIDE */
         .size-selector-container { margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
@@ -302,11 +303,12 @@
             <div class="container">
                 <div class="merch-grid" id="product-list">
                     
-                    <div class="merch-card js-scroll fade-in-up" data-id="1" data-name="Polo T-shirt - SATVA Green" data-price="450" data-img="images/merchandise/polo.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/polo.webp" alt="Polo T-shirt - SATVA Green" class="merch-img" loading="lazy"></div>
+                    <div class="merch-card js-scroll fade-in-up" data-id="1" data-name="Polo T-shirt - Dark Wine" data-price="450" data-img="images/merchandise/polo.webp">
+                        <div class="merch-img-wrapper"><img src="images/merchandise/polo.webp" alt="Polo T-shirt" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Polo T-shirt<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">SATVA Green</span></div>
+                            <div class="merch-title">Polo T-shirt</div>
                             <div class="merch-price">Rs. 450</div>
+                            <div class="merch-desc">Dark Wine Colour – Mars Fabric 200 gsm, Front Embroidery</div>
                             <div class="size-selector-container">
                                 <label>Size: </label>
                                 <select class="item-size">
@@ -316,7 +318,7 @@
                                     <option value="XL">XL</option>
                                     <option value="XXL">XXL</option>
                                 </select>
-                                <button class="size-guide-btn" onclick="openFitGuide()"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
+                                <button class="size-guide-btn" onclick="openFitGuide('images/merchandise/polofitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
                             </div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -327,8 +329,9 @@
                     <div class="merch-card js-scroll fade-in-up" data-id="2" data-name="Round Neck T-shirt - Olive Green" data-price="420" data-img="images/merchandise/tshirt1.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/tshirt1.webp" alt="Round Neck T-shirt - Olive Green" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Round Neck T-shirt<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">Olive Green</span></div>
+                            <div class="merch-title">Round Neck T-shirt</div>
                             <div class="merch-price">Rs. 420</div>
+                            <div class="merch-desc">Olive Green Colour – Cotton Fabric, 180 gsm</div>
                             <div class="size-selector-container">
                                 <label>Size: </label>
                                 <select class="item-size">
@@ -338,7 +341,7 @@
                                     <option value="XL">XL</option>
                                     <option value="XXL">XXL</option>
                                 </select>
-                                <button class="size-guide-btn" onclick="openFitGuide()"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
+                                <button class="size-guide-btn" onclick="openFitGuide('images/merchandise/roundneckfitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
                             </div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -349,8 +352,9 @@
                     <div class="merch-card js-scroll fade-in-up" data-id="3" data-name="Round Neck T-shirt - Black" data-price="420" data-img="images/merchandise/tshirt2.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/tshirt2.webp" alt="Round Neck T-shirt - Black" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Round Neck T-shirt<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">Black</span></div>
+                            <div class="merch-title">Round Neck T-shirt</div>
                             <div class="merch-price">Rs. 420</div>
+                            <div class="merch-desc">Black Colour – Cotton Fabric, 180 gsm</div>
                             <div class="size-selector-container">
                                 <label>Size: </label>
                                 <select class="item-size">
@@ -360,7 +364,7 @@
                                     <option value="XL">XL</option>
                                     <option value="XXL">XXL</option>
                                 </select>
-                                <button class="size-guide-btn" onclick="openFitGuide()"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
+                                <button class="size-guide-btn" onclick="openFitGuide('images/merchandise/roundneckfitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
                             </div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -373,6 +377,7 @@
                         <div class="merch-info">
                             <div class="merch-title">Multi-pin</div>
                             <div class="merch-price">Rs. 250</div>
+                            <div class="merch-desc">Multi-port with mobile stand</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
                             </div>
@@ -382,8 +387,9 @@
                     <div class="merch-card js-scroll fade-in-up" data-id="5" data-name="Fridge Magnet - Design 1" data-price="60" data-img="images/merchandise/magnet1.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/magnet1.webp" alt="Fridge Magnet - Design 1" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Fridge Magnet<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">Design 1</span></div>
+                            <div class="merch-title">Fridge Magnet 1</div>
                             <div class="merch-price">Rs. 60</div>
+                            <div class="merch-desc">Rectangular 2 x 3 inch, Flexible magnet</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
                             </div>
@@ -393,8 +399,9 @@
                     <div class="merch-card js-scroll fade-in-up" data-id="6" data-name="Fridge Magnet - Design 2" data-price="60" data-img="images/merchandise/magnet2.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/magnet2.webp" alt="Fridge Magnet - Design 2" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Fridge Magnet<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">Design 2</span></div>
+                            <div class="merch-title">Fridge Magnet 2</div>
                             <div class="merch-price">Rs. 60</div>
+                            <div class="merch-desc">Rectangular 2 x 3 inch, Flexible magnet</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
                             </div>
@@ -404,8 +411,9 @@
                     <div class="merch-card js-scroll fade-in-up" data-id="7" data-name="Fridge Magnet - Design 3" data-price="60" data-img="images/merchandise/magnet3.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/magnet3.webp" alt="Fridge Magnet - Design 3" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Fridge Magnet<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">Design 3</span></div>
+                            <div class="merch-title">Fridge Magnet 3</div>
                             <div class="merch-price">Rs. 60</div>
+                            <div class="merch-desc">Oval 3-inch diameter, Flexible magnet</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
                             </div>
@@ -417,6 +425,7 @@
                         <div class="merch-info">
                             <div class="merch-title">SATVA Cap</div>
                             <div class="merch-price">Rs. 100</div>
+                            <div class="merch-desc">with IIT Palakkad logo</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
                             </div>
@@ -426,8 +435,9 @@
                     <div class="merch-card js-scroll fade-in-up" data-id="9" data-name="Keychain - Design 1" data-price="75" data-img="images/merchandise/kchain1.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/kchain1.webp" alt="Keychain - Design 1" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Keychain<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">Design 1</span></div>
+                            <div class="merch-title">Keychain 1</div>
                             <div class="merch-price">Rs. 75</div>
+                            <div class="merch-desc">Rose Gold Colour - Metallic</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
                             </div>
@@ -437,8 +447,9 @@
                     <div class="merch-card js-scroll fade-in-up" data-id="10" data-name="Keychain - Design 2" data-price="75" data-img="images/merchandise/kchain2.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/kchain2.webp" alt="Keychain - Design 2" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
-                            <div class="merch-title">Keychain<br><span style="font-size: 0.9rem; color: #666; font-weight: 500;">Design 2</span></div>
+                            <div class="merch-title">Keychain 2</div>
                             <div class="merch-price">Rs. 75</div>
+                            <div class="merch-desc">Stainless Steel Colour - Metallic</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
                             </div>
@@ -590,7 +601,7 @@
                 <button class="modal-close-btn" onclick="closeFitGuide()">&times;</button>
             </div>
             <div class="modal-body" style="padding: 15px; text-align: center; background: var(--section-alt-bg);">
-                <img src="images/merchandise/fitguide.png" alt="Size Fit Guide" style="width: 100%; max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                <img id="fitGuideImage" src="" alt="Size Fit Guide" style="width: 100%; max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
             </div>
         </div>
     </div>
@@ -693,7 +704,8 @@
             document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
         };
 
-        window.openFitGuide = function() {
+        window.openFitGuide = function(imageSrc) {
+            document.getElementById('fitGuideImage').src = imageSrc;
             document.getElementById('fitGuideModal').classList.add('active');
         };
         window.closeFitGuide = function() {
