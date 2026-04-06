@@ -149,7 +149,7 @@
         .cart-remove-btn:hover { color: #a94442; transform: scale(1.1); }
 
         .cart-footer { padding: 20px; background: #fff; border-top: 1px solid #eee; box-shadow: 0 -5px 10px rgba(0,0,0,0.02); }
-        .cart-total-row { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px; color: var(--dark-color); }
+        .cart-total-row { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 800; margin-bottom: 15px; color: var(--dark-color); align-items: center; }
         .checkout-btn { width: 100%; background: var(--secondary-color); color: #fff; border: none; padding: 15px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
         .checkout-btn:hover { background: var(--primary-color); }
 
@@ -158,13 +158,7 @@
         .order-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; align-items: start; }
         
         .payment-card { background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center; }
-        .qr-code-box { width: 220px; height: 220px; border: 2px dashed #ccc; border-radius: 10px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; background: #fafafa; overflow: hidden; position: relative;}
-        .qr-code-box img { width: 100%; height: 100%; object-fit: cover; }
         
-        .bank-details { margin-top: 25px; text-align: left; background: #f9f9f9; padding: 20px; border-radius: 10px; border-left: 4px solid var(--primary-color); }
-        .bank-details p { margin-bottom: 8px; font-size: 0.95rem; }
-        .bank-details strong { color: var(--dark-color); display: inline-block; width: 120px; }
-
         /* CHECKOUT FORM */
         .checkout-form-container { background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
         .checkout-form-container h3 { font-size: 1.6rem; margin-bottom: 20px; color: var(--dark-color); }
@@ -180,7 +174,7 @@
         .radio-group { display: flex; gap: 20px; margin-top: 5px; flex-wrap: wrap;}
         .radio-group label { font-weight: 400; display: flex; align-items: center; gap: 8px; cursor: pointer;}
         
-        .submit-order-btn { width: 100%; background: var(--primary-color); color: #fff; border: none; padding: 15px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        .submit-order-btn { width: 100%; background: var(--primary-color); color: #fff; border: none; padding: 15px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s; margin-top: 10px; text-decoration: none; display: inline-block; }
         .submit-order-btn:hover { background: var(--dark-color); }
         .submit-order-btn:disabled { background: #ccc; cursor: not-allowed; }
 
@@ -303,11 +297,11 @@
             <div class="container">
                 <div class="merch-grid" id="product-list">
                     
-                    <div class="merch-card js-scroll fade-in-up" data-id="1" data-name="Polo T-shirt - Dark Wine" data-price="450" data-img="images/merchandise/polo.webp">
+                    <div class="merch-card js-scroll fade-in-up" data-id="1" data-name="Polo T-shirt - Dark Wine" data-price="470" data-img="images/merchandise/polo.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/polo.webp" alt="Polo T-shirt" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Polo T-shirt</div>
-                            <div class="merch-price">Rs. 450</div>
+                            <div class="merch-price">Rs. 470</div>
                             <div class="merch-desc">Dark Wine Colour – Mars Fabric 200 gsm, Front Embroidery</div>
                             <div class="size-selector-container">
                                 <label>Size: </label>
@@ -420,23 +414,11 @@
                         </div>
                     </div>
 
-                    <div class="merch-card js-scroll fade-in-up" data-id="8" data-name="SATVA Cap" data-price="100" data-img="images/merchandise/cap.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/cap.webp" alt="CAP" class="merch-img" loading="lazy"></div>
-                        <div class="merch-info">
-                            <div class="merch-title">SATVA Cap</div>
-                            <div class="merch-price">Rs. 100</div>
-                            <div class="merch-desc">with IIT Palakkad logo</div>
-                            <div class="cart-controls">
-                                <button class="add-to-cart-btn">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="merch-card js-scroll fade-in-up" data-id="9" data-name="Keychain - Design 1" data-price="75" data-img="images/merchandise/kchain1.webp">
+                    <div class="merch-card js-scroll fade-in-up" data-id="9" data-name="Keychain - Design 1" data-price="55" data-img="images/merchandise/kchain1.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/kchain1.webp" alt="Keychain - Design 1" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Keychain 1</div>
-                            <div class="merch-price">Rs. 75</div>
+                            <div class="merch-price">Rs. 55</div>
                             <div class="merch-desc">Rose Gold Colour - Metallic</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -444,11 +426,11 @@
                         </div>
                     </div>
 
-                    <div class="merch-card js-scroll fade-in-up" data-id="10" data-name="Keychain - Design 2" data-price="75" data-img="images/merchandise/kchain2.webp">
+                    <div class="merch-card js-scroll fade-in-up" data-id="10" data-name="Keychain - Design 2" data-price="55" data-img="images/merchandise/kchain2.webp">
                         <div class="merch-img-wrapper"><img src="images/merchandise/kchain2.webp" alt="Keychain - Design 2" class="merch-img" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Keychain 2</div>
-                            <div class="merch-price">Rs. 75</div>
+                            <div class="merch-price">Rs. 55</div>
                             <div class="merch-desc">Stainless Steel Colour - Metallic</div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -469,21 +451,13 @@
                         
                         <div class="payment-card">
                             <h3 style="margin-bottom: 20px; color: var(--dark-color);">Step 1: Make Payment</h3>
-                            <div class="qr-code-box">
-                                <img src="images/merchandise/qr.webp" alt="UPI QR Code">
-                            </div>
-                            <p style="font-size: 1.1rem; font-weight: 700; color: var(--primary-color);">Scan the QR Code to pay via UPI</p>
+                            <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">Please click the button below to proceed to our secure payment gateway. Once the payment is successful, save the transaction ID and a screenshot/PDF of the receipt.</p>
                             
-                            <div class="bank-details">
-                                <h4 style="margin-bottom: 10px; color: var(--secondary-color);">Or Pay via Bank Transfer:</h4>
-                                <p><strong>Account Name:</strong> SATVA 2026</p>
-                                <p><strong>Account No:</strong> 12345678901234</p>
-                                <p><strong>IFSC Code:</strong> SBIN000XXXX</p>
-                                <p><strong>Bank Name:</strong> State Bank of India</p>
-                                <p><strong>Branch:</strong> IIT Palakkad Branch</p>
-                            </div>
-                            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border: 1px solid #ffeeba; margin-top: 20px;">
+                            <a href="https://www.billdesk.com/web/online-payment" target="_blank" class="submit-order-btn" style="display: inline-block; text-decoration: none; width: auto; padding: 15px 40px; margin-bottom: 20px;">Proceed to BillDesk Gateway <i class="fas fa-external-link-alt" style="margin-left: 8px;"></i></a>
+                            
+                            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border: 1px solid #ffeeba; margin-top: 10px;">
                                 <p style="margin: 0; font-size: 1.2rem; font-weight:bold; color: var(--danger-color);">Amount to Pay: Rs. <span id="payment-display-amount">0</span></p>
+                                <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #666;">(Inclusive of GST 18%)</p>
                             </div>
                         </div>
 
@@ -553,7 +527,7 @@
                                 <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 
                                 <div class="form-group full-width">
-                                    <label for="transaction-id">Transaction ID / UTR Number *</label>
+                                    <label for="transaction-id">Transaction ID / BillDesk Ref Number *</label>
                                     <input type="text" id="transaction-id" placeholder="e.g. 123456789012" required>
                                 </div>
                                 <div class="form-group full-width">
@@ -587,7 +561,7 @@
             </div>
         <div class="cart-footer">
             <div class="cart-total-row">
-                <span>Total:</span>
+                <span>Total: <br><span style="font-size: 0.8rem; font-weight: 400; color: #666;">(Incl. 18% GST)</span></span>
                 <span>Rs. <span id="cart-total-amount">0</span></span>
             </div>
             <button class="checkout-btn" onclick="document.getElementById('checkout-section').scrollIntoView(); document.getElementById('cart-sidebar').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('show');">Proceed to Payment</button>
@@ -909,7 +883,7 @@
         const formErrorMsg = document.getElementById('form-error-msg');
         const orderForm = document.getElementById('order-submit-form');
         
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzWKymCUYYsyr8duV37qU1pBQGznuox_7xxfZTlKi47j9zz1doSWkhei9ZePaTAMa5h/exec"; 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk-4da0B8MBqJXU5aru-7StOcudi8bdZ16k1_oEzQ0R06rDBuAttM936tZ-G7T0MoL/exec"; 
 
         window.updateCheckoutFormState = function() {
             if (currentUser && window.cart.length > 0) {
