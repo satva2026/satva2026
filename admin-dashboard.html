@@ -252,6 +252,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        
+        // 1. New Firestore Imports
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBBpqJXBfbiju_T69mS1qrx2CRkZd1mkQU",
@@ -265,19 +268,16 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         
-        // 🚨 ADD YOUR ADMIN EMAILS HERE
-        const ADMIN_EMAILS = [
-            "satva2026@gmail.com",
-            "veena@iitpkd.ac.in", 
-            "satva@iitpkd.ac.in",
-         ];
-
-        // 🚨 YOUR NEW GOOGLE SCRIPT URL 🚨
+        // 2. Initialize Firestore
+        const db = getFirestore(app); 
+        
         const scriptURL = "https://script.google.com/macros/s/AKfycbxMPo2MS8aoMwa93e-ie3Gtlbyz0qFXkLRgq2FJQNv6fLDNmHdPNhswdSYqqsODAX_K/exec";
         
+        // If you secure your Apps Script later, put your password here!
+        const appsScriptSecret = ""; 
+
         let globalData = []; 
 
-        // 🛠️ FUZZY MATCHER TOOL (Ignores spaces, underscores, and caps from Sheet headers)
         const getVal = (userObj, possibleNames) => {
             for (let key in userObj) {
                 let cleanKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -289,20 +289,34 @@
             return "";
         };
 
-        onAuthStateChanged(auth, (user) => {
+        // 3. SECURE AUTHENTICATION CHECK WITH FIRESTORE
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                if(ADMIN_EMAILS.includes(user.email.toLowerCase())) {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('admin-ui-header').classList.remove('hidden');
-                    document.getElementById('admin-dashboard').classList.remove('hidden');
-                    document.getElementById('admin-email-display').textContent = user.email;
-                    document.getElementById('admin-email-display').style.display = 'inline-block';
-                    window.fetchData();
-                } else {
+                try {
+                    // Check if the logged-in user's UID exists in the 'admins' collection
+                    const adminDocRef = doc(db, 'admins', user.uid);
+                    const adminDocSnap = await getDoc(adminDocRef);
+
+                    if (adminDocSnap.exists()) {
+                        // VIP Confirmed! Load dashboard.
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('admin-ui-header').classList.remove('hidden');
+                        document.getElementById('admin-dashboard').classList.remove('hidden');
+                        document.getElementById('admin-email-display').textContent = user.email;
+                        document.getElementById('admin-email-display').style.display = 'inline-block';
+                        window.fetchData();
+                    } else {
+                        // Logged in, but NOT an admin.
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('access-denied').classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error("Error verifying admin status:", error);
                     document.getElementById('loader').style.display = 'none';
                     document.getElementById('access-denied').classList.remove('hidden');
                 }
             } else {
+                // Not logged in at all
                 window.location.href = "registrations.html";
             }
         });
@@ -314,7 +328,12 @@
             tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding: 50px;"><i class="fas fa-circle-notch fa-spin" style="font-size: 2rem; color: var(--primary);"></i><br><br>Syncing with Google Sheets Database...</td></tr>';
             
             try {
-                const response = await fetch(`${scriptURL}?action=getAll`);
+                // Optional: Passing the secret if you implement it in Apps Script
+                const fetchUrl = appsScriptSecret 
+                    ? `${scriptURL}?action=getAll&secret=${appsScriptSecret}` 
+                    : `${scriptURL}?action=getAll`;
+
+                const response = await fetch(fetchUrl);
                 const result = await response.json();
                 
                 if(result.status === "success") {
@@ -340,7 +359,6 @@
             for (let i = dataArray.length - 1; i >= 0; i--) {
                 const user = dataArray[i];
                 
-                // Using Fuzzy Matcher for safe extraction
                 const name = getVal(user, ['name', 'fullname']) || "Unknown";
                 const org = getVal(user, ['organization', 'affiliatedorganization']) || "";
                 const email = getVal(user, ['email']) || "";
@@ -392,7 +410,6 @@
             
             document.getElementById('editUserEmail').value = getVal(user, ['email']); 
             
-            // Populate Read-Only Details with expanded Fuzzy Matcher
             document.getElementById('editName').value = getVal(user, ['name', 'fullname']);
             document.getElementById('editEmail').value = getVal(user, ['email']);
             document.getElementById('editCategory').value = getVal(user, ['category']);
@@ -415,25 +432,19 @@
             
             document.getElementById('editRefId').value = getVal(user, ['paymentref', 'transactionid', 'refno']);
 
-            // Populate Admin Statuses
             document.getElementById('editRegStatus').value = getVal(user, ['adminregstatus', 'regstatus']) || "Pending";
             
             let currentAcc = getVal(user, ['adminaccstatus', 'accstatus']) || "Pending";
             if ((getVal(user, ['accommodation'])).toLowerCase() === "no") currentAcc = "Not Requested";
             document.getElementById('editAccStatus').value = currentAcc;
 
-            // Populate Document URLs
             document.getElementById('editReceiptUrl').value = getVal(user, ['officialreceipturl', 'adminreceipturl']);
             document.getElementById('editPartCert').value = getVal(user, ['participationcerturl']);
             document.getElementById('editPresCert').value = getVal(user, ['presentationcerturl']);
 
-            // ==========================================
-            // 🛑 THE FIX FOR USER UPLOADED FILES 🛑
-            // ==========================================
             const receiptLink = document.getElementById('viewUserReceipt');
             const idLink = document.getElementById('viewUserId');
             
-            // 1. Find Receipt Link
             let userRec = getVal(user, ['userreceipturl', 'receipturl', 'paymentreceipt']);
             if(!userRec || userRec.trim() === "") {
                 for(let key in user) {
@@ -443,7 +454,6 @@
                 }
             }
 
-            // 2. Find Student ID Link
             let stuId = getVal(user, ['studentidurl', 'idurl', 'studentid']);
             if(!stuId || stuId.trim() === "") {
                 for(let key in user) {
@@ -453,31 +463,28 @@
                 }
             }
 
-            // 3. Update Receipt Button UI
             if (userRec && userRec.includes('http')) { 
                 receiptLink.href = userRec; 
-                receiptLink.className = "btn-doc"; // Make it green/clickable
+                receiptLink.className = "btn-doc"; 
                 receiptLink.innerHTML = '<i class="fas fa-receipt"></i> View Receipt Proof';
             } else { 
                 receiptLink.href = "#";
-                receiptLink.className = "btn-doc disabled-doc"; // Make it red
+                receiptLink.className = "btn-doc disabled-doc"; 
                 receiptLink.innerHTML = '<i class="fas fa-times-circle"></i> No Receipt Found';
             }
 
-            // 4. Update ID Button UI
             let catCheck = getVal(user, ['category', 'cat']);
             if (stuId && stuId.includes('http')) { 
                 idLink.href = stuId; 
-                idLink.className = "btn-doc"; // Make it green/clickable
+                idLink.className = "btn-doc"; 
                 idLink.innerHTML = '<i class="fas fa-id-card"></i> View Student ID';
                 idLink.classList.remove('hidden');
             } else if (catCheck && catCheck.toLowerCase() === 'student') {
                 idLink.href = "#";
-                idLink.className = "btn-doc disabled-doc"; // Make it red
+                idLink.className = "btn-doc disabled-doc"; 
                 idLink.innerHTML = '<i class="fas fa-times-circle"></i> No ID Found';
                 idLink.classList.remove('hidden');
             } else {
-                // If they are a Delegate and uploaded no ID, hide the button completely
                 idLink.classList.add('hidden'); 
             }
 
@@ -501,6 +508,11 @@
                 partCertUrl: document.getElementById('editPartCert').value,
                 presCertUrl: document.getElementById('editPresCert').value
             };
+            
+            // Adding the secret to the POST payload if it exists
+            if (appsScriptSecret) {
+                payload.secret = appsScriptSecret;
+            }
 
             try {
                 const response = await fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) });
@@ -519,6 +531,4 @@
         };
     </script>
 </body>
-
 </html>
-
