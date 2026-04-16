@@ -91,7 +91,7 @@
         .merch-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #f0f0f0; display: flex; flex-direction: column; position: relative;}
         .merch-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
         .merch-img-wrapper { width: 100%; height: 280px; background: var(--section-alt-bg); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 20px; }
-        .merch-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; }
+        .merch-img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; cursor: zoom-in; }
         .merch-card:hover .merch-img { transform: scale(1.1); }
         .merch-info { padding: 25px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .merch-title { font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--dark-color); margin-bottom: 5px; line-height: 1.3; }
@@ -178,14 +178,21 @@
         .submit-order-btn:hover { background: var(--dark-color); }
         .submit-order-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* --- MODALS (Auth & Fit Guide) --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(5px);}
-        .modal-overlay.active { display: flex; opacity: 1; }
+        /* --- MODALS (Auth, Fit Guide & Zoom) --- */
+        .modal-overlay, .zoom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(5px);}
+        .modal-overlay.active, .zoom-modal-overlay.active { display: flex; opacity: 1; }
         .modal-container { background: white; width: 95%; max-width: 450px; border-radius: 10px; overflow: hidden; transform: scale(0.9); transition: transform 0.3s ease; }
         .modal-overlay.active .modal-container { transform: scale(1); }
         .modal-header { padding: 20px; background: var(--dark-color); color: white; display: flex; justify-content: space-between; align-items: center; }
         .modal-close-btn { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
         .modal-body { padding: 30px; }
+
+        /* Zoom modal specific */
+        .zoom-modal-overlay { background: rgba(0, 0, 0, 0.85); z-index: 3000; }
+        .zoom-modal-img { max-width: 90%; max-height: 90vh; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.8); transition: transform 0.3s ease; object-fit: contain; }
+        .zoom-modal-overlay.active .zoom-modal-img { transform: scale(1); }
+        .zoom-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 3rem; cursor: pointer; border: none; background: transparent; transition: color 0.3s; }
+        .zoom-close:hover { color: var(--danger-color); }
 
         /* Auth specific modal styles */
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
@@ -298,7 +305,7 @@
                 <div class="merch-grid" id="product-list">
                     
                     <div class="merch-card js-scroll fade-in-up" data-id="1" data-name="Polo T-shirt - Dark Wine" data-price="470" data-img="images/merchandise/polo.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/polo.webp" alt="Polo T-shirt" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/polo.webp" alt="Polo T-shirt" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Polo T-shirt</div>
                             <div class="merch-price">Rs. 470</div>
@@ -321,7 +328,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="2" data-name="Round Neck T-shirt - Olive Green" data-price="420" data-img="images/merchandise/tshirt1.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/tshirt1.webp" alt="Round Neck T-shirt - Olive Green" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/tshirt1.webp" alt="Round Neck T-shirt - Olive Green" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Round Neck T-shirt</div>
                             <div class="merch-price">Rs. 420</div>
@@ -344,7 +351,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="3" data-name="Round Neck T-shirt - Black" data-price="420" data-img="images/merchandise/tshirt2.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/tshirt2.webp" alt="Round Neck T-shirt - Black" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/tshirt2.webp" alt="Round Neck T-shirt - Black" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Round Neck T-shirt</div>
                             <div class="merch-price">Rs. 420</div>
@@ -367,7 +374,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="4" data-name="Multi-pin" data-price="250" data-img="images/merchandise/pin.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/pin.webp" alt="Multi-pin" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/pin.webp" alt="Multi-pin" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Multi-pin</div>
                             <div class="merch-price">Rs. 250</div>
@@ -379,7 +386,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="5" data-name="Fridge Magnet - Design 1" data-price="60" data-img="images/merchandise/magnet1.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/magnet1.webp" alt="Fridge Magnet - Design 1" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/magnet1.webp" alt="Fridge Magnet - Design 1" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Fridge Magnet 1</div>
                             <div class="merch-price">Rs. 60</div>
@@ -391,7 +398,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="6" data-name="Fridge Magnet - Design 2" data-price="60" data-img="images/merchandise/magnet2.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/magnet2.webp" alt="Fridge Magnet - Design 2" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/magnet2.webp" alt="Fridge Magnet - Design 2" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Fridge Magnet 2</div>
                             <div class="merch-price">Rs. 60</div>
@@ -403,7 +410,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="7" data-name="Fridge Magnet - Design 3" data-price="60" data-img="images/merchandise/magnet3.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/magnet3.webp" alt="Fridge Magnet - Design 3" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/magnet3.webp" alt="Fridge Magnet - Design 3" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Fridge Magnet 3</div>
                             <div class="merch-price">Rs. 60</div>
@@ -415,7 +422,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="9" data-name="Keychain - Design 1" data-price="55" data-img="images/merchandise/kchain1.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/kchain1.webp" alt="Keychain - Design 1" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/kchain1.webp" alt="Keychain - Design 1" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Keychain 1</div>
                             <div class="merch-price">Rs. 55</div>
@@ -427,7 +434,7 @@
                     </div>
 
                     <div class="merch-card js-scroll fade-in-up" data-id="10" data-name="Keychain - Design 2" data-price="55" data-img="images/merchandise/kchain2.webp">
-                        <div class="merch-img-wrapper"><img src="images/merchandise/kchain2.webp" alt="Keychain - Design 2" class="merch-img" loading="lazy"></div>
+                        <div class="merch-img-wrapper"><img src="images/merchandise/kchain2.webp" alt="Keychain - Design 2" class="merch-img" title="Click to zoom" loading="lazy"></div>
                         <div class="merch-info">
                             <div class="merch-title">Keychain 2</div>
                             <div class="merch-price">Rs. 55</div>
@@ -451,13 +458,23 @@
                         
                         <div class="payment-card">
                             <h3 style="margin-bottom: 20px; color: var(--dark-color);">Step 1: Make Payment</h3>
-                            <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">Please click the button below to proceed to our secure payment gateway. Once the payment is successful, save the transaction ID and a screenshot/PDF of the receipt.</p>
+                            <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">Please scan the QR code or use the bank details below to complete your payment. Once successful, save the transaction ID and a screenshot/PDF of the receipt.</p>
                             
-                            <a href="https://www.billdesk.com/web/online-payment" target="_blank" class="submit-order-btn" style="display: inline-block; text-decoration: none; width: auto; padding: 15px 40px; margin-bottom: 20px;">Proceed to BillDesk Gateway <i class="fas fa-external-link-alt" style="margin-left: 8px;"></i></a>
+                            <div style="text-align: center; margin-bottom: 20px;">
+                                <img src="images/merchandise/QR.jpeg" alt="UPI Payment QR Code" style="width: 100%; max-width: 200px; height: auto; border-radius: 10px; border: 2px solid #eee; padding: 10px;">
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e0e0e0; text-align: left; margin-bottom: 20px;">
+                                <h4 style="margin-bottom: 12px; color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 8px;">Bank Transfer Details</h4>
+                                <p style="margin-bottom: 5px;"><strong>Account Number:</strong> 786401500573</p>
+                                <p style="margin-bottom: 5px;"><strong>Bank Name:</strong> ICICI BANK</p>
+                                <p style="margin-bottom: 5px;"><strong>Account Holder's Name:</strong> SILPA SEKHAR G</p>
+                                <p style="margin-bottom: 5px;"><strong>IFSC Code:</strong> ICIC0007864</p>
+                                <p style="margin-bottom: 0;"><strong>Branch:</strong> Kanjikode</p>
+                            </div>
                             
                             <div style="background: #fff3cd; padding: 15px; border-radius: 8px; border: 1px solid #ffeeba; margin-top: 10px;">
                                 <p style="margin: 0; font-size: 1.2rem; font-weight:bold; color: var(--danger-color);">Amount to Pay: Rs. <span id="payment-display-amount">0</span></p>
-                                <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #666;">(Inclusive of GST 18%)</p>
                             </div>
                         </div>
 
@@ -527,7 +544,7 @@
                                 <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
 
                                 <div class="form-group full-width">
-                                    <label for="transaction-id">Transaction ID / BillDesk Ref Number *</label>
+                                    <label for="transaction-id">Transaction ID / UPI Ref Number *</label>
                                     <input type="text" id="transaction-id" placeholder="e.g. 123456789012" required>
                                 </div>
                                 <div class="form-group full-width">
@@ -535,6 +552,12 @@
                                     <input type="file" id="payment-proof" accept="image/*,.pdf" required>
                                 </div>
                                 
+                                <div style="background: #fdf5f5; padding: 15px; border-radius: 8px; border: 1px solid #fadcdc; margin-top: 20px; margin-bottom: 20px; text-align: left;">
+                                    <p style="margin: 0; font-size: 0.9rem; color: #a94442; line-height: 1.5;">
+                                        <strong><i class="fas fa-info-circle"></i> Important Note:</strong> All merchandise orders are final. Once an order is successfully placed, it cannot be modified or canceled, and payments are strictly non-refundable. Kindly review your selected items and sizes carefully before proceeding with the payment.
+                                    </p>
+                                </div>
+
                                 <button type="submit" class="submit-order-btn" id="submit-btn" disabled>Submit Final Order</button>
                                 <p id="form-error-msg" style="color: var(--danger-color); font-size: 0.9rem; margin-top: 10px; display: none;">Your cart is empty or you are not logged in.</p>
                             </form>
@@ -561,11 +584,16 @@
             </div>
         <div class="cart-footer">
             <div class="cart-total-row">
-                <span>Total: <br><span style="font-size: 0.8rem; font-weight: 400; color: #666;">(Incl. 18% GST)</span></span>
+                <span>Total: </span>
                 <span>Rs. <span id="cart-total-amount">0</span></span>
             </div>
             <button class="checkout-btn" onclick="document.getElementById('checkout-section').scrollIntoView(); document.getElementById('cart-sidebar').classList.remove('open'); document.getElementById('cart-overlay').classList.remove('show');">Proceed to Payment</button>
         </div>
+    </div>
+
+    <div id="imageZoomModal" class="zoom-modal-overlay">
+        <button class="zoom-close" onclick="closeZoomModal()">&times;</button>
+        <img id="zoomedImage" src="" alt="Zoomed Product" class="zoom-modal-img">
     </div>
 
     <div id="fitGuideModal" class="modal-overlay">
@@ -687,7 +715,7 @@
         };
 
         // Close Modals on Outside Click
-        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        document.querySelectorAll('.modal-overlay, .zoom-modal-overlay').forEach(overlay => {
             overlay.addEventListener('click', function(e) {
                 if (e.target === this) {
                     this.classList.remove('active');
@@ -730,6 +758,18 @@
                 authModal.classList.add('active');
             }
         }
+
+        // --- PRODUCT ZOOM LOGIC ---
+        document.querySelectorAll('.merch-img').forEach(img => {
+            img.addEventListener('click', () => {
+                document.getElementById('zoomedImage').src = img.src;
+                document.getElementById('imageZoomModal').classList.add('active');
+            });
+        });
+
+        window.closeZoomModal = function() {
+            document.getElementById('imageZoomModal').classList.remove('active');
+        };
 
         // --- CART LOGIC ---
         const merchCards = document.querySelectorAll('.merch-card');
