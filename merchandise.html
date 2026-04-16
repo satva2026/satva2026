@@ -657,7 +657,7 @@
 
                 <div id="signup-form" class="auth-form-container" style="display: none;">
                     <div style="background: #fff3cd; padding: 10px; border-radius: 5px; font-size: 0.8rem; color: #856404; margin-bottom: 15px; border: 1px solid #ffeeba;">
-                        <strong>Note:</strong> Verification email may go to Spam.
+                        <strong>Note:</strong> Verification email may go to Spam/Promotions folder.
                     </div>
                     <input type="email" id="signup-email" placeholder="Email Address" required>
                     <input type="password" id="signup-password" placeholder="Password (Min 6 chars)" required>
@@ -672,7 +672,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         // FIREBASE CONFIGURATION
         const firebaseConfig = {
@@ -703,7 +703,8 @@
 
         // --- AUTHENTICATION STATE OBSERVER ---
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            // Check if user exists AND their email is verified
+            if (user && user.emailVerified) {
                 currentUser = user;
                 userProfile.style.display = 'flex';
                 if(user.photoURL) userAvatar.src = user.photoURL;
@@ -729,6 +730,10 @@
             document.querySelector(`.auth-tab[onclick="switchTab('${tab}')"]`).classList.add('active');
             document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
             document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
+            
+            // Clear any previous error/success messages when switching tabs
+            document.getElementById('login-error').textContent = "";
+            document.getElementById('signup-error').textContent = "";
         };
 
         window.openFitGuide = function(imageSrc) {
@@ -750,26 +755,70 @@
 
         closeAuthModalBtn.addEventListener('click', () => authModal.classList.remove('active'));
 
+        // --- AUTHENTICATION ACTIONS ---
+        
+        // Google Sign In
         const handleGoogle = async () => { 
             try { await signInWithPopup(auth, provider); } 
             catch (e) { document.getElementById('login-error').textContent = e.message; } 
         };
-        
         document.getElementById('btn-google-login').onclick = handleGoogle;
         document.getElementById('btn-google-signup').onclick = handleGoogle;
 
+        // Email/Password Login
         document.getElementById('btn-login-email').onclick = async () => {
+            const loginError = document.getElementById('login-error');
+            loginError.style.color = "#e74c3c"; // Reset to red
+            loginError.textContent = "Logging in...";
+            
             try {
-                await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value);
-            } catch(e) { document.getElementById('login-error').textContent = "Invalid credentials."; }
+                const userCredential = await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value);
+                
+                // Enforce Email Verification
+                if (!userCredential.user.emailVerified) {
+                    await signOut(auth); // Sign them back out immediately
+                    loginError.textContent = "Please verify your email address before logging in. Check your inbox/spam folder.";
+                } else {
+                    loginError.textContent = "";
+                }
+            } catch(e) { 
+                loginError.textContent = "Invalid credentials or email not verified."; 
+            }
         };
 
+        // Email/Password Sign Up
         document.getElementById('btn-signup-email').onclick = async () => {
+            const signupError = document.getElementById('signup-error');
+            const email = document.getElementById('signup-email').value;
             const p = document.getElementById('signup-password').value;
-            if(p.length < 6) { document.getElementById('signup-error').textContent = "Password too short."; return; }
+            
+            if(p.length < 6) { signupError.textContent = "Password must be at least 6 characters."; return; }
+            
+            signupError.style.color = "#e74c3c"; // Default red
+            signupError.textContent = "Creating account...";
+
             try {
-                await createUserWithEmailAndPassword(auth, document.getElementById('signup-email').value, p);
-            } catch(e) { document.getElementById('signup-error').textContent = e.message; }
+                // 1. Create the user
+                const userCredential = await createUserWithEmailAndPassword(auth, email, p);
+                
+                // 2. Send the verification email
+                await sendEmailVerification(userCredential.user);
+                
+                // 3. Log them out immediately so they are forced to verify
+                await signOut(auth);
+                
+                // 4. Show success message in green
+                signupError.style.color = "#117d56"; // Green success color
+                signupError.textContent = "Account created! Please check your email to verify your account before logging in.";
+                
+                // Clear the form fields
+                document.getElementById('signup-email').value = "";
+                document.getElementById('signup-password').value = "";
+
+            } catch(e) { 
+                signupError.style.color = "#e74c3c";
+                signupError.textContent = e.message; 
+            }
         };
 
         logoutBtn.addEventListener('click', () => {
@@ -777,7 +826,7 @@
         });
 
         function requireAuth(callback) {
-            if (currentUser) {
+            if (currentUser && currentUser.emailVerified) {
                 callback();
             } else {
                 authModal.classList.add('active');
@@ -948,7 +997,7 @@
         const formErrorMsg = document.getElementById('form-error-msg');
         const orderForm = document.getElementById('order-submit-form');
         
-        // NEW WEB APP URL ADDED HERE
+        // Google Web App URL
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrBEHOQqLzqUgVrg6L9tNPvuC0FuOsOw5HOGHRDUQ7UeLN7wtO39recZRwsZev_7o1iA/exec"; 
 
         window.updateCheckoutFormState = function() {
