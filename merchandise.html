@@ -234,6 +234,19 @@
             .order-container { grid-template-columns: 1fr; gap: 40px; }
             .order-section { padding: 40px 20px; }
             .form-row { grid-template-columns: 1fr; gap: 0; }
+            
+            /* ADD THIS: Fix floating cart for mobile */
+            .floating-cart {
+                bottom: 20px !important;
+                right: 20px !important;
+                width: 55px !important;
+                height: 55px !important;
+                z-index: 1050 !important; /* Forces it above mobile overlays */
+            }
+            .floating-cart svg {
+                width: 26px !important;
+                height: 26px !important;
+            }
         }
     </style>
 </head>
@@ -923,7 +936,8 @@
         const formErrorMsg = document.getElementById('form-error-msg');
         const orderForm = document.getElementById('order-submit-form');
         
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk-4da0B8MBqJXU5aru-7StOcudi8bdZ16k1_oEzQ0R06rDBuAttM936tZ-G7T0MoL/exec"; 
+        // NEW WEB APP URL ADDED HERE
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrBEHOQqLzqUgVrg6L9tNPvuC0FuOsOw5HOGHRDUQ7UeLN7wtO39recZRwsZev_7o1iA/exec"; 
 
         window.updateCheckoutFormState = function() {
             if (currentUser && window.cart.length > 0) {
