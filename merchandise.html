@@ -247,6 +247,18 @@
                 width: 26px !important;
                 height: 26px !important;
             }
+
+            /* ADD THIS: Scale logos down on tablets so they don't break the layout */
+            .logo-container { gap: 12px; }
+            .logo-1, .logo-3 { height: 45px !important; width: auto !important; }
+            .logo-2 { height: 50px !important; width: auto !important; }
+        }
+
+        /* ADD THIS: Scale logos down further on small mobile screens */
+        @media(max-width: 600px) {
+            .logo-container { gap: 6px; }
+            .logo-1, .logo-3 { height: 32px !important; width: auto !important; }
+            .logo-2 { height: 36px !important; width: auto !important; }
         }
     </style>
 </head>
