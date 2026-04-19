@@ -493,8 +493,10 @@
             }
         }
 
+        // --- UPDATED: Secure Auth State Check ---
         onAuthStateChanged(auth, async (user) => {
-            if (user) {
+            // ONLY load dashboard if user is signed in AND their email is verified
+            if (user && user.emailVerified) {
                 try {
                     document.getElementById('portal-header').classList.remove('hidden');
                     document.getElementById('header-user-email').textContent = user.email;
@@ -520,6 +522,7 @@
                     console.error(e);
                 }
             } else {
+                // If they are not logged in OR not verified, bounce them back!
                 window.location.href = "registrations.html";
             }
         });
@@ -578,6 +581,4 @@
         });
     </script>
 </body>
-
 </html>
-
