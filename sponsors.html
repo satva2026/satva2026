@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsors - SATVA 2026</title>
+    
+    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    
+    <link rel="preload" as="image" href="images/logos/logo4.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
+        
+        :root {
+            --primary-color: #606C38; 
+            --secondary-color: #117d56; 
+            --dark-color: #013328;
+            --text-color: #333;
+            --light-text-color: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --section-alt-bg: #f8f9fa;
+            
+            /* Sponsor Gradients */
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --platinum-gradient: linear-gradient(135deg, #3b414a, #686e79, #2c3139);
+            --diamond-gradient: linear-gradient(135deg, #093028, #237a57);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        /* 2. LOCK SCROLL: Prevent scrolling while loading */
+        body.loading-active { overflow: hidden; height: 100vh; }
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: var(--section-alt-bg); }
+        
+        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+
+        /* --- PRELOADER CSS --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 999999; /* Highest priority */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+
+        .loader-content {
+            text-align: center;
+            width: 300px;
+            max-width: 80%;
+        }
+
+        .loader-logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 30px;
+            animation: breathe 2.5s infinite ease-in-out;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            border-radius: 10px;
+            transition: width 0.2s linear;
+            box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); }
+            100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
+        }
+
+        @media(max-width: 576px) {
+            .loader-logo { width: 120px; }
+            .loader-content { width: 240px; }
+        }
+
+        /* --- HEADER STYLES --- */
+        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo-container { display: flex; align-items: center; gap: 20px; }
+        .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
+        .logo-container img { transition: transform 0.3s ease; }
+        .logo-container img:hover { transform: scale(1.05); }
+
+        .main-nav ul { display: flex; list-style: none; gap: 25px; align-items: center; }
+        .main-nav li { position: relative; }
+        .main-nav a { text-decoration: none; color: #000; font-weight: 700; padding: 25px 0; position: relative; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; transition: color 0.3s; }
+        .main-nav a::after { content: ''; position: absolute; bottom: 15px; left: 0; width: 0; height: 3px; background-color: var(--primary-color); transition: width 0.3s ease-in-out; }
+        .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
+        .main-nav a:hover::after { width: 100%; }
+
+        /* DESKTOP DROPDOWN CSS (CENTERED) */
+        .dropdown-menu { 
+            display: flex; 
+            flex-direction: column;
+            position: absolute; 
+            top: 100%; 
+            left: 50%; /* Start at center */
+            transform: translate(-50%, 20px); 
+            background: white; 
+            list-style: none; 
+            padding: 10px 0; 
+            margin-top: -10px; 
+            border-radius: 5px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+            min-width: 280px; 
+            gap: 0 !important; 
+            z-index: 100; 
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+        .dropdown:hover .dropdown-menu { 
+            visibility: visible;
+            opacity: 1;
+            transform: translate(-50%, 0); 
+        }
+        .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
+        .dropdown-menu li a::after { content: none; }
+        .dropdown-menu li a:hover { background-color: #f4f4f4; }
+
+        .mobile-nav-toggle { display: none; }
+        .mobile-nav-container { display: none; }
+        
+        /* --- SPONSORS PAGE STYLES --- */
+        .page-section { padding: 80px 0; }
+        
+        .section-heading { 
+            text-align: center; 
+            font-size: 2.5rem; 
+            color: var(--dark-color); 
+            margin-bottom: 40px; 
+            position: relative; 
+            display: block;
+        }
+        .section-heading::after { 
+            content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; 
+        }
+
+        /* --- CURRENT SPONSORS SHOWCASE --- */
+        .current-sponsors {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 40px 0;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+        .showcase-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding: 20px;
+        }
+        .showcase-card {
+            background: #fff;
+            padding: 35px 30px;
+            border-radius: 15px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            border: 2px solid transparent;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .showcase-card.gold-tier {
+            border-color: #d4af37;
+            background: linear-gradient(to bottom, #ffffff, #fffcf0);
+        }
+        .showcase-card .tier-label {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gold-gradient);
+            color: #333;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            letter-spacing: 1px;
+        }
+        .showcase-card .sponsor-logo {
+            max-width: 100%;
+            height: auto;
+            max-height: 140px;
+            margin: 20px 0 15px;
+            transition: transform 0.3s ease;
+        }
+        .showcase-card .sponsor-name {
+            font-size: 1.3rem;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+        .showcase-card .sponsor-subname {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* --- EMPHASIS GLOW ANIMATION --- */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7); transform: scale(1); }
+            50% { box-shadow: 0 0 25px 10px rgba(212, 175, 55, 0.2); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); transform: scale(1); }
+        }
+        .emphasis-effect {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        .emphasis-effect:hover {
+            animation: none; /* Stops the pulsing when user hovers */
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* --- PARTNER SECTION --- */
+        .partner-section { margin-bottom: 60px; }
+        .partner-card { 
+            background: #fff; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1); 
+            overflow: hidden; 
+            border: 2px solid #d4af37; 
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s;
+        }
+        .partner-card:hover { transform: translateY(-5px); }
+        
+        .partner-header { 
+            background: var(--primary-color); 
+            color: #fff; 
+            padding: 30px; 
+            text-align: center; 
+            position: relative;
+            background-image: linear-gradient(45deg, #444003 0%, #6f8e74 100%);
+        }
+        
+        .partner-badge {
+            position: absolute;
+            top: 0;
+            right: 30px;
+            background: var(--gold-gradient);
+            color: #000;
+            padding: 10px 20px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .partner-header h3 { font-size: 2rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .partner-header .price-tag { font-size: 1.5rem; font-weight: 800; background: rgba(255,255,255,0.2); padding: 5px 20px; border-radius: 50px; }
+        
+        .partner-body { padding: 40px; text-align: center; }
+        .partner-body ul { list-style: none; display: inline-block; text-align: left; }
+        .partner-body li { font-size: 1.1rem; margin-bottom: 15px; position: relative; padding-left: 35px; }
+        .partner-body li::before { content: '\f058'; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--primary-color); position: absolute; left: 0; top: 2px; font-size: 1.3rem; }
+
+        /* --- SPONSOR GRID --- */
+        .sponsorship-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 40px;
+        }
+        
+        .sponsor-card { background: #fff; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.3s, box-shadow 0.3s; height: 100%; }
+        .sponsor-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        
+        .card-header { padding: 20px; color: #fff; text-align: center; display: flex; flex-direction: column; gap: 5px; }
+        .card-header h3 { font-size: 1.4rem; font-weight: 800; text-transform: uppercase; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); margin: 0; }
+        .card-header .price-tag { font-size: 1.2rem; font-weight: 700; background: rgba(0,0,0,0.2); display: inline-block; margin: 5px auto 0; padding: 2px 15px; border-radius: 20px; }
+        
+        .card-body { padding: 25px; flex-grow: 1; }
+        .card-body ul { list-style: none; padding: 0; }
+        .card-body li { position: relative; padding-left: 25px; margin-bottom: 15px; font-size: 0.95rem; }
+        .card-body li::before { content: '•'; position: absolute; left: 0; top: 0; color: #777; font-weight: bold; font-size: 1.2rem; line-height: 1; }
+
+        .platinum-bg { background: var(--platinum-gradient); } 
+        .diamond-bg { background: var(--diamond-gradient); } 
+        .gold-bg { background: var(--gold-gradient); color: #444; } 
+        .gold-bg h3 { color: #333; text-shadow: none; }
+        .gold-bg .price-tag { color: #333; background: rgba(255,255,255,0.4); }
+
+        .special-note {
+            text-align: center;
+            background-color: #eef2f3;
+            border-left: 5px solid var(--primary-color);
+            padding: 25px;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 1.05rem;
+            color: var(--dark-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .floating-contact-btn { position: fixed; bottom: 20px; right: 20px; background-color: var(--primary-color); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; text-decoration: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 999; transition: all 0.3s; }
+        .floating-contact-btn:hover { background-color: var(--dark-color); transform: scale(1.1); }
+        
+        /* --- CONTACT STYLES --- */
+        .contact-heading { text-align: center; color: #8e44ad; font-size: 1.5rem; margin-bottom: 20px; }
+        .info-card { display: flex; align-items: center; gap: 25px; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); margin-bottom: 20px; transition: transform 0.3s, box-shadow 0.3s; }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+        .contact-icon { font-size: 2.5rem; color: var(--secondary-color); flex-shrink: 0; width: 60px; text-align: center; }
+        .contact-details-grid { display: flex; flex-wrap: wrap; gap: 30px; flex-grow: 1; }
+        .contact-block { flex-grow: 1; min-width: 250px; }
+        .contact-block strong { display: block; margin-bottom: 8px; color: var(--dark-color); font-size: 1.1rem; }
+        .contact-block a { word-break: break-all; text-decoration: none; color: var(--primary-color); font-weight: 700; }
+        
+        .phone-btn { display: inline-block; background: #f0f4c3; color: var(--dark-color); padding: 8px 15px; border-radius: 5px; margin-right: 10px; margin-bottom: 5px; transition: background 0.3s; }
+        .phone-btn:hover { background: #dce775; }
+        .phone-btn i { margin-right: 8px; }
+
+        .address-card { justify-content: center; } 
+        .address-card .contact-block { flex-grow: 0; text-align: center; } 
+
+        .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .js-scroll.fade-in-up { transform: translateY(40px); }
+        .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- RESPONSIVE --- */
+        @media(max-width: 992px) {
+            .main-nav { display: none; }
+            .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
+            .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
+            .hamburger::before, .hamburger::after { content: ''; width: 30px; height: 3px; background: var(--text-color); position: absolute; left: 0; transition: transform 0.3s ease-in-out, top 0.3s ease-in-out; }
+            .hamburger::before { top: -8px; } .hamburger::after { top: 8px; }
+            .mobile-nav-toggle.active .hamburger { background: transparent; }
+            .mobile-nav-toggle.active .hamburger::before { transform: rotate(45deg); top: 0; }
+            .mobile-nav-toggle.active .hamburger::after { transform: rotate(-45deg); top: 0; }
+
+            .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
+            .mobile-nav-container.active { max-height: calc(100vh - 80px); }
+            .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
+            .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; }
+            .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
+            .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
+            .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
+            
+            /* --- FIXED: FORCE MOBILE DROPDOWN STYLES WITH !IMPORTANT --- */
+            .mobile-nav-container .dropdown-menu { 
+                position: static !important; 
+                float: none !important;
+                display: none; 
+                width: 100% !important; 
+                min-width: 0 !important; 
+                transform: none !important; 
+                left: auto !important;
+                top: auto !important;
+                box-shadow: none !important;
+                background-color: #f8f9fa !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+            
+            .mobile-nav-container .dropdown-menu.show { 
+                display: block !important; 
+            }
+
+            .mobile-nav-container .dropdown-menu li {
+                width: 100% !important;
+                display: block !important;
+            }
+
+            .mobile-nav-container .dropdown-menu li a {
+                text-align: center !important;
+                padding: 12px 20px !important;
+                width: 100% !important;
+                display: block !important;
+                font-size: 1rem !important;
+                color: #444 !important;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .logo-container { gap: 8px; flex-grow: 1; }
+            .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
+            .logo-2 { height: 45px !important; } 
+            
+            .partner-header h3 { font-size: 1.5rem; }
+            .partner-body { padding: 20px; }
+        }
+        @media(max-width: 768px) {
+            .info-card { flex-direction: column; text-align: center; }
+            .contact-details-grid { flex-direction: column; align-items: center; }
+            .phone-btn { display: block; margin: 10px auto; width: fit-content; }
+        }
+        @media (max-width: 380px) {
+            .logo-container { gap: 5px; }
+            .logo-container img { height: 32px !important; }
+        }
+    </style>
+</head>
+<body class="loading-active">
+
+    <div id="preloader">
+        <div class="loader-content">
+            <img src="images/logos/logo4.png" alt="SATVA Loading..." class="loader-logo">
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0%</div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo-container">
+                    <a href="index.html"><img src="images/logos/logo4.png" alt="SATVA Logo" class="logo-3"></a>
+                    <a href="https://iitpkd.ac.in/" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo1.png" alt="IIT Palakkad Logo" class="logo-1"></a>
+                    <a href="https://www.ieindia.org/webui/iei-home.aspx" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo2.png" alt="IEI Logo" class="logo-2"></a>
+                    <a href="https://www.igs.org.in/local-chapter/palakkad" target="_blank" rel="noopener noreferrer"><img src="images/logos/logo3.png" alt="IGS Logo" class="logo-3"></a>
+                </div>
+    
+                <nav class="main-nav" id="desktop-nav">
+                    <ul>
+                        <li><a href="index.html">HOME</a></li>
+                        <li><a href="organisers.html">ORGANISERS</a></li>
+                        <li><a href="themes.html">THEMES</a></li>
+                        <li class="dropdown">
+                            <a href="programme.html">PROGRAMME</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="timeline.html">Timeline</a></li>
+                                <li><a href="advisory.html">Advisory and Technical Committee</a></li>
+                                <li><a href="committee.html">Organising Committee</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="sponsors.html">SPONSORS</a></li>
+                        <li><a href="submissions.html">SUBMISSION</a></li>
+                        <li><a href="registrations.html">REGISTRATION</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="mobile-nav-toggle"><span class="hamburger"></span></button>
+            </nav>
+        </div>
+        <nav class="mobile-nav-container" id="mobile-nav"></nav>
+    </header>
+
+    <main>
+        <section class="page-section">
+            <div class="container">
+
+                <div class="current-sponsors js-scroll fade-in-up">
+                    <h2 class="section-heading">Our Valued Sponsors</h2>
+                    
+                    <div class="showcase-grid">
+                        <a href="https://jpscientificequip.com/" target="_blank" rel="noopener noreferrer" class="showcase-card gold-tier emphasis-effect">
+                            <div class="tier-label">Gold Sponsor</div>
+                            <img src="images/sponsors/jp-scientific-logo.png" alt="JP Advance Technologies Pvt. Ltd." class="sponsor-logo">
+                            <h4 class="sponsor-name">JP Advance Technologies Pvt. Ltd.</h4>
+                            <p class="sponsor-subname">(Formerly known as JP Scientific Equipments)</p>
+                        </a>
+                    </div>
+                </div>
+
+                <h2 class="section-heading js-scroll fade-in-up">Sponsorship Opportunities</h2>
+
+                <div class="partner-section js-scroll fade-in-up">
+                    <div class="partner-card">
+                        <div class="partner-badge"><i class="fas fa-crown"></i> PREMIER</div>
+                        <div class="partner-header">
+                            <h3>Symposium Partner</h3>
+                            <span class="price-tag">₹ 3 Lakhs</span>
+                        </div>
+                        <div class="partner-body">
+                            <ul>
+                                <li>Complimentary registration and stay for up to four nominated delegates.</li>
+                                <li>Brand visibility through various symposium promotional platforms.</li>
+                                 <li>Allocation of one exhibition space (10 ft × 10 ft).</li>
+                                 <li>Company brochures/materials included in the delegate registration kit.</li>
+                                <li>Reserved seating for three institution representatives.</li>
+                                <li>A presentation slot for your technical head in a plenary session.</li>
+                                <li>One-page advertisement in the symposium booklet.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sponsorship-grid">
+                    
+                    <div class="sponsor-card js-scroll fade-in-up">
+                        <div class="card-header platinum-bg">
+                            <h3>Platinum Sponsor</h3>
+                            <span class="price-tag">₹ 1.5 Lakhs</span>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Complimentary registration for three nominated delegates.</li>
+                                <li>Brand visibility through various symposium promotional platforms.</li>
+                                <li>Allocation of one exhibition space <br>(6 ft × 4 ft).</li>
+                                <li>Company brochures/materials included in the delegate registration kit.</li>
+                                <li>Reserved seating for two institution representatives.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="sponsor-card js-scroll fade-in-up">
+                        <div class="card-header diamond-bg">
+                            <h3>Diamond Sponsor</h3>
+                            <span class="price-tag">₹ 1.25 Lakhs</span>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Complimentary registration for two nominated delegates.</li>
+                                <li>Brand visibility through various symposium promotional platforms.</li>
+                                <li>Allocation of one exhibition space <br>(4 ft × 4 ft).</li>
+                                <li>Company brochures/materials included in the delegate registration kit.</li>
+                                <li>Reserved seating for one institution representative.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="sponsor-card js-scroll fade-in-up">
+                        <div class="card-header gold-bg">
+                            <h3>Gold Sponsor</h3>
+                            <span class="price-tag">₹ 75,000</span>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>Complimentary registration for one nominated delegate.</li>
+                                <li>Brand visibility through various symposium promotional platforms.</li>
+                                <li>Allocation of one exhibition space <br> (4 ft × 4 ft).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="special-note js-scroll fade-in-up">
+                    <i class="fas fa-info-circle" style="color: var(--secondary-color); margin-right: 8px;"></i>
+                    There are opportunities to finance specific activities of the symposium. Kindly contact the organizers if you are interested.
+                </div>
+
+            </div>
+        </section>
+
+        <section class="page-section">
+            <div class="container">
+                <h3 class="contact-heading js-scroll fade-in-up">Contact us for sponsorship-specific inquiries and clarifications</h3>
+                
+                <div class="info-card js-scroll fade-in-up">
+                    <div class="contact-icon"><i class="fas fa-envelope-open-text"></i></div>
+                    <div class="contact-details-grid">
+                        <div class="contact-block">
+                            <strong>For general inquiries:</strong>
+                            <a href="mailto:satva@iitpkd.ac.in">satva@iitpkd.ac.in</a>
+                        </div>
+                        <div class="contact-block">
+                            <strong>For sponsorship inquiries:</strong>
+                            <a href="mailto:veena@iitpkd.ac.in">veena@iitpkd.ac.in</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card js-scroll fade-in-up">
+                    <div class="contact-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div class="contact-details-grid">
+                        <div class="contact-block" style="flex-grow: 2;">
+                            <strong>Call Us (Click to dial):</strong>
+                            <a href="tel:+914912091107" class="phone-btn"><i class="fas fa-mobile-alt"></i> +91 491 209 1107</a>
+                            <a href="tel:+914912091351" class="phone-btn"><i class="fas fa-mobile-alt"></i> +91 491 209 1351</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card address-card js-scroll fade-in-up">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-block">
+                        <strong>SATVA 2026</strong>
+                        <p style="margin:0;">Indian Institute of Technology Palakkad <br>
+                          Kanjikode, Palakkad,<br>
+                          Kerala - 678623, INDIA.<br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <a href="mailto:satva@iitpkd.ac.in" class="floating-contact-btn" title="Contact Us"><i class="fas fa-envelope"></i></a>
+
+    <script>
+        // --- 4. PRELOADER LOGIC ---
+        (function () {
+            let progress = 0;
+            let finished = false;
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            const interval = setInterval(() => {
+                if (progress < 90) {
+                    const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
+                    progress += increment;
+                }
+                
+                if (progress > 99) progress = 99;
+                
+                if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
+                if (progressText) progressText.innerText = Math.floor(progress) + '%';
+            }, 30); 
+
+            function hidePreloader() {
+                if (finished) return;
+                finished = true;
+                clearInterval(interval);
+                
+                // Jump to 100%
+                if (progressBar) progressBar.style.width = '100%';
+                if (progressText) progressText.innerText = '100%';
+                
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    body.classList.remove('loading-active');
+                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
+                }, 300); 
+            }
+
+            // Detect Actual Page Load
+            window.addEventListener("load", hidePreloader);
+            // Fallback
+            setTimeout(hidePreloader, 4000);
+        })();
+
+        // --- EXISTING PAGE LOGIC ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // MOBILE NAV LOGIC
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavContainer = document.getElementById('mobile-nav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+            
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                let mobileNavHTML = desktopNav.innerHTML;
+                const parser = new DOMParser();
+                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
+                    const toggle = document.createElement('span');
+                    toggle.className = 'dropdown-toggle';
+                    link.appendChild(toggle);
+                });
+                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavContainer.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) {
+                        e.preventDefault();
+                        e.target.classList.toggle('open');
+                        const li = e.target.closest('li.dropdown');
+                        if (!li) return;
+                        const menu = li.querySelector('.dropdown-menu');
+                        if (menu) { menu.classList.toggle('show'); }
+                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                        mobileNavContainer.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
+            
+            // ANIMATION SCRIPT
+            const animatedItems = document.querySelectorAll('.js-scroll');
+            if (animatedItems.length > 0) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.transitionDelay = `${index * 100}ms`; // Slight stagger for grid items
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedItems.forEach(item => {
+                    observer.observe(item);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
