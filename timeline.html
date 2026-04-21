@@ -89,6 +89,10 @@
         .main-nav a:hover::after { width: 100%; }
 
         /* Dropdown */
+        .dropdown { 
+            position: relative; /* FIX: Anchors the dropdown menu to this list item */
+        }
+        
         .dropdown-menu { 
             display: flex; flex-direction: column; position: absolute; top: 100%; left: 50%; 
             transform: translate(-50%, 20px); background: white; list-style: none; padding: 10px 0; margin-top: -10px; 
@@ -110,14 +114,12 @@
 
         .timeline-wrapper { position: relative; padding: 20px 0; }
         
-        /* FIX: Set z-index to 0 to ensure line stays behind the dots */
         .timeline-wrapper::after { 
             content: ''; position: absolute; width: 4px; background: #e0e0e0; 
             top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; 
             z-index: 0; 
         }
 
-        /* FIX: Set z-index to 1 so the entry (and the dot inside it) sits on top of the line */
         .timeline-entry { 
             padding: 10px 40px; position: relative; width: 50%; 
             opacity: 0; transition: all 0.6s ease-out; 
@@ -142,7 +144,6 @@
         }
         .timeline-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
         
-        /* Arrows */
         .timeline-card::before { content: " "; height: 0; position: absolute; top: 32px; width: 0; z-index: 1; border: medium solid white; }
         .timeline-entry:nth-child(odd) .timeline-card::before { right: -10px; border-width: 10px 0 10px 10px; border-color: transparent transparent transparent var(--card-bg); }
         .timeline-entry:nth-child(even) .timeline-card::before { left: -10px; border-width: 10px 10px 10px 0; border-color: transparent var(--card-bg) transparent transparent; }
@@ -208,25 +209,20 @@
         }
 
         /* --- COMPLETED STATE --- */
-        /* Card goes grey */
         .timeline-entry.completed .timeline-card {
             border-top-color: var(--completed-gray);
             opacity: 0.6;
         }
-        /* Card arrow goes grey/white match */
         .timeline-entry.completed .event-date {
             color: var(--completed-gray);
             background: #eee;
         }
-
-        /* Dot turns GREEN for success/completed */
         .timeline-entry.completed .timeline-dot {
             background: var(--success-green);
             border-color: var(--success-green);
         }
-
-        /* Pulse Animation */
         .timeline-entry:not(.completed) .timeline-dot { animation: pulse 2s infinite; }
+        
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0.4); }
             70% { box-shadow: 0 0 0 10px rgba(96, 108, 56, 0); }
@@ -256,7 +252,6 @@
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
             
-            /* Mobile dropdown fix */
             .mobile-nav-container .dropdown-menu { 
                 position: static !important; float: none !important; display: none; width: 100% !important; 
                 transform: none !important; left: auto !important; top: auto !important; box-shadow: none !important; 
@@ -385,25 +380,24 @@
                         </div>
                     </div>
 
-                    <div class="timeline-entry" data-date="2026-04-20">
+                    <div class="timeline-entry" data-date="2026-04-25">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <span class="event-date">20th April 2026</span>
+                            <span class="event-date">25th April 2026</span>
                             <h3>Full Paper Decision</h3>
                             <p>Notification of full paper acceptance.</p>
                         </div>
                     </div>
 
-                    <div class="timeline-entry interactive" data-date="2026-04-20">
+                    <div class="timeline-entry interactive" id="registration-entry">
                         <div class="timeline-dot"></div>
                         <div class="timeline-card">
-                            <span class="event-date">20th April 2026</span>
-                            <h3>Registration Starts</h3>
-                            <p>Registration is now open for all delegates.</p>
-                            <div class="action-reveal" style="color: var(--secondary-color); opacity: 1; margin-bottom: 15px;">
-                                <i class="fas fa-door-open"></i> Registrations Open!
-                            </div>
-                            <a href="registrations.html" class="btn-submit">
+                            <span class="event-date" id="reg-date-badge">Loading dates...</span>
+                            <h3 id="reg-title">Registration Phase</h3>
+                            <p id="reg-desc">Registration details will appear here.</p>
+                            <div id="reg-status" class="action-reveal" style="color: var(--secondary-color); opacity: 1; margin-bottom: 15px;">
+                                </div>
+                            <a href="registrations.html" id="reg-btn" class="btn-submit">
                                 Register Now <i class="fas fa-arrow-right" style="margin-left: 5px;"></i>
                             </a>
                         </div>
@@ -460,23 +454,96 @@
 
         // --- PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function () {
-            // --- DATE CHECKER ---
-            // Manual overrides can be done by changing data-date in HTML, 
-            // but the logic below automatically handles the "Past Event" grey status.
+            
+            // --- DATE CHECKER FOR STATIC EVENTS ---
             const today = new Date().toISOString().split('T')[0]; 
             const items = document.querySelectorAll('.timeline-entry');
 
             items.forEach(item => {
                 const eventDate = item.getAttribute('data-date');
-                if (eventDate < today) {
+                // Only grey out if it HAS a data-date and it's in the past
+                if (eventDate && eventDate < today) {
                     item.classList.add('completed');
                     const dot = item.querySelector('.timeline-dot');
-                    // Add Checkmark inside the dot (The dot background is set to Green in CSS)
-                    if(!dot.querySelector('.fa-star')) {
+                    if(dot && !dot.querySelector('.fa-star')) {
                         dot.innerHTML = '<i class="fas fa-check" style="color:white; font-size: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
                     }
                 }
             });
+
+            // --- DYNAMIC REGISTRATION LOGIC ---
+            function updateRegistrationStatus() {
+                const now = new Date();
+                
+                // Set the exact timeline boundaries
+                const earlyBirdEnd = new Date('2026-05-15T23:59:59');
+                const regularEnd = new Date('2026-06-01T23:50:00'); 
+                const onSpotStart = new Date('2026-06-04T00:00:00');
+                const eventEnd = new Date('2026-06-06T23:59:59');
+
+                // Get DOM elements
+                const regEntry = document.getElementById('registration-entry');
+                const regDateBadge = document.getElementById('reg-date-badge'); // New element mapping
+                const regTitle = document.getElementById('reg-title');
+                const regDesc = document.getElementById('reg-desc');
+                const regStatus = document.getElementById('reg-status');
+                const regBtn = document.getElementById('reg-btn');
+
+                // Clear any previous completion state
+                regEntry.classList.remove('completed');
+                const dot = regEntry.querySelector('.timeline-dot');
+                if (dot) dot.innerHTML = '';
+
+                if (now < new Date('2026-04-20T00:00:00')) {
+                    // Phase 0: Before April 20th
+                    regDateBadge.innerText = "Starts 20th April 2026";
+                    regTitle.innerText = "Registration Opens Soon";
+                    regDesc.innerText = "Registration will officially open on April 20th, 2026.";
+                    regStatus.innerHTML = '<i class="fas fa-lock"></i> Pending';
+                    regBtn.style.display = 'none';
+                } else if (now <= earlyBirdEnd) {
+                    // Phase 1: April 20 - May 15
+                    regDateBadge.innerText = "20th Apr - 15th May 2026";
+                    regTitle.innerText = "Early Bird Registration";
+                    regDesc.innerText = "Register now to grab the Early Bird discount! Valid until May 15th.";
+                    regStatus.innerHTML = '<i class="fas fa-door-open"></i> Early Bird Open!';
+                    regBtn.style.display = 'inline-flex';
+                } else if (now <= regularEnd) {
+                    // Phase 2: May 16 - June 1 (11:50pm)
+                    regDateBadge.innerText = "16th May - 1st Jun 2026";
+                    regTitle.innerText = "Regular Registration";
+                    regDesc.innerText = "Standard online registration is active until June 1st, 11:50 PM.";
+                    regStatus.innerHTML = '<i class="fas fa-door-open"></i> Registration Open!';
+                    regBtn.style.display = 'inline-flex';
+                } else if (now < onSpotStart) {
+                    // Phase 3: Transition (June 2 - June 3)
+                    regDateBadge.innerText = "Online Reg. Closed";
+                    regTitle.innerText = "Registration Update";
+                    regDesc.innerText = "Online registrations are now closed. You can register on-spot starting June 4th.";
+                    regStatus.innerHTML = '<i class="fas fa-ban" style="color: var(--completed-gray);"></i> Closed';
+                    regBtn.style.display = 'none';
+                    regEntry.classList.add('completed');
+                } else if (now <= eventEnd) {
+                    // Phase 4: On-Spot (June 4 - June 6)
+                    regDateBadge.innerText = "4th Jun - 6th Jun 2026";
+                    regTitle.innerText = "On-Spot Registration";
+                    regDesc.innerText = "Welcome to SATVA 2026! Please head to the registration desk at the venue to register.";
+                    regStatus.innerHTML = '<i class="fas fa-map-marker-alt"></i> On-Spot Open';
+                    regBtn.style.display = 'none'; // Usually no button for on-spot
+                } else {
+                    // Phase 5: Event Over
+                    regDateBadge.innerText = "Event Concluded";
+                    regTitle.innerText = "Registration Closed";
+                    regDesc.innerText = "The SATVA 2026 event has concluded.";
+                    regStatus.innerHTML = '<i class="fas fa-times" style="color: var(--completed-gray);"></i> Event Finished';
+                    regBtn.style.display = 'none';
+                    regEntry.classList.add('completed');
+                    if(dot) dot.innerHTML = '<i class="fas fa-check" style="color:white; font-size: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
+                }
+            }
+            
+            // Run the dynamic logic
+            updateRegistrationStatus();
 
             // --- MOBILE NAV LOGIC ---
             const desktopNav = document.getElementById('desktop-nav');
