@@ -78,13 +78,24 @@
         .mobile-nav-toggle, .mobile-nav-container { display: none; }
 
         /* --- GLOBAL CONTENT STYLES --- */
-        .page-header { background: var(--section-alt-bg); padding: 120px 0 60px; text-align: center; border-bottom: 1px solid #eee; }
+        .page-header { background: var(--section-alt-bg); padding: 80px 0 60px; text-align: center; border-bottom: 1px solid #eee; }
         .page-header h1 { font-size: 3rem; color: var(--dark-color); margin-bottom: 15px; }
         .page-header p { font-size: 1.2rem; max-width: 800px; margin: auto; color: #555; }
         
         .content-section { padding: 80px 0; }
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--dark-color); position: relative; }
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
+
+        /* --- COUNTDOWN & DEADLINE UI --- */
+        .countdown-banner { background: var(--danger-color); color: white; text-align: center; padding: 12px; font-weight: bold; font-family: 'Montserrat', sans-serif; z-index: 999; position: relative; letter-spacing: 1px;}
+        .countdown-banner span { font-size: 1.2rem; margin-left: 10px; background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 5px; }
+        .delivery-banner { background: var(--secondary-color); color: white; text-align: center; padding: 15px; font-weight: bold; font-family: 'Montserrat', sans-serif; display: none; }
+        
+        .floating-mail { position: fixed; bottom: 100px; right: 30px; background: #fff; color: var(--dark-color); width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); cursor: pointer; z-index: 998; font-size: 24px; transition: transform 0.3s; border: 2px solid var(--dark-color);}
+        .floating-mail:hover { transform: scale(1.1); background: var(--dark-color); color: #fff;}
+        
+        .closed-icon-anim { font-size: 4rem; color: var(--danger-color); margin-bottom: 15px; animation: scaleUp 0.5s ease-in-out; }
+        @keyframes scaleUp { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
         /* --- MERCHANDISE SPECIFIC STYLES --- */
         .merch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
@@ -235,26 +246,31 @@
             .order-section { padding: 40px 20px; }
             .form-row { grid-template-columns: 1fr; gap: 0; }
             
-            /* ADD THIS: Fix floating cart for mobile */
             .floating-cart {
                 bottom: 20px !important;
                 right: 20px !important;
                 width: 55px !important;
                 height: 55px !important;
-                z-index: 1050 !important; /* Forces it above mobile overlays */
+                z-index: 1050 !important;
             }
             .floating-cart svg {
                 width: 26px !important;
                 height: 26px !important;
             }
+            .floating-mail {
+                bottom: 85px !important; 
+                right: 20px !important; 
+                width: 55px !important; 
+                height: 55px !important; 
+                font-size: 20px;
+                z-index: 1050 !important;
+            }
 
-            /* ADD THIS: Scale logos down on tablets so they don't break the layout */
             .logo-container { gap: 12px; }
             .logo-1, .logo-3 { height: 45px !important; width: auto !important; }
             .logo-2 { height: 50px !important; width: auto !important; }
         }
 
-        /* ADD THIS: Scale logos down further on small mobile screens */
         @media(max-width: 600px) {
             .logo-container { gap: 6px; }
             .logo-1, .logo-3 { height: 32px !important; width: auto !important; }
@@ -317,8 +333,15 @@
         <nav class="mobile-nav-container" id="mobile-nav"></nav>
     </header>
 
+    <div id="countdown-banner" class="countdown-banner">
+        Merchandise portal closes in: <span id="timer-display">Calculating...</span>
+    </div>
+    <div id="delivery-banner" class="delivery-banner">
+        <i class="fas fa-box"></i> All merchandise orders placed will be delivered by the 3rd or 4th week of May 2026. Thank you for your purchases!
+    </div>
+
     <main id="main-content">
-        <section class="page-header">
+        <section class="page-header" style="padding-top: 60px;">
             <div class="container">
                 <h1 class="js-scroll fade-in-up">Official Merchandise</h1>
                 <p class="js-scroll fade-in-up">Take a piece of SATVA 2026 home with you. Browse our exclusive collection of IIT Palakkad symposium merchandise below.</p>
@@ -479,9 +502,9 @@
                 <h2 class="section-title js-scroll fade-in-up">Checkout & Payment</h2>
                 
                 <div class="order-section js-scroll fade-in-up">
-                    <div class="order-container">
+                    <div class="order-container" id="dynamic-order-container">
                         
-                        <div class="payment-card">
+                        <div class="payment-card" id="payment-details-card">
                             <h3 style="margin-bottom: 20px; color: var(--dark-color);">Step 1: Make Payment</h3>
                             <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">Please scan the QR code or use the bank details below to complete your payment. Once successful, save the transaction ID and a screenshot/PDF of the receipt.</p>
                             
@@ -503,7 +526,7 @@
                             </div>
                         </div>
 
-                        <div class="checkout-form-container">
+                        <div class="checkout-form-container" id="checkout-form-card">
                             <h3>Step 2: Submit Order Details</h3>
                             <p style="margin-bottom: 20px; font-size: 0.95rem; color: #666;">After paying the exact amount, please submit your transaction and delivery details below.</p>
                             
@@ -594,6 +617,10 @@
         </section>
     </main>
 
+    <a href="mailto:satva@iitpkd.ac.in" class="floating-mail" id="floating-mail" title="Contact Support">
+        <i class="fas fa-envelope"></i>
+    </a>
+
     <div class="floating-cart" id="floating-cart">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
         <div class="cart-badge" id="cart-badge">0</div>
@@ -670,6 +697,26 @@
         </div>
     </div>
 
+    <div id="closedModalOverlay" class="modal-overlay">
+        <div class="modal-container" style="max-width: 500px; text-align: center;">
+            <div class="modal-header" style="background: var(--danger-color);">
+                <h2>Portal Closed</h2>
+                <button class="modal-close-btn" onclick="document.getElementById('closedModalOverlay').classList.remove('active')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-lock closed-icon-anim"></i>
+                <h3 style="margin-bottom: 15px; color: var(--dark-color);">The Official SATVA 2026 Merchandise order has been officially closed!</h3>
+                <p style="color: #555; margin-bottom: 20px;">Thank you to everyone who purchased items and supported the event.</p>
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #eee;">
+                    <p style="margin-bottom: 5px; font-weight: bold; color: var(--secondary-color);"><i class="fas fa-truck"></i> Delivery Information:</p>
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 15px;">All merchandise orders placed will be delivered by the 3rd or 4th week of May 2026.</p>
+                    <hr style="border: 0; border-top: 1px solid #ddd; margin: 10px 0;">
+                    <p style="font-size: 0.9rem; color: #666; margin-bottom: 0;">Any queries regarding placed orders may be sent to:<br><a href="mailto:satva@iitpkd.ac.in" style="color: var(--primary-color); font-weight: bold; text-decoration: none;">satva@iitpkd.ac.in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -690,7 +737,8 @@
 
         // --- GLOBAL STATE ---
         let currentUser = null;
-        window.cart = []; // Expose to window for inline onclick handlers
+        window.cart = []; 
+        window.isMerchClosed = false; // NEW FLAG
 
         // --- DOM ELEMENTS ---
         const userProfile = document.getElementById('auth-user-profile');
@@ -703,13 +751,11 @@
 
         // --- AUTHENTICATION STATE OBSERVER ---
         onAuthStateChanged(auth, (user) => {
-            // Check if user exists AND their email is verified
             if (user && user.emailVerified) {
                 currentUser = user;
                 userProfile.style.display = 'flex';
                 if(user.photoURL) userAvatar.src = user.photoURL;
                 
-                // Pre-fill form details if available
                 userEmailInput.value = user.email || '';
                 if(user.displayName) userNameInput.value = user.displayName;
 
@@ -724,14 +770,12 @@
             }
         });
 
-        // --- MODAL LOGIC (AUTH & FIT GUIDE) ---
         window.switchTab = function(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
             document.querySelector(`.auth-tab[onclick="switchTab('${tab}')"]`).classList.add('active');
             document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
             document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
             
-            // Clear any previous error/success messages when switching tabs
             document.getElementById('login-error').textContent = "";
             document.getElementById('signup-error').textContent = "";
         };
@@ -744,7 +788,6 @@
             document.getElementById('fitGuideModal').classList.remove('active');
         };
 
-        // Close Modals on Outside Click
         document.querySelectorAll('.modal-overlay, .zoom-modal-overlay').forEach(overlay => {
             overlay.addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -755,9 +798,6 @@
 
         closeAuthModalBtn.addEventListener('click', () => authModal.classList.remove('active'));
 
-        // --- AUTHENTICATION ACTIONS ---
-        
-        // Google Sign In
         const handleGoogle = async () => { 
             try { await signInWithPopup(auth, provider); } 
             catch (e) { document.getElementById('login-error').textContent = e.message; } 
@@ -765,18 +805,15 @@
         document.getElementById('btn-google-login').onclick = handleGoogle;
         document.getElementById('btn-google-signup').onclick = handleGoogle;
 
-        // Email/Password Login
         document.getElementById('btn-login-email').onclick = async () => {
             const loginError = document.getElementById('login-error');
-            loginError.style.color = "#e74c3c"; // Reset to red
+            loginError.style.color = "#e74c3c"; 
             loginError.textContent = "Logging in...";
             
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, document.getElementById('login-email').value, document.getElementById('login-password').value);
-                
-                // Enforce Email Verification
                 if (!userCredential.user.emailVerified) {
-                    await signOut(auth); // Sign them back out immediately
+                    await signOut(auth);
                     loginError.textContent = "Please verify your email address before logging in. Check your inbox/spam folder.";
                 } else {
                     loginError.textContent = "";
@@ -786,7 +823,6 @@
             }
         };
 
-        // Email/Password Sign Up
         document.getElementById('btn-signup-email').onclick = async () => {
             const signupError = document.getElementById('signup-error');
             const email = document.getElementById('signup-email').value;
@@ -794,24 +830,17 @@
             
             if(p.length < 6) { signupError.textContent = "Password must be at least 6 characters."; return; }
             
-            signupError.style.color = "#e74c3c"; // Default red
+            signupError.style.color = "#e74c3c";
             signupError.textContent = "Creating account...";
 
             try {
-                // 1. Create the user
                 const userCredential = await createUserWithEmailAndPassword(auth, email, p);
-                
-                // 2. Send the verification email
                 await sendEmailVerification(userCredential.user);
-                
-                // 3. Log them out immediately so they are forced to verify
                 await signOut(auth);
                 
-                // 4. Show success message in green
-                signupError.style.color = "#117d56"; // Green success color
+                signupError.style.color = "#117d56"; 
                 signupError.textContent = "Account created! Please check your email to verify your account before logging in.";
                 
-                // Clear the form fields
                 document.getElementById('signup-email').value = "";
                 document.getElementById('signup-password').value = "";
 
@@ -826,6 +855,7 @@
         });
 
         function requireAuth(callback) {
+            if(window.isMerchClosed) return; // Prevent if closed
             if (currentUser && currentUser.emailVerified) {
                 callback();
             } else {
@@ -833,7 +863,6 @@
             }
         }
 
-        // --- PRODUCT ZOOM LOGIC ---
         document.querySelectorAll('.merch-img').forEach(img => {
             img.addEventListener('click', () => {
                 document.getElementById('zoomedImage').src = img.src;
@@ -845,7 +874,6 @@
             document.getElementById('imageZoomModal').classList.remove('active');
         };
 
-        // --- CART LOGIC ---
         const merchCards = document.querySelectorAll('.merch-card');
 
         merchCards.forEach(card => {
@@ -878,12 +906,10 @@
                     if (existing) { existing.quantity += 1; } else { window.cart.push(product); }
                     window.updateCartUI();
 
-                    // Visual feedback on button
                     const originalText = addBtn.innerText;
                     addBtn.innerText = "Added!";
                     addBtn.style.backgroundColor = "var(--primary-color)";
                     
-                    // Bump animation on cart icon
                     const floatCart = document.getElementById('floating-cart');
                     floatCart.classList.add('bump');
                     setTimeout(() => floatCart.classList.remove('bump'), 400);
@@ -896,7 +922,6 @@
             });
         });
 
-        // Global functions for inline HTML calls in the sidebar
         window.updateQuantity = function(cartId, change) {
             const itemIndex = window.cart.findIndex(item => item.cartId === cartId);
             if (itemIndex > -1) {
@@ -958,18 +983,21 @@
             window.updateCheckoutFormState();
         };
 
-        // --- CART SIDEBAR TOGGLE ---
         const floatingCart = document.getElementById('floating-cart');
         const cartSidebar = document.getElementById('cart-sidebar');
         const cartOverlay = document.getElementById('cart-overlay');
         const closeCartBtn = document.getElementById('close-cart');
 
-        floatingCart.addEventListener('click', () => { cartSidebar.classList.add('open'); cartOverlay.classList.add('show'); });
+        floatingCart.addEventListener('click', () => { 
+            if(!window.isMerchClosed) {
+                cartSidebar.classList.add('open'); 
+                cartOverlay.classList.add('show'); 
+            }
+        });
         function closeCartSidebar() { cartSidebar.classList.remove('open'); cartOverlay.classList.remove('show'); }
         closeCartBtn.addEventListener('click', closeCartSidebar);
         cartOverlay.addEventListener('click', closeCartSidebar);
 
-        // --- CHECKOUT FORM DYNAMIC FIELDS ---
         const radioTypes = document.querySelectorAll('input[name="user-type"]');
         const iitFields = document.getElementById('iit-fields');
         const outsiderFields = document.getElementById('outsider-fields');
@@ -977,7 +1005,7 @@
         radioTypes.forEach(radio => {
             radio.addEventListener('change', (e) => {
                 if (e.target.value === 'IIT Palakkad') {
-                    iitFields.style.display = 'grid'; // because of form-row class
+                    iitFields.style.display = 'grid'; 
                     outsiderFields.style.display = 'none';
                     document.getElementById('iit-designation').required = true;
                     document.getElementById('iit-department').required = true;
@@ -992,15 +1020,15 @@
             });
         });
 
-        // --- CHECKOUT SUBMISSION LOGIC ---
         const submitBtn = document.getElementById('submit-btn');
         const formErrorMsg = document.getElementById('form-error-msg');
         const orderForm = document.getElementById('order-submit-form');
         
-        // Google Web App URL
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrBEHOQqLzqUgVrg6L9tNPvuC0FuOsOw5HOGHRDUQ7UeLN7wtO39recZRwsZev_7o1iA/exec"; 
 
         window.updateCheckoutFormState = function() {
+            if(window.isMerchClosed) return;
+
             if (currentUser && window.cart.length > 0) {
                 submitBtn.disabled = false;
                 formErrorMsg.style.display = 'none';
@@ -1014,15 +1042,13 @@
 
         orderForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            if (!currentUser || window.cart.length === 0) return;
+            if (!currentUser || window.cart.length === 0 || window.isMerchClosed) return;
 
             submitBtn.disabled = true;
             submitBtn.innerText = "Uploading & Submitting... Please wait";
 
-            // Gather Basic Data
             const userType = document.querySelector('input[name="user-type"]:checked').value;
             
-            // Format Cart for Human Readability (Includes Size)
             const formattedCart = window.cart.map(item => {
                 const sizeText = item.size ? ` (Size: ${item.size})` : '';
                 return `${item.quantity}x ${item.name}${sizeText} (Rs. ${item.price * item.quantity})`;
@@ -1047,14 +1073,12 @@
             const reader = new FileReader();
 
             reader.onload = async function() {
-                // Attach the base64 string to the payload
                 const base64Data = reader.result.split(',')[1];
                 orderData.paymentProofFileName = fileInput.name;
                 orderData.paymentProofMimeType = fileInput.type;
                 orderData.paymentProofData = base64Data;
 
                 try {
-                    // Send to Google Apps Script
                     await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -1063,7 +1087,6 @@
                     
                     alert("Order submitted successfully! We will verify your payment and process your items.");
                     
-                    // Reset UI
                     window.cart = [];
                     window.updateCartUI();
                     orderForm.reset();
@@ -1088,7 +1111,82 @@
     </script>
 
     <script>
-        // --- 1. BULLETPROOF PRELOADER ---
+        // --- NEW: COUNTDOWN & DEADLINE LOGIC ---
+        // Setting Target Date for 26th April 2026, 23:59:50 IST
+        const deadlineDate = new Date("April 26, 2026 23:59:50 GMT+0530").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = deadlineDate - now;
+
+            if (distance <= 0) {
+                // IT'S PAST THE DEADLINE
+                clearInterval(window.timerInterval);
+                document.getElementById("countdown-banner").style.display = "none";
+                document.getElementById("delivery-banner").style.display = "block";
+                
+                triggerClosedState();
+            } else {
+                // CALCULATING TIME
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("timer-display").innerText = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }
+
+        // Run timer every second
+        window.timerInterval = setInterval(updateCountdown, 1000);
+
+        function triggerClosedState() {
+            // Only trigger once to avoid annoying popups if already closed
+            if(!window.isMerchClosed) {
+                window.isMerchClosed = true;
+                
+                // Show the closed modal animation
+                document.getElementById("closedModalOverlay").classList.add("active");
+
+                // Disable all Add to Cart buttons natively
+                document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                    btn.disabled = true;
+                    btn.innerText = "Sales Closed";
+                    btn.style.backgroundColor = "#ccc";
+                    btn.style.color = "#666";
+                    btn.style.cursor = "not-allowed";
+                    btn.style.boxShadow = "none";
+                    btn.style.transform = "none";
+                });
+
+                // Hide floating cart and disable functionality
+                document.getElementById("floating-cart").style.display = "none";
+                window.cart = []; // Empty cart explicitly
+                
+                // Redo the Order Section entirely to strip UPI/Bank/Form
+                const orderContainer = document.getElementById("dynamic-order-container");
+                if(orderContainer) {
+                    orderContainer.style.gridTemplateColumns = "1fr";
+                    orderContainer.innerHTML = `
+                        <div class="payment-card" style="text-align: center; padding: 60px 40px; margin: auto; max-width: 800px;">
+                            <i class="fas fa-check-circle" style="font-size: 5rem; color: var(--secondary-color); margin-bottom: 20px;"></i>
+                            <h2 style="font-size: 2.2rem; margin-bottom: 15px; color: var(--dark-color);">Merchandise Orders are Closed</h2>
+                            <p style="font-size: 1.15rem; color: #555; margin-bottom: 25px;">A massive thank you to everyone who purchased items and supported SATVA 2026! All successfully placed orders will be delivered by the <strong>3rd or 4th week of May 2026</strong>.</p>
+                            <div style="background: #f8f9fa; border: 1px solid #eee; padding: 20px; border-radius: 10px; display: inline-block;">
+                                <p style="font-size: 1rem; color: #555; margin: 0;">For any queries regarding your order, please contact:<br><a href="mailto:satva@iitpkd.ac.in" style="font-size: 1.2rem; color: var(--primary-color); font-weight: bold; text-decoration: none;">satva@iitpkd.ac.in</a></p>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // Call immediately on script load to verify initially
+        window.addEventListener('load', updateCountdown);
+        // ----------------------------------------
+
+        // --- BULLETPROOF PRELOADER ---
         const preloader = document.getElementById('preloader');
         const progressBar = document.getElementById('progress-bar');
         const progressText = document.getElementById('progress-text');
@@ -1125,14 +1223,11 @@
                 }, 150);
             }
 
-            // Normal trigger when window finishes loading
             window.addEventListener('load', hidePreloader);
-            
-            // ABSOLUTE FAILSAFE: Force hide after 4 seconds even if Firebase crashes
             setTimeout(hidePreloader, 4000); 
         }
 
-        // --- 2. MOBILE NAV LOGIC ---
+        // --- MOBILE NAV LOGIC ---
         const desktopNav = document.getElementById('desktop-nav');
         const mobileNavContainer = document.getElementById('mobile-nav');
         const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -1167,7 +1262,7 @@
             });
         }
 
-        // --- 3. SCROLL ANIMATIONS ---
+        // --- SCROLL ANIMATIONS ---
         const scrollElements = document.querySelectorAll('.js-scroll');
         if (scrollElements.length > 0) {
             const elementObserver = new IntersectionObserver((entries, observer) => {
