@@ -4,12 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programme - SATVA 2026</title>
     
-    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    <title>Programme Schedule | SATVA 2026</title>
+    <meta name="description" content="View the official programme schedule for SATVA 2026. Join us for keynote presentations, panel discussions, networking, and cultural events at IIT Palakkad.">
+    <meta name="keywords" content="SATVA 2026 Programme, Symposium Schedule, Civil Engineering Events, IIT Palakkad Schedule, Sustainability Symposium">
+    <meta name="author" content="Environmental Sciences and Sustainable Engineering Centre (ESSENCE), IIT Palakkad">
+    <meta name="robots" content="index, follow">
     
-    <link rel="preload" as="image" href="images/logos/logo4.png">
+    <link rel="canonical" href="https://satva.iitpkd.ac.in/programme.html">
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://satva.iitpkd.ac.in/programme.html">
+    <meta property="og:title" content="Programme Schedule | SATVA 2026">
+    <meta property="og:description" content="View the official programme schedule for SATVA 2026 at IIT Palakkad.">
+    <meta property="og:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png"> 
+    <meta property="og:site_name" content="SATVA 2026">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://satva.iitpkd.ac.in/programme.html">
+    <meta name="twitter:title" content="Programme Schedule | SATVA 2026">
+    <meta name="twitter:description" content="View the official programme schedule for SATVA 2026 at IIT Palakkad.">
+    <meta name="twitter:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png">
+
+    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/logos/logo4.png"> 
+    <meta name="theme-color" content="#606C38">
+
+    <link rel="preload" as="image" href="images/logos/logo4.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -28,14 +49,20 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* 2. LOCK SCROLL: Prevent scrolling while loading */
         body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: #fff; }
         
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-        /* --- PRELOADER CSS --- */
+        img {
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         #preloader {
             position: fixed;
             top: 0;
@@ -48,7 +75,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
         .loader-content {
@@ -79,7 +106,7 @@
             height: 100%;
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             border-radius: 10px;
-            transition: width 0.2s linear;
+            transition: width 0.1s linear;
             box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
         }
 
@@ -98,23 +125,11 @@
             100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         }
 
-        @media(max-width: 576px) {
-            .loader-logo { width: 120px; }
-            .loader-content { width: 240px; }
-        }
-
-        /* --- HEADER STYLES --- */
-        .main-header { 
-            position: sticky; top: 0; width: 100%; z-index: 1000; 
-            background: var(--header-bg); backdrop-filter: blur(10px); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-        }
+        .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
         .logo-container { display: flex; align-items: center; gap: 20px; }
-        .logo-1 { height: 65px; width: auto; } 
-        .logo-2 { height: 75px; width: auto; } 
-        .logo-3 { height: 65px; width: auto; }
+        .logo-1 { height: 65px; width: auto; } .logo-2 { height: 75px; width: auto; } .logo-3 { height: 65px; width: auto; }
         .logo-container img { transition: transform 0.3s ease; }
         .logo-container img:hover { transform: scale(1.05); }
 
@@ -125,32 +140,8 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* DESKTOP DROPDOWN CSS (CENTERED) */
-        .dropdown-menu { 
-            display: flex; 
-            flex-direction: column;
-            position: absolute; 
-            top: 100%; 
-            left: 50%; /* Start at center */
-            transform: translate(-50%, 20px); 
-            background: white; 
-            list-style: none; 
-            padding: 10px 0; 
-            margin-top: -10px; 
-            border-radius: 5px; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            min-width: 280px; 
-            gap: 0 !important; 
-            z-index: 100; 
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-        }
-        .dropdown:hover .dropdown-menu { 
-            visibility: visible;
-            opacity: 1;
-            transform: translate(-50%, 0); 
-        }
+        .dropdown-menu { display: flex; flex-direction: column; position: absolute; top: 100%; left: 50%; transform: translate(-50%, 20px); background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 280px; gap: 0 !important; z-index: 100; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+        .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
         .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
@@ -158,7 +149,6 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- PROGRAMME PAGE STYLES --- */
         .content-section { padding: 80px 0; background-color: var(--section-alt-bg); }
         
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: var(--dark-color); position: relative; }
@@ -166,89 +156,33 @@
         
         .placeholder-text { text-align: center; font-size: 1.1rem; color: #666; max-width: 700px; margin: 0 auto 60px auto; }
 
-        /* --- QUICK LINKS CARDS --- */
-        .nav-grid {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
-        }
-
-        .nav-card {
-            background: #fff;
-            padding: 20px 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-decoration: none;
-            color: var(--dark-color);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 5px solid var(--secondary-color);
-            min-width: 250px;
-        }
-
+        .nav-grid { display: flex; justify-content: center; gap: 30px; margin-bottom: 60px; flex-wrap: wrap; }
+        .nav-card { background: #fff; padding: 20px 40px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-decoration: none; color: var(--dark-color); display: flex; align-items: center; gap: 15px; transition: transform 0.3s, box-shadow 0.3s; border-left: 5px solid var(--secondary-color); min-width: 250px; }
         .nav-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .nav-card i { font-size: 1.5rem; color: var(--primary-color); }
         .nav-card span { font-weight: 700; font-size: 1.1rem; }
 
-        /* --- SCHEDULE GRID --- */
-        .schedule-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .day-card {
-            background: #fff;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
-
+        .schedule-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .day-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s ease; }
         .day-card:hover { transform: translateY(-5px); }
 
-        .day-header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
+        .day-header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: #fff; padding: 20px; text-align: center; }
         .day-header h3 { margin: 0; font-size: 1.5rem; }
         .day-header span { font-size: 0.9rem; opacity: 0.9; font-weight: 500; }
 
         .day-body { padding: 25px; }
 
-        .time-slot {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
+        .time-slot { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
         .time-slot:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
-        .icon-col {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            width: 30px;
-            text-align: center;
-            padding-top: 3px;
-        }
-
+        .icon-col { color: var(--primary-color); font-size: 1.2rem; width: 30px; text-align: center; padding-top: 3px; }
         .detail-col h4 { font-size: 1.1rem; margin-bottom: 5px; color: var(--dark-color); }
         .detail-col p { font-size: 0.9rem; color: #666; margin: 0; }
 
-        /* Animation Classes */
         .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .js-scroll.fade-in-up { transform: translateY(40px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- MEDIA QUERIES --- */
         @media(max-width: 992px) {
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
@@ -268,49 +202,21 @@
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
             
-            /* --- FIXED: FORCE MOBILE DROPDOWN STYLES WITH !IMPORTANT --- */
-            .mobile-nav-container .dropdown-menu { 
-                position: static !important; 
-                float: none !important;
-                display: none; 
-                width: 100% !important; 
-                min-width: 0 !important; 
-                transform: none !important; 
-                left: auto !important;
-                top: auto !important;
-                box-shadow: none !important;
-                background-color: #f8f9fa !important;
-                border-radius: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-            }
-            
-            .mobile-nav-container .dropdown-menu.show { 
-                display: block !important; 
-            }
-
-            .mobile-nav-container .dropdown-menu li {
-                width: 100% !important;
-                display: block !important;
-            }
-
-            .mobile-nav-container .dropdown-menu li a {
-                text-align: center !important;
-                padding: 12px 20px !important;
-                width: 100% !important;
-                display: block !important;
-                font-size: 1rem !important;
-                color: #444 !important;
-                border-bottom: 1px solid rgba(0,0,0,0.05);
-            }
+            .mobile-nav-container .dropdown-menu { position: static !important; float: none !important; display: none; width: 100% !important; min-width: 0 !important; transform: none !important; left: auto !important; top: auto !important; box-shadow: none !important; background-color: #f8f9fa !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; opacity: 1 !important; visibility: visible !important; }
+            .mobile-nav-container .dropdown-menu.show { display: block !important; }
+            .mobile-nav-container .dropdown-menu li { width: 100% !important; display: block !important; }
+            .mobile-nav-container .dropdown-menu li a { text-align: center !important; padding: 12px 20px !important; width: 100% !important; display: block !important; font-size: 1rem !important; color: #444 !important; border-bottom: 1px solid rgba(0,0,0,0.05); }
 
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
         }
-        
+
+        @media(max-width: 576px) {
+            .loader-logo { width: 120px; }
+            .loader-content { width: 240px; }
+        }
+
         @media (max-width: 380px) {
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
@@ -514,33 +420,38 @@
     </main>
     
     <script>
-        // --- 4. PRELOADER LOGIC ---
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
         (function () {
-            let progress = 0;
-            let finished = false;
+            const preloader = document.getElementById('preloader');
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
-            const preloader = document.getElementById('preloader');
             const body = document.body;
+            let progress = 0;
+            let finished = false;
 
             const interval = setInterval(() => {
-                if (progress < 90) {
-                    const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
-                    progress += increment;
-                }
-                
-                if (progress > 99) progress = 99;
-                
+                if (progress < 90) progress += Math.random() * 15 + 5;
+                if (progress >= 95) progress = 95; 
                 if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
                 if (progressText) progressText.innerText = Math.floor(progress) + '%';
-            }, 30); 
+            }, 50);
 
             function hidePreloader() {
                 if (finished) return;
                 finished = true;
                 clearInterval(interval);
                 
-                // Jump to 100%
                 if (progressBar) progressBar.style.width = '100%';
                 if (progressText) progressText.innerText = '100%';
                 
@@ -548,33 +459,30 @@
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
                     body.classList.remove('loading-active');
-                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
-                }, 300); 
+                    setTimeout(() => preloader.remove(), 500);
+                }, 150);
             }
 
-            // Detect Actual Page Load
-            window.addEventListener("load", hidePreloader);
-            // Fallback
-            setTimeout(hidePreloader, 4000);
+            window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 5000); 
         })();
 
-        // --- EXISTING PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function() {
-            // MOBILE NAV LOGIC
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             
             if (desktopNav && mobileNavContainer && mobileNavToggle) {
-                let mobileNavHTML = desktopNav.innerHTML;
-                const parser = new DOMParser();
-                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
-                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
-                    const toggle = document.createElement('span');
-                    toggle.className = 'dropdown-toggle';
-                    link.appendChild(toggle);
-                });
-                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+                const ulElement = desktopNav.querySelector('ul');
+                if(ulElement) {
+                    const clonedNav = ulElement.cloneNode(true);
+                    clonedNav.querySelectorAll('.dropdown > a').forEach(link => {
+                        const toggle = document.createElement('span');
+                        toggle.className = 'dropdown-toggle';
+                        link.appendChild(toggle);
+                    });
+                    mobileNavContainer.appendChild(clonedNav);
+                }
 
                 mobileNavToggle.addEventListener('click', () => {
                     mobileNavContainer.classList.toggle('active');
@@ -596,13 +504,12 @@
                 });
             }
             
-            // ANIMATION SCRIPT
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach((entry, index) => {
                         if (entry.isIntersecting) {
-                            entry.target.style.transitionDelay = `${index * 100}ms`;
+                            entry.target.style.transitionDelay = `${index * 50}ms`; 
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
@@ -616,4 +523,3 @@
     </script>
 </body>
 </html>
-
