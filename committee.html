@@ -55,20 +55,26 @@
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1300px; margin: auto; padding: 0 20px; }
 
-        /* --- PRELOADER CSS --- */
+        img {
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         #preloader {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 999999;
             display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
         .loader-content { text-align: center; width: 300px; max-width: 80%; }
         .loader-logo { width: 150px; height: auto; margin-bottom: 30px; animation: breathe 2.5s infinite ease-in-out; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
         .progress-container { width: 100%; height: 6px; background-color: #e0e0e0; border-radius: 10px; overflow: hidden; position: relative; }
-        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border-radius: 10px; transition: width 0.2s linear; box-shadow: 0 0 10px rgba(96, 108, 56, 0.4); }
+        .progress-bar { width: 0%; height: 100%; background: linear-gradient(90deg, var(--secondary-color), var(--primary-color)); border-radius: 10px; transition: width 0.1s linear; box-shadow: 0 0 10px rgba(96, 108, 56, 0.4); }
         .progress-text { margin-top: 10px; font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--primary-color); font-size: 1rem; letter-spacing: 1px; }
         @keyframes breathe { 0% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); } 50% { transform: scale(1.05); filter: drop-shadow(0 15px 15px rgba(96, 108, 56, 0.2)); } 100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); } }
 
-        /* --- HEADER STYLES --- */
         .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
@@ -91,7 +97,6 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- COMMITTEE PAGE STYLES --- */
         .page-section { padding: 60px 0; }
         .section-heading { font-size: 2.5rem; color: var(--dark-color); margin-bottom: 50px; text-align: center; position: relative; }
         .section-heading::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; }
@@ -115,7 +120,6 @@
         .member-role { font-size: 0.85rem; color: var(--primary-color); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
         .member-aff { font-size: 0.8rem; color: #666; line-height: 1.4; }
 
-        /* --- UPDATED STUDENT TEAM LAYOUT --- */
         .student-group-container {
             margin-bottom: 60px;
             text-align: center;
@@ -145,7 +149,7 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.05);
             text-align: center;
             padding: 25px 15px;
-            width: 220px; /* Fixed width for uniformity */
+            width: 220px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -163,14 +167,13 @@
             height: 120px;
         }
 
-        /* Distinction for Head/Mentor */
         .head-card {
             background: #ffffff;
             border-top: 3px solid var(--primary-color);
             transform: scale(1.02);
         }
         .head-card .member-img {
-            width: 135px; /* Slightly larger image for head */
+            width: 135px;
             height: 135px;
             border-color: var(--primary-color);
         }
@@ -178,18 +181,15 @@
             font-size: 1.15rem;
         }
 
-
         .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .js-scroll.fade-in-up { transform: translateY(30px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- MEDIA QUERIES --- */
         @media(max-width: 1100px) {
             .chair-grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; margin: 0 auto; }
         }
 
         @media(max-width: 992px) {
-            /* Navbar Mobile Styles */
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
             .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
@@ -441,38 +441,43 @@
                     </div>
                 </div>
 
-                </div>
+            </div>
         </section>
     </main>
 
     <script>
-        // --- 4. PRELOADER LOGIC ---
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
         (function () {
-            let progress = 0;
-            let finished = false;
+            const preloader = document.getElementById('preloader');
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
-            const preloader = document.getElementById('preloader');
             const body = document.body;
+            let progress = 0;
+            let finished = false;
 
             const interval = setInterval(() => {
-                if (progress < 90) {
-                    const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
-                    progress += increment;
-                }
-                
-                if (progress > 99) progress = 99;
-                
+                if (progress < 90) progress += Math.random() * 15 + 5;
+                if (progress >= 95) progress = 95; 
                 if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
                 if (progressText) progressText.innerText = Math.floor(progress) + '%';
-            }, 30); 
+            }, 50);
 
             function hidePreloader() {
                 if (finished) return;
                 finished = true;
                 clearInterval(interval);
                 
-                // Jump to 100%
                 if (progressBar) progressBar.style.width = '100%';
                 if (progressText) progressText.innerText = '100%';
                 
@@ -480,34 +485,30 @@
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
                     body.classList.remove('loading-active');
-                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
-                }, 300); 
+                    setTimeout(() => preloader.remove(), 500);
+                }, 150);
             }
 
-            // Detect Actual Page Load
-            window.addEventListener("load", hidePreloader);
-            // Fallback
-            setTimeout(hidePreloader, 4000);
+            window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 5000); 
         })();
 
-        // --- EXISTING PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function() {
-            
-            // MOBILE NAV LOGIC
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             
             if (desktopNav && mobileNavContainer && mobileNavToggle) {
-                let mobileNavHTML = desktopNav.innerHTML;
-                const parser = new DOMParser();
-                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
-                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
-                    const toggle = document.createElement('span');
-                    toggle.className = 'dropdown-toggle';
-                    link.appendChild(toggle);
-                });
-                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+                const ulElement = desktopNav.querySelector('ul');
+                if(ulElement) {
+                    const clonedNav = ulElement.cloneNode(true);
+                    clonedNav.querySelectorAll('.dropdown > a').forEach(link => {
+                        const toggle = document.createElement('span');
+                        toggle.className = 'dropdown-toggle';
+                        link.appendChild(toggle);
+                    });
+                    mobileNavContainer.appendChild(clonedNav);
+                }
 
                 mobileNavToggle.addEventListener('click', () => {
                     mobileNavContainer.classList.toggle('active');
@@ -528,14 +529,13 @@
                     }
                 });
             }
-
-            // ANIMATION SCRIPT
+            
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach((entry, index) => {
                         if (entry.isIntersecting) {
-                            entry.target.style.transitionDelay = `${index * 50}ms`; // Slight stagger
+                            entry.target.style.transitionDelay = `${index * 50}ms`; 
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
