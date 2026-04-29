@@ -4,12 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Themes - SATVA 2026</title>
     
+    <title>Themes | SATVA 2026</title>
+    <meta name="description" content="Explore the core themes of SATVA 2026: Resilient & Green Geotechnics, Eco-Efficient Asphalt, Sustainable Rigid Pavements, and Resilient Roads.">
+    <meta name="keywords" content="SATVA 2026 Themes, Green Geotechnics, Eco-Efficient Asphalt, Rigid Pavement Systems, Resilient Roads, IIT Palakkad">
+    <meta name="author" content="Environmental Sciences and Sustainable Engineering Centre (ESSENCE), IIT Palakkad">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" href="https://satva.iitpkd.ac.in/themes.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://satva.iitpkd.ac.in/themes.html">
+    <meta property="og:title" content="Themes | SATVA 2026">
+    <meta property="og:description" content="Explore the core themes of SATVA 2026: Resilient & Green Geotechnics, Eco-Efficient Asphalt, Sustainable Rigid Pavements, and Resilient Roads.">
+    <meta property="og:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png"> 
+    <meta property="og:site_name" content="SATVA 2026">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://satva.iitpkd.ac.in/themes.html">
+    <meta name="twitter:title" content="Themes | SATVA 2026">
+    <meta name="twitter:description" content="Explore the core themes of SATVA 2026: Resilient & Green Geotechnics, Eco-Efficient Asphalt, Sustainable Rigid Pavements, and Resilient Roads.">
+    <meta name="twitter:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png">
+
     <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
-    
+    <link rel="apple-touch-icon" href="images/logos/logo4.png"> 
+    <meta name="theme-color" content="#606C38">
+
     <link rel="preload" as="image" href="images/logos/logo4.png">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -28,14 +49,20 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* 2. LOCK SCROLL: Prevent scrolling while loading */
         body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: #fff; }
         
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-        /* --- PRELOADER CSS --- */
+        img {
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         #preloader {
             position: fixed;
             top: 0;
@@ -43,12 +70,12 @@
             width: 100vw;
             height: 100vh;
             background: #ffffff;
-            z-index: 999999; /* Highest priority */
+            z-index: 999999;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
         .loader-content {
@@ -79,7 +106,7 @@
             height: 100%;
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             border-radius: 10px;
-            transition: width 0.2s linear;
+            transition: width 0.1s linear;
             box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
         }
 
@@ -98,12 +125,6 @@
             100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         }
 
-        @media(max-width: 576px) {
-            .loader-logo { width: 120px; }
-            .loader-content { width: 240px; }
-        }
-
-        /* --- HEADER STYLES --- */
         .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
@@ -119,13 +140,12 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* DESKTOP DROPDOWN CSS (CENTERED) */
         .dropdown-menu { 
             display: flex; 
             flex-direction: column;
             position: absolute; 
             top: 100%; 
-            left: 50%; /* Start at center */
+            left: 50%; 
             transform: translate(-50%, 20px); 
             background: white; 
             list-style: none; 
@@ -152,7 +172,6 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- THEMES PAGE STYLES --- */
         .content-section { padding: 80px 0; background-color: var(--section-alt-bg); }
         
         .section-title { 
@@ -166,17 +185,15 @@
             content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; 
         }
         
-        /* Grid Layout */
         .themes-grid { 
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2x2 Layout */
+            grid-template-columns: repeat(2, 1fr);
             gap: 40px; 
             justify-content: center;
             max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* Card Styling */
         .theme-card { 
             background: #fff; 
             padding: 40px 30px; 
@@ -192,18 +209,16 @@
             text-align: center; 
         }
 
-        /* Hover Effects */
         .theme-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.12);
             border-bottom: 4px solid var(--secondary-color);
         }
 
-        /* Icons Styling */
         .icon-box {
             width: 70px;
             height: 70px;
-            background-color: rgba(96, 108, 56, 0.1); /* Light Primary */
+            background-color: rgba(96, 108, 56, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -228,7 +243,6 @@
             padding-bottom: 15px;
         }
         
-        /* Underline for title */
         .theme-card h3::after {
             content: '';
             width: 40px;
@@ -255,9 +269,8 @@
             color: #555;
         }
 
-        /* Bullet Point */
         .theme-card li::before { 
-            content: '\f058'; /* FontAwesome Check Circle */
+            content: '\f058';
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute; 
@@ -267,16 +280,13 @@
             top: 3px;
         }
 
-        /* Animation Classes */
         .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .js-scroll.fade-in-up { transform: translateY(30px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- RESPONSIVE --- */
         @media(max-width: 992px) {
             .themes-grid { grid-template-columns: 1fr; max-width: 600px; }
             
-            /* Mobile Nav Logic */
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
             .hamburger { width: 30px; height: 3px; background: var(--text-color); display: block; position: relative; transition: background 0.3s ease-in-out; }
@@ -295,7 +305,6 @@
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
             
-            /* --- FIXED: FORCE MOBILE DROPDOWN STYLES WITH !IMPORTANT --- */
             .mobile-nav-container .dropdown-menu { 
                 position: static !important; 
                 float: none !important;
@@ -337,8 +346,13 @@
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
         }
-        
-        @media(max-width: 380px) {
+
+        @media(max-width: 576px) {
+            .loader-logo { width: 120px; }
+            .loader-content { width: 240px; }
+        }
+
+        @media (max-width: 380px) {
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
         }
@@ -455,7 +469,18 @@
     </main>
     
     <script>
-        // --- 4. PRELOADER LOGIC ---
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
         (function () {
             let progress = 0;
             let finished = false;
@@ -481,7 +506,6 @@
                 finished = true;
                 clearInterval(interval);
                 
-                // Jump to 100%
                 if (progressBar) progressBar.style.width = '100%';
                 if (progressText) progressText.innerText = '100%';
                 
@@ -493,16 +517,12 @@
                 }, 300); 
             }
 
-            // Detect Actual Page Load
             window.addEventListener("load", hidePreloader);
-            // Fallback
             setTimeout(hidePreloader, 4000);
         })();
 
-        // --- EXISTING PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function() {
             
-            // --- MOBILE NAV LOGIC ---
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -537,21 +557,18 @@
                     }
                 });
             }
-
-            // --- ANIMATION SCRIPT ---
+            
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach((entry, index) => {
                         if (entry.isIntersecting) {
-                            // Add a slight stagger delay based on index for nicer flow
-                            entry.target.style.transitionDelay = `${index * 100}ms`;
+                            entry.target.style.transitionDelay = `${index * 50}ms`; 
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
                     });
-                }, { threshold: 0.15 });
-
+                }, { threshold: 0.1 });
                 animatedItems.forEach(item => {
                     observer.observe(item);
                 });
@@ -560,4 +577,3 @@
     </script>
 </body>
 </html>
-
