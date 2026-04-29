@@ -4,9 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merchandise | SATVA 2026</title>
+    
+    <title>Official Merchandise | SATVA 2026</title>
+    <meta name="description" content="Shop official SATVA 2026 merchandise. Pre-order exclusive T-shirts, keychains, and fridge magnets for the Symposium at IIT Palakkad.">
+    <meta name="keywords" content="SATVA 2026 Merchandise, IIT Palakkad T-shirts, Symposium Souvenirs, Civil Engineering Event Merch">
+    <meta name="author" content="Environmental Sciences and Sustainable Engineering Centre (ESSENCE), IIT Palakkad">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" href="https://satva.iitpkd.ac.in/merchandise.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://satva.iitpkd.ac.in/merchandise.html">
+    <meta property="og:title" content="Official Merchandise | SATVA 2026">
+    <meta property="og:description" content="Shop official SATVA 2026 merchandise. Pre-order exclusive T-shirts, keychains, and fridge magnets.">
+    <meta property="og:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png"> 
+    <meta property="og:site_name" content="SATVA 2026">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://satva.iitpkd.ac.in/merchandise.html">
+    <meta name="twitter:title" content="Official Merchandise | SATVA 2026">
+    <meta name="twitter:description" content="Shop official SATVA 2026 merchandise. Pre-order exclusive T-shirts, keychains, and fridge magnets.">
+    <meta name="twitter:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png">
 
     <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/logos/logo4.png"> 
+    <meta name="theme-color" content="#606C38">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
@@ -31,7 +54,14 @@
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-        /* --- PRELOADER CSS --- */
+        img {
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         #preloader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 999999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         .loader-content { text-align: center; width: 300px; max-width: 80%; }
         .loader-logo { width: 150px; height: auto; margin-bottom: 30px; animation: breathe 2.5s infinite ease-in-out; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
@@ -45,7 +75,6 @@
             100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         }
 
-        /* --- HEADER --- */
         .main-header { position: sticky; top: 0; width: 100%; z-index: 1000; background: var(--header-bg); backdrop-filter: blur(10px); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .main-header .container { max-width: 95% !important; margin: auto; padding: 0 20px; }
         .navbar { display: flex; justify-content: space-between; align-items: center; height: 80px; }
@@ -62,14 +91,12 @@
         .main-nav a:hover, .main-nav a.active { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after, .main-nav a.active::after { width: 100%; }
 
-        /* DROPDOWN */
         .dropdown-menu { display: flex; flex-direction: column; position: absolute; top: 100%; left: 50%; transform: translate(-50%, 20px); background: white; list-style: none; padding: 10px 0; margin-top: -10px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); min-width: 280px; z-index: 100; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; gap: 0 !important;}
         .dropdown:hover .dropdown-menu { visibility: visible; opacity: 1; transform: translate(-50%, 0); }
         .dropdown-menu li a { padding: 10px 20px; display: block; width: 100%; text-align: center; }
         .dropdown-menu li a::after { content: none; }
         .dropdown-menu li a:hover { background-color: #f4f4f4; }
 
-        /* AUTH BUTTON / PROFILE */
         .auth-btn { background: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); padding: 8px 15px; border-radius: 5px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; font-family: 'Montserrat', sans-serif; }
         .auth-btn:hover { background: var(--primary-color); color: #fff; }
         .user-profile { display: none; align-items: center; gap: 10px; font-weight: 700; color: var(--dark-color); }
@@ -77,7 +104,6 @@
 
         .mobile-nav-toggle, .mobile-nav-container { display: none; }
 
-        /* --- GLOBAL CONTENT STYLES --- */
         .page-header { background: var(--section-alt-bg); padding: 80px 0 60px; text-align: center; border-bottom: 1px solid #eee; }
         .page-header h1 { font-size: 3rem; color: var(--dark-color); margin-bottom: 15px; }
         .page-header p { font-size: 1.2rem; max-width: 800px; margin: auto; color: #555; }
@@ -86,7 +112,6 @@
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; color: var(--dark-color); position: relative; }
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 20px auto 0; border-radius: 2px; }
 
-        /* --- COUNTDOWN & DEADLINE UI --- */
         .countdown-banner { background: var(--danger-color); color: white; text-align: center; padding: 12px; font-weight: bold; font-family: 'Montserrat', sans-serif; z-index: 999; position: relative; letter-spacing: 1px;}
         .countdown-banner span { font-size: 1.2rem; margin-left: 10px; background: rgba(0,0,0,0.2); padding: 4px 10px; border-radius: 5px; }
         .delivery-banner { background: var(--secondary-color); color: white; text-align: center; padding: 15px; font-weight: bold; font-family: 'Montserrat', sans-serif; display: none; }
@@ -97,7 +122,6 @@
         .closed-icon-anim { font-size: 4rem; color: var(--danger-color); margin-bottom: 15px; animation: scaleUp 0.5s ease-in-out; }
         @keyframes scaleUp { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        /* --- MERCHANDISE SPECIFIC STYLES --- */
         .merch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
         .merch-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; border: 1px solid #f0f0f0; display: flex; flex-direction: column; position: relative;}
         .merch-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
@@ -109,7 +133,6 @@
         .merch-price { font-size: 1.3rem; font-weight: 700; color: var(--primary-color); margin-bottom: 5px; }
         .merch-desc { font-size: 0.85rem; color: #555; margin-bottom: 15px; line-height: 1.4; min-height: 40px; }
         
-        /* SIZE SELECTOR & FIT GUIDE */
         .size-selector-container { margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .size-selector-container label { font-size: 0.9rem; font-weight: 700; color: #555; }
         .item-size { padding: 5px 10px; border-radius: 5px; border: 1px solid #ccc; font-family: 'Roboto', sans-serif; font-weight: 600; color: var(--dark-color); outline: none; cursor: pointer; }
@@ -117,13 +140,11 @@
         .size-guide-btn { background: none; border: none; color: var(--secondary-color); font-size: 0.85rem; font-weight: 700; cursor: pointer; text-decoration: underline; margin-left: 5px; transition: color 0.3s; }
         .size-guide-btn:hover { color: var(--primary-color); }
 
-        /* CART CONTROLS */
         .cart-controls { margin-top: auto; display: flex; justify-content: center; height: 45px; }
         .add-to-cart-btn { background: var(--secondary-color); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: background-color 0.3s, transform 0.1s; width: 100%; font-family: 'Montserrat', sans-serif; }
         .add-to-cart-btn:hover { background: var(--primary-color); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         .add-to-cart-btn:active { transform: scale(0.98); }
 
-        /* --- FLOATING CART --- */
         .floating-cart { position: fixed; bottom: 30px; right: 30px; background: var(--primary-color); color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 5px 20px rgba(0,0,0,0.3); cursor: pointer; z-index: 999; transition: transform 0.3s; }
         .floating-cart:hover { transform: scale(1.1); }
         .floating-cart.bump { animation: cartBump 0.4s ease-out; }
@@ -132,7 +153,6 @@
         .floating-cart svg { width: 30px; height: 30px; fill: #fff; }
         .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--danger-color); color: #fff; font-size: 0.8rem; font-weight: bold; width: 24px; height: 24px; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid #fff; }
 
-        /* CART MODAL SIDEBAR */
         .cart-sidebar { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: #fff; box-shadow: -5px 0 20px rgba(0,0,0,0.1); z-index: 1001; transition: right 0.4s ease; display: flex; flex-direction: column; }
         .cart-sidebar.open { right: 0; }
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: none; backdrop-filter: blur(3px); }
@@ -142,7 +162,6 @@
         .close-cart { font-size: 2rem; cursor: pointer; line-height: 1; color: #555; transition: color 0.3s; }
         .close-cart:hover { color: var(--danger-color); }
         
-        /* NEW CART ITEM CONTROLS */
         .cart-items-container { flex-grow: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
         .cart-item { display: flex; gap: 15px; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 15px; }
         .cart-item img { width: 70px; height: 70px; object-fit: contain; background: #f9f9f9; border-radius: 8px; }
@@ -164,13 +183,11 @@
         .checkout-btn { width: 100%; background: var(--secondary-color); color: #fff; border: none; padding: 15px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
         .checkout-btn:hover { background: var(--primary-color); }
 
-        /* --- PAYMENT & ORDERING SECTION --- */
         .order-section { background: var(--section-alt-bg); border-radius: 20px; padding: 60px; margin-top: 40px; box-shadow: inset 0 0 20px rgba(0,0,0,0.02); }
         .order-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 50px; align-items: start; }
         
         .payment-card { background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center; }
         
-        /* CHECKOUT FORM */
         .checkout-form-container { background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
         .checkout-form-container h3 { font-size: 1.6rem; margin-bottom: 20px; color: var(--dark-color); }
         
@@ -189,7 +206,6 @@
         .submit-order-btn:hover { background: var(--dark-color); }
         .submit-order-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        /* --- MODALS (Auth, Fit Guide & Zoom) --- */
         .modal-overlay, .zoom-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(5px);}
         .modal-overlay.active, .zoom-modal-overlay.active { display: flex; opacity: 1; }
         .modal-container { background: white; width: 95%; max-width: 450px; border-radius: 10px; overflow: hidden; transform: scale(0.9); transition: transform 0.3s ease; }
@@ -198,14 +214,12 @@
         .modal-close-btn { background: none; border: none; color: white; font-size: 1.8rem; cursor: pointer; }
         .modal-body { padding: 30px; }
 
-        /* Zoom modal specific */
         .zoom-modal-overlay { background: rgba(0, 0, 0, 0.85); z-index: 3000; }
         .zoom-modal-img { max-width: 90%; max-height: 90vh; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: scale(0.8); transition: transform 0.3s ease; object-fit: contain; }
         .zoom-modal-overlay.active .zoom-modal-img { transform: scale(1); }
         .zoom-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 3rem; cursor: pointer; border: none; background: transparent; transition: color 0.3s; }
         .zoom-close:hover { color: var(--danger-color); }
 
-        /* Auth specific modal styles */
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 2px solid #eee; }
         .auth-tab { flex: 1; padding: 10px; background: none; border: none; font-weight: 700; cursor: pointer; color: #aaa; font-size: 1rem; transition: 0.3s;}
         .auth-tab.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
@@ -216,7 +230,6 @@
         .google-btn:hover { background: #f1f1f1; }
         .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 10px; text-align: center; }
 
-        /* Animation Classes */
         .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .js-scroll.fade-in-up { transform: translateY(40px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
@@ -233,6 +246,7 @@
             .mobile-nav-container { display: block; position: absolute; top: 80px; left: 0; width: 100%; background: var(--header-bg); box-shadow: 0 5px 10px rgba(0,0,0,0.1); overflow-y: auto; max-height: 0; transition: max-height 0.5s ease-in-out; }
             .mobile-nav-container.active { max-height: calc(100vh - 80px); }
             .mobile-nav-container ul { list-style: none; padding: 10px 0; }
+            .mobile-nav-container > ul > li { text-align: center; }
             .mobile-nav-container a { display: block; padding: 15px; text-decoration: none; color: var(--text-color); font-weight: 700; font-size: 1.2rem; text-align: center; }
             .mobile-nav-container .dropdown > a { display: flex; justify-content: center; align-items: center; gap: 10px; }
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
@@ -367,7 +381,7 @@
                                     <option value="XL">XL</option>
                                     <option value="XXL">XXL</option>
                                 </select>
-                                <button class="size-guide-btn" onclick="openFitGuide('images/merchandise/polofitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
+                                <button class="size-guide-btn" onclick="window.openFitGuide('images/merchandise/polofitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
                             </div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -390,7 +404,7 @@
                                     <option value="XL">XL</option>
                                     <option value="XXL">XXL</option>
                                 </select>
-                                <button class="size-guide-btn" onclick="openFitGuide('images/merchandise/roundneckfitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
+                                <button class="size-guide-btn" onclick="window.openFitGuide('images/merchandise/roundneckfitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
                             </div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -413,7 +427,7 @@
                                     <option value="XL">XL</option>
                                     <option value="XXL">XXL</option>
                                 </select>
-                                <button class="size-guide-btn" onclick="openFitGuide('images/merchandise/roundneckfitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
+                                <button class="size-guide-btn" onclick="window.openFitGuide('images/merchandise/roundneckfitguide.webp')"><i class="fas fa-ruler-horizontal"></i> Size Guide</button>
                             </div>
                             <div class="cart-controls">
                                 <button class="add-to-cart-btn">Add to Cart</button>
@@ -644,7 +658,7 @@
     </div>
 
     <div id="imageZoomModal" class="zoom-modal-overlay">
-        <button class="zoom-close" onclick="closeZoomModal()">&times;</button>
+        <button class="zoom-close" onclick="window.closeZoomModal()">&times;</button>
         <img id="zoomedImage" src="" alt="Zoomed Product" class="zoom-modal-img">
     </div>
 
@@ -652,7 +666,7 @@
         <div class="modal-container" style="max-width: 600px;">
             <div class="modal-header">
                 <h2>Fit Guide</h2>
-                <button class="modal-close-btn" onclick="closeFitGuide()">&times;</button>
+                <button class="modal-close-btn" onclick="window.closeFitGuide()">&times;</button>
             </div>
             <div class="modal-body" style="padding: 15px; text-align: center; background: var(--section-alt-bg);">
                 <img id="fitGuideImage" src="" alt="Size Fit Guide" style="width: 100%; max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
@@ -669,8 +683,8 @@
             <div class="modal-body">
                 <p style="text-align: center; margin-bottom: 20px; font-size: 0.95rem; color: #555;">Please log in to add items to your cart.</p>
                 <div class="auth-tabs">
-                    <button class="auth-tab active" onclick="switchTab('login')">Login</button>
-                    <button class="auth-tab" onclick="switchTab('signup')">Sign Up</button>
+                    <button class="auth-tab active" onclick="window.switchTab('login')">Login</button>
+                    <button class="auth-tab" onclick="window.switchTab('signup')">Sign Up</button>
                 </div>
 
                 <div id="login-form" class="auth-form-container">
@@ -721,7 +735,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyBBpqJXBfbiju_T69mS1qrx2CRkZd1mkQU",
             authDomain: "satva-2026.firebaseapp.com",
@@ -735,12 +748,10 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
-        // --- GLOBAL STATE ---
         let currentUser = null;
         window.cart = []; 
-        window.isMerchClosed = false; // NEW FLAG
+        window.isMerchClosed = false; 
 
-        // --- DOM ELEMENTS ---
         const userProfile = document.getElementById('auth-user-profile');
         const userAvatar = document.getElementById('user-avatar');
         const logoutBtn = document.getElementById('auth-logout-btn');
@@ -749,7 +760,6 @@
         const userEmailInput = document.getElementById('user-email');
         const userNameInput = document.getElementById('user-name');
 
-        // --- AUTHENTICATION STATE OBSERVER ---
         onAuthStateChanged(auth, (user) => {
             if (user && user.emailVerified) {
                 currentUser = user;
@@ -772,7 +782,7 @@
 
         window.switchTab = function(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.auth-tab[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.querySelector(`.auth-tab[onclick="window.switchTab('${tab}')"]`).classList.add('active');
             document.getElementById('login-form').style.display = tab === 'login' ? 'block' : 'none';
             document.getElementById('signup-form').style.display = tab === 'signup' ? 'block' : 'none';
             
@@ -855,7 +865,7 @@
         });
 
         function requireAuth(callback) {
-            if(window.isMerchClosed) return; // Prevent if closed
+            if(window.isMerchClosed) return; 
             if (currentUser && currentUser.emailVerified) {
                 callback();
             } else {
@@ -968,11 +978,11 @@
                             <div class="cart-item-price">Rs. ${item.price}</div>
                             <div class="cart-item-actions">
                                 <div class="cart-qty-controls">
-                                    <button class="cart-qty-btn" onclick="updateQuantity('${item.cartId}', -1)">-</button>
+                                    <button class="cart-qty-btn" onclick="window.updateQuantity('${item.cartId}', -1)">-</button>
                                     <div class="cart-qty-display">${item.quantity}</div>
-                                    <button class="cart-qty-btn" onclick="updateQuantity('${item.cartId}', 1)">+</button>
+                                    <button class="cart-qty-btn" onclick="window.updateQuantity('${item.cartId}', 1)">+</button>
                                 </div>
-                                <button class="cart-remove-btn" onclick="removeFromCart('${item.cartId}')" title="Remove Item"><i class="fas fa-trash"></i></button>
+                                <button class="cart-remove-btn" onclick="window.removeFromCart('${item.cartId}')" title="Remove Item"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
                     `;
@@ -1111,8 +1121,6 @@
     </script>
 
     <script>
-        // --- NEW: COUNTDOWN & DEADLINE LOGIC ---
-        // Setting Target Date for 26th April 2026, 23:59:50 IST
         const deadlineDate = new Date("April 26, 2026 23:59:50 GMT+0530").getTime();
 
         function updateCountdown() {
@@ -1120,14 +1128,12 @@
             const distance = deadlineDate - now;
 
             if (distance <= 0) {
-                // IT'S PAST THE DEADLINE
                 clearInterval(window.timerInterval);
                 document.getElementById("countdown-banner").style.display = "none";
                 document.getElementById("delivery-banner").style.display = "block";
                 
                 triggerClosedState();
             } else {
-                // CALCULATING TIME
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -1138,18 +1144,14 @@
             }
         }
 
-        // Run timer every second
         window.timerInterval = setInterval(updateCountdown, 1000);
 
         function triggerClosedState() {
-            // Only trigger once to avoid annoying popups if already closed
             if(!window.isMerchClosed) {
                 window.isMerchClosed = true;
                 
-                // Show the closed modal animation
                 document.getElementById("closedModalOverlay").classList.add("active");
 
-                // Disable all Add to Cart buttons natively
                 document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
                     btn.disabled = true;
                     btn.innerText = "Sales Closed";
@@ -1160,11 +1162,9 @@
                     btn.style.transform = "none";
                 });
 
-                // Hide floating cart and disable functionality
                 document.getElementById("floating-cart").style.display = "none";
-                window.cart = []; // Empty cart explicitly
+                window.cart = []; 
                 
-                // Redo the Order Section entirely to strip UPI/Bank/Form
                 const orderContainer = document.getElementById("dynamic-order-container");
                 if(orderContainer) {
                     orderContainer.style.gridTemplateColumns = "1fr";
@@ -1182,20 +1182,29 @@
             }
         }
         
-        // Call immediately on script load to verify initially
         window.addEventListener('load', updateCountdown);
-        // ----------------------------------------
-
-        // --- BULLETPROOF PRELOADER ---
-        const preloader = document.getElementById('preloader');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
         
-        if (preloader) {
-            let progress = 0; 
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        (function () {
+            const preloader = document.getElementById('preloader');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const body = document.body;
+            let progress = 0;
             let finished = false;
 
-            const progressInterval = setInterval(() => {
+            const interval = setInterval(() => {
                 if (progress < 90) progress += Math.random() * 15 + 5;
                 if (progress >= 95) progress = 95; 
                 if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
@@ -1205,7 +1214,7 @@
             function hidePreloader() {
                 if (finished) return;
                 finished = true;
-                clearInterval(progressInterval);
+                clearInterval(interval);
                 
                 if (progressBar) progressBar.style.width = '100%';
                 if (progressText) progressText.innerText = '100%';
@@ -1213,68 +1222,68 @@
                 setTimeout(() => {
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
-                    document.body.classList.remove('loading-active');
-                    
-                    setTimeout(() => {
-                        if (preloader && preloader.parentNode) {
-                            preloader.remove();
-                        }
-                    }, 500);
+                    body.classList.remove('loading-active');
+                    setTimeout(() => preloader.remove(), 500);
                 }, 150);
             }
 
             window.addEventListener('load', hidePreloader);
-            setTimeout(hidePreloader, 4000); 
-        }
+            setTimeout(hidePreloader, 5000); 
+        })();
 
-        // --- MOBILE NAV LOGIC ---
-        const desktopNav = document.getElementById('desktop-nav');
-        const mobileNavContainer = document.getElementById('mobile-nav');
-        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-
-        if (desktopNav && mobileNavContainer && mobileNavToggle) {
-            let mobileNavHTML = desktopNav.innerHTML;
-            const parser = new DOMParser();
-            const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
+        document.addEventListener('DOMContentLoaded', function() {
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavContainer = document.getElementById('mobile-nav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             
-            navDoc.querySelectorAll('.dropdown > a').forEach(link => {
-                const toggle = document.createElement('span');
-                toggle.className = 'dropdown-toggle';
-                link.appendChild(toggle);
-            });
-
-            mobileNavContainer.innerHTML = navDoc.body.innerHTML;
-
-            mobileNavToggle.addEventListener('click', () => {
-                mobileNavContainer.classList.toggle('active');
-                mobileNavToggle.classList.toggle('active');
-            });
-
-            mobileNavContainer.addEventListener('click', function(e) {
-                if (e.target.classList.contains('dropdown-toggle')) {
-                    e.preventDefault();
-                    e.target.classList.toggle('open');
-                    const li = e.target.closest('li.dropdown');
-                    if (!li) return;
-                    const menu = li.querySelector('.dropdown-menu');
-                    if (menu) { menu.classList.toggle('show'); }
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                const ulElement = desktopNav.querySelector('ul');
+                if(ulElement) {
+                    const clonedNav = ulElement.cloneNode(true);
+                    clonedNav.querySelectorAll('.dropdown > a').forEach(link => {
+                        const toggle = document.createElement('span');
+                        toggle.className = 'dropdown-toggle';
+                        link.appendChild(toggle);
+                    });
+                    mobileNavContainer.appendChild(clonedNav);
                 }
-            });
-        }
 
-        // --- SCROLL ANIMATIONS ---
-        const scrollElements = document.querySelectorAll('.js-scroll');
-        if (scrollElements.length > 0) {
-            const elementObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavContainer.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) {
+                        e.preventDefault();
+                        e.target.classList.toggle('open');
+                        const li = e.target.closest('li.dropdown');
+                        if (!li) return;
+                        const menu = li.querySelector('.dropdown-menu');
+                        if (menu) { menu.classList.toggle('show'); }
+                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                        mobileNavContainer.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
                     }
                 });
-            }, { threshold: 0.1 });
-            scrollElements.forEach(el => { elementObserver.observe(el); });
-        }
+            }
+            
+            const animatedItems = document.querySelectorAll('.js-scroll');
+            if (animatedItems.length > 0) {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach((entry, index) => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.transitionDelay = `${index * 50}ms`; 
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                animatedItems.forEach(item => {
+                    observer.observe(item);
+                });
+            }
+        });
     </script>
 </body>
 </html>
