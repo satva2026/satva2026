@@ -4,14 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advisory & Technical Committee - SATVA 2026</title>
-    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
     
-    <link rel="preload" as="image" href="images/logos/logo4.png">
+    <title>Advisory & Technical Committee - SATVA 2026 | IIT Palakkad</title>
+    <meta name="description" content="Meet the esteemed Advisory and Technical Committee members of SATVA 2026 at IIT Palakkad. Experts driving the future of pavement sustainability.">
+    <meta name="keywords" content="SATVA 2026 Committee, Advisory Committee, Technical Committee, IIT Palakkad, Sustainability Symposium, Civil Engineering Experts">
+    <meta name="author" content="Environmental Sciences and Sustainable Engineering Centre (ESSENCE), IIT Palakkad">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" href="https://satva.iitpkd.ac.in/advisory.html">
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://satva.iitpkd.ac.in/advisory.html">
+    <meta property="og:title" content="Advisory & Technical Committee - SATVA 2026">
+    <meta property="og:description" content="Meet the esteemed Advisory and Technical Committee members guiding SATVA 2026 at IIT Palakkad.">
+    <meta property="og:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png"> 
+    <meta property="og:site_name" content="SATVA 2026">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://satva.iitpkd.ac.in/advisory.html">
+    <meta name="twitter:title" content="Advisory & Technical Committee - SATVA 2026">
+    <meta name="twitter:description" content="Meet the esteemed Advisory and Technical Committee members guiding SATVA 2026 at IIT Palakkad.">
+    <meta name="twitter:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png">
+
+    <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/logos/logo4.png"> 
+    <meta name="theme-color" content="#606C38">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="preload" as="image" href="images/logos/logo4.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;700&display=swap');
-        
         :root {
             --primary-color: #606C38; 
             --secondary-color: #117d56; 
@@ -25,14 +52,20 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         
-        /* 2. LOCK SCROLL */
         body.loading-active { overflow: hidden; height: 100vh; }
         body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: var(--section-alt-bg); }
         
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1300px; margin: auto; padding: 0 20px; }
 
-        /* --- PRELOADER CSS --- */
+        img {
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         #preloader {
             position: fixed;
             top: 0;
@@ -40,12 +73,12 @@
             width: 100vw;
             height: 100vh;
             background: #ffffff;
-            z-index: 999999; /* Highest priority */
+            z-index: 999999; 
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
         .loader-content {
@@ -76,7 +109,7 @@
             height: 100%;
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
             border-radius: 10px;
-            transition: width 0.2s linear;
+            transition: width 0.1s linear;
             box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
         }
 
@@ -100,7 +133,6 @@
             .loader-content { width: 240px; }
         }
 
-        /* --- HEADER STYLES --- */
         .main-header { 
             position: sticky; 
             top: 0; 
@@ -124,20 +156,19 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* UPDATED DROPDOWN CSS FOR CENTERING */
         .dropdown-menu { 
             display: none; 
             position: absolute; 
             top: 100%; 
-            left: 50%; /* Start at center */
-            transform: translate(-50%, 10px); /* Move back by 50% to perfectly center */
+            left: 50%; 
+            transform: translate(-50%, 10px); 
             background: white; 
             list-style: none; 
             padding: 10px 0; 
             margin-top: -10px; 
             border-radius: 5px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-            min-width: 280px; /* Slightly wider */
+            min-width: 280px; 
             opacity: 0; 
             transition: opacity 0.3s, transform 0.3s; 
             z-index: 100; 
@@ -156,7 +187,6 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- COMMITTEE PAGE STYLES --- */
         .page-section { padding: 60px 0; }
         
         .section-heading { 
@@ -217,7 +247,6 @@
             margin: 0 auto;
         }
 
-        /* --- NEW TABLE STYLES FOR TECHNICAL COMMITTEE --- */
         .table-responsive {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -231,7 +260,7 @@
         .tech-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 600px; /* Ensures it doesn't break on mobile */
+            min-width: 600px; 
         }
 
         .tech-table th {
@@ -260,7 +289,6 @@
         .sl-col { width: 80px; text-align: center; }
         .tech-table td:first-child { text-align: center; font-weight: bold; color: var(--secondary-color); }
 
-        /* --- MEDIA QUERIES --- */
         @media(max-width: 1100px) {
             .chair-grid { grid-template-columns: repeat(3, 1fr); }
         }
@@ -284,7 +312,6 @@
             .mobile-nav-container .dropdown-toggle { display: inline-block; border: solid var(--text-color); border-width: 0 3px 3px 0; padding: 4px; transform: rotate(45deg); cursor: pointer; transition: transform 0.3s; }
             .mobile-nav-container .dropdown-toggle.open { transform: rotate(-135deg); }
             
-            /* --- FIXED: FORCE MOBILE DROPDOWN STYLES WITH !IMPORTANT --- */
             .mobile-nav-container .dropdown-menu { 
                 position: static !important; 
                 float: none !important;
@@ -394,7 +421,7 @@
                         <h4 class="member-name">Dr. A. P. Singh</h4>
                         <p class="member-aff">IGS Secretary</p>
                     </div>
-                                            
+                                                            
                     <div class="member-card js-scroll fade-in-up">
                         <img src="images/adv/adv1.webp" alt="Prof. A Veeraragavan" class="member-img">
                         <h4 class="member-name">Prof. A. Veeraragavan</h4>
@@ -568,33 +595,38 @@
     </main>
 
     <script>
-        // --- 4. PRELOADER LOGIC ---
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
         (function () {
-            let progress = 0;
-            let finished = false;
+            const preloader = document.getElementById('preloader');
             const progressBar = document.getElementById('progress-bar');
             const progressText = document.getElementById('progress-text');
-            const preloader = document.getElementById('preloader');
             const body = document.body;
+            let progress = 0;
+            let finished = false;
 
             const interval = setInterval(() => {
-                if (progress < 90) {
-                    const increment = (progress > 70) ? 0.5 : (progress > 40) ? 1 : 2;
-                    progress += increment;
-                }
-                
-                if (progress > 99) progress = 99;
-                
+                if (progress < 90) progress += Math.random() * 15 + 5;
+                if (progress >= 95) progress = 95; 
                 if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
                 if (progressText) progressText.innerText = Math.floor(progress) + '%';
-            }, 30); 
+            }, 50);
 
             function hidePreloader() {
                 if (finished) return;
                 finished = true;
                 clearInterval(interval);
                 
-                // Jump to 100%
                 if (progressBar) progressBar.style.width = '100%';
                 if (progressText) progressText.innerText = '100%';
                 
@@ -602,34 +634,30 @@
                     preloader.style.opacity = '0';
                     preloader.style.visibility = 'hidden';
                     body.classList.remove('loading-active');
-                    setTimeout(() => { if(preloader) preloader.remove(); }, 800);
-                }, 300); 
+                    setTimeout(() => preloader.remove(), 500);
+                }, 150);
             }
 
-            // Detect Actual Page Load
-            window.addEventListener("load", hidePreloader);
-            // Fallback
-            setTimeout(hidePreloader, 4000);
+            window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 5000); 
         })();
 
-        // --- EXISTING PAGE LOGIC ---
         document.addEventListener('DOMContentLoaded', function() {
-            
-            // MOBILE NAV LOGIC
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             
             if (desktopNav && mobileNavContainer && mobileNavToggle) {
-                let mobileNavHTML = desktopNav.innerHTML;
-                const parser = new DOMParser();
-                const navDoc = parser.parseFromString(mobileNavHTML, 'text/html');
-                navDoc.querySelectorAll('.dropdown > a').forEach(link => {
-                    const toggle = document.createElement('span');
-                    toggle.className = 'dropdown-toggle';
-                    link.appendChild(toggle);
-                });
-                mobileNavContainer.innerHTML = navDoc.body.innerHTML;
+                const ulElement = desktopNav.querySelector('ul');
+                if(ulElement) {
+                    const clonedNav = ulElement.cloneNode(true);
+                    clonedNav.querySelectorAll('.dropdown > a').forEach(link => {
+                        const toggle = document.createElement('span');
+                        toggle.className = 'dropdown-toggle';
+                        link.appendChild(toggle);
+                    });
+                    mobileNavContainer.appendChild(clonedNav);
+                }
 
                 mobileNavToggle.addEventListener('click', () => {
                     mobileNavContainer.classList.toggle('active');
@@ -650,14 +678,13 @@
                     }
                 });
             }
-
-            // ANIMATION SCRIPT
+            
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach((entry, index) => {
                         if (entry.isIntersecting) {
-                            entry.target.style.transitionDelay = `${index * 50}ms`; // Slight stagger for grid items
+                            entry.target.style.transitionDelay = `${index * 50}ms`; 
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
@@ -671,12 +698,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
