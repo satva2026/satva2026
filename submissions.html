@@ -4,11 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submission - SATVA 2026</title>
     
+    <title>Submission Guidelines | SATVA 2026</title>
+    <meta name="description" content="Review the full paper submission guidelines for SATVA 2026. Accepted papers will be published by Springer.">
+    <meta name="keywords" content="SATVA 2026 Submissions, Call for Papers, IIT Palakkad, Civil Engineering Conference, Springer Proceedings">
+    <meta name="author" content="Environmental Sciences and Sustainable Engineering Centre (ESSENCE), IIT Palakkad">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="canonical" href="https://satva.iitpkd.ac.in/submissions.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://satva.iitpkd.ac.in/submissions.html">
+    <meta property="og:title" content="Submission Guidelines | SATVA 2026">
+    <meta property="og:description" content="Review the full paper submission guidelines for SATVA 2026. Accepted papers will be published by Springer.">
+    <meta property="og:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png"> 
+    <meta property="og:site_name" content="SATVA 2026">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://satva.iitpkd.ac.in/submissions.html">
+    <meta name="twitter:title" content="Submission Guidelines | SATVA 2026">
+    <meta name="twitter:description" content="Review the full paper submission guidelines for SATVA 2026. Accepted papers will be published by Springer.">
+    <meta name="twitter:image" content="https://satva.iitpkd.ac.in/images/logos/logo4.png">
+
     <link rel="shortcut icon" href="images/logos/logo4.png" type="image/x-icon">
-    <link rel="preload" as="image" href="images/logos/logo4.png">
+    <link rel="apple-touch-icon" href="images/logos/logo4.png"> 
+    <meta name="theme-color" content="#606C38">
     
+    <link rel="preload" as="image" href="images/logos/logo4.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -33,12 +55,19 @@
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
-        /* --- PRELOADER CSS --- */
+        img {
+            -webkit-user-drag: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
         #preloader {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #ffffff; z-index: 999999;
             display: flex; justify-content: center; align-items: center; flex-direction: column;
-            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
         }
 
         .loader-content { text-align: center; width: 300px; max-width: 80%; }
@@ -57,7 +86,7 @@
         .progress-bar {
             width: 0%; height: 100%;
             background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
-            border-radius: 10px; transition: width 0.2s linear;
+            border-radius: 10px; transition: width 0.1s linear;
             box-shadow: 0 0 10px rgba(96, 108, 56, 0.4);
         }
 
@@ -73,12 +102,6 @@
             100% { transform: scale(1); filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         }
 
-        @media(max-width: 576px) {
-            .loader-logo { width: 120px; }
-            .loader-content { width: 240px; }
-        }
-
-        /* --- HEADER STYLES --- */
         .main-header { 
             position: sticky; top: 0; width: 100%; z-index: 1000; 
             background: var(--header-bg); backdrop-filter: blur(10px); 
@@ -98,7 +121,6 @@
         .main-nav a:hover { color: var(--primary-color); text-decoration: none; }
         .main-nav a:hover::after { width: 100%; }
 
-        /* DESKTOP DROPDOWN CSS */
         .dropdown-menu { 
             display: flex; flex-direction: column; position: absolute; 
             top: 100%; left: 50%; transform: translate(-50%, 20px); 
@@ -115,11 +137,9 @@
         .mobile-nav-toggle { display: none; }
         .mobile-nav-container { display: none; }
 
-        /* --- Page-Specific Styles --- */
         .registration-section { padding: 80px 0; text-align: center; background-color: var(--section-alt-bg); }
         .registration-section h1 { font-size: 3rem; color: var(--dark-color); margin-bottom: 20px; }
         
-        /* Updated List Styles for Tick Points */
         .content-list {
             list-style: none;
             max-width: 900px;
@@ -133,7 +153,7 @@
             position: relative;
         }
         .content-list li::before {
-            content: '\f00c'; /* Font Awesome Check Icon */
+            content: '\f00c';
             font-family: 'Font Awesome 5 Free';
             font-weight: 900;
             color: var(--primary-color);
@@ -142,7 +162,6 @@
             top: 4px;
         }
 
-        /* Buttons */
         .cta-button { 
             cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             background: var(--dark-color); color: var(--light-text-color); 
@@ -160,7 +179,6 @@
         .info-section { padding: 60px 0; background-color: #fff; text-align: center; }
         .info-section h2 { font-size: 2.2rem; color: var(--dark-color); margin-bottom: 20px; }
         
-        /* NEW STYLES FOR GUIDELINES */
         .guidelines-wrapper { text-align: left; max-width: 900px; margin: auto; padding: 0 20px; }
         .guidelines-wrapper h3 { color: var(--primary-color); margin-top: 35px; margin-bottom: 15px; font-size: 1.5rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
         .guidelines-wrapper h4 { color: var(--dark-color); font-size: 1.1rem; margin-top: 15px; margin-bottom: 8px; }
@@ -169,10 +187,9 @@
         .guidelines-wrapper ul { margin-bottom: 20px; padding-left: 20px; }
         .guidelines-wrapper li { margin-bottom: 8px; color: #333; }
         
-        /* Formal Statement / Disclaimer Box */
         .formal-statement {
             background-color: #f8f9fa;
-            border-left: 5px solid #0056b3; /* Microsoft/Springer blueish tone */
+            border-left: 5px solid #0056b3; 
             padding: 20px;
             margin: 25px 0;
             font-size: 0.95rem;
@@ -180,7 +197,6 @@
         }
         .formal-statement p:last-child { margin-bottom: 0; }
         
-        /* Template buttons now inside the list area */
         .template-button-container { 
             display: flex; justify-content: flex-start; flex-wrap: wrap; 
             gap: 15px; margin-top: 20px; margin-bottom: 30px; 
@@ -198,7 +214,6 @@
         .js-scroll.fade-in-up { transform: translateY(30px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* --- MEDIA QUERIES --- */
         @media(max-width: 992px) {
             .main-nav { display: none; }
             .mobile-nav-toggle { display: block; background: none; border: none; cursor: pointer; z-index: 1001; margin-left: 10px; }
@@ -235,6 +250,11 @@
             .logo-container { gap: 5px; }
             .logo-container img { height: 32px !important; }
             .template-button-container { justify-content: center; padding-left: 0; }
+        }
+
+        @media(max-width: 576px) {
+            .loader-logo { width: 120px; }
+            .loader-content { width: 240px; }
         }
     </style>
 </head>
@@ -365,28 +385,104 @@
     <a href="mailto:satva@iitpkd.ac.in" class="floating-info-tab js-scroll fade-in-up">&#9993; info</a>
 
     <script>
-        // PRELOADER
-        (function(){let e=0,t=!1,n=document.getElementById("progress-bar"),o=document.getElementById("progress-text"),r=document.getElementById("preloader"),a=document.body,i=setInterval(()=>{e<90&&(e+=(e>70?.5:e>40?1:2)),e>99&&(e=99),n&&(n.style.width=Math.floor(e)+"%"),o&&(o.innerText=Math.floor(e)+"%")},30);function s(){if(!t){t=!0,clearInterval(i),n&&(n.style.width="100%"),o&&(o.innerText="100%"),setTimeout(()=>{r.style.opacity="0",r.style.visibility="hidden",a.classList.remove("loading-active"),setTimeout(()=>{r&&r.remove()},800)},300)}}window.addEventListener("load",s),setTimeout(s,4e3)})();
-        
-        // PAGE LOGIC
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        (function () {
+            let progress = 0;
+            let finished = false;
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const preloader = document.getElementById('preloader');
+            const body = document.body;
+
+            const interval = setInterval(() => {
+                if (progress < 90) progress += Math.random() * 15 + 5;
+                if (progress >= 95) progress = 95; 
+                if (progressBar) progressBar.style.width = Math.floor(progress) + '%';
+                if (progressText) progressText.innerText = Math.floor(progress) + '%';
+            }, 50);
+
+            function hidePreloader() {
+                if (finished) return;
+                finished = true;
+                clearInterval(interval);
+                
+                if (progressBar) progressBar.style.width = '100%';
+                if (progressText) progressText.innerText = '100%';
+                
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    body.classList.remove('loading-active');
+                    setTimeout(() => { if(preloader) preloader.remove(); }, 500);
+                }, 150);
+            }
+
+            window.addEventListener('load', hidePreloader);
+            setTimeout(hidePreloader, 5000); 
+        })();
+
         document.addEventListener('DOMContentLoaded', function() {
+            const desktopNav = document.getElementById('desktop-nav');
+            const mobileNavContainer = document.getElementById('mobile-nav');
+            const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
             
-            // Mobile Nav
-            const n=document.getElementById("desktop-nav"),o=document.getElementById("mobile-nav"),r=document.querySelector(".mobile-nav-toggle");if(n&&o&&r){let a=n.innerHTML,i=(new DOMParser).parseFromString(a,"text/html");i.querySelectorAll(".dropdown > a").forEach(e=>{let t=document.createElement("span");t.className="dropdown-toggle",e.appendChild(t)}),o.innerHTML=i.body.innerHTML,r.addEventListener("click",()=>{o.classList.toggle("active"),r.classList.toggle("active")}),o.addEventListener("click",function(e){if(e.target.classList.contains("dropdown-toggle")){e.preventDefault(),e.target.classList.toggle("open");let t=e.target.closest("li.dropdown");if(!t)return;let n=t.querySelector(".dropdown-menu");n&&n.classList.toggle("show")}else"A"===e.target.tagName&&!e.target.closest(".dropdown-menu")&&(o.classList.remove("active"),r.classList.remove("active"))})}
+            if (desktopNav && mobileNavContainer && mobileNavToggle) {
+                const ulElement = desktopNav.querySelector('ul');
+                if(ulElement) {
+                    const clonedNav = ulElement.cloneNode(true);
+                    clonedNav.querySelectorAll('.dropdown > a').forEach(link => {
+                        const toggle = document.createElement('span');
+                        toggle.className = 'dropdown-toggle';
+                        link.appendChild(toggle);
+                    });
+                    mobileNavContainer.appendChild(clonedNav);
+                }
+
+                mobileNavToggle.addEventListener('click', () => {
+                    mobileNavContainer.classList.toggle('active');
+                    mobileNavToggle.classList.toggle('active');
+                });
+
+                mobileNavContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('dropdown-toggle')) {
+                        e.preventDefault();
+                        e.target.classList.toggle('open');
+                        const li = e.target.closest('li.dropdown');
+                        if (!li) return;
+                        const menu = li.querySelector('.dropdown-menu');
+                        if (menu) { menu.classList.toggle('show'); }
+                    } else if (e.target.tagName === 'A' && !e.target.closest('.dropdown-menu')) {
+                        mobileNavContainer.classList.remove('active');
+                        mobileNavToggle.classList.remove('active');
+                    }
+                });
+            }
             
-            // Scroll Animation
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach((entry, index) => {
                         if (entry.isIntersecting) {
-                            entry.target.style.transitionDelay = `${index * 100}ms`;
+                            entry.target.style.transitionDelay = `${index * 50}ms`; 
                             entry.target.classList.add('visible');
                             observer.unobserve(entry.target);
                         }
                     });
                 }, { threshold: 0.1 });
-                animatedItems.forEach(item => { observer.observe(item); });
+                animatedItems.forEach(item => {
+                    observer.observe(item);
+                });
             }
         });
     </script>
