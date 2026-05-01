@@ -50,8 +50,11 @@
         html { scroll-behavior: smooth; overflow-x: hidden; }
         
         body.loading-active { overflow: hidden; height: 100vh; }
-        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: #fff; overflow-x: hidden; }
         
+        /* Flex setup ensures the footer sticks to the bottom of the page */
+        body { font-family: 'Roboto', sans-serif; color: var(--text-color); line-height: 1.6; background-color: #fff; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+        main { flex-grow: 1; }
+
         h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
@@ -287,6 +290,96 @@
         .js-scroll.fade-in-up { transform: translateY(30px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
+        /* --- Footer Styles --- */
+        .site-footer {
+            background-color: var(--dark-color);
+            color: var(--light-text-color);
+            padding-top: 60px;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .footer-links, .footer-contact {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-contact li {
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .footer-links a, .footer-contact a, .footer-contact li {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s, padding-left 0.3s;
+        }
+
+        .footer-links a:hover, .footer-contact a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-contact i {
+            color: var(--primary-color);
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            color: #aaaaaa;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* IndieWebCrafter Link Styling */
+        .dev-link {
+            color: var(--primary-color);
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .dev-link:hover {
+            color: var(--secondary-color);
+            text-shadow: 0 0 8px rgba(96, 108, 56, 0.4);
+        }
+
         @media(max-width: 992px) {
             .themes-grid { grid-template-columns: 1fr; max-width: 600px; }
             
@@ -349,6 +442,28 @@
             .logo-container { gap: 8px; flex-grow: 1; }
             .logo-container img { height: 40px !important; width: auto; max-width: 100%; }
             .logo-2 { height: 45px !important; } 
+        }
+
+        @media(max-width: 768px) {
+            /* Mobile Footer */
+            .footer-grid {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+            }
+            .footer-col h4::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .footer-logos {
+                justify-content: center;
+            }
+            .footer-bottom .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-bottom p {
+                text-align: center !important;
+            }
         }
 
         @media(max-width: 576px) {
@@ -478,6 +593,54 @@
         </section>
     </main>
     
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            
+            <div class="footer-col brand-col">
+                <div class="footer-logos" style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+                    <img src="images/logos/logo4.png" alt="SATVA Logo" style="width: 80px; height: auto; filter: brightness(0) invert(1);">
+                    <div style="width: 2px; height: 50px; background-color: rgba(255,255,255,0.2);"></div>
+                    <img src="images/logos/logo1.png" alt="IIT Palakkad Logo" style="width: 80px; height: auto; filter: brightness(0) invert(1);">
+                </div>
+                <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">Symposium on Advanced Technologies and Visionary Approaches for Sustainability.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programme.html">Programme</a></li>
+                    <li><a href="sponsors.html">Sponsors</a></li>
+                    <li><a href="registrations.html">Registration</a></li>
+                    <li><a href="accommodation.html">Accommodation</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="footer-contact">
+                    <li style="display: flex; align-items: flex-start; gap: 10px;">
+                        <i class="fas fa-map-marker-alt" style="margin-top: 5px;"></i> 
+                        <a href="https://goo.gl/maps/LXzZJEUFw5QCTrEDA" target="_blank" rel="noopener noreferrer">Indian Institute of Technology Palakkad, Kanjikode, Kerala, India - 678623</a>
+                    </li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:satva@iitpkd.ac.in">satva@iitpkd.ac.in</a></li>
+                    <li>
+                        <i class="fas fa-phone-alt"></i> 
+                        <a href="tel:+914912091107">+91 491 209 1107</a> &nbsp;|&nbsp; 
+                        <a href="tel:+914912091351">+91 491 209 1351</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <p style="text-align: left; margin: 0;">&copy; <span id="current-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
+                <p style="text-align: right; margin: 0;">Designed & Developed by <a href="https://indiewebcrafter.com/" target="_blank" rel="noopener noreferrer" class="dev-link">IndieWebCrafter</a></p>
+            </div>
+        </div>
+    </footer>
+
     <script>
         document.addEventListener('contextmenu', function(e) {
             if (e.target.tagName === 'IMG') {
