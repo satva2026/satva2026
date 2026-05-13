@@ -8,7 +8,11 @@
     <title>SATVA 2026 | Symposium on Advanced Technologies and Visionary Approaches for Sustainability</title>
     <meta name="description" content="Join SATVA 2026 at IIT Palakkad (June 04-06, 2026). Explore Pavement Sustainability Frontiers: From Materials to Maintenance. Register now for expert lectures, paper presentations, and panel discussions.">
     <meta name="keywords" content="SATVA 2026, IIT Palakkad, Sustainability Symposium, Pavement Sustainability, Civil Engineering Conference India, Green Geotechnics, Asphalt Technologies, Rigid Pavements, ESSENCE">
-    <meta name="author" content="Environmental Sciences and Sustainable Engineering Centre (ESSENCE), IIT Palakkad">
+    
+    <meta name="author" content="IndieWebCrafter">
+    <meta name="developer" content="IndieWebCrafter">
+    <link rel="author" href="https://indiewebcrafter.com/">
+    
     <meta name="robots" content="index, follow">
     
     <link rel="canonical" href="https://satva.iitpkd.ac.in/">
@@ -182,7 +186,8 @@
 
         .current-sponsors { text-align: center; margin-top: 40px; margin-bottom: 20px; padding: 40px 0; background-color: #fff; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
         .showcase-grid { display: flex; justify-content: center; align-items: stretch; flex-wrap: wrap; gap: 40px; padding: 20px; }
-        .showcase-card { background: #fff; padding: 45px 30px 35px; border-radius: 15px; text-align: center; width: 100%; max-width: 400px; position: relative; border: 2px solid transparent; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; justify-content: space-between; margin: 0 auto; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        /* Removed margin: 0 auto; from .showcase-card to allow consistent gapping */
+        .showcase-card { background: #fff; padding: 45px 30px 35px; border-radius: 15px; text-align: center; width: 100%; max-width: 400px; position: relative; border: 2px solid transparent; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; justify-content: space-between; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .showcase-card:hover { transform: translateY(-8px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
         
         .showcase-card.symposium-tier { border-color: var(--primary-color); background: linear-gradient(120deg, #ffffff, #f9faf4); max-width: 800px; }
@@ -715,6 +720,16 @@
                                 <a href="https://jpscientificequip.com/" target="_blank" rel="noopener noreferrer" class="action-btn btn-solid">Visit Website</a>
                             </div>
                         </div>
+
+                        <div class="showcase-card gold-tier">
+                            <div class="tier-label">Gold Sponsor</div>
+                            <img src="images/sponsors/anton-paar-logo.png" alt="Anton Paar Logo" class="sponsor-logo" loading="lazy">
+                            <h4 class="sponsor-name">Anton Paar</h4>
+                            <div class="card-actions">
+                                <button class="action-btn btn-outline" onclick="window.openModal('anton-paar-modal')">Read More</button>
+                                <a href="https://www.anton-paar.com/in-en/" target="_blank" rel="noopener noreferrer" class="action-btn btn-solid">Visit Website</a>
+                            </div>
+                        </div>
                         
                     </div>
                 </div>
@@ -1068,6 +1083,17 @@
                 <p><strong>Supplier of the Wide Range of Material Testing Equipment</strong></p>
                 <p>JP Scientific Equipments, a partnership firm was established by Nileysh S Laiya, an Engineer by education having Bachelor degree in Production Engineering, passed out in the year 1995 from Bombay University having diversified experience over 20 years in sales and after sales support of various kind of laboratory equipments in the field of petroleum, pharmaceutical, Chemical and construction industries.</p>
                 <p>JP Scientific Equipments was founded in the year 2008 with focus on material testing equipment and petroleum testing equipment, offering reputed brand from across the globe and providing best quality to price ratio to the industry, research and Education Institute needs.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="anton-paar-modal" class="sponsor-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="window.closeModal('anton-paar-modal')">&times;</span>
+            <img src="images/sponsors/anton-paar-logo.png" alt="Anton Paar Logo" class="modal-header-logo">
+            <h3 class="modal-title">Anton Paar</h3>
+            <div class="modal-body-text">
+                <p>Anton Paar develops, produces and distributes highly accurate laboratory instruments and process measuring systems, and provides custom-tailored automation and robotic solutions. It is the world leader in the measurement of density, concentration and CO₂ and in the field of rheometry. As part of the Anton Paar Group AG, Anton Paar GmbH is owned by the charitable Santner Foundation.</p>
             </div>
         </div>
     </div>
