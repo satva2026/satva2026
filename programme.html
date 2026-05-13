@@ -9,6 +9,11 @@
     <meta name="description" content="View the official programme schedule for SATVA 2026. Join us for keynote presentations, panel discussions, networking, and cultural events at IIT Palakkad.">
     <meta name="keywords" content="SATVA 2026 Programme, Symposium Schedule, Civil Engineering Events, IIT Palakkad Schedule, Sustainability Symposium">
     <meta name="author" content="Environmental Sciences and Sustainable Engineering Centre (ESSENCE), IIT Palakkad">
+    
+    <meta name="author" content="IndieWebCrafter">
+    <meta name="developer" content="IndieWebCrafter">
+    <link rel="author" href="https://indiewebcrafter.com/">
+    
     <meta name="robots" content="index, follow">
     
     <link rel="canonical" href="https://satva.iitpkd.ac.in/programme.html">
@@ -34,7 +39,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500;700&family=Barlow+Condensed:ital,wght@0,300;0,700;0,900;1,900&family=Syne:wght@400;700;800&family=Fragment+Mono&display=swap');
         
         :root {
             --primary-color: #606C38; 
@@ -183,6 +188,218 @@
         .detail-col h4 { font-size: 1.1rem; margin-bottom: 5px; color: var(--dark-color); }
         .detail-col p { font-size: 0.9rem; color: #666; margin: 0; }
 
+        /* --- Cultural Programs Section --- */
+        #cultural-programs {
+            --ink: #05040a;
+            --cream: #f0ece3;
+            --fire: #ff2a1f;
+            --gold: #e8c84a;
+            --dim: rgba(240,236,227,0.5);
+            --hd: 'Barlow Condensed', sans-serif;
+            --body: 'Syne', sans-serif;
+            --mono: 'Fragment Mono', monospace;
+
+            position: relative;
+            padding: 120px 0;
+            background: var(--ink);
+            color: var(--cream);
+            font-family: var(--body);
+            overflow: hidden;
+        }
+
+        .malhar-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Overlay with radial gradients + scanlines for rock vibe */
+        .malhar-overlay {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(255,42,31,0.22) 0%, transparent 70%),
+                        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,200,74,0.06) 0%, transparent 60%),
+                        rgba(5,4,10,0.85);
+            z-index: 1;
+        }
+        .malhar-overlay::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+            pointer-events: none;
+        }
+
+        .malhar-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .malhar-header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 0 20px;
+        }
+
+        .malhar-logo {
+            height: 160px; /* Increased size */
+            filter: invert(1);
+            margin-bottom: 20px;
+            transition: filter 0.3s, transform 0.3s;
+        }
+        .malhar-logo:hover {
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(-10deg);
+            transform: scale(1.05);
+        }
+
+        .malhar-title {
+            font-family: var(--hd);
+            font-size: clamp(2.5rem, 6vw, 5.5rem); /* Slightly adjusted for longer text */
+            font-weight: 900;
+            font-style: italic;
+            color: var(--cream);
+            line-height: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+        }
+        .malhar-title span { color: var(--fire); }
+
+        .malhar-details {
+            font-family: var(--mono);
+            font-size: 1rem;
+            color: var(--dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 25px;
+        }
+
+        .stay-tuned {
+            display: inline-block;
+            font-family: var(--hd);
+            font-size: 2.2rem;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 30px;
+            animation: neonPulse 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px var(--gold), 0 0 15px var(--gold); transform: scale(1); }
+            100% { text-shadow: 0 0 10px #fff, 0 0 20px var(--gold), 0 0 30px var(--gold), 0 0 40px var(--gold); transform: scale(1.05); }
+        }
+
+        .team-heading {
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            letter-spacing: 0.2em;
+            color: var(--fire);
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 5%;
+        }
+        .team-heading::before {
+            content: '';
+            display: block;
+            width: 36px;
+            height: 1px;
+            background: var(--fire);
+        }
+
+        .members-track-container {
+            width: 100%;
+            overflow: hidden; /* Hide overflow for continuous marquee */
+            padding-bottom: 20px;
+        }
+
+        /* Continuous Auto-scrolling Animation */
+        .members-track {
+            display: flex;
+            gap: 0;
+            width: max-content;
+            animation: marqueeScroll 25s linear infinite;
+        }
+        
+        .members-track:hover {
+            animation-play-state: paused; /* Pause on hover for better visibility */
+        }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* Translates exactly half the width to seamlessly loop */
+        }
+
+        .member-slide {
+            min-width: 250px; /* Reduced size */
+            width: 250px;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid rgba(240,236,227,0.06);
+            user-select: none;
+        }
+
+        .member-slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5,4,10,0.95) 20%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .member-slide img {
+            width: 100%;
+            height: 350px; /* Reduced size */
+            object-fit: cover;
+            display: block;
+            filter: grayscale(60%) contrast(1.15);
+            transition: transform 1s cubic-bezier(.23,1,.32,1), filter 0.6s;
+            pointer-events: none;
+        }
+
+        .member-slide:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%) contrast(1.1);
+        }
+
+        .member-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            padding: 20px 24px;
+            pointer-events: none;
+        }
+
+        .member-instrument {
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.2em;
+            color: var(--fire);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .member-name {
+            font-family: var(--hd);
+            font-size: 2.2rem;
+            font-weight: 900;
+            font-style: italic;
+            color: var(--cream);
+            line-height: 1;
+        }
+
         .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .js-scroll.fade-in-up { transform: translateY(40px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
@@ -307,7 +524,6 @@
         }
 
         @media(max-width: 768px) {
-            /* Mobile Footer */
             .footer-grid {
                 grid-template-columns: 1fr !important;
                 text-align: center;
@@ -325,6 +541,17 @@
             }
             .footer-bottom p {
                 text-align: center !important;
+            }
+            
+            /* Malhar mobile tweaks */
+            .malhar-logo {
+                height: 120px;
+            }
+            .malhar-title {
+                font-size: 3rem;
+            }
+            .stay-tuned {
+                font-size: 1.8rem;
             }
         }
 
@@ -413,6 +640,10 @@
                     <a href="committee.html" class="nav-card">
                         <i class="fas fa-users"></i>
                         <span>View Organising Committee</span>
+                    </a>
+                    <a href="#cultural-programs" class="nav-card">
+                        <i class="fas fa-guitar"></i>
+                        <span>Cultural Program</span>
                     </a>
                 </div>
 
@@ -539,6 +770,146 @@
                 </div>
             </div>
         </section>
+
+        <section id="cultural-programs">
+            <video autoplay loop muted playsinline class="malhar-bg-video">
+                <source src="videos/culturals/malharpromo.webm" type="video/webm">
+            </video>
+            
+            <div class="malhar-overlay"></div>
+            
+            <div class="malhar-content">
+                <div class="malhar-header js-scroll fade-in-up">
+                    <img src="images/culturals/malhar.png" alt="Malhar Musical Band Logo" class="malhar-logo">
+                    <h2 class="malhar-title">Feel The Melody,<br><span>Live The Rhythm</span></h2>
+                    <p class="malhar-details">Live Concert &bull; June 05, 2026 &bull; 6:00 PM to 8:00 PM</p>
+                    <div class="stay-tuned">Stay Tuned!</div>
+                </div>
+
+                <div class="js-scroll fade-in-up">
+                    <div class="team-heading">The Artists</div>
+                    
+                    <div class="members-track-container" id="draggable-track">
+                        <div class="members-track">
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art1.webp" alt="Vaishnavi - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Vaishnavi</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art2.webp" alt="Sreya - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Sreya</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art3.webp" alt="Navaneeth - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Navaneeth</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art4.webp" alt="Shyam - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Shyam</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art5.webp" alt="Albinus - Keyboard" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Keyboard</div>
+                                    <div class="member-name">Albinus</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art6.webp" alt="Siddharth - Drums" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Drums</div>
+                                    <div class="member-name">Siddharth</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art7.webp" alt="Sanjay - Guitar" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Guitar</div>
+                                    <div class="member-name">Sanjay</div>
+                                </div>
+                            </div>
+
+                            <div class="member-slide">
+                                <img src="images/culturals/art1.webp" alt="Vaishnavi - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Vaishnavi</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art2.webp" alt="Sreya - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Sreya</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art3.webp" alt="Navaneeth - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Navaneeth</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art4.webp" alt="Shyam - Vocals" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Vocals</div>
+                                    <div class="member-name">Shyam</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art5.webp" alt="Albinus - Keyboard" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Keyboard</div>
+                                    <div class="member-name">Albinus</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art6.webp" alt="Siddharth - Drums" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Drums</div>
+                                    <div class="member-name">Siddharth</div>
+                                </div>
+                            </div>
+                            
+                            <div class="member-slide">
+                                <img src="images/culturals/art7.webp" alt="Sanjay - Guitar" draggable="false">
+                                <div class="member-info">
+                                    <div class="member-instrument">Guitar</div>
+                                    <div class="member-name">Sanjay</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
     
     <footer class="site-footer">
