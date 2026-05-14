@@ -59,7 +59,7 @@
         
         main { flex-grow: 1; }
 
-        h1, h2, h3, h4 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        h1, h2, h3, h4, h5 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
 
         img {
@@ -163,30 +163,57 @@
         .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 40px; color: var(--dark-color); position: relative; }
         .section-title::after { content: ''; display: block; width: 80px; height: 4px; background: var(--primary-color); margin: 15px auto 0; border-radius: 2px; }
         
-        .placeholder-text { text-align: center; font-size: 1.1rem; color: #666; max-width: 700px; margin: 0 auto 60px auto; }
-
         .nav-grid { display: flex; justify-content: center; gap: 30px; margin-bottom: 60px; flex-wrap: wrap; }
         .nav-card { background: #fff; padding: 20px 40px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-decoration: none; color: var(--dark-color); display: flex; align-items: center; gap: 15px; transition: transform 0.3s, box-shadow 0.3s; border-left: 5px solid var(--secondary-color); min-width: 250px; }
         .nav-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .nav-card i { font-size: 1.5rem; color: var(--primary-color); }
         .nav-card span { font-weight: 700; font-size: 1.1rem; }
 
-        .schedule-wrapper { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .day-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s ease; }
-        .day-card:hover { transform: translateY(-5px); }
+        /* --- Dynamic Schedule Tabs & Content --- */
+        .schedule-tabs-container { margin-bottom: 40px; }
+        .schedule-tabs { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .tab-btn { background: #fff; border: 2px solid var(--primary-color); color: var(--primary-color); font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.1rem; padding: 12px 30px; border-radius: 30px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; min-width: 160px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .tab-btn span.date { font-size: 0.85rem; font-weight: 400; margin-top: 5px; color: #555; }
+        .tab-btn:hover { background: rgba(96, 108, 56, 0.1); transform: translateY(-3px); }
+        .tab-btn.active { background: var(--primary-color); color: #fff; box-shadow: 0 6px 15px rgba(96, 108, 56, 0.3); transform: translateY(-3px); }
+        .tab-btn.active span.date { color: #eee; }
 
-        .day-header { background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: #fff; padding: 20px; text-align: center; }
-        .day-header h3 { margin: 0; font-size: 1.5rem; }
-        .day-header span { font-size: 0.9rem; opacity: 0.9; font-weight: 500; }
+        .schedule-pane { display: none; animation: fadeInPane 0.5s ease-out forwards; }
+        .schedule-pane.active { display: block; }
+        
+        @keyframes fadeInPane {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        .day-body { padding: 25px; }
+        .schedule-list { background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); padding: 30px; }
+        
+        .sch-row { display: flex; border-bottom: 1px solid #eee; padding: 20px 0; }
+        .sch-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .sch-row:first-child { padding-top: 0; }
+        
+        .sch-time { width: 140px; flex-shrink: 0; font-weight: 700; color: var(--primary-color); font-family: 'Montserrat', sans-serif; font-size: 1.1rem; display: flex; flex-direction: column; }
+        .sch-time i { margin-right: 8px; font-size: 0.9rem; }
+        
+        .sch-content { flex-grow: 1; }
+        
+        .sch-single { background: #f9f9f9; padding: 15px 20px; border-left: 4px solid var(--secondary-color); border-radius: 5px; }
+        .sch-single h4 { margin-bottom: 5px; color: var(--dark-color); font-size: 1.15rem; }
+        
+        .sch-parallel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .sch-track { background: #fff; border: 1px solid #e0e0e0; padding: 15px 20px; border-top: 4px solid var(--primary-color); border-radius: 5px; transition: box-shadow 0.3s; }
+        .sch-track:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .sch-track h5 { margin-bottom: 8px; color: var(--dark-color); font-size: 1.05rem; }
+        
+        .venue-tag { display: inline-flex; align-items: center; gap: 5px; background: rgba(96, 108, 56, 0.1); color: var(--secondary-color); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-top: 8px; }
+        .venue-tag i { font-size: 0.75rem; }
 
-        .time-slot { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-        .time-slot:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-        .icon-col { color: var(--primary-color); font-size: 1.2rem; width: 30px; text-align: center; padding-top: 3px; }
-        .detail-col h4 { font-size: 1.1rem; margin-bottom: 5px; color: var(--dark-color); }
-        .detail-col p { font-size: 0.9rem; color: #666; margin: 0; }
+        @media (max-width: 768px) {
+            .sch-row { flex-direction: column; gap: 15px; }
+            .sch-time { width: 100%; border-bottom: 1px dashed #ddd; padding-bottom: 10px; flex-direction: row; align-items: center; }
+            .sch-parallel { grid-template-columns: 1fr; }
+            .tab-btn { width: 100%; }
+        }
 
         /* --- Cultural Programs Section --- */
         #cultural-programs {
@@ -207,292 +234,58 @@
             overflow: hidden;
         }
 
-        .malhar-bg-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        /* Overlay with radial gradients + scanlines for rock vibe */
-        .malhar-overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(255,42,31,0.22) 0%, transparent 70%),
-                        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,200,74,0.06) 0%, transparent 60%),
-                        rgba(5,4,10,0.85);
-            z-index: 1;
-        }
-        .malhar-overlay::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
-            pointer-events: none;
-        }
-
-        .malhar-content {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-        }
-
-        .malhar-header {
-            text-align: center;
-            margin-bottom: 80px;
-            padding: 0 20px;
-        }
-
-        .malhar-logo {
-            height: 160px; /* Increased size */
-            filter: invert(1);
-            margin-bottom: 20px;
-            transition: filter 0.3s, transform 0.3s;
-        }
-        .malhar-logo:hover {
-            filter: invert(1) sepia(1) saturate(5) hue-rotate(-10deg);
-            transform: scale(1.05);
-        }
-
-        .malhar-title {
-            font-family: var(--hd);
-            font-size: clamp(2.5rem, 6vw, 5.5rem); /* Slightly adjusted for longer text */
-            font-weight: 900;
-            font-style: italic;
-            color: var(--cream);
-            line-height: 0.9;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-        }
+        .malhar-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+        .malhar-overlay { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 110%, rgba(255,42,31,0.22) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 80% 20%, rgba(232,200,74,0.06) 0%, transparent 60%), rgba(5,4,10,0.85); z-index: 1; }
+        .malhar-overlay::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px); pointer-events: none; }
+        .malhar-content { position: relative; z-index: 2; width: 100%; }
+        .malhar-header { text-align: center; margin-bottom: 80px; padding: 0 20px; }
+        .malhar-logo { height: 160px; filter: invert(1); margin-bottom: 20px; transition: filter 0.3s, transform 0.3s; }
+        .malhar-logo:hover { filter: invert(1) sepia(1) saturate(5) hue-rotate(-10deg); transform: scale(1.05); }
+        .malhar-title { font-family: var(--hd); font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 900; font-style: italic; color: var(--cream); line-height: 0.9; margin-bottom: 10px; text-transform: uppercase; letter-spacing: -0.01em; }
         .malhar-title span { color: var(--fire); }
-
-        .malhar-details {
-            font-family: var(--mono);
-            font-size: 1rem;
-            color: var(--dim);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-top: 25px;
-        }
-
-        .stay-tuned {
-            display: inline-block;
-            font-family: var(--hd);
-            font-size: 2.2rem;
-            font-weight: 900;
-            font-style: italic;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-top: 30px;
-            animation: neonPulse 1.5s ease-in-out infinite alternate;
-        }
+        .malhar-details { font-family: var(--mono); font-size: 1rem; color: var(--dim); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 25px; }
+        .stay-tuned { display: inline-block; font-family: var(--hd); font-size: 2.2rem; font-weight: 900; font-style: italic; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 30px; animation: neonPulse 1.5s ease-in-out infinite alternate; }
 
         @keyframes neonPulse {
             0% { text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px var(--gold), 0 0 15px var(--gold); transform: scale(1); }
             100% { text-shadow: 0 0 10px #fff, 0 0 20px var(--gold), 0 0 30px var(--gold), 0 0 40px var(--gold); transform: scale(1.05); }
         }
 
-        .team-heading {
-            font-family: var(--mono);
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
-            color: var(--fire);
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 0 5%;
-        }
-        .team-heading::before {
-            content: '';
-            display: block;
-            width: 36px;
-            height: 1px;
-            background: var(--fire);
-        }
+        .team-heading { font-family: var(--mono); font-size: 0.9rem; letter-spacing: 0.2em; color: var(--fire); text-transform: uppercase; margin-bottom: 30px; display: flex; align-items: center; gap: 14px; padding: 0 5%; }
+        .team-heading::before { content: ''; display: block; width: 36px; height: 1px; background: var(--fire); }
+        .members-track-container { width: 100%; overflow: hidden; padding-bottom: 20px; }
+        .members-track { display: flex; gap: 0; width: max-content; animation: marqueeScroll 25s linear infinite; }
+        .members-track:hover { animation-play-state: paused; }
 
-        .members-track-container {
-            width: 100%;
-            overflow: hidden; /* Hide overflow for continuous marquee */
-            padding-bottom: 20px;
-        }
+        @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Continuous Auto-scrolling Animation */
-        .members-track {
-            display: flex;
-            gap: 0;
-            width: max-content;
-            animation: marqueeScroll 25s linear infinite;
-        }
-        
-        .members-track:hover {
-            animation-play-state: paused; /* Pause on hover for better visibility */
-        }
-
-        @keyframes marqueeScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); } /* Translates exactly half the width to seamlessly loop */
-        }
-
-        .member-slide {
-            min-width: 250px; /* Reduced size */
-            width: 250px;
-            position: relative;
-            overflow: hidden;
-            border-right: 1px solid rgba(240,236,227,0.06);
-            user-select: none;
-        }
-
-        .member-slide::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(5,4,10,0.95) 20%, transparent 60%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .member-slide img {
-            width: 100%;
-            height: 350px; /* Reduced size */
-            object-fit: cover;
-            display: block;
-            filter: grayscale(60%) contrast(1.15);
-            transition: transform 1s cubic-bezier(.23,1,.32,1), filter 0.6s;
-            pointer-events: none;
-        }
-
-        .member-slide:hover img {
-            transform: scale(1.08);
-            filter: grayscale(0%) contrast(1.1);
-        }
-
-        .member-info {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 2;
-            padding: 20px 24px;
-            pointer-events: none;
-        }
-
-        .member-instrument {
-            font-family: var(--mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
-            color: var(--fire);
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        .member-name {
-            font-family: var(--hd);
-            font-size: 2.2rem;
-            font-weight: 900;
-            font-style: italic;
-            color: var(--cream);
-            line-height: 1;
-        }
+        .member-slide { min-width: 250px; width: 250px; position: relative; overflow: hidden; border-right: 1px solid rgba(240,236,227,0.06); user-select: none; }
+        .member-slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,4,10,0.95) 20%, transparent 60%); z-index: 1; pointer-events: none; }
+        .member-slide img { width: 100%; height: 350px; object-fit: cover; display: block; filter: grayscale(60%) contrast(1.15); transition: transform 1s cubic-bezier(.23,1,.32,1), filter 0.6s; pointer-events: none; }
+        .member-slide:hover img { transform: scale(1.08); filter: grayscale(0%) contrast(1.1); }
+        .member-info { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 20px 24px; pointer-events: none; }
+        .member-instrument { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--fire); text-transform: uppercase; margin-bottom: 6px; }
+        .member-name { font-family: var(--hd); font-size: 2.2rem; font-weight: 900; font-style: italic; color: var(--cream); line-height: 1; }
 
         .js-scroll { opacity: 0; transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .js-scroll.fade-in-up { transform: translateY(40px); }
         .js-scroll.fade-in-up.visible { opacity: 1; transform: translateY(0); }
 
         /* --- Footer Styles --- */
-        .site-footer {
-            background-color: var(--dark-color);
-            color: var(--light-text-color);
-            padding-top: 60px;
-            margin-top: auto;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1.5fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-col h4 {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        .footer-col h4::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 3px;
-            background-color: var(--primary-color);
-            border-radius: 2px;
-        }
-
-        .footer-links, .footer-contact {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-contact li {
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .footer-links a, .footer-contact a, .footer-contact li {
-            color: #cccccc;
-            text-decoration: none;
-            font-size: 0.95rem;
-            transition: color 0.3s, padding-left 0.3s;
-        }
-
-        .footer-links a:hover, .footer-contact a:hover {
-            color: var(--primary-color);
-            padding-left: 5px;
-        }
-
-        .footer-contact i {
-            color: var(--primary-color);
-            width: 20px;
-            margin-right: 10px;
-        }
-
-        .footer-bottom {
-            background-color: rgba(0, 0, 0, 0.3);
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .footer-bottom p {
-            color: #aaaaaa;
-            font-size: 0.9rem;
-            margin: 0;
-        }
-
-        /* IndieWebCrafter Link Styling */
-        .dev-link {
-            color: var(--primary-color);
-            font-weight: 700;
-            text-decoration: none;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
-
-        .dev-link:hover {
-            color: var(--secondary-color);
-            text-shadow: 0 0 8px rgba(96, 108, 56, 0.4);
-        }
+        .site-footer { background-color: var(--dark-color); color: var(--light-text-color); padding-top: 60px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+        .footer-col h4 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 20px; position: relative; padding-bottom: 10px; }
+        .footer-col h4::after { content: ''; position: absolute; left: 0; bottom: 0; width: 40px; height: 3px; background-color: var(--primary-color); border-radius: 2px; }
+        .footer-links, .footer-contact { list-style: none; }
+        .footer-links li, .footer-contact li { margin-bottom: 12px; }
+        .footer-contact li { line-height: 1.4; }
+        .footer-links a, .footer-contact a, .footer-contact li { color: #cccccc; text-decoration: none; font-size: 0.95rem; transition: color 0.3s, padding-left 0.3s; }
+        .footer-links a:hover, .footer-contact a:hover { color: var(--primary-color); padding-left: 5px; }
+        .footer-contact i { color: var(--primary-color); width: 20px; margin-right: 10px; }
+        .footer-bottom { background-color: rgba(0, 0, 0, 0.3); padding: 20px 0; text-align: center; }
+        .footer-bottom p { color: #aaaaaa; font-size: 0.9rem; margin: 0; }
+        .dev-link { color: var(--primary-color); font-weight: 700; text-decoration: none; transition: color 0.3s ease, text-shadow 0.3s ease; }
+        .dev-link:hover { color: var(--secondary-color); text-shadow: 0 0 8px rgba(96, 108, 56, 0.4); }
 
         @media(max-width: 992px) {
             .main-nav { display: none; }
@@ -524,35 +317,14 @@
         }
 
         @media(max-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 1fr !important;
-                text-align: center;
-            }
-            .footer-col h4::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            .footer-logos {
-                justify-content: center;
-            }
-            .footer-bottom .container {
-                flex-direction: column;
-                text-align: center;
-            }
-            .footer-bottom p {
-                text-align: center !important;
-            }
-            
-            /* Malhar mobile tweaks */
-            .malhar-logo {
-                height: 120px;
-            }
-            .malhar-title {
-                font-size: 3rem;
-            }
-            .stay-tuned {
-                font-size: 1.8rem;
-            }
+            .footer-grid { grid-template-columns: 1fr !important; text-align: center; }
+            .footer-col h4::after { left: 50%; transform: translateX(-50%); }
+            .footer-logos { justify-content: center; }
+            .footer-bottom .container { flex-direction: column; text-align: center; }
+            .footer-bottom p { text-align: center !important; }
+            .malhar-logo { height: 120px; }
+            .malhar-title { font-size: 3rem; }
+            .stay-tuned { font-size: 1.8rem; }
         }
 
         @media(max-width: 576px) {
@@ -622,12 +394,8 @@
     <main>
         <section class="content-section">
             <div class="container">
-                <h2 class="section-title js-scroll fade-in-up">Programme</h2>
+                <h2 class="section-title js-scroll fade-in-up">Technical Programme</h2>
                 
-                <p class="placeholder-text js-scroll fade-in-up">
-                    The detailed technical programme schedule will be updated here closer to the event date. Below is a tentative structure of the symposium.
-                </p>
-
                 <div class="nav-grid js-scroll fade-in-up">
                     <a href="timeline.html" class="nav-card">
                         <i class="fas fa-calendar-alt"></i>
@@ -647,127 +415,308 @@
                     </a>
                 </div>
 
-                <div class="schedule-wrapper js-scroll fade-in-up">
-                    
-                    <div class="day-card">
-                        <div class="day-header">
-                            <h3>Day 1</h3>
-                            <span>June 04, 2026</span>
-                        </div>
-                        <div class="day-body">
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-star"></i></div>
-                                <div class="detail-col">
-                                    <h4>Inauguration</h4>
-                                    <p>Opening Ceremony</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-microphone-alt"></i></div>
-                                <div class="detail-col">
-                                    <h4>Keynote Presentations</h4>
-                                    <p>Academic & Industry Experts</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-utensils"></i></div>
-                                <div class="detail-col">
-                                    <h4>Networking Lunch</h4>
-                                    <p>Refreshments & Interaction</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-chalkboard-teacher"></i></div>
-                                <div class="detail-col">
-                                    <h4>Presentations</h4>
-                                    <p>Oral (Parallel) & Poster Sessions</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-bus"></i></div>
-                                <div class="detail-col">
-                                    <h4>Social Tour</h4>
-                                    <p>Local Excursion</p>
-                                </div>
-                            </div>
-                        </div>
+                <div class="schedule-tabs-container js-scroll fade-in-up">
+                    <div class="schedule-tabs">
+                        <button class="tab-btn" data-target="day1">
+                            Day 1
+                            <span class="date">June 04, 2026</span>
+                        </button>
+                        <button class="tab-btn" data-target="day2">
+                            Day 2
+                            <span class="date">June 05, 2026</span>
+                        </button>
+                        <button class="tab-btn" data-target="day3">
+                            Day 3
+                            <span class="date">June 06, 2026</span>
+                        </button>
                     </div>
-
-                    <div class="day-card">
-                        <div class="day-header">
-                            <h3>Day 2</h3>
-                            <span>June 05, 2026</span>
-                        </div>
-                        <div class="day-body">
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-microphone-alt"></i></div>
-                                <div class="detail-col">
-                                    <h4>Keynote Presentations</h4>
-                                    <p>Academic & Industry Experts</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-utensils"></i></div>
-                                <div class="detail-col">
-                                    <h4>Networking Lunch</h4>
-                                    <p>Refreshments & Interaction</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-chalkboard-teacher"></i></div>
-                                <div class="detail-col">
-                                    <h4>Presentations</h4>
-                                    <p>Oral (Parallel) & Poster Sessions</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-music"></i></div>
-                                <div class="detail-col">
-                                    <h4>Cultural Program</h4>
-                                    <p>Evening Entertainment</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-glass-cheers"></i></div>
-                                <div class="detail-col">
-                                    <h4>Gala Dinner</h4>
-                                    <p>Networking & Dining</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="day-card">
-                        <div class="day-header">
-                            <h3>Day 3</h3>
-                            <span>June 06, 2026</span>
-                        </div>
-                        <div class="day-body">
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-microphone-alt"></i></div>
-                                <div class="detail-col">
-                                    <h4>Keynote Presentation</h4>
-                                    <p>Expert Lecture</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-users"></i></div>
-                                <div class="detail-col">
-                                    <h4>Panel Discussion</h4>
-                                    <p>Interactive Session</p>
-                                </div>
-                            </div>
-                            <div class="time-slot">
-                                <div class="icon-col"><i class="fas fa-utensils"></i></div>
-                                <div class="detail-col">
-                                    <h4>Networking Lunch</h4>
-                                    <p>Closing Refreshments</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
+
+                <!-- DAY 1 PANE -->
+                <div class="schedule-pane" id="day1">
+                    <div class="schedule-list js-scroll fade-in-up">
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 09:00 - 09:30</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Registration</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 09:30 - 10:30</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Inauguration</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 10:30 - 11:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Hi Tea</h4>
+                                    <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 11:00 - 12:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Keynote 1: Prof. Viswanadham</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 12:00 - 13:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Keynote 2: Prof. K P Biligiri</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 13:00 - 14:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Lunch</h4>
+                                    <span class="venue-tag"><i class="fas fa-utensils"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 14:00 - 14:30</div>
+                            <div class="sch-content">
+                                <div class="sch-parallel">
+                                    <div class="sch-track">
+                                        <h5>Invited Talk 1: Minimol Korulla</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    </div>
+                                    <div class="sch-track">
+                                        <h5>Invited Talk 2: Nikhil Saboo</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 14:30 - 16:00</div>
+                            <div class="sch-content">
+                                <div class="sch-parallel">
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS1</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    </div>
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS2</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 16:00 - 16:30</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Tea</h4>
+                                    <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 16:30 - 17:30</div>
+                            <div class="sch-content">
+                                <div class="sch-parallel">
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS3</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    </div>
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS4</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DAY 2 PANE -->
+                <div class="schedule-pane" id="day2">
+                    <div class="schedule-list js-scroll fade-in-up">
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 09:00 - 10:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Keynote 3: Prof. Animesh Das</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 10:00 - 11:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Keynote 4: Prof. Narayanan N</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 11:00 - 11:30</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Tea</h4>
+                                    <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 11:30 - 12:00</div>
+                            <div class="sch-content">
+                                <div class="sch-parallel">
+                                    <div class="sch-track">
+                                        <h5>Invited Talk 3: Prakash Nanthagopalan</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    </div>
+                                    <div class="sch-track">
+                                        <h5>Invited Talk 4: Abhishek Tiwari</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 12:00 - 13:00</div>
+                            <div class="sch-content">
+                                <div class="sch-parallel">
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS5</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    </div>
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS6</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 13:00 - 14:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Lunch</h4>
+                                    <span class="venue-tag"><i class="fas fa-utensils"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 14:00 - 15:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Panel Discussion</h4>
+                                    <span class="venue-tag"><i class="fas fa-users"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 15:00 - 16:30</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Poster presentation + Hi Tea</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 18:00 - 20:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single" style="border-left-color: #ff2a1f;">
+                                    <h4>Cultural Program & Dinner</h4>
+                                    <span class="venue-tag" style="background: rgba(255,42,31,0.1); color: #ff2a1f;"><i class="fas fa-guitar"></i> Agora</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DAY 3 PANE -->
+                <div class="schedule-pane" id="day3">
+                    <div class="schedule-list js-scroll fade-in-up">
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 09:00 - 10:00</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Keynote 5: Prof. Manu Santhanam</h4>
+                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 10:00 - 10:15</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Tea</h4>
+                                    <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 10:15 - 10:45</div>
+                            <div class="sch-content">
+                                <div class="sch-parallel">
+                                    <div class="sch-track">
+                                        <h5>Invited Talk 5: Vishal Thombare</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    </div>
+                                    <div class="sch-track">
+                                        <h5>Invited Talk 6: Vinod Kr Mauriya</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 10:45 - 12:15</div>
+                            <div class="sch-content">
+                                <div class="sch-parallel">
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS7</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    </div>
+                                    <div class="sch-track">
+                                        <h5>Oral presentation PS8</h5>
+                                        <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 12:15 - 13:15</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Valedictory</h4>
+                                    <span class="venue-tag"><i class="fas fa-award"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sch-row">
+                            <div class="sch-time"><i class="far fa-clock"></i> 13:15 - 14:45</div>
+                            <div class="sch-content">
+                                <div class="sch-single">
+                                    <h4>Lunch</h4>
+                                    <span class="venue-tag"><i class="fas fa-utensils"></i> A01-007</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -782,7 +731,7 @@
                 <div class="malhar-header js-scroll fade-in-up">
                     <img src="images/culturals/malhar.png" alt="Malhar Musical Band Logo" class="malhar-logo">
                     <h2 class="malhar-title">Feel The Melody,<br><span>Live The Rhythm</span></h2>
-                    <p class="malhar-details">Live Concert &bull; June 05, 2026 &bull; 6:00 PM to 7:00 PM</p>
+                    <p class="malhar-details">Live Concert &bull; June 05, 2026 &bull; 6:00 PM to 8:00 PM</p>
                     <div class="stay-tuned">Stay Tuned!</div>
                 </div>
 
@@ -1008,6 +957,7 @@
         })();
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Mobile Nav Logic
             const desktopNav = document.getElementById('desktop-nav');
             const mobileNavContainer = document.getElementById('mobile-nav');
             const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
@@ -1044,6 +994,7 @@
                 });
             }
             
+            // Scroll Animation Logic
             const animatedItems = document.querySelectorAll('.js-scroll');
             if (animatedItems.length > 0) {
                 const observer = new IntersectionObserver(entries => {
@@ -1058,6 +1009,46 @@
                 animatedItems.forEach(item => {
                     observer.observe(item);
                 });
+            }
+
+            // Schedule Tabs Logic & Date Interaction
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const panes = document.querySelectorAll('.schedule-pane');
+            
+            function openTab(targetId) {
+                tabBtns.forEach(btn => btn.classList.remove('active'));
+                panes.forEach(pane => pane.classList.remove('active'));
+                
+                const activeBtn = document.querySelector(`.tab-btn[data-target="${targetId}"]`);
+                const activePane = document.getElementById(targetId);
+                
+                if(activeBtn && activePane) {
+                    activeBtn.classList.add('active');
+                    activePane.classList.add('active');
+                }
+            }
+
+            // Tab Click Events
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    openTab(btn.dataset.target);
+                });
+            });
+
+            // Date-based default tab selection
+            const currentDate = new Date();
+            // Start of respective days
+            const day1Start = new Date('2026-06-04T00:00:00');
+            const day2Start = new Date('2026-06-05T00:00:00');
+            const day3Start = new Date('2026-06-06T00:00:00');
+            const postEvent = new Date('2026-06-07T00:00:00');
+
+            if (currentDate >= day3Start && currentDate < postEvent) {
+                openTab('day3');
+            } else if (currentDate >= day2Start && currentDate < day3Start) {
+                openTab('day2');
+            } else {
+                openTab('day1'); // Default for Before June 4, On June 4, and after the event
             }
         });
     </script>
