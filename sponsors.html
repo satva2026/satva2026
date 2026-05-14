@@ -172,9 +172,8 @@ section.flush-bot { padding-bottom: 0; }
 .section-title.centered { text-align: center; }
 .rule { width: 48px; height: 4px; background: var(--forest); border-radius: 2px; margin-bottom: 40px; }
 .rule.centered { margin-left: auto; margin-right: auto; }
-.page-header { background: var(--forest-dark); padding: 60px 0 50px; text-align: center; color: var(--white); }
-.page-header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 16px; }
-.page-header p { font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto; }
+.page-header { padding: 60px 0 20px; text-align: center; }
+.page-header p { font-size: 1.1rem; color: var(--text-mid); max-width: 600px; margin: 0 auto; }
 
 /* Buttons */
 .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--forest); color: var(--white); padding: 13px 28px; border-radius: 8px; font-size: 15px; font-weight: 600; letter-spacing: 0.3px; border: 1.5px solid var(--forest); transition: all 0.2s; cursor: pointer; }
@@ -211,8 +210,9 @@ section.flush-bot { padding-bottom: 0; }
   display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.3s;
   background: var(--white);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
 }
-.gold-card:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.05); transform: translateY(-3px); }
+.gold-card:hover { border-color: var(--gold); box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(-3px); }
 .gold-tier-tag {
   font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
   color: var(--gold); font-family: 'Space Mono', monospace;
@@ -233,6 +233,7 @@ section.flush-bot { padding-bottom: 0; }
   background: var(--white); border-radius: 12px; overflow: hidden;
   border: 1px solid var(--cream-dark); display: flex; flex-direction: column;
   transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
 }
 .tier-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
 .tier-header {
@@ -280,8 +281,9 @@ section.flush-bot { padding-bottom: 0; }
 .contact-card {
   background: var(--white); border: 1px solid var(--cream-dark); border-radius: 12px;
   padding: 32px 28px; text-align: center; transition: all 0.3s;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
 }
-.contact-card:hover { border-color: var(--forest); box-shadow: 0 10px 30px rgba(0,0,0,0.05); transform: translateY(-3px); }
+.contact-card:hover { border-color: var(--forest); box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(-3px); }
 .contact-icon-wrap {
   width: 64px; height: 64px; border-radius: 50%; background: var(--cream);
   display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
@@ -440,15 +442,16 @@ section.flush-bot { padding-bottom: 0; }
 <main>
   <div class="page-header">
     <div class="wrap js-fade">
-      <h1>Sponsors & Partners</h1>
+      <span class="section-eyebrow centered">Our Supporters</span>
+      <h1 class="section-title centered">Sponsors & Partners</h1>
+      <div class="rule centered"></div>
       <p>Discover the esteemed sponsors and partnership opportunities for SATVA 2026. Join us in advancing pavement sustainability frontiers.</p>
     </div>
   </div>
 
-  <section id="current-sponsors">
+  <section id="current-sponsors" class="flush-top">
     <div class="wrap">
       <div class="js-fade">
-        <span class="section-eyebrow">Legacy of Support</span>
         <h2 class="section-title">Our Valued Sponsors</h2>
         <div class="rule"></div>
       </div>
