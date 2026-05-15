@@ -40,7 +40,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="images/logos/logo4.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Leaflet CSS for Map -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
 
 <style>
@@ -208,26 +207,121 @@ section { padding: 80px 0; }
 .lightbox-close:hover { color: var(--white); }
 
 /* ── HOTELS DIRECTORY & MAP STYLES ── */
-.hotels-flex-container { display: flex; gap: 32px; align-items: flex-start; margin-top: 30px; }
-.hotels-list { flex: 1.2; height: 650px; overflow-y: auto; padding-right: 15px; } /* Scrollable list */
-.hotels-map-sidebar { flex: 0.8; position: sticky; top: 100px; height: 650px; border-radius: 16px; overflow: hidden; border: 1px solid var(--cream-dark); box-shadow: 0 10px 30px rgba(0,0,0,0.05); z-index: 10; }
-#custom-map { width: 100%; height: 100%; background-color: var(--cream); }
 
-/* Scrollbar styling for list */
-.hotels-list::-webkit-scrollbar { width: 8px; }
-.hotels-list::-webkit-scrollbar-track { background: var(--cream); border-radius: 4px; }
-.hotels-list::-webkit-scrollbar-thumb { background: var(--forest-light); border-radius: 4px; }
+/* Desktop: side-by-side sticky layout */
+.hotels-section-inner {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  margin-top: 30px;
+}
 
-.location-group-title { font-family: 'Space Mono', monospace; color: var(--forest); font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin: 30px 0 15px; padding-bottom: 8px; border-bottom: 1px solid var(--cream-dark); }
+/* LEFT PANEL */
+.hotels-panel {
+  flex: 1 1 400px;
+  min-width: 0;
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h) - 40px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--cream-dark);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  background: var(--white);
+}
+.hotels-panel-header {
+  padding: 16px 20px 12px;
+  background: var(--forest-dark);
+  color: var(--white);
+  flex-shrink: 0;
+}
+.hotels-panel-header h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+.hotels-panel-header p { font-size: 12px; opacity: 0.55; font-family: 'Space Mono', monospace; }
+.hotels-list {
+  flex: 1 1 0;
+  overflow-y: auto;
+  padding: 14px 14px 20px;
+}
+.hotels-list::-webkit-scrollbar { width: 6px; }
+.hotels-list::-webkit-scrollbar-track { background: var(--cream); }
+.hotels-list::-webkit-scrollbar-thumb { background: var(--forest-light); border-radius: 3px; }
+
+/* RIGHT PANEL – sticky map */
+.hotels-map-sidebar {
+  flex: 1 1 500px;
+  min-width: 0;
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h) - 40px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--cream-dark);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+}
+.map-hint-bar {
+  padding: 10px 16px;
+  background: var(--forest-dark);
+  color: rgba(255,255,255,0.65);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  font-family: 'Space Mono', monospace;
+  z-index: 20;
+}
+.map-hint-bar i { color: var(--forest-light); }
+
+#custom-map {
+  width: 100%;
+  flex: 1 1 0;
+  border: none;
+  display: block;
+  z-index: 1;
+}
+
+/* Hotel cards */
+.location-group-title {
+  font-family: 'Space Mono', monospace;
+  color: var(--forest);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 20px 0 10px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--cream-dark);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
 .location-group-title:first-child { margin-top: 0; }
-.hotel-card { background: var(--white); border: 1px solid var(--cream-mid); border-radius: 10px; padding: 20px; margin-bottom: 16px; transition: all 0.3s ease; cursor: pointer; }
-.hotel-card:hover, .hotel-card.highlighted { border-color: var(--forest); box-shadow: 0 5px 15px rgba(0,0,0,0.08); transform: translateY(-3px); }
-.hotel-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.hotel-name { font-weight: 700; color: var(--forest-dark); font-size: 17px; }
-.hotel-rating { color: var(--gold); font-size: 13px; background: var(--cream-dark); padding: 2px 8px; border-radius: 12px; color: var(--text-mid); font-weight: bold;}
-.hotel-meta { font-size: 14px; color: var(--text-soft); margin-bottom: 12px; }
-.hotel-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-.action-link { font-size: 13.5px; font-weight: 600; color: var(--forest-mid); display: flex; align-items: center; gap: 6px; text-decoration: none;}
+.hotel-card {
+  background: var(--white);
+  border: 1.5px solid var(--cream-mid);
+  border-radius: 10px;
+  padding: 13px 15px;
+  margin-bottom: 9px;
+  transition: all 0.22s ease;
+  cursor: pointer;
+}
+.hotel-card:hover { border-color: var(--forest-light); box-shadow: 0 3px 10px rgba(0,0,0,0.07); transform: translateX(3px); }
+.hotel-card.active { border-color: var(--forest); background: #f0f4eb; box-shadow: 0 4px 16px rgba(96,108,56,0.15); transform: translateX(3px); }
+.hotel-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 5px; }
+.hotel-name { font-weight: 700; color: var(--forest-dark); font-size: 14.5px; line-height: 1.3; }
+.hotel-rating { font-size: 12px; background: var(--cream-dark); padding: 2px 8px; border-radius: 10px; color: var(--text-mid); font-weight: 700; white-space: nowrap; flex-shrink: 0; }
+.hotel-meta { font-size: 12.5px; color: var(--text-soft); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 3px 10px; }
+.hotel-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.action-link { font-size: 12px; font-weight: 600; color: var(--forest-mid); display: inline-flex; align-items: center; gap: 5px; text-decoration: none; padding: 2px 0; transition: color 0.15s; }
 .action-link:hover { color: var(--forest-dark); text-decoration: underline; }
 
 /* Custom Leaflet Map Marker Styles */
@@ -266,9 +360,24 @@ section { padding: 80px 0; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 992px) {
-  .hotels-flex-container { flex-direction: column; }
-  .hotels-map-sidebar { position: relative; top: 0; width: 100%; height: 400px; order: -1; }
-  .hotels-list { height: auto; overflow-y: visible; padding-right: 0;}
+  /* Stack: map on top, list below */
+  .hotels-section-inner { flex-direction: column; gap: 20px; }
+  .hotels-panel {
+    position: relative;
+    top: 0;
+    height: auto;
+    max-height: 55vh;
+    width: 100%;
+  }
+  .hotels-map-sidebar {
+    position: relative;
+    top: 0;
+    height: 55vw;
+    min-height: 320px;
+    max-height: 480px;
+    width: 100%;
+    order: -1; /* map appears first on mobile */
+  }
 }
 @media (max-width: 900px) {
   .desk-nav { display: none; }
@@ -294,14 +403,12 @@ section { padding: 80px 0; }
 
 <body class="loading-active">
 
-<!-- PRELOADER -->
 <div id="preloader">
   <img src="images/logos/logo4.png" alt="SATVA" class="pre-logo">
   <div class="pre-bar-track"><div class="pre-bar" id="pre-bar"></div></div>
   <div class="pre-pct" id="pre-pct">0%</div>
 </div>
 
-<!-- HEADER -->
 <header class="main-header">
   <div class="navbar">
     <div class="logo-group">
@@ -371,7 +478,6 @@ section { padding: 80px 0; }
             <div class="rule centered"></div>
             <p>Information regarding in-campus hostels, guest houses, and nearby hotels to ensure a comfortable stay during SATVA 2026.</p>
             
-            <!-- In-Page Navigation -->
             <div class="page-nav-btns">
                 <a href="#hostel-section" class="btn-outline">Hostel</a>
                 <a href="#guesthouse-section" class="btn-outline">Guest House</a>
@@ -380,7 +486,6 @@ section { padding: 80px 0; }
         </div>
     </div>
 
-    <!-- HOSTEL SECTION -->
     <section id="hostel-section" class="flush-top">
         <div class="wrap">
             <div class="js-fade">
@@ -390,14 +495,14 @@ section { padding: 80px 0; }
             <div class="about-wrapper js-fade">
                 <div class="booking-notice">
                     <i class="fas fa-info-circle"></i> 
-                    <strong>Note:</strong> Participants requiring on-campus accommodation in the hostel may select the <strong>“Accommodation Required”</strong> option in the registration form. Rooms are allocated on a first-come, first-serve basis, on a chargeable basis.
+                    <strong>Note:</strong> Participants requiring on-campus accommodation in the hostel may select the <strong>"Accommodation Required"</strong> option in the registration form. Rooms are allocated on a first-come, first-serve basis, on a chargeable basis.
                 </div>
 
                 <p>Our fully residential campus offers dedicated hostels for both girls and boys, creating a secure, comfortable, vibrant, and exceptional living experience. In total, the campus houses six hostels: four in the tranquil Nila Campus and two in the serene Sahyadri Campus. Students are provided with double/triple sharing accommodation in Nila Campus, while rooms at Sahyadri Campus are either single or triple occupancy rooms.</p>
                 
                 <div class="expandable-text">
                     <p>Our hostels are equipped with well-appointed rooms, water heaters, RO-based drinking water systems, heavy-duty washing machines, and both WiFi and LAN network connections, ensuring convenience and connectivity. Additionally, a spacious dining hall, a well-equipped recreational area, an indoor games area, and a fitness center are readily available for leisure and physical activities. Each room is equipped with either WiFi or LAN connectivity, offering seamless online access. Additionally, common rooms in every hostel provide a space for relaxation, equipped with a television, newspapers, and a selection of magazines chosen by the student body.</p>
-                    <p>To promote students’ overall well-being, amenities such as an in-house facility for football, volleyball, basketball, and table tennis are provided. Professional coaches are on hand to guide students in athletics, football, volleyball, and cricket. Badminton enthusiasts can pursue their interests at the 4GB Badminton Academy in Palakkad. To accommodate visitors, guest rooms are available for Institute faculty, staff, and students' families, ensuring a warm welcome.</p>
+                    <p>To promote students' overall well-being, amenities such as an in-house facility for football, volleyball, basketball, and table tennis are provided. Professional coaches are on hand to guide students in athletics, football, volleyball, and cricket. Badminton enthusiasts can pursue their interests at the 4GB Badminton Academy in Palakkad. To accommodate visitors, guest rooms are available for Institute faculty, staff, and students' families, ensuring a warm welcome.</p>
                 </div>
                 <button class="read-more-toggle">Read More <i class="fas fa-chevron-down" style="font-size: 12px; margin-top:2px;"></i></button>
                 
@@ -419,7 +524,6 @@ section { padding: 80px 0; }
         </div>
     </section>
 
-    <!-- GUEST HOUSE SECTION -->
     <section id="guesthouse-section" class="section-alt">
         <div class="wrap">
             <div class="js-fade">
@@ -455,35 +559,41 @@ section { padding: 80px 0; }
         </div>
     </section>
 
-    <!-- HOTELS SECTION WITH CUSTOM MAP -->
     <section id="hotels-section">
         <div class="wrap">
             <div class="js-fade">
                 <h2 class="section-title centered">Hotels Nearby</h2>
-                <p style="text-align:center; max-width:700px; margin: 0 auto 40px;">Browse recommended accommodation options. Click on any hotel card to locate it directly on the interactive map.</p>
+                <p style="text-align:center; max-width:700px; margin: 0 auto 40px;">Browse recommended accommodation options. Click any hotel card to view its exact location on the map.</p>
             </div>
-            
-            <div class="hotels-flex-container js-fade">
-                
-                <!-- LEFT: HOTEL LIST -->
-                <div class="hotels-list" id="hotel-cards-container">
-                    <!-- Cards are dynamically generated by JavaScript below -->
+
+            <div class="hotels-section-inner js-fade">
+
+                <div class="hotels-panel">
+                    <div class="hotels-panel-header">
+                        <h3>20 Hotels Near IIT Palakkad</h3>
+                        <p>Click a card to open it on the map →</p>
+                    </div>
+                    <div class="hotels-list" id="hotel-cards-container">
+                        </div>
                 </div>
 
-                <!-- RIGHT: CUSTOM INTERACTIVE MAP -->
                 <div class="hotels-map-sidebar">
+                    <div class="map-hint-bar">
+                        <i class="fas fa-hand-pointer"></i>
+                        <span>Select a hotel from the list to view its exact location</span>
+                    </div>
                     <div id="custom-map"></div>
                 </div>
 
             </div>
-            <div class="js-fade" style="padding: 20px; background: var(--cream); border-radius: 8px; font-size: 14px; color: var(--text-soft); margin-top: 24px;">
-                <i class="fas fa-info-circle"></i> <strong>Note:</strong> We recommend booking through official websites or trusted platforms like MakeMyTrip or Booking.com for the best rates. Coordinates and distances are approximate.
+
+            <div class="js-fade" style="padding: 18px 20px; background: var(--cream); border-radius: 8px; font-size: 14px; color: var(--text-soft); margin-top: 24px;">
+                <i class="fas fa-info-circle"></i> <strong>Note:</strong> We recommend booking through official hotel websites or trusted platforms like MakeMyTrip or Booking.com for the best rates. Distances are approximate road distances from IIT Palakkad Sahyadri Campus. <strong>Prices displayed are tentative and subject to change.</strong>
             </div>
         </div>
     </section>
 </main>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="wrap">
     <div class="footer-grid">
@@ -518,20 +628,19 @@ section { padding: 80px 0; }
           </li>
           <li>
             <i class="fas fa-phone-alt"></i>
-            <span><a href="tel:+914912091107">+91 491 209 1107</a> &nbsp;|&nbsp; <a href="tel:+914912091351">+91 491 209 1351</a></span>
+            <span><a href="tel:+914912091107">+91 491 209 1107</a>  |  <a href="tel:+914912091351">+91 491 209 1351</a></span>
           </li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
-        <p>&copy; <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
+        <p>© <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- LIGHTBOX HTML -->
 <div class="lightbox-overlay" id="lightbox">
     <div class="lightbox-content">
         <span class="lightbox-close" id="lightbox-close" aria-label="Close">×</span>
@@ -539,7 +648,6 @@ section { padding: 80px 0; }
     </div>
 </div>
 
-<!-- LEAFLET JS FOR MAP -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
 <script>
@@ -570,7 +678,7 @@ section { padding: 80px 0; }
   setTimeout(hide, 5000);
 })();
 
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
     
     // --- MOBILE NAV LOGIC ---
     const mobToggle = document.getElementById('mob-toggle');
@@ -647,18 +755,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('cur-year').textContent = new Date().getFullYear();
 
-    // --- LEAFLET MAP & HOTELS DATA LOGIC ---
-    // Initialize map centered roughly between Palakkad and Malampuzha/Kanjikode
+    // ── LEAFLET MAP INITIALIZATION ──
     const map = L.map('custom-map').setView([10.804957, 76.729379], 12);
 
-    // Add Dark/Modern map tiles
     L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap contributors & CARTO',
+        attribution: '© OpenStreetMap contributors & CARTO',
         subdomains: 'abcd',
         maxZoom: 19
     }).addTo(map);
 
-    // Custom Icon for IIT Palakkad
     const iitIcon = L.divIcon({
         className: 'custom-div-icon',
         html: `<div style="background-color: #013328; color: white; padding: 5px 12px; border-radius: 8px; font-weight: bold; font-family: 'DM Sans', sans-serif; text-align: center; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size:13px; white-space:nowrap;">🏛️ IIT Palakkad</div>`,
@@ -666,123 +771,117 @@ document.addEventListener('DOMContentLoaded', function() {
         iconAnchor: [60, 30]
     });
 
-    // Add IIT Palakkad Pin (Accurate Sahyadri Campus Coordinates)
-    L.marker([10.804957760812545, 76.72937920660996], {icon: iitIcon, zIndexOffset: 1000}).addTo(map).bindPopup("<b style='font-family:DM Sans; color:#013328;'>IIT Palakkad</b><br>Sahyadri Campus");
+    L.marker([10.804957760812545, 76.72937920660996], {icon: iitIcon, zIndexOffset: 1000})
+     .addTo(map)
+     .bindPopup("<b style='font-family:DM Sans; color:#013328;'>IIT Palakkad</b><br>Sahyadri Campus");
 
-    // Hotel Data Array (Exact Coordinates extracted from Claude)
+    // ── HOTEL DATA (Merged coordinates with booking links) ──
     const hotels = [
-        // Kanjikode
-        { id: 1, name: "Distrikt 9 Hotels & Resorts", category: "Kanjikode", lat: 10.796076, lng: 76.737277, rating: "4.7", stars: "⭐⭐⭐⭐⭐", dist: "~2.1 km", price: "From ₹5,000", url: "https://www.google.com/maps/place/?q=place_id:ChIJlyXvrU1pqDsRwFoKisClfQc", phone: "+914912569999" },
-        { id: 2, name: "Dreamotel by Vaiga", category: "Kanjikode", lat: 10.796614, lng: 76.738095, rating: "4.4", stars: "⭐⭐⭐", dist: "~2.5 km", price: "From ₹1,880", url: "https://www.google.com/maps/place/?q=place_id:ChIJcanKQLtpqDsR8nfkmgPxYx0", phone: "+918939162998" },
-        { id: 3, name: "The Grand Inn", category: "Kanjikode", lat: 10.797641, lng: 76.741939, rating: "3.9", stars: "⭐⭐", dist: "~3.0 km", price: "From ₹1,200", url: "https://www.google.com/maps/place/?q=place_id:ChIJwXqQUdNpqDsRdI9e3wr5RCo", phone: "+918921855950" },
-        { id: 4, name: "SD Residency", category: "Kanjikode", lat: 10.797199, lng: 76.739877, rating: "3.8", stars: "⭐⭐", dist: "~3.0 km", price: "From ₹1,000", url: "https://www.google.com/maps/place/?q=place_id:ChIJr-_Ch05pqDsRCHlrw7LIZPk", phone: "+919388477149" },
-        { id: 5, name: "Soorya Retreat", category: "Kanjikode", lat: 10.797614, lng: 76.762694, rating: "3.7", stars: "⭐⭐", dist: "~4.0 km", price: "From ₹1,800", url: "https://www.google.com/maps/place/?q=place_id:ChIJwfwhKm9pqDsR-884HqWUnBw", phone: "+919387671013" },
-        
-        // Palakkad Town
-        { id: 6, name: "Hotel Deepakam Inn", category: "Palakkad Town", lat: 10.770357, lng: 76.660690, rating: "4.8", stars: "⭐⭐⭐⭐", dist: "~12 km", price: "From ₹1,800", url: "https://www.google.com/maps/place/?q=place_id:ChIJ9w3KfABtqDsRDNl64tmlqws", phone: "+914912511111" },
-        { id: 7, name: "VOX Holiday", category: "Palakkad Town", lat: 10.785223, lng: 76.656251, rating: "5.0", stars: "⭐⭐⭐", dist: "~11 km", price: "From ₹1,500", url: "https://www.google.com/maps/place/?q=place_id:ChIJLSrq1wRvqDsRlux6-W9zJMI", phone: "+918075641217" },
-        { id: 8, name: "Palcastle", category: "Palakkad Town", lat: 10.773693, lng: 76.659780, rating: "4.7", stars: "⭐⭐⭐", dist: "~13 km", price: "From ₹2,200", url: "https://www.google.com/maps/place/?q=place_id:ChIJh9lVGABtqDsRhwTlTK1ZTQU", phone: "+919544446944" },
-        { id: 9, name: "Kapilavasthu Hotel", category: "Palakkad Town", lat: 10.767376, lng: 76.648586, rating: "4.1", stars: "⭐⭐⭐", dist: "~14 km", price: "From ₹1,200", url: "https://www.google.com/maps/place/?q=place_id:ChIJ51KonPBtqDsRn1-XQDKFk2c", phone: "+919387812650" },
-        { id: 10, name: "Hotel Indraprastha", category: "Palakkad Town", lat: 10.765981, lng: 76.654549, rating: "4.0", stars: "⭐⭐⭐", dist: "~13 km", price: "From ₹1,500", url: "https://www.google.com/maps/place/?q=place_id:ChIJkWASt-9tqDsRxREgCh9mT9o", phone: "+919496628339" },
-        { id: 11, name: "Hilux Courtyard Hotel", category: "Palakkad Town", lat: 10.777665, lng: 76.652785, rating: "4.1", stars: "⭐⭐⭐", dist: "~14 km", price: "From ₹2,000", url: "https://www.google.com/maps/place/?q=place_id:ChIJA37NQdttqDsRBi4n-VHtlIM", phone: "+917736656333" },
-        { id: 12, name: "Kalyan Tourist Home", category: "Palakkad Town", lat: 10.774214, lng: 76.655722, rating: "3.9", stars: "⭐⭐", dist: "~13 km", price: "From ₹900", url: "https://www.google.com/maps/place/?q=place_id:ChIJ21-fguNtqDsRgG2BFdb7FLA", phone: "+914912548401" },
-        { id: 13, name: "Regent Tourist Home", category: "Palakkad Town", lat: 10.772106, lng: 76.657906, rating: "4.5", stars: "⭐⭐", dist: "~13 km", price: "From ₹500", url: "https://www.google.com/maps/place/?q=place_id:ChIJBT8YmwhtqDsRSz8iEN39HWM", phone: "+919895279646" },
-
-        // Olavakkode
-        { id: 14, name: "Medley Regency", category: "Olavakkode", lat: 10.797079, lng: 76.638493, rating: "4.5", stars: "⭐⭐⭐", dist: "~14 km", price: "From ₹1,500", url: "https://www.google.com/maps/place/?q=place_id:ChIJDZEWF7JtqDsR3XP3ldrPMP0", phone: "+918304966999" },
-        { id: 15, name: "Hasco Tower Hotel", category: "Olavakkode", lat: 10.797166, lng: 76.639990, rating: "4.2", stars: "⭐⭐⭐", dist: "~14 km", price: "From ₹1,800", url: "https://www.google.com/maps/place/?q=place_id:ChIJfWxTkyZxqDsR0tEjGv8VuCY", phone: "+918943599000" },
-        { id: 16, name: "JS Grand Residency", category: "Olavakkode", lat: 10.798810, lng: 76.637980, rating: "3.5", stars: "⭐⭐", dist: "~15 km", price: "From ₹1,200", url: "https://www.google.com/maps/place/?q=place_id:ChIJgdPswyFxqDsRqtq2wCbCzwo", phone: "+919946159993" },
-        { id: 17, name: "GK Residency", category: "Olavakkode", lat: 10.797888, lng: 76.640113, rating: "4.6", stars: "⭐⭐⭐", dist: "~14 km", price: "From ₹1,000", url: "https://www.google.com/maps/place/?q=place_id:ChIJH_1V0zxxqDsR3T1Y-1GfQ5s", phone: "+919946017799" },
-
-        // Malampuzha
-        { id: 18, name: "Au Revoir Wellness Resort", category: "Malampuzha", lat: 10.862897, lng: 76.644162, rating: "4.7", stars: "⭐⭐⭐⭐⭐", dist: "~18 km", price: "From ₹6,000", url: "https://www.google.com/maps/place/?q=place_id:ChIJmb5Dw2xvqDsRYNJ1aPGEYxI", phone: "+919778412247" },
-        { id: 19, name: "KTDC Garden House", category: "Malampuzha", lat: 10.827687, lng: 76.681187, rating: "4.1", stars: "⭐⭐⭐", dist: "~17 km", price: "From ₹1,500", url: "https://www.google.com/maps/place/?q=place_id:ChIJu-m23atvqDsR6C3R3Qv2Ulo", phone: "+919400008767" },
-        { id: 20, name: "Hotel Tripenta", category: "Malampuzha", lat: 10.824271, lng: 76.686694, rating: "4.0", stars: "⭐⭐⭐", dist: "~17 km", price: "From ₹1,800", url: "https://www.google.com/maps/place/?q=place_id:ChIJs__sRFVuqDsRzM_X2wIE7Hc", phone: "+917591967178" }
+        // ── KANJIKODE ──
+        { id:1,  name:"Distrikt 9 Hotels & Resorts",      category:"Kanjikode",      lat:10.796076, lng:76.737277, rating:"4.7", dist:"~2.1 km", price:"From ₹5,000", phone:"+914912569999",  website:"https://www.distrikt9hotels.com", booking:"https://www.booking.com/hotel/in/distrikt-9.html", mmt:"https://www.makemytrip.global/hotels/distrikt_9-details-palakkad.html" },
+        { id:2,  name:"Dreamotel by Vaiga Hospitality",    category:"Kanjikode",      lat:10.796614, lng:76.738095, rating:"4.4", dist:"~2.5 km", price:"From ₹1,880", phone:"+918939162998",  website:"https://www.dreamotel.in",        booking:"https://www.booking.com/searchresults.html?ss=Dreamotel+Palakkad", mmt:"https://www.makemytrip.global/hotels/dreamotel_luxury_suits_and_rooms-details-palakkad.html" },
+        { id:3,  name:"The Grand Inn",                     category:"Kanjikode",      lat:10.797641, lng:76.741939, rating:"3.9", dist:"~3.0 km", price:"From ₹1,200", phone:"+918921855950",  website:null, booking:null, mmt:null },
+        { id:4,  name:"SD Residency",                      category:"Kanjikode",      lat:10.797199, lng:76.739877, rating:"3.8", dist:"~3.0 km", price:"From ₹1,000", phone:"+919388477149",  website:"https://www.sdresidency.in",       booking:null, mmt:null },
+        { id:5,  name:"Soorya Retreat",                    category:"Kanjikode",      lat:10.797614, lng:76.762694, rating:"3.7", dist:"~4.0 km", price:"From ₹1,800", phone:"+919387671013",  website:"https://www.sooryaretreat.com",    booking:null, mmt:null },
+        // ── PALAKKAD TOWN ──
+        { id:6,  name:"Hotel Deepakam Inn",                category:"Palakkad Town", lat:10.770357, lng:76.660690, rating:"4.8", dist:"~12 km",  price:"From ₹1,800", phone:"+914912511111",  website:"https://www.hoteldeepakam.in",     booking:"https://www.booking.com/searchresults.html?ss=Hotel+Deepakam+Inn+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:7,  name:"VOX Holiday",                       category:"Palakkad Town", lat:10.785223, lng:76.656251, rating:"5.0", dist:"~11 km",  price:"From ₹1,500", phone:"+918075641217",  website:"https://www.voxholiday.in",        booking:"https://www.booking.com/searchresults.html?ss=VOX+Holiday+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:8,  name:"Palcastle",                         category:"Palakkad Town", lat:10.773693, lng:76.659780, rating:"4.7", dist:"~13 km",  price:"From ₹2,200", phone:"+919544446944",  website:"https://www.palcastle.com",        booking:"https://www.booking.com/searchresults.html?ss=Palcastle+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:9,  name:"Kapilavasthu Hotel",                category:"Palakkad Town", lat:10.767376, lng:76.648586, rating:"4.1", dist:"~14 km",  price:"From ₹1,200", phone:"+919387812650",  website:"https://www.kapilavasthu.com",     booking:"https://www.booking.com/searchresults.html?ss=Hotel+Kapilavasthu+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:10, name:"Hotel Indraprastha",                category:"Palakkad Town", lat:10.765981, lng:76.654549, rating:"4.0", dist:"~13 km",  price:"From ₹1,500", phone:"+919496628339",  website:"https://www.hotelindraprastha.com",booking:"https://www.booking.com/searchresults.html?ss=Hotel+Indraprastha+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:11, name:"Hilux Courtyard Hotel",             category:"Palakkad Town", lat:10.777665, lng:76.652785, rating:"4.1", dist:"~14 km",  price:"From ₹2,000", phone:"+917736656333",  website:"https://www.hiluxcourtyard.com",   booking:"https://www.booking.com/searchresults.html?ss=Hilux+Courtyard+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:12, name:"Kalyan Tourist Home",               category:"Palakkad Town", lat:10.774214, lng:76.655722, rating:"3.9", dist:"~13 km",  price:"From ₹900",   phone:"+914912548401",  website:null, booking:"https://www.booking.com/searchresults.html?ss=Kalyan+Tourist+Home+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:13, name:"Regent Tourist Home",               category:"Palakkad Town", lat:10.772106, lng:76.657906, rating:"4.5", dist:"~13 km",  price:"From ₹500",   phone:"+919895279646",  website:null, booking:null, mmt:null },
+        // ── OLAVAKKODE ──
+        { id:14, name:"Medley Regency",                    category:"Olavakkode",    lat:10.797079, lng:76.638493, rating:"4.5", dist:"~14 km",  price:"From ₹1,500", phone:"+918304966999",  website:null, booking:"https://www.booking.com/searchresults.html?ss=Medley+Regency+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:15, name:"Hasco Tower Business Hotel",        category:"Olavakkode",    lat:10.797166, lng:76.639990, rating:"4.2", dist:"~14 km",  price:"From ₹1,800", phone:"+918943599000",  website:"https://www.hotelhascotower.com",  booking:"https://www.booking.com/searchresults.html?ss=Hasco+Tower+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:16, name:"GK Residency",                      category:"Olavakkode",    lat:10.797888, lng:76.640113, rating:"4.6", dist:"~14 km",  price:"From ₹1,000", phone:"+919946017799",  website:null, booking:null, mmt:null },
+        { id:17, name:"JS Grand Residency",                category:"Olavakkode",    lat:10.798810, lng:76.637980, rating:"3.5", dist:"~15 km",  price:"From ₹1,200", phone:"+919946159993",  website:null, booking:"https://www.booking.com/searchresults.html?ss=JS+Grand+Residency+Palakkad", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        // ── MALAMPUZHA ──
+        { id:18, name:"Au Revoir Wellness Resort",         category:"Malampuzha",    lat:10.862897, lng:76.644162, rating:"4.7", dist:"~18 km",  price:"From ₹6,000", phone:"+919778412247",  website:"https://www.aurevoir.co.in",       booking:"https://www.booking.com/searchresults.html?ss=Au+Revoir+Wellness+Resort+Malampuzha", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:19, name:"KTDC Garden House Malampuzha",      category:"Malampuzha",    lat:10.827687, lng:76.681187, rating:"4.1", dist:"~17 km",  price:"From ₹1,500", phone:"+919400008767",  website:"https://www.ktdckerala.org",       booking:"https://www.booking.com/searchresults.html?ss=KTDC+Garden+House+Malampuzha", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" },
+        { id:20, name:"Hotel Tripenta",                    category:"Malampuzha",    lat:10.824271, lng:76.686694, rating:"4.0", dist:"~17 km",  price:"From ₹1,800", phone:"+917591967178",  website:"https://www.tripenta.com",         booking:"https://www.booking.com/searchresults.html?ss=Hotel+Tripenta+Malampuzha", mmt:"https://www.makemytrip.com/hotels/palakkad-hotels.html" }
     ];
 
     const container = document.getElementById('hotel-cards-container');
     const markers = {};
-    let currentCategory = "";
+    let activeId = null;
 
-    // Generate Cards and Markers dynamically
+    // Highlight active card
+    function setActiveCard(id) {
+        document.querySelectorAll('.hotel-card').forEach(c => c.classList.remove('active'));
+        if (id !== null) {
+            const card = document.getElementById('card-' + id);
+            if (card) {
+                card.classList.add('active');
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+        activeId = id;
+    }
+
+    // Switch map to show a specific hotel
+    window.focusHotel = function(id) {
+        const hotel = hotels.find(h => h.id === id);
+        if (!hotel) return;
+        setActiveCard(id);
+        
+        map.flyTo([hotel.lat, hotel.lng], 15, { duration: 1.0 });
+        setTimeout(() => { markers[id].openPopup(); }, 1000);
+    };
+
+    // Generate hotel cards and map markers
+    let currentCategory = "";
     hotels.forEach(hotel => {
-        // Render Group Titles
+        
+        // Render Group headers in sidebar
         if (hotel.category !== currentCategory) {
-            let iconStr = "fa-city";
-            if(hotel.category === "Kanjikode") iconStr = "fa-map-marker-alt";
-            if(hotel.category === "Malampuzha") iconStr = "fa-water";
-            if(hotel.category === "Olavakkode") iconStr = "fa-train";
-            
-            container.innerHTML += `<div class="location-group-title"><i class="fas ${iconStr}"></i> ${hotel.category}</div>`;
+            const icons = { "Kanjikode":"fa-map-marker-alt", "Palakkad Town":"fa-city", "Olavakkode":"fa-train", "Malampuzha":"fa-water" };
+            container.innerHTML += `<div class="location-group-title"><i class="fas ${icons[hotel.category]||'fa-hotel'}"></i> ${hotel.category}</div>`;
             currentCategory = hotel.category;
         }
 
-        // Build HTML Card
-        const cardHTML = `
+        // Generate Action Links
+        let mapLink = `https://www.google.com/maps/dir/?api=1&destination=${hotel.lat},${hotel.lng}`;
+        let links = `<a href="${mapLink}" target="_blank" class="action-link" onclick="event.stopPropagation();"><i class="fas fa-directions"></i> Map</a>`;
+        links += `<a href="tel:${hotel.phone}" class="action-link" onclick="event.stopPropagation();"><i class="fas fa-phone"></i> Call</a>`;
+        if (hotel.website) links += `<a href="${hotel.website}" target="_blank" class="action-link" onclick="event.stopPropagation();"><i class="fas fa-globe"></i> Website</a>`;
+        if (hotel.booking) links += `<a href="${hotel.booking}" target="_blank" class="action-link" onclick="event.stopPropagation();"><i class="fas fa-bed"></i> Booking.com</a>`;
+        if (hotel.mmt)     links += `<a href="${hotel.mmt}"     target="_blank" class="action-link" onclick="event.stopPropagation();"><i class="fas fa-ticket-alt"></i> MakeMyTrip</a>`;
+
+        container.innerHTML += `
             <div class="hotel-card" id="card-${hotel.id}" onclick="focusHotel(${hotel.id})">
                 <div class="hotel-header">
                     <div class="hotel-name">${hotel.name}</div>
-                    <div class="hotel-rating"><i class="fas fa-star" style="color:var(--gold); font-size:10px; margin-right:3px;"></i>${hotel.rating}</div>
+                    <div class="hotel-rating"><i class="fas fa-star" style="color:var(--gold);font-size:9px;margin-right:3px;"></i>${hotel.rating}</div>
                 </div>
                 <div class="hotel-meta">
-                    <span><i class="fas fa-road" style="width:16px;"></i> ${hotel.dist} to IIT</span> &nbsp;|&nbsp; 
-                    <span style="color:var(--forest-mid); font-weight:bold;">${hotel.price}</span>
+                    <span><i class="fas fa-road" style="width:14px;"></i> ${hotel.dist} from IIT</span>
+                    <span style="color:var(--forest-mid);font-weight:bold;">${hotel.price}</span>
                 </div>
-                <div class="hotel-actions">
-                    <a href="${hotel.url}" target="_blank" class="action-link" onclick="event.stopPropagation();"><i class="fas fa-directions"></i> Map</a>
-                    <a href="tel:${hotel.phone}" class="action-link" onclick="event.stopPropagation();"><i class="fas fa-phone"></i> Call</a>
-                </div>
-            </div>
-        `;
-        container.innerHTML += cardHTML;
+                <div class="hotel-actions">${links}</div>
+            </div>`;
 
-        // Custom Rating Pin Marker for Leaflet Map
+        // Create Leaflet Marker
         const customIcon = L.divIcon({
             className: 'custom-hotel-marker',
             html: `<div style="background:#1a1a18; color:white; padding:4px 8px; border-radius:12px; font-weight:bold; font-size:12px; box-shadow:0 2px 5px rgba(0,0,0,0.4); text-align:center; min-width:35px; border: 1px solid var(--cream-dark);">${hotel.rating}</div>`,
             iconAnchor: [17, 15]
         });
 
-        // Add Marker to Map
         const marker = L.marker([hotel.lat, hotel.lng], {icon: customIcon}).addTo(map);
         marker.bindPopup(`
             <div class="popup-title">${hotel.name}</div>
             <div class="popup-price" style="font-size:13px; color:var(--text-soft);"><i class="fas fa-money-bill-wave" style="color:var(--forest-mid);"></i> ${hotel.price}</div>
-            <div style="font-size:12px; margin-top:5px; color:var(--text-mid);">${hotel.stars}</div>
         `);
         
         markers[hotel.id] = marker;
 
         // Open popup on marker click and highlight list card
         marker.on('click', function() { 
-            highlightCard(hotel.id);
-            // Scroll list to the active card
-            const activeCard = document.getElementById(`card-${hotel.id}`);
-            activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setActiveCard(hotel.id);
         });
     });
-
-    // Function to handle card highlighting
-    function highlightCard(id) {
-        document.querySelectorAll('.hotel-card').forEach(c => {
-            c.style.borderColor = "var(--cream-mid)";
-            c.style.boxShadow = "none";
-        });
-        const target = document.getElementById(`card-${id}`);
-        target.style.borderColor = "var(--forest)";
-        target.style.boxShadow = "0 5px 15px rgba(0,0,0,0.08)";
-    }
-
-    // Function to pan map when card is clicked (global scope so inline onclick works)
-    window.focusHotel = function(id) {
-        const hotel = hotels.find(h => h.id === id);
-        highlightCard(id);
-        
-        // Fly to marker and open popup
-        map.flyTo([hotel.lat, hotel.lng], 15, { duration: 1.0 });
-        // Slight delay to allow flyTo to finish before opening popup
-        setTimeout(() => { markers[id].openPopup(); }, 1000);
-    };
 
 });
 
