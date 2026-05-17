@@ -34,6 +34,12 @@
 <link rel="apple-touch-icon" href="images/logos/logo4.png"> 
 <meta name="theme-color" content="#606C38">
 
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SATVA 2026">
+<link rel="apple-touch-icon" href="images/logos/satvalogo.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&family=Barlow+Condensed:ital,wght@0,300;0,700;0,900;1,900&family=Syne:wght@400;700;800&family=Fragment+Mono&display=swap" rel="stylesheet">
@@ -59,16 +65,24 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Strict rule to completely prevent horizontal scrolling/white strip on iOS */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 html { scroll-behavior: smooth; }
 body {
   font-family: 'DM Sans', sans-serif;
   color: var(--text);
   background: var(--white);
-  overflow-x: hidden;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
+  width: 100%;
 }
 body.loading-active { overflow: hidden; }
 main { flex-grow: 1; }
@@ -150,6 +164,16 @@ a { text-decoration: none; color: inherit; }
 .mob-sub li { border-bottom: none; }
 .mob-sub a { font-size: 15px; color: var(--text-soft); padding: 9px 4px; display: flex; justify-content: space-between;}
 
+/* New Mobile Link Group Layout */
+.mob-link-group { display: flex; justify-content: space-between; align-items: center; }
+.mob-link-group a { flex: 1; }
+.mob-toggle-btn { 
+  background: none; border: none; padding: 10px 14px; cursor: pointer; 
+  color: var(--text-soft); font-size: 14px; transition: transform 0.3s ease, color 0.3s ease; 
+  display: flex; align-items: center; justify-content: center; outline: none;
+}
+.mob-toggle-btn.active { transform: rotate(180deg); color: var(--forest); }
+
 /* ── LAYOUT & TYPOGRAPHY ── */
 .wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
 section { padding: 80px 0; }
@@ -209,23 +233,85 @@ section { padding: 80px 0; }
 .sch-time i { font-size: 15px; margin-top: 2px; }
 .sch-content { flex: 1; display: flex; flex-direction: column; gap: 16px; }
 
-.sch-single { background: var(--cream); padding: 20px 24px; border-radius: 12px; border-left: 4px solid var(--forest-light); }
+.sch-single { background: var(--cream); padding: 20px 24px; border-radius: 12px; border-left: 4px solid var(--forest-light); transition: all 0.3s ease; }
+.sch-single:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-left-color: var(--forest); }
 .sch-item-title { font-size: 17px; font-weight: 600; color: var(--forest-dark); margin-bottom: 10px; line-height: 1.3; }
+.sch-item-subtitle { font-size: 14.5px; color: var(--text-soft); margin-bottom: 12px; margin-top: -6px; }
+
+.parallel-tag { display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 11px; background: rgba(138, 154, 91, 0.15); border: 1px solid rgba(138, 154, 91, 0.3); padding: 4px 10px; border-radius: 100px; color: var(--forest-dark); font-weight: 700; text-transform: uppercase; margin-bottom: 10px; align-self: flex-start; }
+
+/* ── VENUE TAG (HOVER EXPANSION LOGIC) ── */
 .venue-tag {
-  display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace;
-  font-size: 12px; background: var(--white); border: 1px solid var(--cream-dark);
-  padding: 6px 14px; border-radius: 100px; color: var(--text-soft); font-weight: 700; text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  padding: 6px 14px;
+  border-radius: 100px; /* Restored to perfect pill shape */
+  color: var(--text-soft); 
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  max-width: 100%;
+  box-sizing: border-box;
+  line-height: 1.5;
+  overflow: hidden; /* Contains the expansion cleanly */
 }
 .sch-single .venue-tag { background: var(--white); border-color: var(--cream-dark); }
-
-.sch-parallel { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.sch-track { background: var(--white); border: 1px solid var(--cream-dark); border-top: 4px solid var(--forest-mid); padding: 20px 24px; border-radius: 12px; transition: box-shadow 0.3s; }
-.sch-track:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
 .sch-track .venue-tag { background: var(--cream); border-color: transparent; }
+.sch-cultural .venue-tag { background: var(--white); color: var(--gold); border-color: rgba(191, 163, 106, 0.3); }
+
+.venue-short { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; flex-shrink: 0; }
+.venue-full {
+  display: inline-block; 
+  max-width: 0; 
+  opacity: 0; 
+  white-space: nowrap; /* Strictly single line */
+  overflow: hidden;
+  vertical-align: middle;
+  /* Shrinks after a 5 second delay */
+  transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1) 5s, opacity 0.4s ease 5s;
+}
+.venue-tag:hover .venue-full {
+  max-width: 500px; 
+  opacity: 1;
+  /* Expands immediately and smoothly on hover */
+  transition: max-width 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s, opacity 0.4s ease 0.1s;
+}
+.venue-full a {
+  color: inherit; 
+  text-decoration: none; 
+  padding-left: 6px; 
+  outline: none; 
+  transition: color 0.2s;
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Graceful truncation if space runs out */
+  vertical-align: middle;
+}
+.venue-full a:hover, .venue-full a:focus { color: var(--forest-mid); text-decoration: underline; }
+.sch-cultural .venue-full a:hover, .sch-cultural .venue-full a:focus { color: var(--gold); }
+
+/* Grid adjusted to strictly respect column bounds so it never pushes the layout */
+.sch-parallel { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.sch-track { background: var(--white); border: 1px solid var(--cream-dark); border-top: 4px solid var(--forest-mid); padding: 20px 24px; border-radius: 12px; display: flex; flex-direction: column; transition: all 0.3s ease; min-width: 0; }
+.sch-track:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.06); border-top-color: var(--forest); }
+
+/* ── ACCORDION FOR ORAL PRESENTATIONS ── */
+.oral-details { margin-top: 14px; background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 8px; overflow: hidden; transition: all 0.3s ease; }
+.sch-track .oral-details { background: var(--white); border-color: var(--cream-dark); }
+.oral-details summary { padding: 10px 14px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--forest-mid); display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; list-style: none; }
+.oral-details summary::-webkit-details-marker { display: none; }
+.oral-details summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 11px; color: var(--forest-light); transition: transform 0.3s; }
+.oral-details[open] summary::after { transform: rotate(180deg); }
+.oral-details summary:hover { background: rgba(0,0,0,0.02); }
+.oral-content { padding: 14px; font-size: 13.5px; color: var(--text-soft); border-top: 1px solid var(--cream-dark); line-height: 1.5; }
 
 /* Special styling for cultural highlight */
 .sch-cultural { border-left-color: var(--gold); background: rgba(191, 163, 106, 0.1); }
-.sch-cultural .venue-tag { background: var(--white); color: var(--gold); border-color: rgba(191, 163, 106, 0.3); }
 
 /* ── CULTURAL PROGRAMS (MALHAR) ── */
 #cultural-programs {
@@ -279,6 +365,42 @@ section { padding: 80px 0; }
 .member-instrument { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--fire); text-transform: uppercase; margin-bottom: 6px; }
 .member-name { font-family: var(--hd); font-size: 2.2rem; font-weight: 900; font-style: italic; color: var(--cream); line-height: 1; }
 
+/* ── PWA INSTALL BANNER ── */
+.install-banner {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 400px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-left: 4px solid var(--forest);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 999999;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.install-banner-content { display: flex; align-items: center; gap: 12px; }
+.install-banner-icon { width: 40px; height: 40px; border-radius: 8px; }
+.install-banner-text { display: flex; flex-direction: column; }
+.install-banner-text strong { font-size: 14px; color: var(--forest-dark); line-height: 1.2; }
+.install-banner-text span { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+
+.install-btn {
+  background: var(--forest); color: var(--white);
+  border: none; padding: 8px 16px; border-radius: 100px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.install-close {
+  background: none; border: none; font-size: 16px;
+  color: var(--text-soft); cursor: pointer; padding: 4px;
+}
+
 /* ── FOOTER ── */
 .site-footer { background: var(--forest-dark); padding-top: 72px; margin-top: auto; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1.2fr; gap: 48px; padding-bottom: 56px; }
@@ -321,12 +443,17 @@ section { padding: 80px 0; }
 @media (max-width: 768px) {
   .sch-row { flex-direction: column; gap: 16px; padding: 20px 0; }
   .sch-time { width: 100%; border-bottom: 1px dashed var(--cream-dark); padding-bottom: 12px; }
-  .sch-parallel { grid-template-columns: 1fr; }
+  .sch-parallel { grid-template-columns: minmax(0, 1fr); }
   .schedule-list { padding: 24px; }
   .nav-grid { grid-template-columns: 1fr; }
   .malhar-logo { height: 120px; }
   .malhar-title { font-size: 3rem; }
   .stay-tuned { font-size: 1.8rem; }
+  
+  .venue-tag:hover .venue-full { max-width: 200px; }
+  
+  /* Only show the PWA install banner on mobile devices */
+  .install-banner.show { display: flex; }
 }
 @media (max-width: 640px) {
   .wrap { padding: 0 20px; }
@@ -342,14 +469,12 @@ section { padding: 80px 0; }
 
 <body class="loading-active">
 
-<!-- PRELOADER -->
 <div id="preloader">
   <img src="images/logos/logo4.png" alt="SATVA" class="pre-logo">
   <div class="pre-bar-track"><div class="pre-bar" id="pre-bar"></div></div>
   <div class="pre-pct" id="pre-pct">0%</div>
 </div>
 
-<!-- HEADER -->
 <header class="main-header">
   <div class="navbar">
     <div class="logo-group">
@@ -391,7 +516,10 @@ section { padding: 80px 0; }
       <li><a href="index.html">Home</a></li>
       <li><a href="organisers.html">Organisers</a></li>
       <li>
-        <a href="programme.html" class="mob-drop-toggle">Programme</a>
+        <div class="mob-link-group">
+          <a href="programme.html">Programme</a>
+          <button class="mob-toggle-btn" aria-label="Toggle submenu"><i class="fas fa-chevron-down"></i></button>
+        </div>
         <ul class="mob-sub" id="mob-sub-prog">
           <li><a href="timeline.html">Timeline</a></li>
           <li><a href="advisory.html">Advisory & Technical Committee</a></li>
@@ -401,7 +529,10 @@ section { padding: 80px 0; }
       </li>
       <li><a href="sponsors.html">Sponsors</a></li>
       <li>
-        <a href="javascript:void(0)" class="mob-drop-toggle">Attend</a>
+        <div class="mob-link-group">
+          <a href="javascript:void(0)" class="mob-attend-link">Attend</a>
+          <button class="mob-toggle-btn" aria-label="Toggle submenu"><i class="fas fa-chevron-down"></i></button>
+        </div>
         <ul class="mob-sub" id="mob-sub-attend">
           <li><a href="registrations.html">Registration</a></li>
           <li><a href="accommodation.html">Accommodation</a></li>
@@ -428,7 +559,7 @@ section { padding: 80px 0; }
                 </a>
                 <a href="advisory.html" class="nav-card">
                     <i class="fas fa-sitemap"></i>
-                    <span>Advisory &amp; Technical<br>Committee</span>
+                    <span>Advisory & Technical<br>Committee</span>
                 </a>
                 <a href="committee.html" class="nav-card">
                     <i class="fas fa-users-cog"></i>
@@ -457,7 +588,6 @@ section { padding: 80px 0; }
                 </div>
             </div>
 
-            <!-- DAY 1 PANE -->
             <div class="schedule-pane" id="day1">
                 <div class="schedule-list js-fade">
                     <div class="sch-row">
@@ -465,7 +595,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Registration</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -474,7 +607,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Inauguration</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -483,7 +619,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Hi Tea</h4>
-                                <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -492,7 +631,11 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 1: Prof. B.V.S. Viswanadham</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -501,7 +644,11 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 2: Prof. Krishna Prapoorna Biligiri</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -510,7 +657,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Lunch Break</h4>
-                                <span class="venue-tag"><i class="fas fa-utensils"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-utensils"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -519,12 +669,22 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-parallel">
                                 <div class="sch-track">
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 1: Ms. Minimol Korulla</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
                                 </div>
                                 <div class="sch-track">
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 2: Dr. Nikhil Saboo</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -534,12 +694,32 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-parallel">
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS1</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS2</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
                         </div>
@@ -549,7 +729,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Tea Break</h4>
-                                <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -558,12 +741,32 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-parallel">
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS3</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS4</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
                         </div>
@@ -571,7 +774,6 @@ section { padding: 80px 0; }
                 </div>
             </div>
 
-            <!-- DAY 2 PANE -->
             <div class="schedule-pane" id="day2">
                 <div class="schedule-list js-scroll fade-in-up">
                     <div class="sch-row">
@@ -579,7 +781,11 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 3: Prof. Animesh Das</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -588,7 +794,11 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 4: Prof. Narayanan Neithalath</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -597,7 +807,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Tea Break</h4>
-                                <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -606,12 +819,22 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-parallel">
                                 <div class="sch-track">
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 3: Prof. Prakash Nanthagopalan</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
                                 </div>
                                 <div class="sch-track">
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 4: Mr. Abhishek Tiwari</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -621,12 +844,32 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-parallel">
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS5</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS6</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
                         </div>
@@ -636,7 +879,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Lunch Break</h4>
-                                <span class="venue-tag"><i class="fas fa-utensils"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-utensils"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -645,7 +891,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Panel Discussion</h4>
-                                <span class="venue-tag"><i class="fas fa-users"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-users"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -653,8 +902,11 @@ section { padding: 80px 0; }
                         <div class="sch-time"><i class="far fa-clock"></i> 15:00 - 16:30</div>
                         <div class="sch-content">
                             <div class="sch-single">
-                                <h4 class="sch-item-title">Poster Presentation &amp; Hi Tea</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <h4 class="sch-item-title">Poster Presentation & Hi Tea</h4>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -662,15 +914,17 @@ section { padding: 80px 0; }
                         <div class="sch-time"><i class="far fa-clock"></i> 18:00 - 20:00</div>
                         <div class="sch-content">
                             <div class="sch-single sch-cultural">
-                                <h4 class="sch-item-title">Cultural Program &amp; Dinner</h4>
-                                <span class="venue-tag"><i class="fas fa-guitar"></i> Agora</span>
+                                <h4 class="sch-item-title">Cultural Program & Dinner</h4>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-guitar"></i> Agora</span>
+                                    <span class="venue-full"><a href="https://maps.app.goo.gl/9tVXtqqzLXXy9NQp6" target="_blank" rel="noopener">- Nila Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- DAY 3 PANE -->
             <div class="schedule-pane" id="day3">
                 <div class="schedule-list js-scroll fade-in-up">
                     <div class="sch-row">
@@ -678,7 +932,11 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 5: Prof. Manu Santhanam</h4>
-                                <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -687,7 +945,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Tea Break</h4>
-                                <span class="venue-tag"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -696,12 +957,22 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-parallel">
                                 <div class="sch-track">
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 5: Dr. Vishal Thombare</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
                                 </div>
                                 <div class="sch-track">
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 6: Mr. Vinod Kumar Mauriya</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -711,12 +982,32 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-parallel">
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS7</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                                 <div class="sch-track">
-                                    <h5 class="sch-item-title">Oral Presentation PS8</h5>
-                                    <span class="venue-tag"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
+                                    <h5 class="sch-item-title">Oral Presentations</h5>
+                                    <div class="venue-tag">
+                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
+                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                    </div>
+                                    <details class="oral-details">
+                                        <summary>View Presentations</summary>
+                                        <div class="oral-content">
+                                            List of presentees, their titles, and session details will be updated soon...
+                                        </div>
+                                    </details>
                                 </div>
                             </div>
                         </div>
@@ -726,7 +1017,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Valedictory Ceremony</h4>
-                                <span class="venue-tag"><i class="fas fa-award"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-award"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -735,7 +1029,10 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Lunch Break</h4>
-                                <span class="venue-tag"><i class="fas fa-utensils"></i> A01-007</span>
+                                <div class="venue-tag">
+                                    <span class="venue-short"><i class="fas fa-utensils"></i> A01-007</span>
+                                    <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -745,7 +1042,6 @@ section { padding: 80px 0; }
         </div>
     </section>
 
-    <!-- CULTURAL PROGRAMS -->
     <section id="cultural-programs">
         <video autoplay loop muted playsinline class="malhar-bg-video">
             <source src="videos/culturals/malharpromo.webm" type="video/webm">
@@ -757,7 +1053,7 @@ section { padding: 80px 0; }
             <div class="malhar-header js-scroll fade-in-up">
                 <img src="images/culturals/malhar.png" alt="Malhar Musical Band Logo" class="malhar-logo">
                 <h2 class="malhar-title">Feel The Melody,<br><span>Live The Rhythm</span></h2>
-                <p class="malhar-details">Live Concert &bull; June 05, 2026 &bull; 6:00 PM to 8:00 PM</p>
+                <p class="malhar-details">Live Concert • June 05, 2026 • 6:00 PM to 8:00 PM</p>
                 <div class="stay-tuned">Stay Tuned!</div>
             </div>
 
@@ -767,7 +1063,6 @@ section { padding: 80px 0; }
                 <div class="members-track-container" id="draggable-track">
                     <div class="members-track">
                         
-                        <!-- Set 1 -->
                         <div class="member-slide">
                             <img src="images/culturals/art1.webp" alt="Vaishnavi - Vocals" draggable="false">
                             <div class="member-info">
@@ -824,7 +1119,6 @@ section { padding: 80px 0; }
                             </div>
                         </div>
 
-                        <!-- Duplicate Set for infinite scroll illusion -->
                         <div class="member-slide">
                             <img src="images/culturals/art1.webp" alt="Vaishnavi - Vocals" draggable="false">
                             <div class="member-info">
@@ -923,18 +1217,30 @@ section { padding: 80px 0; }
           </li>
           <li>
             <i class="fas fa-phone-alt"></i>
-            <span><a href="tel:+914912091107">+91 491 209 1107</a> &nbsp;|&nbsp; <a href="tel:+914912091351">+91 491 209 1351</a></span>
+            <span><a href="tel:+914912091107">+91 491 209 1107</a>  |  <a href="tel:+914912091351">+91 491 209 1351</a></span>
           </li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
-        <p>&copy; <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
+        <p>© <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
       </div>
     </div>
   </div>
 </footer>
+
+<div id="pwa-install-banner" class="install-banner">
+  <div class="install-banner-content">
+    <img src="images/logos/satvalogo.png" alt="SATVA App" class="install-banner-icon">
+    <div class="install-banner-text">
+      <strong>Install SATVA 2026 App</strong>
+      <span id="install-instructions">Get the app for quick access</span>
+    </div>
+  </div>
+  <button id="pwa-install-btn" class="install-btn">Install</button>
+  <button id="pwa-close-btn" class="install-close">✕</button>
+</div>
 
 <script>
 // --- PRELOADER LOGIC ---
@@ -964,9 +1270,10 @@ section { padding: 80px 0; }
   setTimeout(hide, 5000);
 })();
 
+// --- GLOBAL DOM LOGIC ---
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Mobile Nav
+    // Mobile Nav Toggle
     const mobToggle = document.getElementById('mob-toggle');
     const mobNav = document.getElementById('mob-nav');
     if(mobToggle && mobNav) {
@@ -976,13 +1283,28 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
     
-    document.querySelectorAll('.mob-drop-toggle').forEach(el=>{
-      el.addEventListener('click', e=>{
+    // Mobile Dropdown Buttons
+    document.querySelectorAll('.mob-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
         e.preventDefault();
-        const sub = el.nextElementSibling;
+        const li = btn.closest('li');
+        const sub = li.querySelector('.mob-sub');
         if(sub) sub.classList.toggle('open');
+        btn.classList.toggle('active');
       });
     });
+
+    // Make clicking 'Attend' text toggle the menu
+    const attendLink = document.querySelector('.mob-attend-link');
+    if(attendLink) {
+        attendLink.addEventListener('click', e => {
+            e.preventDefault();
+            const btn = attendLink.nextElementSibling;
+            if(btn && btn.classList.contains('mob-toggle-btn')) {
+                btn.click();
+            }
+        });
+    }
 
     // Scroll Animation Logic
     const fades = document.querySelectorAll('.js-fade');
@@ -995,7 +1317,7 @@ document.addEventListener('DOMContentLoaded', function() {
       fades.forEach(el=>el.classList.add('visible')); 
     }
 
-    // Schedule Tabs Logic & Date Interaction
+    // Schedule Tabs Logic
     const tabBtns = document.querySelectorAll('.tab-btn');
     const panes = document.querySelectorAll('.schedule-pane');
     
@@ -1012,7 +1334,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Tab Click Events
     tabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             openTab(btn.dataset.target);
@@ -1021,7 +1342,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Date-based default tab selection
     const currentDate = new Date();
-    // Start of respective days
     const day1Start = new Date('2026-06-04T00:00:00');
     const day2Start = new Date('2026-06-05T00:00:00');
     const day3Start = new Date('2026-06-06T00:00:00');
@@ -1032,16 +1352,65 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (currentDate >= day2Start && currentDate < day3Start) {
         openTab('day2');
     } else {
-        openTab('day1'); // Default for Before June 4, On June 4, and after the event
+        openTab('day1'); 
     }
 
     document.getElementById('cur-year').textContent = new Date().getFullYear();
+
+    // --- PWA MOBILE INSTALL PROMPT ---
+    let deferredPrompt;
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installBtn = document.getElementById('pwa-install-btn');
+    const closeBtn = document.getElementById('pwa-close-btn');
+    const installInstructions = document.getElementById('install-instructions');
+
+    const hasDismissedPrompt = localStorage.getItem('satvaPwaDismissed') === 'true';
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (!isStandalone && !hasDismissedPrompt && installBanner) {
+      if (isIOS) {
+        installBtn.style.display = 'none';
+        installInstructions.innerHTML = 'Tap <i class="fas fa-share-square"></i> Share below<br>then "Add to Home Screen"';
+        setTimeout(() => { installBanner.classList.add('show'); }, 3000);
+      } else {
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          installBanner.classList.add('show');
+        });
+
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            installBanner.classList.remove('show');
+            localStorage.setItem('satvaPwaDismissed', 'true'); 
+            deferredPrompt.prompt(); 
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+          }
+        });
+      }
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        installBanner.classList.remove('show');
+        localStorage.setItem('satvaPwaDismissed', 'true');
+      });
+    }
 });
 
 // Image Protection
 document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
 document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
-</script>
 
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(err => console.log('ServiceWorker registration failed: ', err));
+  });
+}
+</script>
 </body>
 </html>
