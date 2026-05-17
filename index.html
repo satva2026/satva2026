@@ -33,6 +33,12 @@
 <link rel="apple-touch-icon" href="images/logos/logo4.png">
 <meta name="theme-color" content="#606C38">
 
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SATVA 2026">
+<link rel="apple-touch-icon" href="images/logos/satvalogo.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -58,21 +64,32 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+
+/* Strict rule to completely prevent horizontal scrolling/white strip on iOS */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+html { scroll-behavior: smooth; }
 body {
   font-family: 'DM Sans', sans-serif;
   color: var(--text);
   background: var(--white);
-  overflow-x: clip;
-  width: 100%;
-  position: relative;
   line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
 }
 body.loading-active { overflow: hidden; }
+main { flex-grow: 1; }
 
 img { -webkit-user-drag: none; user-select: none; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 
+/* Preloader */
 #preloader {
   position: fixed; inset: 0; background: var(--forest-dark);
   z-index: 999999; display: flex; flex-direction: column;
@@ -85,6 +102,7 @@ a { text-decoration: none; color: inherit; }
 .pre-pct { font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 2px; }
 @keyframes breathe { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.06); opacity: 1; } }
 
+/* Header & Nav */
 .main-header {
   position: sticky; top: 0; z-index: 1000; height: var(--header-h);
   background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
@@ -145,6 +163,17 @@ a { text-decoration: none; color: inherit; }
 .mob-sub li { border-bottom: none; }
 .mob-sub a { font-size: 15px; color: var(--text-soft); padding: 9px 4px; display: flex; justify-content: space-between;}
 
+/* Mobile Link Group Layout */
+.mob-link-group { display: flex; justify-content: space-between; align-items: center; }
+.mob-link-group a { flex: 1; }
+.mob-toggle-btn { 
+  background: none; border: none; padding: 10px 14px; cursor: pointer; 
+  color: var(--text-soft); font-size: 14px; transition: transform 0.3s ease, color 0.3s ease; 
+  display: flex; align-items: center; justify-content: center; outline: none;
+}
+.mob-toggle-btn.active { transform: rotate(180deg); color: var(--forest); }
+
+/* Hero Section */
 .hero {
   position: relative; height: 100vh; min-height: 640px;
   display: flex; flex-direction: column; justify-content: flex-end;
@@ -255,11 +284,13 @@ a { text-decoration: none; color: inherit; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+/* Shared Layouts */
 .wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
 section { padding: 100px 0; }
 section.tight { padding: 60px 0; }
 section.flush-top { padding-top: 0; }
 section.flush-bot { padding-bottom: 0; }
+.section-alt { background: var(--cream); }
 
 .section-eyebrow {
   font-family: 'Space Mono', monospace;
@@ -279,6 +310,7 @@ section.flush-bot { padding-bottom: 0; }
 .rule { width: 48px; height: 4px; background: var(--forest); border-radius: 2px; margin-bottom: 40px; }
 .rule.centered { margin-left: auto; margin-right: auto; }
 
+/* About Section */
 .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 .about-text-col p { font-size: 1.05rem; line-height: 1.85; color: var(--text-mid); text-align: justify; }
 .about-stat-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
@@ -298,6 +330,7 @@ section.flush-bot { padding-bottom: 0; }
 .stat-card:nth-child(4) .stat-num { color: var(--forest-dark); }
 .stat-card:nth-child(4) .stat-desc { color: var(--text-soft); }
 
+/* Legacy Section */
 .legacy-section { background: var(--cream); }
 .legacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
 .legacy-card {
@@ -325,6 +358,7 @@ section.flush-bot { padding-bottom: 0; }
 }
 .legacy-link:hover { gap: 10px; }
 
+/* Theme Section */
 .theme-layout { display: grid; grid-template-columns: 1fr 450px; gap: 80px; align-items: center; }
 .theme-text p { font-size: 1.1rem; line-height: 1.85; color: var(--text-mid); text-align: justify; margin-bottom: 32px; }
 .theme-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -351,6 +385,7 @@ section.flush-bot { padding-bottom: 0; }
 .stack-wrapper .stack-card.hidden { z-index: 1; transform: translateY(-34px) scale(0.88); opacity: 0; }
 .stack-wrapper .stack-card.going { transform: translate(110%, -15%) rotate(18deg); opacity: 0; z-index: 5; }
 
+/* Speakers Section */
 .speakers-section { background: var(--cream); }
 .speakers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 56px; }
 .invited-speakers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; margin-top: 56px; }
@@ -375,6 +410,7 @@ section.flush-bot { padding-bottom: 0; }
 .speaker-card-sm .speaker-name { font-size: 16px; }
 .speaker-card-sm .speaker-inst { font-size: 13px; }
 
+/* Sponsors Mini-Section */
 .sponsor-sym {
   background: var(--forest-dark); border-radius: 16px; padding: 48px 40px;
   display: flex; align-items: center; gap: 48px; margin-bottom: 32px;
@@ -437,6 +473,7 @@ section.flush-bot { padding-bottom: 0; }
 }
 .btn-solid-sm:hover { background: var(--forest-mid); border-color: var(--forest-mid); }
 
+/* Chairs Section */
 .chairs-section { background: var(--forest-dark); }
 .chairs-section .section-eyebrow { color: var(--forest-light); }
 .chairs-section .section-title { color: var(--white); }
@@ -460,6 +497,7 @@ section.flush-bot { padding-bottom: 0; }
 .chair-name { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 6px; line-height: 1.3; }
 .chair-role { font-size: 14px; color: var(--forest-light); letter-spacing: 0.3px; }
 
+/* Organizers Section */
 .org-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
 .org-card {
   background: var(--cream); border-radius: 12px; padding: 36px 28px;
@@ -488,6 +526,7 @@ section.flush-bot { padding-bottom: 0; }
 .academic-item p { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
 .acad-card { background: var(--cream); border-radius: 12px; padding: 36px 28px; border: 1px solid var(--cream-dark); grid-column: 1/-1; margin-top: 0; }
 
+/* Modals */
 .modal-backdrop {
   display: none; position: fixed; inset: 0; z-index: 10000;
   background: rgba(1,31,20,0.75); backdrop-filter: blur(6px);
@@ -535,6 +574,43 @@ section.flush-bot { padding-bottom: 0; }
 .theme-list li { margin-bottom: 14px; position: relative; padding-left: 28px; font-size: 16px; color: var(--text-mid); }
 .theme-list li::before { content: '\f058'; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--forest-mid); font-size: 1rem; top: 3px; }
 
+/* ── PWA INSTALL BANNER ── */
+.install-banner {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 400px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-left: 4px solid var(--forest);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 999999;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.install-banner-content { display: flex; align-items: center; gap: 12px; }
+.install-banner-icon { width: 40px; height: 40px; border-radius: 8px; }
+.install-banner-text { display: flex; flex-direction: column; }
+.install-banner-text strong { font-size: 14px; color: var(--forest-dark); line-height: 1.2; }
+.install-banner-text span { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+
+.install-btn {
+  background: var(--forest); color: var(--white);
+  border: none; padding: 8px 16px; border-radius: 100px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.install-close {
+  background: none; border: none; font-size: 16px;
+  color: var(--text-soft); cursor: pointer; padding: 4px;
+}
+
+/* Footer */
 .site-footer { background: var(--forest-dark); padding-top: 72px; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1.2fr; gap: 48px; padding-bottom: 56px; }
 .footer-brand-logos { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
@@ -559,12 +635,14 @@ section.flush-bot { padding-bottom: 0; }
 .footer-bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
 
+/* Animation Utils */
 .js-fade { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .js-fade.visible { opacity: 1; transform: none; }
 .js-fade-d1 { transition-delay: 0.1s; }
 .js-fade-d2 { transition-delay: 0.2s; }
 .js-fade-d3 { transition-delay: 0.3s; }
 
+/* Media Queries */
 @media (max-width: 1100px) {
   .about-layout { grid-template-columns: 1fr; gap: 48px; }
   .about-stat-col { grid-template-columns: repeat(4, 1fr); }
@@ -583,6 +661,10 @@ section.flush-bot { padding-bottom: 0; }
   .countdown-strip { display: none; }
   section { padding: 72px 0; }
   .hero-body { padding-bottom: 40px; }
+}
+@media (max-width: 768px) {
+  /* Only show the PWA install banner on mobile devices */
+  .install-banner.show { display: flex; }
 }
 @media (max-width: 640px) {
   .wrap { padding: 0 20px; }
@@ -646,7 +728,10 @@ section.flush-bot { padding-bottom: 0; }
       <li><a href="index.html">Home</a></li>
       <li><a href="organisers.html">Organisers</a></li>
       <li>
-        <a href="programme.html" class="mob-drop-toggle">Programme</a>
+        <div class="mob-link-group">
+          <a href="programme.html">Programme</a>
+          <button class="mob-toggle-btn" aria-label="Toggle submenu"><i class="fas fa-chevron-down"></i></button>
+        </div>
         <ul class="mob-sub" id="mob-sub-prog">
           <li><a href="timeline.html">Timeline</a></li>
           <li><a href="advisory.html">Advisory & Technical Committee</a></li>
@@ -656,7 +741,10 @@ section.flush-bot { padding-bottom: 0; }
       </li>
       <li><a href="sponsors.html">Sponsors</a></li>
       <li>
-        <a href="javascript:void(0)" class="mob-drop-toggle">Attend</a>
+        <div class="mob-link-group">
+          <a href="javascript:void(0)" class="mob-attend-link">Attend</a>
+          <button class="mob-toggle-btn" aria-label="Toggle submenu"><i class="fas fa-chevron-down"></i></button>
+        </div>
         <ul class="mob-sub" id="mob-sub-attend">
           <li><a href="registrations.html">Registration</a></li>
           <li><a href="accommodation.html">Accommodation</a></li>
@@ -700,11 +788,11 @@ section.flush-bot { padding-bottom: 0; }
           <span>Early Bird Registration is Now Open</span>
           <span>Expert Lectures · Paper Presentations · Panel Discussions</span>
           <span>SATVA 2026 — Pavement Sustainability Frontiers: From Materials to Maintenance</span>
-          <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI &amp; IGS Palakkad Chapters</span>
+          <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI & IGS Palakkad Chapters</span>
           <span>Early Bird Registration is Now Open</span>
           <span>Expert Lectures · Paper Presentations · Panel Discussions</span>
           <span>SATVA 2026 — Pavement Sustainability Frontiers: From Materials to Maintenance</span>
-          <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI &amp; IGS Palakkad Chapters</span>
+          <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI & IGS Palakkad Chapters</span>
         </div>
       </div>
     </div>
@@ -735,7 +823,7 @@ section.flush-bot { padding-bottom: 0; }
         </div>
         <div class="stat-card">
           <div class="stat-num">11+</div>
-          <div class="stat-desc">Keynote &amp; Invited<br>Speakers</div>
+          <div class="stat-desc">Keynote & Invited<br>Speakers</div>
         </div>
       </div>
     </div>
@@ -910,7 +998,7 @@ section.flush-bot { padding-bottom: 0; }
       <img src="images/sponsors/irsm-logo.png" alt="IRSM" class="sponsor-sym-logo">
       <div class="sponsor-sym-info">
         <div class="sponsor-tier-tag"><i class="fas fa-crown" style="font-size:11px"></i> Symposium Partner</div>
-        <div class="sponsor-sym-name">Indian Road Survey &amp; Management (IRSM) Pvt Ltd</div>
+        <div class="sponsor-sym-name">Indian Road Survey & Management (IRSM) Pvt Ltd</div>
         <p class="sponsor-sym-desc">Industry leader providing services related to road condition assessment since 2009. ISO 9001:2015 and ISO 39001:2012 certified, with over 600,000 km of network assessments completed.</p>
         <div class="sponsor-sym-actions">
           <button class="btn-sym-outline" onclick="openSponsorModal('irsm')">Read More</button>
@@ -936,7 +1024,7 @@ section.flush-bot { padding-bottom: 0; }
         <div class="gold-info">
           <div class="gold-tier-tag">Gold Sponsor</div>
           <div class="gold-name">Anton Paar</div>
-          <div class="gold-sub">World leader in density &amp; rheometry measurement</div>
+          <div class="gold-sub">World leader in density & rheometry measurement</div>
           <div class="gold-actions">
             <button class="btn-outline-sm" onclick="openSponsorModal('anton')">Read More</button>
             <a href="https://www.anton-paar.com/in-en/" target="_blank" rel="noopener" class="btn-solid-sm">Website</a>
@@ -983,7 +1071,7 @@ section.flush-bot { padding-bottom: 0; }
   <div class="wrap">
     <div class="js-fade">
       <span class="section-eyebrow">Organisers</span>
-      <h2 class="section-title">Organisers &amp; Partners</h2>
+      <h2 class="section-title">Organisers & Partners</h2>
       <div class="rule"></div>
     </div>
     <div class="org-grid js-fade">
@@ -1064,14 +1152,14 @@ section.flush-bot { padding-bottom: 0; }
           </li>
           <li>
             <i class="fas fa-phone-alt"></i>
-            <span><a href="tel:+914912091107">+91 491 209 1107</a> &nbsp;|&nbsp; <a href="tel:+914912091351">+91 491 209 1351</a></span>
+            <span><a href="tel:+914912091107">+91 491 209 1107</a>  |  <a href="tel:+914912091351">+91 491 209 1351</a></span>
           </li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
-        <p>&copy; <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
+        <p>© <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
       </div>
     </div>
   </div>
@@ -1121,7 +1209,20 @@ section.flush-bot { padding-bottom: 0; }
   </div>
 </div>
 
+<div id="pwa-install-banner" class="install-banner">
+  <div class="install-banner-content">
+    <img src="images/logos/satvalogo.png" alt="SATVA App" class="install-banner-icon">
+    <div class="install-banner-text">
+      <strong>Install SATVA 2026 App</strong>
+      <span id="install-instructions">Get the app for quick access</span>
+    </div>
+  </div>
+  <button id="pwa-install-btn" class="install-btn">Install</button>
+  <button id="pwa-close-btn" class="install-close">✕</button>
+</div>
+
 <script>
+// --- PRELOADER LOGIC ---
 (function(){
   const bar = document.getElementById('pre-bar');
   const pct = document.getElementById('pre-pct');
@@ -1129,37 +1230,134 @@ section.flush-bot { padding-bottom: 0; }
   const iv = setInterval(()=>{
     if(p < 90) p += Math.random()*15+5;
     if(p > 95) p = 95;
-    bar.style.width = Math.floor(p)+'%';
-    pct.textContent = Math.floor(p)+'%';
+    if(bar) bar.style.width = Math.floor(p)+'%';
+    if(pct) pct.textContent = Math.floor(p)+'%';
   }, 50);
   function hide(){
     if(done) return; done = true;
-    clearInterval(iv); bar.style.width='100%'; pct.textContent='100%';
+    clearInterval(iv); 
+    if(bar) bar.style.width='100%'; 
+    if(pct) pct.textContent='100%';
     setTimeout(()=>{
       const pre = document.getElementById('preloader');
-      pre.style.opacity='0'; pre.style.visibility='hidden';
+      if(pre) { pre.style.opacity='0'; pre.style.visibility='hidden'; }
       document.body.classList.remove('loading-active');
-      setTimeout(()=>pre.remove(), 600);
+      setTimeout(()=>{ if(pre) pre.remove(); }, 600);
     }, 200);
   }
   window.addEventListener('load', hide);
   setTimeout(hide, 5000);
 })();
 
-const mobToggle = document.getElementById('mob-toggle');
-const mobNav = document.getElementById('mob-nav');
-mobToggle.addEventListener('click', ()=>{
-  mobNav.classList.toggle('open');
-  mobToggle.classList.toggle('active');
-});
-document.querySelectorAll('.mob-drop-toggle').forEach(el=>{
-  el.addEventListener('click', e=>{
-    e.preventDefault();
-    const sub = el.nextElementSibling;
-    if(sub) sub.classList.toggle('open');
-  });
+// --- GLOBAL DOM LOGIC ---
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Mobile Nav Toggle
+    const mobToggle = document.getElementById('mob-toggle');
+    const mobNav = document.getElementById('mob-nav');
+    if(mobToggle && mobNav) {
+      mobToggle.addEventListener('click', ()=>{
+        mobNav.classList.toggle('open');
+        mobToggle.classList.toggle('active');
+      });
+    }
+    
+    // Mobile Dropdown Buttons
+    document.querySelectorAll('.mob-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const li = btn.closest('li');
+        const sub = li.querySelector('.mob-sub');
+        if(sub) sub.classList.toggle('open');
+        btn.classList.toggle('active');
+      });
+    });
+
+    // Make clicking 'Attend' text toggle the menu
+    const attendLink = document.querySelector('.mob-attend-link');
+    if(attendLink) {
+        attendLink.addEventListener('click', e => {
+            e.preventDefault();
+            const btn = attendLink.nextElementSibling;
+            if(btn && btn.classList.contains('mob-toggle-btn')) {
+                btn.click();
+            }
+        });
+    }
+
+    // Scroll Animation Logic
+    const fades = document.querySelectorAll('.js-fade');
+    if('IntersectionObserver' in window){
+      const obs = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      },{threshold:0.08});
+      fades.forEach(el=>obs.observe(el));
+    } else { 
+      fades.forEach(el=>el.classList.add('visible')); 
+    }
+
+    // Set Copyright Year
+    const yearSpan = document.getElementById('cur-year');
+    if(yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+    // --- PWA MOBILE INSTALL PROMPT ---
+    let deferredPrompt;
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installBtn = document.getElementById('pwa-install-btn');
+    const closeBtn = document.getElementById('pwa-close-btn');
+    const installInstructions = document.getElementById('install-instructions');
+
+    const hasDismissedPrompt = localStorage.getItem('satvaPwaDismissed') === 'true';
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (!isStandalone && !hasDismissedPrompt && installBanner) {
+      if (isIOS) {
+        installBtn.style.display = 'none';
+        installInstructions.innerHTML = 'Tap <i class="fas fa-share-square"></i> Share below<br>then "Add to Home Screen"';
+        setTimeout(() => { installBanner.classList.add('show'); }, 3000);
+      } else {
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          installBanner.classList.add('show');
+        });
+
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            installBanner.classList.remove('show');
+            localStorage.setItem('satvaPwaDismissed', 'true'); 
+            deferredPrompt.prompt(); 
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+          }
+        });
+      }
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        installBanner.classList.remove('show');
+        localStorage.setItem('satvaPwaDismissed', 'true');
+      });
+    }
 });
 
+// Image Protection
+document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(err => console.log('ServiceWorker registration failed: ', err));
+  });
+}
+
+// ── INDEX SPECIFIC LOGIC ──
+
+// Countdown Timer
 const target = new Date('June 4, 2026 09:00:00').getTime();
 function tick(){
   const gap = target - Date.now();
@@ -1169,21 +1367,20 @@ function tick(){
   const m = Math.floor((gap%3600000)/60000);
   const s = Math.floor((gap%60000)/1000);
   const p = n => String(n).padStart(2,'0');
-  document.getElementById('cd-d').textContent=p(d);
-  document.getElementById('cd-h').textContent=p(h);
-  document.getElementById('cd-m').textContent=p(m);
-  document.getElementById('cd-s').textContent=p(s);
+  
+  const dEl = document.getElementById('cd-d');
+  const hEl = document.getElementById('cd-h');
+  const mEl = document.getElementById('cd-m');
+  const sEl = document.getElementById('cd-s');
+  
+  if(dEl) dEl.textContent=p(d);
+  if(hEl) hEl.textContent=p(h);
+  if(mEl) mEl.textContent=p(m);
+  if(sEl) sEl.textContent=p(s);
 }
 const civ = setInterval(tick, 1000); tick();
 
-const fades = document.querySelectorAll('.js-fade');
-if('IntersectionObserver' in window){
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  },{threshold:0.08});
-  fades.forEach(el=>obs.observe(el));
-} else { fades.forEach(el=>el.classList.add('visible')); }
-
+// Stack Animation
 const cs = document.getElementById('card-stack');
 if(cs){
   setInterval(()=>{
@@ -1204,9 +1401,13 @@ if(cs){
   }, 5000);
 }
 
+// Modal Handlers
 function closeModalAction(modalId) {
-    document.getElementById(modalId).classList.remove('open');
-    document.body.style.overflow = '';
+    const modal = document.getElementById(modalId);
+    if(modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
 }
 
 function closeModalEvent(e, modalId) {
@@ -1308,6 +1509,7 @@ const sponsorData = {
     body: `<p>Anton Paar develops, produces and distributes highly accurate laboratory instruments and process measuring systems, and provides custom-tailored automation and robotic solutions. It is the world leader in the measurement of density, concentration and CO₂ and in the field of rheometry. As part of the Anton Paar Group AG, Anton Paar GmbH is owned by the charitable Santner Foundation.</p>`
   }
 };
+
 function openSponsorModal(key){
   const d = sponsorData[key]; if(!d) return;
   document.getElementById('smod-logo').src = d.logo;
@@ -1359,6 +1561,7 @@ const themeData = {
            </ul>`
   }
 };
+
 function openThemeModal(key){
   const d = themeData[key]; if(!d) return;
   document.getElementById('tmod-icon').innerHTML = d.icon;
@@ -1367,10 +1570,6 @@ function openThemeModal(key){
   document.getElementById('modal-theme').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
-document.getElementById('cur-year').textContent = new Date().getFullYear();
-document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
-document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
 </script>
 </body>
 </html>
