@@ -1,0 +1,24 @@
+{
+  "name": "SATVA 2026 Symposium",
+  "short_name": "SATVA 2026",
+  "description": "Symposium on Advanced Technologies and Visionary Approaches for Sustainability at IIT Palakkad.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#606C38",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/logos/satvalogo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/logos/satvalogo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
