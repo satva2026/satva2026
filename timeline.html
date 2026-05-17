@@ -34,6 +34,12 @@
 <link rel="apple-touch-icon" href="images/logos/logo4.png"> 
 <meta name="theme-color" content="#606C38">
 
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SATVA 2026">
+<link rel="apple-touch-icon" href="images/logos/satvalogo.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -59,16 +65,24 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Strict rule to completely prevent horizontal scrolling/white strip on iOS */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 html { scroll-behavior: smooth; }
 body {
   font-family: 'DM Sans', sans-serif;
   color: var(--text);
   background: var(--cream);
-  overflow-x: hidden;
   line-height: 1.6;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
+  width: 100%;
 }
 body.loading-active { overflow: hidden; }
 main { flex-grow: 1; }
@@ -150,57 +164,67 @@ a { text-decoration: none; color: inherit; }
 .mob-sub li { border-bottom: none; }
 .mob-sub a { font-size: 15px; color: var(--text-soft); padding: 9px 4px; display: flex; justify-content: space-between;}
 
+/* New Mobile Link Group Layout */
+.mob-link-group { display: flex; justify-content: space-between; align-items: center; }
+.mob-link-group a { flex: 1; }
+.mob-toggle-btn { 
+  background: none; border: none; padding: 10px 14px; cursor: pointer; 
+  color: var(--text-soft); font-size: 14px; transition: transform 0.3s ease, color 0.3s ease; 
+  display: flex; align-items: center; justify-content: center; outline: none;
+}
+.mob-toggle-btn.active { transform: rotate(180deg); color: var(--forest); }
+
 /* ── LAYOUT ── */
 .wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
 
 /* ── TIMELINE SECTION ── */
 .timeline-section { 
-    padding: 100px 0; 
-    overflow-x: hidden; 
-    background-image: radial-gradient(var(--cream-dark) 1px, transparent 1px);
-    background-size: 24px 24px;
+  padding: 100px 0; 
+  overflow-x: hidden; 
+  background-image: radial-gradient(var(--cream-dark) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 .section-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
-    color: var(--forest); margin-bottom: 14px; display: block;
-    text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--forest); margin-bottom: 14px; display: block;
+  text-align: center;
 }
 .section-title { 
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    line-height: 1.1; color: var(--forest-dark); margin-bottom: 20px;
-    text-align: center; margin-bottom: 80px; 
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 1.1; color: var(--forest-dark); margin-bottom: 20px;
+  text-align: center; margin-bottom: 80px; 
 }
 
 .timeline-wrapper { position: relative; padding: 20px 0; }
 .timeline-wrapper::after { 
-    content: ''; position: absolute; width: 4px; background: var(--cream-dark); 
-    top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; 
-    z-index: 0; 
+  content: ''; position: absolute; width: 4px; background: var(--cream-dark); 
+  top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; 
+  z-index: 0; 
 }
 
 .timeline-entry { 
-    padding: 10px 40px; position: relative; width: 50%; 
-    opacity: 0; transition: all 0.6s ease-out; 
-    z-index: 1; 
+  padding: 10px 40px; position: relative; width: 50%; 
+  opacity: 0; transition: all 0.6s ease-out; 
+  z-index: 1; 
 }
 .timeline-entry:nth-child(odd) { left: 0; transform: translateX(-50px); }
 .timeline-entry:nth-child(even) { left: 50%; transform: translateX(50px); }
 .timeline-entry.visible { opacity: 1; transform: translateX(0); }
 
 .timeline-dot {
-    position: absolute; width: 24px; height: 24px; background: var(--white);
-    border: 4px solid var(--forest); top: 30px; border-radius: 50%; z-index: 10; transition: 0.3s;
+  position: absolute; width: 24px; height: 24px; background: var(--white);
+  border: 4px solid var(--forest); top: 30px; border-radius: 50%; z-index: 10; transition: 0.3s;
 }
 .timeline-entry:nth-child(odd) .timeline-dot { right: -12px; }
 .timeline-entry:nth-child(even) .timeline-dot { left: -12px; }
 
 .timeline-card {
-    background: var(--white); border-radius: 12px; padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative;
-    border: 1px solid var(--cream-dark);
-    border-top: 5px solid var(--forest); transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: var(--white); border-radius: 12px; padding: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative;
+  border: 1px solid var(--cream-dark);
+  border-top: 5px solid var(--forest); transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .timeline-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
 
@@ -209,68 +233,104 @@ a { text-decoration: none; color: inherit; }
 .timeline-entry:nth-child(even) .timeline-card::before { left: -10px; border-width: 10px 10px 10px 0; border-color: transparent var(--white) transparent transparent; }
 
 .event-date {
-    display: inline-block; font-family: 'Space Mono', monospace; font-weight: 700;
-    color: var(--forest-mid); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
-    margin-bottom: 14px; background: var(--cream); padding: 6px 14px; border-radius: 20px;
+  display: inline-block; font-family: 'Space Mono', monospace; font-weight: 700;
+  color: var(--forest-mid); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 14px; background: var(--cream); padding: 6px 14px; border-radius: 20px;
 }
 
 .timeline-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--forest-dark); margin-bottom: 10px; }
 .timeline-card p { font-size: 1.05rem; color: var(--text-mid); margin-bottom: 15px; }
 
 .action-reveal {
-    font-weight: 700; color: var(--forest); text-transform: uppercase;
-    font-size: 0.85rem; display: flex; align-items: center; gap: 5px; opacity: 0.8; transition: 0.3s;
+  font-weight: 700; color: var(--forest); text-transform: uppercase;
+  font-size: 0.85rem; display: flex; align-items: center; gap: 5px; opacity: 0.8; transition: 0.3s;
 }
 .timeline-card:hover .action-reveal { opacity: 1; gap: 10px; }
 
 .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--forest); color: var(--white);
-    padding: 10px 24px; border-radius: 8px; margin-top: 5px;
-    font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
-    border: 1.5px solid var(--forest);
-    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--forest); color: var(--white);
+  padding: 10px 24px; border-radius: 8px; margin-top: 5px;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
+  border: 1.5px solid var(--forest);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 .btn-primary:hover { background: var(--forest-mid); border-color: var(--forest-mid); color: var(--white); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
 .btn-primary i { transition: margin 0.3s; }
 .btn-primary:hover i { margin-left: 5px; }
 
 .mail-notification {
-    color: var(--forest-mid);
-    font-weight: 600; font-size: 0.95rem;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  color: var(--forest-mid);
+  font-weight: 600; font-size: 0.95rem;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .mail-notification i {
-    animation: mailFly 2s infinite ease-in-out;
-    color: var(--forest);
+  animation: mailFly 2s infinite ease-in-out;
+  color: var(--forest);
 }
 @keyframes mailFly {
-    0% { transform: translate(0, 0); opacity: 0.8; }
-    50% { transform: translate(5px, -5px); opacity: 1; }
-    100% { transform: translate(0, 0); opacity: 0.8; }
+  0% { transform: translate(0, 0); opacity: 0.8; }
+  50% { transform: translate(5px, -5px); opacity: 1; }
+  100% { transform: translate(0, 0); opacity: 0.8; }
 }
 
 .timeline-entry.completed .timeline-card {
-    border-top-color: var(--cream-dark);
-    opacity: 0.7;
+  border-top-color: var(--cream-dark);
+  opacity: 0.7;
 }
 .timeline-entry.completed .event-date {
-    color: var(--text-soft);
-    background: var(--cream-mid);
+  color: var(--text-soft);
+  background: var(--cream-mid);
 }
 .timeline-entry.completed .timeline-dot {
-    background: var(--forest-mid);
-    border-color: var(--forest-mid);
+  background: var(--forest-mid);
+  border-color: var(--forest-mid);
 }
 .timeline-entry:not(.completed) .timeline-dot { animation: pulse 2s infinite; }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(96, 108, 56, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(96, 108, 56, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(96, 108, 56, 0); }
+}
+
+/* ── PWA INSTALL BANNER ── */
+.install-banner {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 400px;
+  background: var(--white);
+  border: 1px solid var(--cream-dark);
+  border-left: 4px solid var(--forest);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  z-index: 999999;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.install-banner-content { display: flex; align-items: center; gap: 12px; }
+.install-banner-icon { width: 40px; height: 40px; border-radius: 8px; }
+.install-banner-text { display: flex; flex-direction: column; }
+.install-banner-text strong { font-size: 14px; color: var(--forest-dark); line-height: 1.2; }
+.install-banner-text span { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+
+.install-btn {
+  background: var(--forest); color: var(--white);
+  border: none; padding: 8px 16px; border-radius: 100px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.install-close {
+  background: none; border: none; font-size: 16px;
+  color: var(--text-soft); cursor: pointer; padding: 4px;
 }
 
 /* ── FOOTER ── */
@@ -314,6 +374,8 @@ a { text-decoration: none; color: inherit; }
     .timeline-entry:nth-child(odd) .timeline-card::before, .timeline-entry:nth-child(even) .timeline-card::before {
         left: -10px; right: auto; border-width: 10px 10px 10px 0; border-color: transparent var(--white) transparent transparent;
     }
+    /* Only show the PWA install banner on mobile devices */
+    .install-banner.show { display: flex; }
 }
 @media (max-width: 640px) {
   .wrap { padding: 0 20px; }
@@ -327,14 +389,12 @@ a { text-decoration: none; color: inherit; }
 </head>
 <body class="loading-active">
 
-<!-- PRELOADER -->
 <div id="preloader">
   <img src="images/logos/logo4.png" alt="SATVA" class="pre-logo">
   <div class="pre-bar-track"><div class="pre-bar" id="pre-bar"></div></div>
   <div class="pre-pct" id="pre-pct">0%</div>
 </div>
 
-<!-- HEADER -->
 <header class="main-header">
   <div class="navbar">
     <div class="logo-group">
@@ -376,7 +436,10 @@ a { text-decoration: none; color: inherit; }
       <li><a href="index.html">Home</a></li>
       <li><a href="organisers.html">Organisers</a></li>
       <li>
-        <a href="programme.html" class="mob-drop-toggle">Programme</a>
+        <div class="mob-link-group">
+          <a href="programme.html">Programme</a>
+          <button class="mob-toggle-btn" aria-label="Toggle submenu"><i class="fas fa-chevron-down"></i></button>
+        </div>
         <ul class="mob-sub" id="mob-sub-prog">
           <li><a href="timeline.html">Timeline</a></li>
           <li><a href="advisory.html">Advisory & Technical Committee</a></li>
@@ -386,7 +449,10 @@ a { text-decoration: none; color: inherit; }
       </li>
       <li><a href="sponsors.html">Sponsors</a></li>
       <li>
-        <a href="javascript:void(0)" class="mob-drop-toggle">Attend</a>
+        <div class="mob-link-group">
+          <a href="javascript:void(0)" class="mob-attend-link">Attend</a>
+          <button class="mob-toggle-btn" aria-label="Toggle submenu"><i class="fas fa-chevron-down"></i></button>
+        </div>
         <ul class="mob-sub" id="mob-sub-attend">
           <li><a href="registrations.html">Registration</a></li>
           <li><a href="accommodation.html">Accommodation</a></li>
@@ -526,18 +592,30 @@ a { text-decoration: none; color: inherit; }
           </li>
           <li>
             <i class="fas fa-phone-alt"></i>
-            <span><a href="tel:+914912091107">+91 491 209 1107</a> &nbsp;|&nbsp; <a href="tel:+914912091351">+91 491 209 1351</a></span>
+            <span><a href="tel:+914912091107">+91 491 209 1107</a>  |  <a href="tel:+914912091351">+91 491 209 1351</a></span>
           </li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-bottom-inner">
-        <p>&copy; <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
+        <p>© <span id="cur-year">2026</span> SATVA | IIT Palakkad. All Rights Reserved.</p>
       </div>
     </div>
   </div>
 </footer>
+
+<div id="pwa-install-banner" class="install-banner">
+  <div class="install-banner-content">
+    <img src="images/logos/satvalogo.png" alt="SATVA App" class="install-banner-icon">
+    <div class="install-banner-text">
+      <strong>Install SATVA 2026 App</strong>
+      <span id="install-instructions">Get the app for quick access</span>
+    </div>
+  </div>
+  <button id="pwa-install-btn" class="install-btn">Install</button>
+  <button id="pwa-close-btn" class="install-close">✕</button>
+</div>
 
 <script>
 /* ---- PRELOADER ---- */
@@ -548,40 +626,62 @@ a { text-decoration: none; color: inherit; }
   const iv = setInterval(()=>{
     if(p < 90) p += Math.random()*15+5;
     if(p > 95) p = 95;
-    bar.style.width = Math.floor(p)+'%';
-    pct.textContent = Math.floor(p)+'%';
+    if(bar) bar.style.width = Math.floor(p)+'%';
+    if(pct) pct.textContent = Math.floor(p)+'%';
   }, 50);
   function hide(){
     if(done) return; done = true;
-    clearInterval(iv); bar.style.width='100%'; pct.textContent='100%';
+    clearInterval(iv); 
+    if(bar) bar.style.width='100%'; 
+    if(pct) pct.textContent='100%';
     setTimeout(()=>{
       const pre = document.getElementById('preloader');
-      pre.style.opacity='0'; pre.style.visibility='hidden';
+      if(pre) { pre.style.opacity='0'; pre.style.visibility='hidden'; }
       document.body.classList.remove('loading-active');
-      setTimeout(()=>pre.remove(), 600);
+      setTimeout(()=>{ if(pre) pre.remove(); }, 600);
     }, 200);
   }
   window.addEventListener('load', hide);
   setTimeout(hide, 5000);
 })();
 
-/* ---- MOBILE NAV ---- */
-const mobToggle = document.getElementById('mob-toggle');
-const mobNav = document.getElementById('mob-nav');
-mobToggle.addEventListener('click', ()=>{
-  mobNav.classList.toggle('open');
-  mobToggle.classList.toggle('active');
-});
-document.querySelectorAll('.mob-drop-toggle').forEach(el=>{
-  el.addEventListener('click', e=>{
-    e.preventDefault();
-    const sub = el.nextElementSibling;
-    if(sub) sub.classList.toggle('open');
-  });
-});
-
-/* ---- TIMELINE LOGIC ---- */
+/* ---- PAGE LOGIC ---- */
 document.addEventListener('DOMContentLoaded', function () {
+    
+    // Mobile Nav Toggle
+    const mobToggle = document.getElementById('mob-toggle');
+    const mobNav = document.getElementById('mob-nav');
+    if(mobToggle && mobNav) {
+      mobToggle.addEventListener('click', ()=>{
+        mobNav.classList.toggle('open');
+        mobToggle.classList.toggle('active');
+      });
+    }
+    
+    // Mobile Dropdown Buttons
+    document.querySelectorAll('.mob-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const li = btn.closest('li');
+        const sub = li.querySelector('.mob-sub');
+        if(sub) sub.classList.toggle('open');
+        btn.classList.toggle('active');
+      });
+    });
+
+    // Make clicking 'Attend' text toggle the menu
+    const attendLink = document.querySelector('.mob-attend-link');
+    if(attendLink) {
+        attendLink.addEventListener('click', e => {
+            e.preventDefault();
+            const btn = attendLink.nextElementSibling;
+            if(btn && btn.classList.contains('mob-toggle-btn')) {
+                btn.click();
+            }
+        });
+    }
+
+    /* ---- TIMELINE SPECIFIC LOGIC ---- */
     const today = new Date().toISOString().split('T')[0]; 
     const items = document.querySelectorAll('.timeline-entry');
 
@@ -611,49 +711,51 @@ document.addEventListener('DOMContentLoaded', function () {
         const regStatus = document.getElementById('reg-status');
         const regBtn = document.getElementById('reg-btn');
 
-        regEntry.classList.remove('completed');
-        const dot = regEntry.querySelector('.timeline-dot');
+        if(regEntry) regEntry.classList.remove('completed');
+        const dot = regEntry ? regEntry.querySelector('.timeline-dot') : null;
         if (dot) dot.innerHTML = '';
 
-        if (now < new Date('2026-04-20T00:00:00')) {
-            regDateBadge.innerText = "Starts 20th April 2026";
-            regTitle.innerText = "Registration Opens Soon";
-            regDesc.innerText = "Registration will officially open on April 20th, 2026.";
-            regStatus.innerHTML = '<i class="fas fa-lock"></i> Pending';
-            regBtn.style.display = 'none';
-        } else if (now <= earlyBirdEnd) {
-            regDateBadge.innerText = "20th Apr - 15th May 2026";
-            regTitle.innerText = "Early Bird Registration";
-            regDesc.innerText = "Register now to grab the Early Bird discount! Valid until May 15th.";
-            regStatus.innerHTML = '<i class="fas fa-door-open"></i> Early Bird Open!';
-            regBtn.style.display = 'inline-flex';
-        } else if (now <= regularEnd) {
-            regDateBadge.innerText = "16th May - 1st Jun 2026";
-            regTitle.innerText = "Regular Registration";
-            regDesc.innerText = "Standard online registration is active until June 1st, 11:50 PM.";
-            regStatus.innerHTML = '<i class="fas fa-door-open"></i> Registration Open!';
-            regBtn.style.display = 'inline-flex';
-        } else if (now < onSpotStart) {
-            regDateBadge.innerText = "Online Reg. Closed";
-            regTitle.innerText = "Registration Update";
-            regDesc.innerText = "Online registrations are now closed. You can register on-spot starting June 4th.";
-            regStatus.innerHTML = '<i class="fas fa-ban" style="color: var(--cream-dark);"></i> Closed';
-            regBtn.style.display = 'none';
-            regEntry.classList.add('completed');
-        } else if (now <= eventEnd) {
-            regDateBadge.innerText = "4th Jun - 6th Jun 2026";
-            regTitle.innerText = "On-Spot Registration";
-            regDesc.innerText = "Welcome to SATVA 2026! Please head to the registration desk at the venue to register.";
-            regStatus.innerHTML = '<i class="fas fa-map-marker-alt"></i> On-Spot Open';
-            regBtn.style.display = 'none'; 
-        } else {
-            regDateBadge.innerText = "Event Concluded";
-            regTitle.innerText = "Registration Closed";
-            regDesc.innerText = "The SATVA 2026 event has concluded.";
-            regStatus.innerHTML = '<i class="fas fa-times" style="color: var(--cream-dark);"></i> Event Finished';
-            regBtn.style.display = 'none';
-            regEntry.classList.add('completed');
-            if(dot) dot.innerHTML = '<i class="fas fa-check" style="color:white; font-size: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
+        if(regDateBadge && regTitle && regDesc && regStatus && regBtn) {
+            if (now < new Date('2026-04-20T00:00:00')) {
+                regDateBadge.innerText = "Starts 20th April 2026";
+                regTitle.innerText = "Registration Opens Soon";
+                regDesc.innerText = "Registration will officially open on April 20th, 2026.";
+                regStatus.innerHTML = '<i class="fas fa-lock"></i> Pending';
+                regBtn.style.display = 'none';
+            } else if (now <= earlyBirdEnd) {
+                regDateBadge.innerText = "20th Apr - 15th May 2026";
+                regTitle.innerText = "Early Bird Registration";
+                regDesc.innerText = "Register now to grab the Early Bird discount! Valid until May 15th.";
+                regStatus.innerHTML = '<i class="fas fa-door-open"></i> Early Bird Open!';
+                regBtn.style.display = 'inline-flex';
+            } else if (now <= regularEnd) {
+                regDateBadge.innerText = "16th May - 1st Jun 2026";
+                regTitle.innerText = "Regular Registration";
+                regDesc.innerText = "Standard online registration is active until June 1st, 11:50 PM.";
+                regStatus.innerHTML = '<i class="fas fa-door-open"></i> Registration Open!';
+                regBtn.style.display = 'inline-flex';
+            } else if (now < onSpotStart) {
+                regDateBadge.innerText = "Online Reg. Closed";
+                regTitle.innerText = "Registration Update";
+                regDesc.innerText = "Online registrations are now closed. You can register on-spot starting June 4th.";
+                regStatus.innerHTML = '<i class="fas fa-ban" style="color: var(--cream-dark);"></i> Closed';
+                regBtn.style.display = 'none';
+                regEntry.classList.add('completed');
+            } else if (now <= eventEnd) {
+                regDateBadge.innerText = "4th Jun - 6th Jun 2026";
+                regTitle.innerText = "On-Spot Registration";
+                regDesc.innerText = "Welcome to SATVA 2026! Please head to the registration desk at the venue to register.";
+                regStatus.innerHTML = '<i class="fas fa-map-marker-alt"></i> On-Spot Open';
+                regBtn.style.display = 'none'; 
+            } else {
+                regDateBadge.innerText = "Event Concluded";
+                regTitle.innerText = "Registration Closed";
+                regDesc.innerText = "The SATVA 2026 event has concluded.";
+                regStatus.innerHTML = '<i class="fas fa-times" style="color: var(--cream-dark);"></i> Event Finished';
+                regBtn.style.display = 'none';
+                regEntry.classList.add('completed');
+                if(dot) dot.innerHTML = '<i class="fas fa-check" style="color:white; font-size: 12px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>';
+            }
         }
     }
     
@@ -667,11 +769,63 @@ document.addEventListener('DOMContentLoaded', function () {
       },{threshold:0.08});
       fades.forEach(el=>obs.observe(el));
     } else { fades.forEach(el=>el.classList.add('visible')); }
+
+    document.getElementById('cur-year').textContent = new Date().getFullYear();
+
+    // --- PWA MOBILE INSTALL PROMPT ---
+    let deferredPrompt;
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installBtn = document.getElementById('pwa-install-btn');
+    const closeBtn = document.getElementById('pwa-close-btn');
+    const installInstructions = document.getElementById('install-instructions');
+
+    const hasDismissedPrompt = localStorage.getItem('satvaPwaDismissed') === 'true';
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (!isStandalone && !hasDismissedPrompt && installBanner) {
+      if (isIOS) {
+        installBtn.style.display = 'none';
+        installInstructions.innerHTML = 'Tap <i class="fas fa-share-square"></i> Share below<br>then "Add to Home Screen"';
+        setTimeout(() => { installBanner.classList.add('show'); }, 3000);
+      } else {
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          installBanner.classList.add('show');
+        });
+
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            installBanner.classList.remove('show');
+            localStorage.setItem('satvaPwaDismissed', 'true'); 
+            deferredPrompt.prompt(); 
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+          }
+        });
+      }
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        installBanner.classList.remove('show');
+        localStorage.setItem('satvaPwaDismissed', 'true');
+      });
+    }
 });
 
-document.getElementById('cur-year').textContent = new Date().getFullYear();
+// Image Protection
 document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
 document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(err => console.log('ServiceWorker registration failed: ', err));
+  });
+}
 </script>
 </body>
 </html>
