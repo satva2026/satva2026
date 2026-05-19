@@ -42,7 +42,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="images/logos/logo4.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -152,7 +152,7 @@ a { text-decoration: none; color: inherit; }
 .mob-nav {
   display: none; position: absolute; top: var(--header-h); left: 0; width: 100%;
   background: var(--white); border-bottom: 1px solid var(--cream-dark);
-  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease; z-index: 999;
 }
 .mob-nav.open { max-height: 80vh; overflow-y: auto; }
 .mob-nav ul { list-style: none; padding: 12px 20px 20px; }
@@ -290,6 +290,12 @@ section.flush-bot { padding-bottom: 0; }
   position: absolute; left: 0; top: 2px; font-size: 1rem; color: var(--forest-light);
 }
 
+.split-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 40px;
+}
+
 .premier-card-wrapper { grid-column: 1 / -1; max-width: 900px; margin: 0 auto 32px; width: 100%; }
 
 .special-note {
@@ -365,6 +371,7 @@ section.flush-bot { padding-bottom: 0; }
 .install-banner-text { display: flex; flex-direction: column; }
 .install-banner-text strong { font-size: 14px; color: var(--forest-dark); line-height: 1.2; }
 .install-banner-text span { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+
 .install-btn {
   background: var(--forest); color: var(--white);
   border: none; padding: 8px 16px; border-radius: 100px;
@@ -405,7 +412,6 @@ section.flush-bot { padding-bottom: 0; }
 .js-fade.visible { opacity: 1; transform: none; }
 .js-fade-d1 { transition-delay: 0.1s; }
 .js-fade-d2 { transition-delay: 0.2s; }
-.js-fade-d3 { transition-delay: 0.3s; }
 
 /* Media Queries */
 @media (max-width: 900px) {
@@ -422,6 +428,7 @@ section.flush-bot { padding-bottom: 0; }
   .sponsor-sym-actions { justify-content: center; }
 }
 @media (max-width: 768px) {
+  .split-list { grid-template-columns: 1fr; }
   /* Only show the PWA install banner on mobile devices */
   .install-banner.show { display: flex; }
 }
@@ -585,7 +592,7 @@ section.flush-bot { padding-bottom: 0; }
               <div class="tier-price">₹ 3 Lakhs</div>
             </div>
             <div class="tier-body">
-              <ul class="tier-list" style="column-count: 2; column-gap: 40px;">
+              <ul class="tier-list split-list">
                 <li>Complimentary registration and stay for up to four nominated delegates.</li>
                 <li>Brand visibility through various symposium promotional platforms.</li>
                 <li>Allocation of one exhibition space (10 ft × 10 ft).</li>
@@ -743,18 +750,6 @@ section.flush-bot { padding-bottom: 0; }
   </div>
 </footer>
 
-<div id="pwa-install-banner" class="install-banner">
-  <div class="install-banner-content">
-    <img src="images/logos/satvalogo.png" alt="SATVA App" class="install-banner-icon">
-    <div class="install-banner-text">
-      <strong>Install SATVA 2026 App</strong>
-      <span id="install-instructions">Get the app for quick access</span>
-    </div>
-  </div>
-  <button id="pwa-install-btn" class="install-btn">Install</button>
-  <button id="pwa-close-btn" class="install-close">✕</button>
-</div>
-
 <div id="modal-sponsor" class="modal-backdrop" onclick="closeModalEvent(event, 'modal-sponsor')">
   <div class="modal-box" style="max-width:640px">
     <div class="sponsor-modal-header">
@@ -766,6 +761,18 @@ section.flush-bot { padding-bottom: 0; }
       <div id="smod-body"></div>
     </div>
   </div>
+</div>
+
+<div id="pwa-install-banner" class="install-banner">
+  <div class="install-banner-content">
+    <img src="images/logos/satvalogo.png" alt="SATVA App" class="install-banner-icon">
+    <div class="install-banner-text">
+      <strong>Install SATVA 2026 App</strong>
+      <span id="install-instructions">Get the app for quick access</span>
+    </div>
+  </div>
+  <button id="pwa-install-btn" class="install-btn">Install</button>
+  <button id="pwa-close-btn" class="install-close">✕</button>
 </div>
 
 <script>
