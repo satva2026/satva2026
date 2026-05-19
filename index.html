@@ -41,8 +41,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="images/home/hero.webp">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="images/logos/logo4.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -89,7 +89,7 @@ main { flex-grow: 1; }
 img { -webkit-user-drag: none; user-select: none; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 
-/* Preloader */
+/* ── PRELOADER ── */
 #preloader {
   position: fixed; inset: 0; background: var(--forest-dark);
   z-index: 999999; display: flex; flex-direction: column;
@@ -102,7 +102,7 @@ a { text-decoration: none; color: inherit; }
 .pre-pct { font-family: 'Space Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 2px; }
 @keyframes breathe { 0%,100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.06); opacity: 1; } }
 
-/* Header & Nav */
+/* ── HEADER ── */
 .main-header {
   position: sticky; top: 0; z-index: 1000; height: var(--header-h);
   background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
@@ -151,7 +151,7 @@ a { text-decoration: none; color: inherit; }
 .mob-nav {
   display: none; position: absolute; top: var(--header-h); left: 0; width: 100%;
   background: var(--white); border-bottom: 1px solid var(--cream-dark);
-  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease; z-index: 999;
 }
 .mob-nav.open { max-height: 80vh; overflow-y: auto; }
 .mob-nav ul { list-style: none; padding: 12px 20px 20px; }
@@ -163,7 +163,7 @@ a { text-decoration: none; color: inherit; }
 .mob-sub li { border-bottom: none; }
 .mob-sub a { font-size: 15px; color: var(--text-soft); padding: 9px 4px; display: flex; justify-content: space-between;}
 
-/* Mobile Link Group Layout */
+/* New Mobile Link Group Layout */
 .mob-link-group { display: flex; justify-content: space-between; align-items: center; }
 .mob-link-group a { flex: 1; }
 .mob-toggle-btn { 
@@ -173,7 +173,7 @@ a { text-decoration: none; color: inherit; }
 }
 .mob-toggle-btn.active { transform: rotate(180deg); color: var(--forest); }
 
-/* Hero Section */
+/* ── HERO SECTION ── */
 .hero {
   position: relative; height: 100vh; min-height: 640px;
   display: flex; flex-direction: column; justify-content: flex-end;
@@ -256,6 +256,7 @@ a { text-decoration: none; color: inherit; }
 }
 .btn-ghost:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
 
+/* ── COUNTDOWN & TICKER ── */
 .countdown-strip {
   position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
   background: var(--forest-dark); border-top: 1px solid rgba(255,255,255,0.08);
@@ -284,7 +285,7 @@ a { text-decoration: none; color: inherit; }
 @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Shared Layouts */
+/* ── SHARED LAYOUTS ── */
 .wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
 section { padding: 100px 0; }
 section.tight { padding: 60px 0; }
@@ -310,7 +311,7 @@ section.flush-bot { padding-bottom: 0; }
 .rule { width: 48px; height: 4px; background: var(--forest); border-radius: 2px; margin-bottom: 40px; }
 .rule.centered { margin-left: auto; margin-right: auto; }
 
-/* About Section */
+/* ── ABOUT SECTION ── */
 .about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
 .about-text-col p { font-size: 1.05rem; line-height: 1.85; color: var(--text-mid); text-align: justify; }
 .about-stat-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
@@ -330,7 +331,7 @@ section.flush-bot { padding-bottom: 0; }
 .stat-card:nth-child(4) .stat-num { color: var(--forest-dark); }
 .stat-card:nth-child(4) .stat-desc { color: var(--text-soft); }
 
-/* Legacy Section */
+/* ── LEGACY SECTION ── */
 .legacy-section { background: var(--cream); }
 .legacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
 .legacy-card {
@@ -358,7 +359,7 @@ section.flush-bot { padding-bottom: 0; }
 }
 .legacy-link:hover { gap: 10px; }
 
-/* Theme Section */
+/* ── THEME SECTION ── */
 .theme-layout { display: grid; grid-template-columns: 1fr 450px; gap: 80px; align-items: center; }
 .theme-text p { font-size: 1.1rem; line-height: 1.85; color: var(--text-mid); text-align: justify; margin-bottom: 32px; }
 .theme-pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -371,8 +372,8 @@ section.flush-bot { padding-bottom: 0; }
 .pillar-icon { font-size: 22px; color: var(--forest); margin-top: 2px; flex-shrink: 0; }
 .pillar-text { font-size: 15px; font-weight: 600; color: var(--text-mid); line-height: 1.4; }
 
-.stack-wrapper { position: relative; height: 380px; display: flex; align-items: center; justify-content: center; }
-.stack-wrapper .card-stack { position: relative; width: 340px; height: 250px; }
+.stack-wrapper { position: relative; height: 380px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.stack-wrapper .card-stack { position: relative; width: 100%; max-width: 340px; height: 250px; }
 .stack-wrapper .stack-card {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; border-radius: 12px;
@@ -385,7 +386,7 @@ section.flush-bot { padding-bottom: 0; }
 .stack-wrapper .stack-card.hidden { z-index: 1; transform: translateY(-34px) scale(0.88); opacity: 0; }
 .stack-wrapper .stack-card.going { transform: translate(110%, -15%) rotate(18deg); opacity: 0; z-index: 5; }
 
-/* Speakers Section */
+/* ── SPEAKERS SECTION ── */
 .speakers-section { background: var(--cream); }
 .speakers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 56px; }
 .invited-speakers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; margin-top: 56px; }
@@ -410,7 +411,7 @@ section.flush-bot { padding-bottom: 0; }
 .speaker-card-sm .speaker-name { font-size: 16px; }
 .speaker-card-sm .speaker-inst { font-size: 13px; }
 
-/* Sponsors Mini-Section */
+/* ── SPONSORS MINI-SECTION ── */
 .sponsor-sym {
   background: var(--forest-dark); border-radius: 16px; padding: 48px 40px;
   display: flex; align-items: center; gap: 48px; margin-bottom: 32px;
@@ -473,7 +474,7 @@ section.flush-bot { padding-bottom: 0; }
 }
 .btn-solid-sm:hover { background: var(--forest-mid); border-color: var(--forest-mid); }
 
-/* Chairs Section */
+/* ── CHAIRS SECTION ── */
 .chairs-section { background: var(--forest-dark); }
 .chairs-section .section-eyebrow { color: var(--forest-light); }
 .chairs-section .section-title { color: var(--white); }
@@ -497,7 +498,7 @@ section.flush-bot { padding-bottom: 0; }
 .chair-name { font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 6px; line-height: 1.3; }
 .chair-role { font-size: 14px; color: var(--forest-light); letter-spacing: 0.3px; }
 
-/* Organizers Section */
+/* ── ORGANISERS SECTION ── */
 .org-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
 .org-card {
   background: var(--cream); border-radius: 12px; padding: 36px 28px;
@@ -515,18 +516,21 @@ section.flush-bot { padding-bottom: 0; }
 .org-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
 .org-item img { height: 72px; width: auto; object-fit: contain; }
 .org-item p { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
+
+/* Responsive org-assoc for mobile */
 .org-assoc { display: flex; align-items: flex-start; gap: 0; }
 .org-assoc-item { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 0 20px; }
 .org-assoc-item img { height: 64px; width: auto; object-fit: contain; }
 .org-assoc-item p { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
 .org-divider { width: 1px; background: var(--cream-dark); align-self: stretch; margin: 0; }
+
 .academic-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 24px; border: 1px solid var(--cream-dark); border-radius: 10px; overflow: hidden; }
 .academic-item { background: var(--white); padding: 28px 24px; display: flex; align-items: center; gap: 20px; }
 .academic-item img { height: 56px; width: auto; object-fit: contain; flex-shrink: 0; }
 .academic-item p { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
 .acad-card { background: var(--cream); border-radius: 12px; padding: 36px 28px; border: 1px solid var(--cream-dark); grid-column: 1/-1; margin-top: 0; }
 
-/* Modals */
+/* ── MODALS ── */
 .modal-backdrop {
   display: none; position: fixed; inset: 0; z-index: 10000;
   background: rgba(1,31,20,0.75); backdrop-filter: blur(6px);
@@ -610,8 +614,8 @@ section.flush-bot { padding-bottom: 0; }
   color: var(--text-soft); cursor: pointer; padding: 4px;
 }
 
-/* Footer */
-.site-footer { background: var(--forest-dark); padding-top: 72px; }
+/* ── FOOTER ── */
+.site-footer { background: var(--forest-dark); padding-top: 72px; margin-top: auto; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1.2fr; gap: 48px; padding-bottom: 56px; }
 .footer-brand-logos { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
 .footer-brand-logos img { height: 50px; width: auto; filter: brightness(0) invert(1); opacity: 0.8; }
@@ -635,19 +639,18 @@ section.flush-bot { padding-bottom: 0; }
 .footer-bottom-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
 .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.3); }
 
-/* Animation Utils */
+/* ── SCROLL ANIM ── */
 .js-fade { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .js-fade.visible { opacity: 1; transform: none; }
 .js-fade-d1 { transition-delay: 0.1s; }
 .js-fade-d2 { transition-delay: 0.2s; }
 .js-fade-d3 { transition-delay: 0.3s; }
 
-/* Media Queries */
+/* ── RESPONSIVE ── */
 @media (max-width: 1100px) {
   .about-layout { grid-template-columns: 1fr; gap: 48px; }
   .about-stat-col { grid-template-columns: repeat(4, 1fr); }
   .theme-layout { grid-template-columns: 1fr; gap: 48px; }
-  .stack-wrapper { height: auto; padding: 32px 0; }
   .org-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 900px) {
@@ -673,8 +676,19 @@ section.flush-bot { padding-bottom: 0; }
   .about-stat-col { grid-template-columns: 1fr 1fr; }
   .theme-pillars { grid-template-columns: 1fr; }
   .sponsor-sym { flex-direction: column; gap: 28px; }
+  
+  /* Organisers Mobile Fix */
+  .org-assoc { flex-direction: column; gap: 24px; }
+  .org-assoc-item { width: 100%; padding: 0; }
+  .org-divider { width: 100%; height: 1px; margin: 0; }
+  .org-card, .org-card-wide, .acad-card { padding: 24px 20px; }
+  
   .academic-row { grid-template-columns: 1fr; }
   .footer-bottom-inner { flex-direction: column; text-align: center; }
+}
+@media (max-width: 380px) {
+  .logo-group { gap: 8px; }
+  .logo-group img { height: 32px !important; }
 }
 </style>
 </head>
@@ -770,7 +784,7 @@ section.flush-bot { padding-bottom: 0; }
       <div class="hero-sep"></div>
       <div class="hero-meta-item"><i class="far fa-calendar"></i> 04–06 June 2026</div>
       <div class="hero-sep"></div>
-      <div class="hero-meta-item"><i class="fas fa-tag"></i> Regular Registration Portal is Open</div>
+      <div class="hero-meta-item"><i class="fas fa-tag"></i> Regular Registration Open</div>
     </div>
     <div class="hero-actions">
       <a href="registrations.html" class="btn-primary"><i class="fas fa-arrow-right"></i> Register Now</a>
@@ -785,11 +799,11 @@ section.flush-bot { padding-bottom: 0; }
       <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Secs</span></div>
       <div class="ticker-wrap">
         <div class="ticker" id="ticker-inner">
-          <span>Regular Registration Portal is Now Open</span>
+          <span>Regular Registration is Now Open</span>
           <span>Expert Lectures · Paper Presentations · Panel Discussions</span>
           <span>SATVA 2026 — Pavement Sustainability Frontiers: From Materials to Maintenance</span>
           <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI & IGS Palakkad Chapters</span>
-          <span>Regular Registration Portal is Now Open</span>
+          <span>Regular Registration is Now Open</span>
           <span>Expert Lectures · Paper Presentations · Panel Discussions</span>
           <span>SATVA 2026 — Pavement Sustainability Frontiers: From Materials to Maintenance</span>
           <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI & IGS Palakkad Chapters</span>
@@ -1222,7 +1236,6 @@ section.flush-bot { padding-bottom: 0; }
 </div>
 
 <script>
-// --- PRELOADER LOGIC ---
 (function(){
   const bar = document.getElementById('pre-bar');
   const pct = document.getElementById('pre-pct');
@@ -1230,134 +1243,37 @@ section.flush-bot { padding-bottom: 0; }
   const iv = setInterval(()=>{
     if(p < 90) p += Math.random()*15+5;
     if(p > 95) p = 95;
-    if(bar) bar.style.width = Math.floor(p)+'%';
-    if(pct) pct.textContent = Math.floor(p)+'%';
+    bar.style.width = Math.floor(p)+'%';
+    pct.textContent = Math.floor(p)+'%';
   }, 50);
   function hide(){
     if(done) return; done = true;
-    clearInterval(iv); 
-    if(bar) bar.style.width='100%'; 
-    if(pct) pct.textContent='100%';
+    clearInterval(iv); bar.style.width='100%'; pct.textContent='100%';
     setTimeout(()=>{
       const pre = document.getElementById('preloader');
-      if(pre) { pre.style.opacity='0'; pre.style.visibility='hidden'; }
+      pre.style.opacity='0'; pre.style.visibility='hidden';
       document.body.classList.remove('loading-active');
-      setTimeout(()=>{ if(pre) pre.remove(); }, 600);
+      setTimeout(()=>pre.remove(), 600);
     }, 200);
   }
   window.addEventListener('load', hide);
   setTimeout(hide, 5000);
 })();
 
-// --- GLOBAL DOM LOGIC ---
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Mobile Nav Toggle
-    const mobToggle = document.getElementById('mob-toggle');
-    const mobNav = document.getElementById('mob-nav');
-    if(mobToggle && mobNav) {
-      mobToggle.addEventListener('click', ()=>{
-        mobNav.classList.toggle('open');
-        mobToggle.classList.toggle('active');
-      });
-    }
-    
-    // Mobile Dropdown Buttons
-    document.querySelectorAll('.mob-toggle-btn').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        const li = btn.closest('li');
-        const sub = li.querySelector('.mob-sub');
-        if(sub) sub.classList.toggle('open');
-        btn.classList.toggle('active');
-      });
-    });
-
-    // Make clicking 'Attend' text toggle the menu
-    const attendLink = document.querySelector('.mob-attend-link');
-    if(attendLink) {
-        attendLink.addEventListener('click', e => {
-            e.preventDefault();
-            const btn = attendLink.nextElementSibling;
-            if(btn && btn.classList.contains('mob-toggle-btn')) {
-                btn.click();
-            }
-        });
-    }
-
-    // Scroll Animation Logic
-    const fades = document.querySelectorAll('.js-fade');
-    if('IntersectionObserver' in window){
-      const obs = new IntersectionObserver(entries=>{
-        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
-      },{threshold:0.08});
-      fades.forEach(el=>obs.observe(el));
-    } else { 
-      fades.forEach(el=>el.classList.add('visible')); 
-    }
-
-    // Set Copyright Year
-    const yearSpan = document.getElementById('cur-year');
-    if(yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
-
-    // --- PWA MOBILE INSTALL PROMPT ---
-    let deferredPrompt;
-    const installBanner = document.getElementById('pwa-install-banner');
-    const installBtn = document.getElementById('pwa-install-btn');
-    const closeBtn = document.getElementById('pwa-close-btn');
-    const installInstructions = document.getElementById('install-instructions');
-
-    const hasDismissedPrompt = localStorage.getItem('satvaPwaDismissed') === 'true';
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-    if (!isStandalone && !hasDismissedPrompt && installBanner) {
-      if (isIOS) {
-        installBtn.style.display = 'none';
-        installInstructions.innerHTML = 'Tap <i class="fas fa-share-square"></i> Share below<br>then "Add to Home Screen"';
-        setTimeout(() => { installBanner.classList.add('show'); }, 3000);
-      } else {
-        window.addEventListener('beforeinstallprompt', (e) => {
-          e.preventDefault();
-          deferredPrompt = e;
-          installBanner.classList.add('show');
-        });
-
-        installBtn.addEventListener('click', async () => {
-          if (deferredPrompt) {
-            installBanner.classList.remove('show');
-            localStorage.setItem('satvaPwaDismissed', 'true'); 
-            deferredPrompt.prompt(); 
-            const { outcome } = await deferredPrompt.userChoice;
-            deferredPrompt = null;
-          }
-        });
-      }
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        installBanner.classList.remove('show');
-        localStorage.setItem('satvaPwaDismissed', 'true');
-      });
-    }
+const mobToggle = document.getElementById('mob-toggle');
+const mobNav = document.getElementById('mob-nav');
+mobToggle.addEventListener('click', ()=>{
+  mobNav.classList.toggle('open');
+  mobToggle.classList.toggle('active');
+});
+document.querySelectorAll('.mob-drop-toggle').forEach(el=>{
+  el.addEventListener('click', e=>{
+    e.preventDefault();
+    const sub = el.nextElementSibling;
+    if(sub) sub.classList.toggle('open');
+  });
 });
 
-// Image Protection
-document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
-document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
-
-// PWA Service Worker Registration
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .catch(err => console.log('ServiceWorker registration failed: ', err));
-  });
-}
-
-// ── INDEX SPECIFIC LOGIC ──
-
-// Countdown Timer
 const target = new Date('June 4, 2026 09:00:00').getTime();
 function tick(){
   const gap = target - Date.now();
@@ -1367,20 +1283,21 @@ function tick(){
   const m = Math.floor((gap%3600000)/60000);
   const s = Math.floor((gap%60000)/1000);
   const p = n => String(n).padStart(2,'0');
-  
-  const dEl = document.getElementById('cd-d');
-  const hEl = document.getElementById('cd-h');
-  const mEl = document.getElementById('cd-m');
-  const sEl = document.getElementById('cd-s');
-  
-  if(dEl) dEl.textContent=p(d);
-  if(hEl) hEl.textContent=p(h);
-  if(mEl) mEl.textContent=p(m);
-  if(sEl) sEl.textContent=p(s);
+  document.getElementById('cd-d').textContent=p(d);
+  document.getElementById('cd-h').textContent=p(h);
+  document.getElementById('cd-m').textContent=p(m);
+  document.getElementById('cd-s').textContent=p(s);
 }
 const civ = setInterval(tick, 1000); tick();
 
-// Stack Animation
+const fades = document.querySelectorAll('.js-fade');
+if('IntersectionObserver' in window){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  },{threshold:0.08});
+  fades.forEach(el=>obs.observe(el));
+} else { fades.forEach(el=>el.classList.add('visible')); }
+
 const cs = document.getElementById('card-stack');
 if(cs){
   setInterval(()=>{
@@ -1401,13 +1318,9 @@ if(cs){
   }, 5000);
 }
 
-// Modal Handlers
 function closeModalAction(modalId) {
-    const modal = document.getElementById(modalId);
-    if(modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-    }
+    document.getElementById(modalId).classList.remove('open');
+    document.body.style.overflow = '';
 }
 
 function closeModalEvent(e, modalId) {
@@ -1509,7 +1422,6 @@ const sponsorData = {
     body: `<p>Anton Paar develops, produces and distributes highly accurate laboratory instruments and process measuring systems, and provides custom-tailored automation and robotic solutions. It is the world leader in the measurement of density, concentration and CO₂ and in the field of rheometry. As part of the Anton Paar Group AG, Anton Paar GmbH is owned by the charitable Santner Foundation.</p>`
   }
 };
-
 function openSponsorModal(key){
   const d = sponsorData[key]; if(!d) return;
   document.getElementById('smod-logo').src = d.logo;
@@ -1561,7 +1473,6 @@ const themeData = {
            </ul>`
   }
 };
-
 function openThemeModal(key){
   const d = themeData[key]; if(!d) return;
   document.getElementById('tmod-icon').innerHTML = d.icon;
@@ -1569,6 +1480,58 @@ function openThemeModal(key){
   document.getElementById('tmod-body').innerHTML = d.body;
   document.getElementById('modal-theme').classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+document.getElementById('cur-year').textContent = new Date().getFullYear();
+document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+
+// PWA Install Logic
+let deferredPrompt;
+const installBanner = document.getElementById('pwa-install-banner');
+const installBtn = document.getElementById('pwa-install-btn');
+const closeBtn = document.getElementById('pwa-close-btn');
+const installInstructions = document.getElementById('install-instructions');
+
+const hasDismissedPrompt = localStorage.getItem('satvaPwaDismissed') === 'true';
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+if (!isStandalone && !hasDismissedPrompt && installBanner) {
+  if (isIOS) {
+    installBtn.style.display = 'none';
+    installInstructions.innerHTML = 'Tap <i class="fas fa-share-square"></i> Share below<br>then "Add to Home Screen"';
+    setTimeout(() => { installBanner.classList.add('show'); }, 3000);
+  } else {
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBanner.classList.add('show');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        installBanner.classList.remove('show');
+        localStorage.setItem('satvaPwaDismissed', 'true'); 
+        deferredPrompt.prompt(); 
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+      }
+    });
+  }
+}
+
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    installBanner.classList.remove('show');
+    localStorage.setItem('satvaPwaDismissed', 'true');
+  });
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW fail: ', err));
+  });
 }
 </script>
 </body>
