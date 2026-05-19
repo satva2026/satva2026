@@ -163,7 +163,7 @@ a { text-decoration: none; color: inherit; }
 .mob-sub li { border-bottom: none; }
 .mob-sub a { font-size: 15px; color: var(--text-soft); padding: 9px 4px; display: flex; justify-content: space-between;}
 
-/* New Mobile Link Group Layout */
+/* Mobile Link Group Layout */
 .mob-link-group { display: flex; justify-content: space-between; align-items: center; }
 .mob-link-group a { flex: 1; }
 .mob-toggle-btn { 
@@ -372,7 +372,8 @@ section.flush-bot { padding-bottom: 0; }
 .pillar-icon { font-size: 22px; color: var(--forest); margin-top: 2px; flex-shrink: 0; }
 .pillar-text { font-size: 15px; font-weight: 600; color: var(--text-mid); line-height: 1.4; }
 
-.stack-wrapper { position: relative; height: 380px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+/* The Mobile Overflow Fix for Stack Wrapper */
+.stack-wrapper { position: relative; height: 380px; display: flex; align-items: center; justify-content: center; max-width: 100%; overflow: hidden;}
 .stack-wrapper .card-stack { position: relative; width: 100%; max-width: 340px; height: 250px; }
 .stack-wrapper .stack-card {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -661,7 +662,12 @@ section.flush-bot { padding-bottom: 0; }
   .gold-grid { grid-template-columns: 1fr; }
   .legacy-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
-  .countdown-strip { display: none; }
+  /* FIX: Stack the countdown vertically on mobile so the ticker remains visible without overlapping the hero text */
+  .countdown-strip { position: relative; }
+  .countdown-inner { flex-wrap: wrap; padding: 0; }
+  .cd-unit { flex: 1 1 25%; min-width: auto; padding: 12px 0; }
+  .ticker-wrap { flex: 1 1 100%; padding: 12px 20px; border-top: 1px solid rgba(255,255,255,0.08); }
+  /* End FIX */
   section { padding: 72px 0; }
   .hero-body { padding-bottom: 40px; }
 }
@@ -678,11 +684,14 @@ section.flush-bot { padding-bottom: 0; }
   .sponsor-sym { flex-direction: column; gap: 28px; }
   
   /* Organisers Mobile Fix */
-  .org-assoc { flex-direction: column; gap: 24px; }
+  .org-assoc { flex-direction: column; align-items: center; gap: 24px; }
   .org-assoc-item { width: 100%; padding: 0; }
   .org-divider { width: 100%; height: 1px; margin: 0; }
   .org-card, .org-card-wide, .acad-card { padding: 24px 20px; }
   
+  .stack-wrapper { height: 300px; padding: 20px 0; }
+  .stack-wrapper .card-stack { max-width: 260px; height: 180px; }
+
   .academic-row { grid-template-columns: 1fr; }
   .footer-bottom-inner { flex-direction: column; text-align: center; }
 }
@@ -1236,6 +1245,7 @@ section.flush-bot { padding-bottom: 0; }
 </div>
 
 <script>
+// --- PRELOADER LOGIC ---
 (function(){
   const bar = document.getElementById('pre-bar');
   const pct = document.getElementById('pre-pct');
@@ -1243,37 +1253,134 @@ section.flush-bot { padding-bottom: 0; }
   const iv = setInterval(()=>{
     if(p < 90) p += Math.random()*15+5;
     if(p > 95) p = 95;
-    bar.style.width = Math.floor(p)+'%';
-    pct.textContent = Math.floor(p)+'%';
+    if(bar) bar.style.width = Math.floor(p)+'%';
+    if(pct) pct.textContent = Math.floor(p)+'%';
   }, 50);
   function hide(){
     if(done) return; done = true;
-    clearInterval(iv); bar.style.width='100%'; pct.textContent='100%';
+    clearInterval(iv); 
+    if(bar) bar.style.width='100%'; 
+    if(pct) pct.textContent='100%';
     setTimeout(()=>{
       const pre = document.getElementById('preloader');
-      pre.style.opacity='0'; pre.style.visibility='hidden';
+      if(pre) { pre.style.opacity='0'; pre.style.visibility='hidden'; }
       document.body.classList.remove('loading-active');
-      setTimeout(()=>pre.remove(), 600);
+      setTimeout(()=>{ if(pre) pre.remove(); }, 600);
     }, 200);
   }
   window.addEventListener('load', hide);
   setTimeout(hide, 5000);
 })();
 
-const mobToggle = document.getElementById('mob-toggle');
-const mobNav = document.getElementById('mob-nav');
-mobToggle.addEventListener('click', ()=>{
-  mobNav.classList.toggle('open');
-  mobToggle.classList.toggle('active');
-});
-document.querySelectorAll('.mob-drop-toggle').forEach(el=>{
-  el.addEventListener('click', e=>{
-    e.preventDefault();
-    const sub = el.nextElementSibling;
-    if(sub) sub.classList.toggle('open');
-  });
+// --- GLOBAL DOM LOGIC ---
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Mobile Nav Toggle
+    const mobToggle = document.getElementById('mob-toggle');
+    const mobNav = document.getElementById('mob-nav');
+    if(mobToggle && mobNav) {
+      mobToggle.addEventListener('click', ()=>{
+        mobNav.classList.toggle('open');
+        mobToggle.classList.toggle('active');
+      });
+    }
+    
+    // Mobile Dropdown Buttons
+    document.querySelectorAll('.mob-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        const li = btn.closest('li');
+        const sub = li.querySelector('.mob-sub');
+        if(sub) sub.classList.toggle('open');
+        btn.classList.toggle('active');
+      });
+    });
+
+    // Make clicking 'Attend' text toggle the menu
+    const attendLink = document.querySelector('.mob-attend-link');
+    if(attendLink) {
+        attendLink.addEventListener('click', e => {
+            e.preventDefault();
+            const btn = attendLink.nextElementSibling;
+            if(btn && btn.classList.contains('mob-toggle-btn')) {
+                btn.click();
+            }
+        });
+    }
+
+    // Scroll Animation Logic
+    const fades = document.querySelectorAll('.js-fade');
+    if('IntersectionObserver' in window){
+      const obs = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+      },{threshold:0.08});
+      fades.forEach(el=>obs.observe(el));
+    } else { 
+      fades.forEach(el=>el.classList.add('visible')); 
+    }
+
+    // Set Copyright Year
+    const yearSpan = document.getElementById('cur-year');
+    if(yearSpan) { yearSpan.textContent = new Date().getFullYear(); }
+
+    // --- PWA MOBILE INSTALL PROMPT ---
+    let deferredPrompt;
+    const installBanner = document.getElementById('pwa-install-banner');
+    const installBtn = document.getElementById('pwa-install-btn');
+    const closeBtn = document.getElementById('pwa-close-btn');
+    const installInstructions = document.getElementById('install-instructions');
+
+    const hasDismissedPrompt = localStorage.getItem('satvaPwaDismissed') === 'true';
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (!isStandalone && !hasDismissedPrompt && installBanner) {
+      if (isIOS) {
+        installBtn.style.display = 'none';
+        installInstructions.innerHTML = 'Tap <i class="fas fa-share-square"></i> Share below<br>then "Add to Home Screen"';
+        setTimeout(() => { installBanner.classList.add('show'); }, 3000);
+      } else {
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          installBanner.classList.add('show');
+        });
+
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            installBanner.classList.remove('show');
+            localStorage.setItem('satvaPwaDismissed', 'true'); 
+            deferredPrompt.prompt(); 
+            const { outcome } = await deferredPrompt.userChoice;
+            deferredPrompt = null;
+          }
+        });
+      }
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        installBanner.classList.remove('show');
+        localStorage.setItem('satvaPwaDismissed', 'true');
+      });
+    }
 });
 
+// Image Protection
+document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
+
+// PWA Service Worker Registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .catch(err => console.log('ServiceWorker registration failed: ', err));
+  });
+}
+
+// ── INDEX SPECIFIC LOGIC ──
+
+// Countdown Timer
 const target = new Date('June 4, 2026 09:00:00').getTime();
 function tick(){
   const gap = target - Date.now();
@@ -1283,21 +1390,20 @@ function tick(){
   const m = Math.floor((gap%3600000)/60000);
   const s = Math.floor((gap%60000)/1000);
   const p = n => String(n).padStart(2,'0');
-  document.getElementById('cd-d').textContent=p(d);
-  document.getElementById('cd-h').textContent=p(h);
-  document.getElementById('cd-m').textContent=p(m);
-  document.getElementById('cd-s').textContent=p(s);
+  
+  const dEl = document.getElementById('cd-d');
+  const hEl = document.getElementById('cd-h');
+  const mEl = document.getElementById('cd-m');
+  const sEl = document.getElementById('cd-s');
+  
+  if(dEl) dEl.textContent=p(d);
+  if(hEl) hEl.textContent=p(h);
+  if(mEl) mEl.textContent=p(m);
+  if(sEl) sEl.textContent=p(s);
 }
 const civ = setInterval(tick, 1000); tick();
 
-const fades = document.querySelectorAll('.js-fade');
-if('IntersectionObserver' in window){
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  },{threshold:0.08});
-  fades.forEach(el=>obs.observe(el));
-} else { fades.forEach(el=>el.classList.add('visible')); }
-
+// Stack Animation
 const cs = document.getElementById('card-stack');
 if(cs){
   setInterval(()=>{
@@ -1318,9 +1424,13 @@ if(cs){
   }, 5000);
 }
 
+// Modal Handlers
 function closeModalAction(modalId) {
-    document.getElementById(modalId).classList.remove('open');
-    document.body.style.overflow = '';
+    const modal = document.getElementById(modalId);
+    if(modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
 }
 
 function closeModalEvent(e, modalId) {
@@ -1407,8 +1517,9 @@ const sponsorData = {
   irsm: {
     logo: 'images/sponsors/irsm-logo.png',
     name: 'Indian Road Survey & Management (IRSM) Pvt Ltd',
-    body: `<p>We are an industry leader providing services related to road condition and assessment since 2009. More than 100+ qualified and trained engineers from various related fields constitute a formidable work force. NTRO (formerly ARRB), Australia are our technical partners.</p>
-    <p>We are both <strong>ISO 9001:2015</strong> and <strong>ISO 39001:2012</strong> certified, among the first companies in the transportation space to acquire ISO 39001 certification in India. IRSM has successfully completed prestigious projects covering over 600,000 km of road network condition assessments, including Road Safety and iRAP evaluations, and comprehensive Airport Pavement Evaluations for more than 15 airports.</p>`
+    body: `<p>We are an industry leader providing services related to road condition and assessment since 2009. More than 100+ qualified and trained engineers from various related fields constitute a formidable work force. NTRO (formerly ARRB), Australia are our technical partners. We enjoy the benefit of having access to the 65 years of Research & Technical Expertise of NTRO.</p>
+    <p>We are both <strong>ISO 9001:2015</strong> and <strong>ISO 39001:2012</strong> certified. We were one of the first companies in the transportation space to acquire ISO 39001 certification in India. We bring together a pool of qualified professionals with deep expertise in safety and iRAP standards.</p>
+    <p>IRSM has successfully completed prestigious projects covering over 600,000 km of road network condition assessments, including Road Safety and iRAP evaluations, and comprehensive Airport Pavement Evaluations for more than 15 airports.</p>`
   },
   jp: {
     logo: 'images/sponsors/jp-scientific-logo.png',
@@ -1422,6 +1533,7 @@ const sponsorData = {
     body: `<p>Anton Paar develops, produces and distributes highly accurate laboratory instruments and process measuring systems, and provides custom-tailored automation and robotic solutions. It is the world leader in the measurement of density, concentration and CO₂ and in the field of rheometry. As part of the Anton Paar Group AG, Anton Paar GmbH is owned by the charitable Santner Foundation.</p>`
   }
 };
+
 function openSponsorModal(key){
   const d = sponsorData[key]; if(!d) return;
   document.getElementById('smod-logo').src = d.logo;
@@ -1473,6 +1585,7 @@ const themeData = {
            </ul>`
   }
 };
+
 function openThemeModal(key){
   const d = themeData[key]; if(!d) return;
   document.getElementById('tmod-icon').innerHTML = d.icon;
@@ -1480,58 +1593,6 @@ function openThemeModal(key){
   document.getElementById('tmod-body').innerHTML = d.body;
   document.getElementById('modal-theme').classList.add('open');
   document.body.style.overflow = 'hidden';
-}
-
-document.getElementById('cur-year').textContent = new Date().getFullYear();
-document.addEventListener('contextmenu', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
-document.addEventListener('dragstart', e=>{ if(e.target.tagName==='IMG') e.preventDefault(); });
-
-// PWA Install Logic
-let deferredPrompt;
-const installBanner = document.getElementById('pwa-install-banner');
-const installBtn = document.getElementById('pwa-install-btn');
-const closeBtn = document.getElementById('pwa-close-btn');
-const installInstructions = document.getElementById('install-instructions');
-
-const hasDismissedPrompt = localStorage.getItem('satvaPwaDismissed') === 'true';
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-
-if (!isStandalone && !hasDismissedPrompt && installBanner) {
-  if (isIOS) {
-    installBtn.style.display = 'none';
-    installInstructions.innerHTML = 'Tap <i class="fas fa-share-square"></i> Share below<br>then "Add to Home Screen"';
-    setTimeout(() => { installBanner.classList.add('show'); }, 3000);
-  } else {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBanner.classList.add('show');
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        installBanner.classList.remove('show');
-        localStorage.setItem('satvaPwaDismissed', 'true'); 
-        deferredPrompt.prompt(); 
-        const { outcome } = await deferredPrompt.userChoice;
-        deferredPrompt = null;
-      }
-    });
-  }
-}
-
-if (closeBtn) {
-  closeBtn.addEventListener('click', () => {
-    installBanner.classList.remove('show');
-    localStorage.setItem('satvaPwaDismissed', 'true');
-  });
-}
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW fail: ', err));
-  });
 }
 </script>
 </body>
