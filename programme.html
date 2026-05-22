@@ -217,8 +217,8 @@ section { padding: 80px 0; }
 .tab-btn.active { background: var(--forest); border-color: var(--forest); box-shadow: 0 8px 20px rgba(0,0,0,0.15); transform: translateY(-2px); }
 .tab-btn.active .day-label, .tab-btn.active .date { color: var(--white); }
 
-.schedule-pane { display: none; animation: fadeInPane 0.5s ease-out forwards; }
-.schedule-pane.active { display: block; }
+.schedule-pane { display: none; }
+.schedule-pane.active { display: block; animation: fadeInPane 0.5s ease-out forwards; }
 @keyframes fadeInPane { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ── SCHEDULE LISTS ── */
@@ -249,7 +249,7 @@ section { padding: 80px 0; }
   background: var(--white);
   border: 1px solid var(--cream-dark);
   padding: 6px 14px;
-  border-radius: 100px; /* Restored to perfect pill shape */
+  border-radius: 100px; 
   color: var(--text-soft); 
   font-weight: 700;
   text-transform: uppercase;
@@ -257,7 +257,8 @@ section { padding: 80px 0; }
   max-width: 100%;
   box-sizing: border-box;
   line-height: 1.5;
-  overflow: hidden; /* Contains the expansion cleanly */
+  overflow: hidden; 
+  transition: border-radius 0.3s ease;
 }
 .sch-single .venue-tag { background: var(--white); border-color: var(--cream-dark); }
 .sch-track .venue-tag { background: var(--cream); border-color: transparent; }
@@ -268,17 +269,16 @@ section { padding: 80px 0; }
   display: inline-block; 
   max-width: 0; 
   opacity: 0; 
-  white-space: nowrap; /* Strictly single line */
+  white-space: nowrap; 
   overflow: hidden;
   vertical-align: middle;
-  /* Shrinks after a 5 second delay */
-  transition: max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1) 5s, opacity 0.4s ease 5s;
+  transition: max-width 0.4s ease, opacity 0.3s ease;
 }
-.venue-tag:hover .venue-full {
+/* Trigger expansion on desktop hover OR mobile click (.expanded class) */
+.venue-tag:hover .venue-full,
+.venue-tag.expanded .venue-full {
   max-width: 500px; 
   opacity: 1;
-  /* Expands immediately and smoothly on hover */
-  transition: max-width 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0s, opacity 0.4s ease 0.1s;
 }
 .venue-full a {
   color: inherit; 
@@ -289,7 +289,7 @@ section { padding: 80px 0; }
   display: inline-block;
   max-width: 100%;
   overflow: hidden;
-  text-overflow: ellipsis; /* Graceful truncation if space runs out */
+  text-overflow: ellipsis; 
   vertical-align: middle;
 }
 .venue-full a:hover, .venue-full a:focus { color: var(--forest-mid); text-decoration: underline; }
@@ -300,15 +300,26 @@ section { padding: 80px 0; }
 .sch-track { background: var(--white); border: 1px solid var(--cream-dark); border-top: 4px solid var(--forest-mid); padding: 20px 24px; border-radius: 12px; display: flex; flex-direction: column; transition: all 0.3s ease; min-width: 0; }
 .sch-track:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.06); border-top-color: var(--forest); }
 
-/* ── ACCORDION FOR ORAL PRESENTATIONS ── */
-.oral-details { margin-top: 14px; background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 8px; overflow: hidden; transition: all 0.3s ease; }
-.sch-track .oral-details { background: var(--white); border-color: var(--cream-dark); }
-.oral-details summary { padding: 10px 14px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--forest-mid); display: flex; justify-content: space-between; align-items: center; user-select: none; transition: background 0.2s; list-style: none; }
-.oral-details summary::-webkit-details-marker { display: none; }
-.oral-details summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 11px; color: var(--forest-light); transition: transform 0.3s; }
-.oral-details[open] summary::after { transform: rotate(180deg); }
-.oral-details summary:hover { background: rgba(0,0,0,0.02); }
-.oral-content { padding: 14px; font-size: 13.5px; color: var(--text-soft); border-top: 1px solid var(--cream-dark); line-height: 1.5; }
+/* ── FIXED PRESENTATION LISTS (NO ACCORDION) ── */
+.paper-list-box {
+  margin-top: 16px;
+  background: var(--cream);
+  border: 1px solid var(--cream-dark);
+  border-radius: 8px;
+  padding: 12px 16px;
+  max-height: 220px;
+  overflow-y: auto;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+.paper-list-box::-webkit-scrollbar { width: 5px; }
+.paper-list-box::-webkit-scrollbar-track { background: transparent; }
+.paper-list-box::-webkit-scrollbar-thumb { background: var(--cream-dark); border-radius: 4px; }
+.sch-track .paper-list-box { background: var(--white); }
+.paper-list { list-style-type: none; padding: 0; margin: 0; }
+.paper-list li { padding: 8px 0; border-bottom: 1px dashed var(--cream-dark); line-height: 1.4; }
+.paper-list li:last-child { border-bottom: none; padding-bottom: 0; }
+.paper-list strong { color: var(--forest-dark); font-family: 'Space Mono', monospace; font-size: 12px; }
 
 /* Special styling for cultural highlight */
 .sch-cultural { border-left-color: var(--gold); background: rgba(191, 163, 106, 0.1); }
@@ -450,7 +461,36 @@ section { padding: 80px 0; }
   .malhar-title { font-size: 3rem; }
   .stay-tuned { font-size: 1.8rem; }
   
-  .venue-tag:hover .venue-full { max-width: 200px; }
+  /* Mobile Venue Tag Logic: Wrap and open downwards on tap */
+  .venue-tag {
+    flex-wrap: wrap; 
+  }
+  .venue-tag.expanded {
+    border-radius: 16px;
+  }
+  .venue-full {
+    white-space: normal;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    max-height: 0;
+    padding-left: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+  .venue-tag:hover .venue-full,
+  .venue-tag.expanded .venue-full {
+    max-width: 100%; 
+    max-height: 150px;
+    opacity: 1;
+  }
+  .venue-full a {
+    padding-left: 20px; 
+    padding-top: 4px;
+    padding-bottom: 4px;
+    display: block;
+    white-space: normal;
+    text-overflow: clip;
+  }
   
   /* Only show the PWA install banner on mobile devices */
   .install-banner.show { display: flex; }
@@ -631,7 +671,7 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 1: Prof. B.V.S. Viswanadham</h4>
-                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated later...</em></div>
                                 <div class="venue-tag">
                                     <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
                                     <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -644,7 +684,7 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 2: Prof. Krishna Prapoorna Biligiri</h4>
-                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated later...</em></div>
                                 <div class="venue-tag">
                                     <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
                                     <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -671,7 +711,7 @@ section { padding: 80px 0; }
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 1: Ms. Minimol Korulla</h5>
-                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="sch-item-subtitle">Title: <em>Carbon Neutral Stabilisation and Strengthening of Slopes and Pavements</em></div>
                                     <div class="venue-tag">
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -680,7 +720,7 @@ section { padding: 80px 0; }
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 2: Dr. Nikhil Saboo</h5>
-                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="sch-item-subtitle">Title: <em>Development of a Simple Tool For Balanced Bituminous Mixtures</em></div>
                                     <div class="venue-tag">
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -700,12 +740,17 @@ section { padding: 80px 0; }
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                     </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
+                                    <div class="paper-list-box">
+                                        <ul class="paper-list">
+                                            <li><strong>(10)</strong> : MECHANIZED SURFACE DRESSING- A SUSTAINABLE PAVEMENT SURFACING FOR LOW-VOLUME ROADS IN INDIA: LESSONS FROM KERALA</li>
+                                            <li><strong>(20)</strong> : Induction Furnace-Steel Slag: A Sustainable Alternative to Conventional Aggregate</li>
+                                            <li><strong>(21)</strong> : Durability index assessment of foam concrete mixes admixed with CD-RFA</li>
+                                            <li><strong>(52)</strong> : PRELIMINARY PREDICTIVE MODEL FOR OPTIMAL SELECTION OF SUBGRADE STABILIZATION</li>
+                                            <li><strong>(54)</strong> : Impacts of Lime and Ground Granulated Blast Furnace Slag on Soil Stabilisation in Flexible Pavement</li>
+                                            <li><strong>(81)</strong> : Comparative Evaluation of Fatigue Failure Criteria for Asphalt Binders Using the Linear Amplitude Sweep Test</li>
+                                            <li><strong>(82)</strong> : Performance Evaluation of Iron Ore Tailings and Fly Ash for Pavement Subgrade Applications</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
@@ -714,59 +759,53 @@ section { padding: 80px 0; }
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                     </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
+                                    <div class="paper-list-box">
+                                        <ul class="paper-list">
+                                            <li><strong>(16)</strong> : Assessment of Bonding and Debonding Characteristics of Textile Pyrolysis-Oil-Modified Bitumen Using Contact Angle–Based Surface Free Energy Approach </li>
+                                            <li><strong>(19)</strong> : REJUVENATION OF AGED RAP BINDER WITH WASTE ENGINE OIL: BINDER RESTORATION AND MIX-LEVEL FATIGUE EVALUATION</li>
+                                            <li><strong>(35)</strong> : A Multi-Parameter Clustering Analysis for Pavement Homogenization Using Soft and Hard Clustering </li>
+                                            <li><strong>(36)</strong> : Performance Evaluation of Porous Asphalt with LDPE-Modified Bitumen for Urban Stormwater Management</li>
+                                            <li><strong>(45)</strong> : Performance evaluation of Modified bitumen with LDPE and waste cooking oil</li>
+                                            <li><strong>(58)</strong> : Utilization of Municipal Solid Waste Incineration Fly Ash as a Modifier in Asphalt Pavements: Binder Performance  Characterization & Environmental Sustainability Assessment</li>
+                                            <li><strong>(59)</strong> : Performance Evaluation of Hot In-Place Recycled Bituminous Mixtures for Sustainable Pavement Restoration</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="sch-row">
-                        <div class="sch-time"><i class="far fa-clock"></i> 16:00 - 16:30</div>
+                        <div class="sch-time"><i class="far fa-clock"></i> 16:00 - 18:00</div>
                         <div class="sch-content">
                             <div class="sch-single">
-                                <h4 class="sch-item-title">Tea Break</h4>
+                                <h4 class="sch-item-title">Poster Presentation & Hi Tea</h4>
                                 <div class="venue-tag">
-                                    <span class="venue-short"><i class="fas fa-mug-hot"></i> A01-007</span>
+                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> Saraswati Block Atrium</span>
                                     <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="sch-row">
-                        <div class="sch-time"><i class="far fa-clock"></i> 16:30 - 17:30</div>
-                        <div class="sch-content">
-                            <div class="sch-parallel">
-                                <div class="sch-track">
-                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
-                                    <h5 class="sch-item-title">Oral Presentations</h5>
-                                    <div class="venue-tag">
-                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
-                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
-                                    </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
-                                </div>
-                                <div class="sch-track">
-                                    <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
-                                    <h5 class="sch-item-title">Oral Presentations</h5>
-                                    <div class="venue-tag">
-                                        <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
-                                        <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
-                                    </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
+                                <div class="paper-list-box" style="background: var(--white); border-color: var(--cream-dark);">
+                                    <ul class="paper-list">
+                                        <li><strong>(08)</strong> : Forensic Analysis and Mitigation Strategies for Instabilities along A 100-Meter Road Stretch in Peruvemba</li>
+                                        <li><strong>(09)</strong> : Performance Evaluation of Stone Matrix Asphalt Mixes Using Chitin-modified Bitumen</li>
+                                        <li><strong>(17)</strong> : INTEGRATED TRAFFIC CONTROL DESIGN AND FLEXIBLE PAVEMENT DESIGN AT KULAPPULLY JUNCTION PALAKKAD</li>
+                                        <li><strong>(23)</strong> : FUNCTIONAL ANALYSIS OF SHORT-TERM AGEING OF BITUMEN </li>
+                                        <li><strong>(24)</strong> : Prediction of Aging-Related Rheological Behaviour of Pyrolysis Oil-Modified Asphalt Using Machine Learning Techniques</li>
+                                        <li><strong>(33)</strong> : A Design-Stage Framework for Low-Carbon Isolated Footing Design</li>
+                                        <li><strong>(34)</strong> : Bioengineering Techniques for Slope Stabilization and Landslide Mitigation: A State-of-the-Art Review</li>
+                                        <li><strong>(40)</strong> : Spatial Variability of Modulus of Resilience in Kerala Laterite Subgrade Soils and Its Implications for Pavement Design Reliability</li>
+                                        <li><strong>(44)</strong> : Investigation on Compaction Behaviour of Modified Asphalt Mixtures </li>
+                                        <li><strong>(47)</strong> : Homogenization of Pavement Sections in Pavement Management Systems: A Comprehensive Review of Methodologies, Limitations, and Contemporary Practices</li>
+                                        <li><strong>(48)</strong> : AI-Enabled Green Geotechnical Engineering for Climate-Resilient and Sustainable Infrastructure</li>
+                                        <li><strong>(50)</strong> : Multi-Dimensional Performance-Based Evaluation of Flexible Pavement Assessment Instruments within a Hierarchical Three-Tier Framework</li>
+                                        <li><strong>(60)</strong> : Sustainable particle boards using water hyacinth and human hair fibers</li>
+                                        <li><strong>(61)</strong> : STUDY ON THE EFFECT OF PHOSPHOGYPSUM AS A FILLER IN HOT MIX ASPHALT</li>
+                                        <li><strong>(67)</strong> : Evaluation of crumb rubber activation techniques in asphalt rubber binders</li>
+                                        <li><strong>(74)</strong> : Enhancing the Sustainability and Performance of Bitu-minous Concrete Using Ceramic Waste and Copper Slag Additives</li>
+                                        <li><strong>(75)</strong> : Real-Time Pothole Detection Using Ultrasonic Sensors and GPS for Intelligent Transportation Systems</li>
+                                        <li><strong>(76)</strong> : Experimental Evaluation of Determining Optimum Dosage of Biochar to Clay Liner in Muncipal Solid Landfills</li>
+                                        <li><strong>(78)</strong> : FROM HAZARDOUS WASTE TO SUSTAINABLE INFRASTRUCTURE: REUSING BIOMEDICAL PLASTICS FOR LOW-CARBON ROADS</li>
+                                        <li><strong>(79)</strong> : DESIGN OF FLEXIBLE PAVEMENT AND EXPERIMENTAL STUDY ON FEASABILITY OF USING IRON ORE TAILINGS AND FLYASH AS A PAVEMENT </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -775,13 +814,13 @@ section { padding: 80px 0; }
             </div>
 
             <div class="schedule-pane" id="day2">
-                <div class="schedule-list js-scroll fade-in-up">
+                <div class="schedule-list js-fade">
                     <div class="sch-row">
                         <div class="sch-time"><i class="far fa-clock"></i> 09:00 - 10:00</div>
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 3: Prof. Animesh Das</h4>
-                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="sch-item-subtitle">Title: <em>Sustainability considerations in bituminous pavement design</em></div>
                                 <div class="venue-tag">
                                     <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
                                     <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -794,7 +833,7 @@ section { padding: 80px 0; }
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 4: Prof. Narayanan Neithalath</h4>
-                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="sch-item-subtitle">Title: <em>Will be updated later...</em></div>
                                 <div class="venue-tag">
                                     <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
                                     <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -821,7 +860,7 @@ section { padding: 80px 0; }
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 3: Prof. Prakash Nanthagopalan</h5>
-                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="sch-item-subtitle">Title: <em>Sustainable Rigid Pavements – A materials perspective</em></div>
                                     <div class="venue-tag">
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -830,7 +869,7 @@ section { padding: 80px 0; }
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 4: Mr. Abhishek Tiwari</h5>
-                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="sch-item-subtitle">Title: <em>Technology-Driven Asset Management: Integrated High-Speed Road Surveys</em></div>
                                     <div class="venue-tag">
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -850,12 +889,16 @@ section { padding: 80px 0; }
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                     </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
+                                    <div class="paper-list-box">
+                                        <ul class="paper-list">
+                                            <li><strong>(12)</strong> : EXPERIMENTAL STUDY ON MORTAR WITH PARTIAL REPLACEMENT OF FINE AGGREGATE BY ALUMINIUM WASTE</li>
+                                            <li><strong>(15)</strong> : Utilisation of Recycled Coarse Aggregates in Porous Concrete for Sustainable Pavement Base Layers</li>
+                                            <li><strong>(38)</strong> : Performance Evaluation of Concrete Pavement Constructed with Fibre-Reinforced and Waste-Based Concrete Mixes</li>
+                                            <li><strong>(64)</strong> : Influence of Fibre End Geometry and Embedment Length on Pullout Behaviour in Steel Fibre-Reinforced Concrete</li>
+                                            <li><strong>(70)</strong> : BRIDGING MICROSTRUCTURE AND MECHANICAL PERFORMANCE IN CEMENT-TREATED FULL-DEPTH RECLAMATION</li>
+                                            <li><strong>(77)</strong> : SUSTAINABLE GEOPOLYMER MORTAR WITH OPTIMIZED NAOH MOLARITY FOR LOW-CARBON CONSTRUCTION</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
@@ -864,12 +907,16 @@ section { padding: 80px 0; }
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                     </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
+                                    <div class="paper-list-box">
+                                        <ul class="paper-list">
+                                            <li><strong>(04)</strong> : Comparison of CMIP6 Temperature Projections on the Rutting Performance of Flexible Pavements in the Climate of Delhi, India</li>
+                                            <li><strong>(22)</strong> : GEOMETRICA: A Hybrid System of Geometry and Deep Segmentation Framework for Pothole Detection and Severity Assessment from Crowd-sourced Images </li>
+                                            <li><strong>(30)</strong> : High-RAP Dense Bituminous Macadam: Materials, Mix Design, and Long-Term Performance.</li>
+                                            <li><strong>(41)</strong> : Chemical Modification of Lignin Recovered from Compressed Biogas (CBG) Plants for Enhanced Bio-Bitumen Performance</li>
+                                            <li><strong>(62)</strong> : Integration of Statistical Process Control and Spatial Autocorrelation Techniques: A Framework for Pavement Quality Assessment</li>
+                                            <li><strong>(63)</strong> : COMPARATIVE ANAYLSIS OF UNSUPERVISED CLUSTERING ALGORITHMS IN PAVEMENT MANAGEMENT SYSTEMS USING A COMPOSITE SCORING FRAMEWORK </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -887,7 +934,7 @@ section { padding: 80px 0; }
                         </div>
                     </div>
                     <div class="sch-row">
-                        <div class="sch-time"><i class="far fa-clock"></i> 14:00 - 15:00</div>
+                        <div class="sch-time"><i class="far fa-clock"></i> 14:00 - 16:00</div>
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Panel Discussion</h4>
@@ -899,12 +946,12 @@ section { padding: 80px 0; }
                         </div>
                     </div>
                     <div class="sch-row">
-                        <div class="sch-time"><i class="far fa-clock"></i> 15:00 - 16:30</div>
+                        <div class="sch-time"><i class="far fa-clock"></i> 16:00 - 16:30</div>
                         <div class="sch-content">
                             <div class="sch-single">
-                                <h4 class="sch-item-title">Poster Presentation & Hi Tea</h4>
+                                <h4 class="sch-item-title">Tea Break</h4>
                                 <div class="venue-tag">
-                                    <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
+                                    <span class="venue-short"><i class="fas fa-mug-hot"></i> A01-007</span>
                                     <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                 </div>
                             </div>
@@ -926,13 +973,13 @@ section { padding: 80px 0; }
             </div>
 
             <div class="schedule-pane" id="day3">
-                <div class="schedule-list js-scroll fade-in-up">
+                <div class="schedule-list js-fade">
                     <div class="sch-row">
                         <div class="sch-time"><i class="far fa-clock"></i> 09:00 - 10:00</div>
                         <div class="sch-content">
                             <div class="sch-single">
                                 <h4 class="sch-item-title">Keynote 5: Prof. Manu Santhanam</h4>
-                                <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                <div class="sch-item-subtitle">Title: <em>Maximizing Utilization of Supplementary Binders and Alternative Aggregates for Pavement Quality Concrete</em></div>
                                 <div class="venue-tag">
                                     <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-007</span>
                                     <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -959,7 +1006,7 @@ section { padding: 80px 0; }
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 5: Dr. Vishal Thombare</h5>
-                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="sch-item-subtitle">Title: <em>Will be updated later...</em></div>
                                     <div class="venue-tag">
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -968,7 +1015,7 @@ section { padding: 80px 0; }
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
                                     <h5 class="sch-item-title">Invited Talk 6: Mr. Vinod Kumar Mauriya</h5>
-                                    <div class="sch-item-subtitle">Title: <em>Will be updated soon...</em></div>
+                                    <div class="sch-item-subtitle">Title: <em>Construction of sustainable and resilient roads with Fly ash based Geo-polymer concrete (GPC)</em></div>
                                     <div class="venue-tag">
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
@@ -988,12 +1035,16 @@ section { padding: 80px 0; }
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-102</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                     </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
+                                    <div class="paper-list-box">
+                                        <ul class="paper-list">
+                                            <li><strong>(25)</strong> : Binder and Mixture Performance Evaluation of High-Density Polyethylene Modified Bitumen with In-Situ Ma-leic Anhydride Grafting</li>
+                                            <li><strong>(37)</strong> : Performance of Hot Mix Asphalt using Bio rejuvenated Reclaimed Asphalt Pavement (RAP)</li>
+                                            <li><strong>(39)</strong> : IMPACT OF CURING ON THE STRENGTH AND MECHANICAL PROPERTIES OF COLD MIX ASPHALT</li>
+                                            <li><strong>(43)</strong> : Performance Evaluation of Pavement Subgrades Stabilized with Lantana camara Ash </li>
+                                            <li><strong>(53)</strong> : Optimization of RCA content for Paving Concrete</li>
+                                            <li><strong>(66)</strong> : Evaluation of Rejuvenation Effectiveness in RAP incorporated Asphalt Mixtures through Post Performance Recovered Binder Analysis</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="sch-track">
                                     <span class="parallel-tag"><i class="fas fa-layer-group"></i> Parallel Session</span>
@@ -1002,12 +1053,16 @@ section { padding: 80px 0; }
                                         <span class="venue-short"><i class="fas fa-map-marker-alt"></i> A01-103</span>
                                         <span class="venue-full"><a href="https://www.google.com/maps/place/Saraswati+Block/data=!4m2!3m1!1s0x0:0x61fc453e96dfd865?sa=X&ved=1t:2428&ictx=111" target="_blank" rel="noopener">- Saraswati (Academic Block), Sahyadri Campus, IIT Palakkad</a></span>
                                     </div>
-                                    <details class="oral-details">
-                                        <summary>View Presentations</summary>
-                                        <div class="oral-content">
-                                            List of presentees, their titles, and session details will be updated soon...
-                                        </div>
-                                    </details>
+                                    <div class="paper-list-box">
+                                        <ul class="paper-list">
+                                            <li><strong>(18)</strong> : Banana Peel Biochar as a Sustainable Bitumen Modifier</li>
+                                            <li><strong>(42)</strong> : Investigation on Microwave-Activated Self-Healing Mechanisms in Asphalt Mixtures Under Single Damage Condition</li>
+                                            <li><strong>(46)</strong> : Evaluation of Bio-Silane Modified Tack Coat on Interlayer Bond Strength Under Different Surface Conditions</li>
+                                            <li><strong>(49)</strong> : LABORATORY EVALUATION OF ASPHALT MIXTURES FOR TOP-DOWN CRACKING USING STRAIN RECOVERY AND FATIGUE TESTS</li>
+                                            <li><strong>(55)</strong> : Performance Evaluation of Stone Matrix Asphalt Wear-ing Coat on Bridges - A Case study from Kerala</li>
+                                            <li><strong>(71)</strong> : Reactivity Enhancement of Calcined 2:1 Clay for Utilisation as Supplementary Cementitious Material</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1354,6 +1409,33 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         openTab('day1'); 
     }
+
+    // Venue Tag Mobile Expansion Fix
+    const venueTags = document.querySelectorAll('.venue-tag');
+    venueTags.forEach(tag => {
+        tag.addEventListener('click', function(e) {
+            // Allow link clicks to pass through
+            if (e.target.tagName.toLowerCase() === 'a') return;
+            
+            // Prevent event from bubbling up and closing immediately
+            e.stopPropagation();
+            
+            const isExpanded = this.classList.contains('expanded');
+            
+            // Close all
+            venueTags.forEach(t => t.classList.remove('expanded'));
+            
+            // Toggle clicked
+            if (!isExpanded) {
+                this.classList.add('expanded');
+            }
+        });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function() {
+        venueTags.forEach(t => t.classList.remove('expanded'));
+    });
 
     document.getElementById('cur-year').textContent = new Date().getFullYear();
 
