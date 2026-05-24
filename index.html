@@ -180,11 +180,11 @@ a { text-decoration: none; color: inherit; }
 /* ── HERO SECTION ── */
 .hero {
   position: relative; 
-  height: 100vh;
-  height: 100dvh; /* Fix for iOS Safari Viewport */
-  min-height: 640px;
+  min-height: 100vh;
+  min-height: 100dvh; /* Fix for iOS Safari Viewport, changed to min-height to allow expansion */
   display: flex; flex-direction: column; justify-content: flex-end;
   color: var(--white); overflow: hidden;
+  padding-top: calc(var(--header-h) + 40px); /* Prevents content from getting trapped behind sticky header on mobile */
 }
 .hero-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
