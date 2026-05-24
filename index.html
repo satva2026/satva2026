@@ -256,6 +256,52 @@ a { text-decoration: none; color: inherit; }
 }
 .btn-ghost:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
 
+/* ── TEMPLATE DOWNLOAD BUTTONS ── */
+.hero-templates {
+  margin-top: 24px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+.btn-aura {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(191, 163, 106, 0.15);
+  color: var(--white);
+  padding: 11px 22px;
+  border-radius: 8px;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
+  border: 1px solid var(--gold);
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+  animation: aura-glow 2s infinite alternate;
+  text-decoration: none;
+}
+.btn-aura:hover {
+  transform: translateY(-2px);
+  background: rgba(191, 163, 106, 0.3);
+}
+.btn-aura i { font-size: 16px; color: var(--gold); }
+.btn-aura .badge {
+  background: var(--danger-color);
+  color: var(--white);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  animation: badge-blink 1.5s infinite;
+}
+@keyframes aura-glow {
+  0% { box-shadow: 0 0 10px rgba(191, 163, 106, 0.3), 0 0 20px rgba(191, 163, 106, 0.1); }
+  100% { box-shadow: 0 0 20px rgba(191, 163, 106, 0.7), 0 0 40px rgba(191, 163, 106, 0.4); }
+}
+@keyframes badge-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 /* ── COUNTDOWN & TICKER ── */
 .countdown-strip {
   position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
@@ -795,10 +841,22 @@ section.flush-bot { padding-bottom: 0; }
       <div class="hero-sep"></div>
       <div class="hero-meta-item"><i class="fas fa-tag"></i> Regular Registration Open</div>
     </div>
+    
     <div class="hero-actions">
       <a href="registrations.html" class="btn-primary"><i class="fas fa-arrow-right"></i> Register Now</a>
       <a href="programme.html" class="btn-ghost">View Programme</a>
     </div>
+
+    <!-- NEW TEMPLATE LINKS -->
+    <div class="hero-templates">
+      <a href="DOCS/Oral_SATVA2026_template.pptx" class="btn-aura" download>
+        <i class="fas fa-desktop"></i> Oral Template <span class="badge">New</span>
+      </a>
+      <a href="DOCS/Poster_SATVA2026_template.pptx" class="btn-aura" download>
+        <i class="fas fa-file-image"></i> Poster Template <span class="badge">New</span>
+      </a>
+    </div>
+
   </div>
   <div class="countdown-strip">
     <div class="countdown-inner">
