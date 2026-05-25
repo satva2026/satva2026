@@ -181,10 +181,10 @@ a { text-decoration: none; color: inherit; }
 .hero {
   position: relative; 
   min-height: 100vh;
-  min-height: 100dvh; /* Fix for iOS Safari Viewport, changed to min-height to allow expansion */
+  min-height: 100dvh;
   display: flex; flex-direction: column; justify-content: flex-end;
   color: var(--white); overflow: hidden;
-  padding-top: calc(var(--header-h) + 40px); /* Prevents content from getting trapped behind sticky header on mobile */
+  padding-top: calc(var(--header-h) + 40px);
 }
 .hero-bg {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -201,11 +201,9 @@ a { text-decoration: none; color: inherit; }
   position: relative; z-index: 2;
   max-width: 1320px; width: 100%; margin: 0 auto; padding: 0 32px 72px;
 }
-
-/* Updated Hero Title to prevent iOS glitch */
 .hero-title {
   font-family: 'DM Serif Display', serif;
-  font-size: 3.5rem; /* Fallback for older iOS */
+  font-size: 3.5rem;
   font-size: clamp(3rem, 7vw, 6.5rem);
   line-height: 1.0; letter-spacing: -1px;
   margin-bottom: 6px;
@@ -383,34 +381,6 @@ section.flush-bot { padding-bottom: 0; }
 .stat-card:nth-child(4) .stat-num { color: var(--forest-dark); }
 .stat-card:nth-child(4) .stat-desc { color: var(--text-soft); }
 
-/* ── LEGACY SECTION ── */
-.legacy-section { background: var(--cream); }
-.legacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
-.legacy-card {
-  background: var(--white); border-radius: 12px; overflow: hidden;
-  display: flex; flex-direction: column;
-  border: 1px solid var(--cream-dark); transition: transform 0.3s, box-shadow 0.3s;
-}
-.legacy-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-.legacy-card-top {
-  background: var(--forest-dark); padding: 32px 28px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.legacy-year {
-  font-family: 'DM Serif Display', serif;
-  font-size: 2.4rem; color: var(--white);
-}
-.legacy-icon { font-size: 28px; color: var(--forest-light); opacity: 0.7; }
-.legacy-body { padding: 28px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
-.legacy-theme { font-size: 0.95rem; color: var(--text-soft); font-style: italic; line-height: 1.6; flex: 1; }
-.legacy-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 14px; font-weight: 600; color: var(--forest);
-  border-bottom: 1.5px solid var(--forest); padding-bottom: 1px;
-  width: fit-content; transition: gap 0.2s;
-}
-.legacy-link:hover { gap: 10px; }
-
 /* ── THEME SECTION ── */
 .theme-layout { display: grid; grid-template-columns: 1fr 450px; gap: 80px; align-items: center; }
 .theme-text p { font-size: 1.1rem; line-height: 1.85; color: var(--text-mid); text-align: justify; margin-bottom: 32px; }
@@ -439,12 +409,54 @@ section.flush-bot { padding-bottom: 0; }
 .stack-wrapper .stack-card.hidden { z-index: 1; transform: translateY(-34px) scale(0.88); opacity: 0; }
 .stack-wrapper .stack-card.going { transform: translate(110%, -15%) rotate(18deg); opacity: 0; z-index: 5; }
 
+/* ── MOU SIGNING SECTION (NEW) ── */
+.mou-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.mou-text p { font-size: 1.05rem; line-height: 1.85; color: var(--text-mid); text-align: justify; margin-bottom: 16px;}
+.mou-image-box { 
+  background: var(--white); 
+  padding: 40px; 
+  border-radius: 12px; 
+  border: 1px solid var(--cream-dark); 
+  text-align: center; 
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+}
+.mou-logos { display: flex; align-items: center; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 24px; }
+.mou-logos img { max-height: 70px; width: auto; object-fit: contain; }
+
+/* ── LEGACY SECTION ── */
+.legacy-section { background: var(--cream); }
+.legacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+.legacy-card {
+  background: var(--white); border-radius: 12px; overflow: hidden;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--cream-dark); transition: transform 0.3s, box-shadow 0.3s;
+}
+.legacy-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+.legacy-card-top {
+  background: var(--forest-dark); padding: 32px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.legacy-year {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.4rem; color: var(--white);
+}
+.legacy-icon { font-size: 28px; color: var(--forest-light); opacity: 0.7; }
+.legacy-body { padding: 28px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; }
+.legacy-theme { font-size: 0.95rem; color: var(--text-soft); font-style: italic; line-height: 1.6; flex: 1; }
+.legacy-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 600; color: var(--forest);
+  border-bottom: 1.5px solid var(--forest); padding-bottom: 1px;
+  width: fit-content; transition: gap 0.2s;
+}
+.legacy-link:hover { gap: 10px; }
+
 /* ── SPEAKERS SECTION ── */
-.speakers-section { background: var(--cream); }
+.speakers-section { background: var(--white); }
 .speakers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 56px; }
 .invited-speakers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; margin-top: 56px; }
 .speaker-card {
-  background: var(--white); border-radius: 15px; overflow: hidden;
+  background: var(--cream); border-radius: 15px; overflow: hidden;
   border: 1px solid var(--cream-dark); cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex; flex-direction: column; align-items: center; padding: 36px 20px 30px;
@@ -454,7 +466,7 @@ section.flush-bot { padding-bottom: 0; }
 .speaker-avatar {
   width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
   border: 4px solid var(--white); box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-  margin-bottom: 20px; background: var(--cream); flex-shrink: 0;
+  margin-bottom: 20px; background: var(--white); flex-shrink: 0;
 }
 .speaker-avatar img { width: 100%; height: 100%; object-fit: cover; }
 .speaker-name { font-size: 18px; font-weight: 700; color: var(--forest-dark); line-height: 1.3; margin-bottom: 8px; }
@@ -705,6 +717,7 @@ section.flush-bot { padding-bottom: 0; }
   .about-stat-col { grid-template-columns: repeat(4, 1fr); }
   .theme-layout { grid-template-columns: 1fr; gap: 48px; }
   .org-grid { grid-template-columns: 1fr; }
+  .mou-layout { grid-template-columns: 1fr; gap: 48px; }
 }
 @media (max-width: 900px) {
   .desk-nav { display: none; }
@@ -749,6 +762,9 @@ section.flush-bot { padding-bottom: 0; }
   
   /* Mobile font-size fallback for Hero */
   .hero-title { font-size: 3.5rem; }
+
+  /* Stack MoU logos on mobile */
+  .mou-logos { flex-direction: column; gap: 16px; }
 }
 @media (max-width: 380px) {
   .logo-group { gap: 8px; }
@@ -915,7 +931,71 @@ section.flush-bot { padding-bottom: 0; }
   </div>
 </section>
 
-<section id="past-editions" class="tight legacy-section">
+<section id="theme" class="section-alt">
+  <div class="wrap">
+    <div class="theme-layout">
+      <div class="theme-text js-fade">
+        <span class="section-eyebrow">2026 Theme</span>
+        <h2 class="section-title">Pavement Sustainability Frontiers: From Materials to Maintenance</h2>
+        <div class="rule"></div>
+        <p>Pavement Sustainability Frontiers: From Materials to Maintenance aims to provide a collaborative platform for researchers, engineers, and industry professionals to exchange knowledge and showcase advances shaping the future of sustainable pavement infrastructure. The symposium is built around four core themes, each reflecting the growing need for innovation across the pavement lifecycle. These themes highlight progress in eco-friendly materials, performance-driven design, energy-efficient construction practices, and smart, data-enabled maintenance strategies.</p>
+        <div class="theme-pillars">
+          <div class="pillar" onclick="openThemeModal('theme1')">
+            <div class="pillar-icon"><i class="fas fa-layer-group"></i></div>
+            <div class="pillar-text">Resilient & Green Geotechnics</div>
+          </div>
+          <div class="pillar" onclick="openThemeModal('theme2')">
+            <div class="pillar-icon"><i class="fas fa-road"></i></div>
+            <div class="pillar-text">Eco-Efficient Asphalt Technologies</div>
+          </div>
+          <div class="pillar" onclick="openThemeModal('theme3')">
+            <div class="pillar-icon"><i class="fas fa-cubes-stacked"></i></div>
+            <div class="pillar-text">Sustainable Rigid Pavement Systems</div>
+          </div>
+          <div class="pillar" onclick="openThemeModal('theme4')">
+            <div class="pillar-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
+            <div class="pillar-text">Resilient Roads: Evaluation & Maintenance</div>
+          </div>
+        </div>
+      </div>
+      <div class="stack-wrapper js-fade js-fade-d1">
+        <div class="card-stack" id="card-stack">
+          <img src="images/home/img1.webp" class="stack-card top" alt="Symposium highlight 1" loading="lazy">
+          <img src="images/home/img2.webp" class="stack-card mid" alt="Symposium highlight 2" loading="lazy">
+          <img src="images/home/img3.webp" class="stack-card bot" alt="Symposium highlight 3" loading="lazy">
+          <img src="images/home/img4.webp" class="stack-card hidden" alt="Symposium highlight 4" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mou-signing" class="tight">
+  <div class="wrap">
+    <div class="mou-layout">
+      <div class="mou-text js-fade">
+        <span class="section-eyebrow">Special Announcement</span>
+        <h2 class="section-title">MoU Signing Ceremony</h2>
+        <div class="rule"></div>
+        <p>An official Memorandum of Understanding (MoU) signing ceremony between the Indian Institute of Technology Palakkad and the Indian Road Survey & Management (IRSM) Pvt Ltd will be a key highlight of the SATVA 2026 inaugural function.</p>
+        <p>Representing the shared vision for sustainable engineering, the agreement will be officially exchanged by <strong>Shri G Parasuraman</strong>, Managing Director, IRSM and <strong>Prof. Santhakumar Mohan</strong>, Dean (Industry Collaboration & Sponsored Research), IIT Palakkad. This strategic partnership aims to foster collaborative research, facilitate vital knowledge exchange, and drive innovative advancements in pavement infrastructure and road condition assessment methodologies.</p>
+      </div>
+      <div class="js-fade js-fade-d1">
+        <div class="mou-image-box">
+           <div class="mou-logos" style="margin-top: 0; margin-bottom: 24px;">
+              <img src="images/logos/logo1.png" alt="IIT Palakkad" style="max-height: 95px;">
+              <i class="fas fa-handshake" style="font-size: 36px; color: var(--forest-light);"></i>
+              <img src="images/sponsors/irsm-logo.png" alt="IRSM">
+           </div>
+           <h3 style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--forest-dark); margin-bottom: 12px;">Partnership for Pavement Sustainability</h3>
+           <p style="font-size: 14px; color: var(--text-soft); line-height: 1.6;">Formalizing collaborative research and technological advancement in pavement infrastructure management.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="past-editions" class="legacy-section">
   <div class="wrap">
     <div class="js-fade">
       <span class="section-eyebrow">Legacy</span>
@@ -957,46 +1037,7 @@ section.flush-bot { padding-bottom: 0; }
   </div>
 </section>
 
-<section id="theme">
-  <div class="wrap">
-    <div class="theme-layout">
-      <div class="theme-text js-fade">
-        <span class="section-eyebrow">2026 Theme</span>
-        <h2 class="section-title">Pavement Sustainability Frontiers: From Materials to Maintenance</h2>
-        <div class="rule"></div>
-        <p>Pavement Sustainability Frontiers: From Materials to Maintenance aims to provide a collaborative platform for researchers, engineers, and industry professionals to exchange knowledge and showcase advances shaping the future of sustainable pavement infrastructure. The symposium is built around four core themes, each reflecting the growing need for innovation across the pavement lifecycle. These themes highlight progress in eco-friendly materials, performance-driven design, energy-efficient construction practices, and smart, data-enabled maintenance strategies.</p>
-        <div class="theme-pillars">
-          <div class="pillar" onclick="openThemeModal('theme1')">
-            <div class="pillar-icon"><i class="fas fa-layer-group"></i></div>
-            <div class="pillar-text">Resilient & Green Geotechnics</div>
-          </div>
-          <div class="pillar" onclick="openThemeModal('theme2')">
-            <div class="pillar-icon"><i class="fas fa-road"></i></div>
-            <div class="pillar-text">Eco-Efficient Asphalt Technologies</div>
-          </div>
-          <div class="pillar" onclick="openThemeModal('theme3')">
-            <div class="pillar-icon"><i class="fas fa-cubes-stacked"></i></div>
-            <div class="pillar-text">Sustainable Rigid Pavement Systems</div>
-          </div>
-          <div class="pillar" onclick="openThemeModal('theme4')">
-            <div class="pillar-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
-            <div class="pillar-text">Resilient Roads: Evaluation & Maintenance</div>
-          </div>
-        </div>
-      </div>
-      <div class="stack-wrapper js-fade js-fade-d1">
-        <div class="card-stack" id="card-stack">
-          <img src="images/home/img1.webp" class="stack-card top" alt="Symposium highlight 1" loading="lazy">
-          <img src="images/home/img2.webp" class="stack-card mid" alt="Symposium highlight 2" loading="lazy">
-          <img src="images/home/img3.webp" class="stack-card bot" alt="Symposium highlight 3" loading="lazy">
-          <img src="images/home/img4.webp" class="stack-card hidden" alt="Symposium highlight 4" loading="lazy">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="speakers" class="tight speakers-section">
+<section id="speakers" class="speakers-section">
   <div class="wrap">
     <div class="js-fade">
       <span class="section-eyebrow">Speakers</span>
@@ -1072,7 +1113,7 @@ section.flush-bot { padding-bottom: 0; }
   </div>
 </section>
 
-<section id="sponsors">
+<section id="sponsors" class="section-alt">
   <div class="wrap">
     <div class="js-fade">
       <span class="section-eyebrow">Partners & Sponsors</span>
