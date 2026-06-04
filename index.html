@@ -121,6 +121,20 @@ a { text-decoration: none; color: inherit; }
 .logo-group img { height: 55px; width: auto; transition: opacity 0.2s; }
 .logo-group img:hover { opacity: 0.75; }
 
+/* Custom New Badge for Navigation */
+.nav-badge {
+  background: var(--danger-color);
+  color: var(--white);
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-left: 2px;
+  animation: badge-blink 1.5s infinite;
+}
+
 .desk-nav ul { display: flex; list-style: none; gap: 8px; align-items: center; }
 .desk-nav li { position: relative; height: var(--header-h); display: flex; align-items: center; }
 .desk-nav a {
@@ -260,14 +274,6 @@ a { text-decoration: none; color: inherit; }
 .btn-ghost:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
 
 /* ── TEMPLATE DOWNLOAD BUTTONS ── */
-.hero-templates {
-  margin-top: 24px;
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-  opacity: 0;
-  animation: fadeUp 0.8s 0.5s ease forwards;
-}
 .btn-aura {
   display: inline-flex; align-items: center; gap: 8px;
   background: rgba(191, 163, 106, 0.15);
@@ -793,6 +799,7 @@ section.flush-bot { padding-bottom: 0; }
     <nav class="desk-nav">
       <ul>
         <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="gallery.html">Gallery <span class="nav-badge">New</span></a></li>
         <li><a href="organisers.html">Organisers</a></li>
         <li>
           <a href="programme.html">Programme <span class="chevron">▾</span></a>
@@ -820,6 +827,7 @@ section.flush-bot { padding-bottom: 0; }
   <nav class="mob-nav" id="mob-nav">
     <ul>
       <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery <span class="nav-badge">New</span></a></li>
       <li><a href="organisers.html">Organisers</a></li>
       <li>
         <div class="mob-link-group">
@@ -859,22 +867,11 @@ section.flush-bot { padding-bottom: 0; }
       <div class="hero-meta-item"><i class="fas fa-map-marker-alt"></i> Indian Institute of Technology Palakkad, Kerala</div>
       <div class="hero-sep"></div>
       <div class="hero-meta-item"><i class="far fa-calendar"></i> 04–06 June 2026</div>
-      <div class="hero-sep"></div>
-      <div class="hero-meta-item"><i class="fas fa-tag"></i> Regular Registration Open</div>
     </div>
     
     <div class="hero-actions">
       <a href="registrations.html" class="btn-primary"><i class="fas fa-arrow-right"></i> Register Now</a>
       <a href="programme.html" class="btn-ghost">View Programme</a>
-    </div>
-
-    <div class="hero-templates">
-      <a href="DOCS/Oral_SATVA2026_template.pptx" class="btn-aura" download>
-        <i class="fas fa-desktop"></i> Oral Template <span class="badge">New</span>
-      </a>
-      <a href="DOCS/Poster_SATVA2026_template.pptx" class="btn-aura" download>
-        <i class="fas fa-file-image"></i> Poster Template <span class="badge">New</span>
-      </a>
     </div>
 
   </div>
@@ -886,11 +883,9 @@ section.flush-bot { padding-bottom: 0; }
       <div class="cd-unit"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Secs</span></div>
       <div class="ticker-wrap">
         <div class="ticker" id="ticker-inner">
-          <span>Regular Registration is Now Open</span>
           <span>Expert Lectures · Paper Presentations · Panel Discussions</span>
           <span>SATVA 2026 — Pavement Sustainability Frontiers: From Materials to Maintenance</span>
           <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI Palakkad Chapter & IGS Palakkad Chapter</span>
-          <span>Regular Registration is Now Open</span>
           <span>Expert Lectures · Paper Presentations · Panel Discussions</span>
           <span>SATVA 2026 — Pavement Sustainability Frontiers: From Materials to Maintenance</span>
           <span>Organized by ESSENCE, IIT Palakkad in collaboration with IEI Palakkad Chapter & IGS Palakkad Chapter</span>
