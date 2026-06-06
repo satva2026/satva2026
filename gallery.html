@@ -66,6 +66,7 @@ a { text-decoration: none; color: inherit; }
 .desk-nav li:hover .drop-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 .drop-menu li { height: auto; display: block; }
 .drop-menu li a { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; font-size: 15px; color: var(--text-mid); text-align: center; }
+.drop-menu li a:hover { background: var(--cream); color: var(--forest); }
 
 /* Mobile Nav */
 .mob-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; border: none; background: none; }
@@ -163,10 +164,8 @@ a { text-decoration: none; color: inherit; }
   overflow: hidden;
   background: var(--forest-dark);
   cursor: pointer;
-  /* Start invisible and scattered (values assigned via JS) */
   opacity: 0;
   transform: translate(var(--startX, 0), var(--startY, 50px)) scale(0.5) rotate(var(--startRot, 0deg));
-  /* Smooth, bouncy ease for snapping into place */
   transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease;
 }
 
@@ -185,7 +184,7 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 767px) {
   .tile.large { grid-column: span 2; grid-row: span 2; }
   .tile.wide  { grid-column: span 2; grid-row: span 1; }
-  .tile.tall  { grid-column: span 1; grid-row: span 1; } /* Conserve vertical space on mobile */
+  .tile.tall  { grid-column: span 1; grid-row: span 1; } 
 }
 
 /* Cinematic Breathing Animation for Images */
@@ -403,7 +402,7 @@ a { text-decoration: none; color: inherit; }
           <strong>Day 2</strong>
           <span>June 05, 2026</span>
         </button>
-        <button class="tab-btn disabled" disabled data-target="day3">
+        <button class="tab-btn" data-target="day3">
           <strong>Day 3</strong>
           <span>June 06, 2026</span>
         </button>
@@ -411,7 +410,6 @@ a { text-decoration: none; color: inherit; }
 
       <!-- DAY 1 CONTENT: Dynamic Animated Grid -->
       <div id="day1" class="tab-content active">
-        
         <div class="dynamic-grid">
           <!-- Mixing sizes for Google Photos aesthetic -->
           <div class="tile large">
@@ -463,21 +461,69 @@ a { text-decoration: none; color: inherit; }
         </div>
       </div>
       
-      <!-- DAY 2 CONTENT: Coming Soon Animation -->
+      <!-- DAY 2 CONTENT: Dynamic Animated Grid -->
       <div id="day2" class="tab-content">
-        <div class="coming-soon-wrapper" id="coming-soon-day2">
+        <div class="dynamic-grid">
+          <!-- Pattern varied slightly for visual interest -->
+          <div class="tile">
+            <img src="images/gallery/day2/pic11.webp" alt="Day 2 Highlight 1" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile wide">
+            <img src="images/gallery/day2/pic12.webp" alt="Day 2 Highlight 2" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile tall">
+            <img src="images/gallery/day2/pic13.webp" alt="Day 2 Highlight 3" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile large">
+            <img src="images/gallery/day2/pic14.webp" alt="Day 2 Highlight 4" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile">
+            <img src="images/gallery/day2/pic15.webp" alt="Day 2 Highlight 5" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile tall">
+            <img src="images/gallery/day2/pic16.webp" alt="Day 2 Highlight 6" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile wide">
+            <img src="images/gallery/day2/pic17.webp" alt="Day 2 Highlight 7" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile">
+            <img src="images/gallery/day2/pic18.webp" alt="Day 2 Highlight 8" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile large">
+            <img src="images/gallery/day2/pic19.webp" alt="Day 2 Highlight 9" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+          <div class="tile">
+            <img src="images/gallery/day2/pic20.webp" alt="Day 2 Highlight 10" loading="lazy">
+            <div class="tile-overlay"><i class="fas fa-search-plus"></i></div>
+          </div>
+        </div>
+
+        <div class="drive-btn-wrap">
+          <a href="https://drive.google.com/drive/folders/1F9uxyAlbTnAmjQ9FIuE75IPLFOld-jym?usp=drive_link" target="_blank" rel="noopener" class="btn-drive">
+            <i class="fab fa-google-drive"></i> View Full Day 2 Album on Drive
+          </a>
+        </div>
+      </div>
+      
+      <!-- DAY 3 CONTENT: Coming Soon Animation -->
+      <div id="day3" class="tab-content">
+        <div class="coming-soon-wrapper" id="coming-soon-day3">
           <div class="camera-icon-wrap">
             <i class="fas fa-camera-retro"></i>
             <div class="flash"></div>
           </div>
           <h3 class="coming-soon-title">Capturing the Moments...</h3>
-          <p class="coming-soon-text">The SATVA 2026 Gallery is currently being built! Our photographers are busy capturing the brilliant minds and exciting moments of Day 2. Check back soon for the photo updates.</p>
+          <p class="coming-soon-text">The SATVA 2026 Gallery is currently being built! Our photographers are busy capturing the brilliant minds and exciting moments of Day 3. Check back soon for the photo updates.</p>
         </div>
-      </div>
-      
-      <!-- DAY 3 CONTENT (Locked) -->
-      <div id="day3" class="tab-content">
-        <!-- Will activate on June 6th -->
       </div>
 
     </div>
