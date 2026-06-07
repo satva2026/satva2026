@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# You can optionally block search engines from indexing the user portal page
+# Disallow: /user.html
+
+Sitemap: https://satva.iitpkd.ac.in/sitemap.xml

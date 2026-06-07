@@ -1,0 +1,16 @@
+# SATVA 2026
+
+> Symposium on Advanced Technologies and Visionary Approaches for Sustainability (SATVA 2026) organized by ESSENCE, IIT Palakkad. The event focuses on Pavement Sustainability Frontiers: From Materials to Maintenance.
+
+## About the Event
+- **Dates:** June 04–06, 2026
+- **Location:** Indian Institute of Technology Palakkad, Kerala, India
+- **Host:** IIT Palakkad in association with IEI and IGS.
+
+## Site Structure
+
+- [Home](https://satva.iitpkd.ac.in/): Main event details, themes, legacy editions, and the post-event highlight video.
+- [Gallery](https://satva.iitpkd.ac.in/gallery.html): Event photos and memory highlights separated by Day 1, Day 2, and Day 3.
+- [Advisory Committee](https://satva.iitpkd.ac.in/advisory.html): Details of the advisory board and technical committee members.
+- [Organising Committee](https://satva.iitpkd.ac.in/committee.html): Details of the core organizers, host organizations, and student core committee.
+- [Participant Portal](https://satva.iitpkd.ac.in/user.html): Secure login page for attendees and speakers to download participation certificates, presentation certificates, and official payment receipts.
